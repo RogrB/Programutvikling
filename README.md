@@ -3,6 +3,8 @@ Semesteroppgave i Programutvikling
 
 Gruppemedlemmer:
 
-Roger Birkenes Solli \n
-Jonas Ege Carlsen \n
-Åsmund Røst Wien \n
+Roger Birkenes Solli
+
+Jonas Ege Carlsen
+
+Åsmund Røst Wien 
