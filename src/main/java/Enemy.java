@@ -1,18 +1,26 @@
 package main.java;
 
+import static main.java.Main.SPEED_MODIFIER;
+
 public class Enemy {
 
     private final EnemyType TYPE;
 
+    private MovementPattern pattern;
     private boolean dead;
     private int health;
 
-    private int posX, posY;
+    private double posX, posY;
+    private int framesAlive;
 
-    public Enemy(EnemyType TYPE){
-        this.TYPE = TYPE;
-        health = this.TYPE.MAX_HEALTH;
-        dead = false;
+    public Enemy(EnemyType TYPE, MovementPattern pattern){
+        this.TYPE       = TYPE;
+        this.pattern    = pattern;
+
+        dead    = false;
+        health  = this.TYPE.MAX_HEALTH;
+
+        framesAlive = 0;
     }
 
     // FUNCTIONS
@@ -29,13 +37,15 @@ public class Enemy {
         dead = true;
     }
 
-    public void move(MovementPattern pattern){
-        
+    public void move(){
+        framesAlive--;
+        updatePosition(framesAlive, 0);
     }
 
-    public void updatePosition(int newX, int newY){
-        posX = newX;
-        posY = newY;
+    public void updatePosition(double newX, double newY){
+        posX = newX * SPEED_MODIFIER;
+        posY = newY * SPEED_MODIFIER;
+        //System.out.println("X = " + posX + ", Y = " + posY);
     }
 
     // GET
@@ -51,11 +61,11 @@ public class Enemy {
         return health;
     }
 
-    public int x() {
+    public double x() {
         return posX;
     }
 
-    public int y() {
+    public double y() {
         return posY;
     }
 
