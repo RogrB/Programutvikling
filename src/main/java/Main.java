@@ -28,7 +28,7 @@ public class Main extends Application{
     }
 
     public void generateEnemies() {
-        Enemy test = new Enemy(EnemyType.ASTROID, MovementPattern.LEFT);
+        Enemy test = new Enemy(EnemyType.ASTROID, MovementPattern.SIN);
         enemies.add(test);
     }
 

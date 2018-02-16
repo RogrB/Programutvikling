@@ -11,7 +11,6 @@ public class Enemy {
     private int health;
 
     private double posX, posY;
-    private int framesAlive;
 
     public Enemy(EnemyType TYPE, MovementPattern pattern){
         this.TYPE       = TYPE;
@@ -19,8 +18,6 @@ public class Enemy {
 
         dead    = false;
         health  = this.TYPE.MAX_HEALTH;
-
-        framesAlive = 0;
     }
 
     // FUNCTIONS
@@ -38,14 +35,14 @@ public class Enemy {
     }
 
     public void move(){
-        framesAlive--;
-        updatePosition(framesAlive, 0);
+        pattern.nextFrame();
+        updatePosition(pattern.x, pattern.y);
     }
 
     public void updatePosition(double newX, double newY){
-        posX = newX * SPEED_MODIFIER;
-        posY = newY * SPEED_MODIFIER;
-        //System.out.println("X = " + posX + ", Y = " + posY);
+        posX = newX;
+        posY = newY;
+        //System.out.println(posX);
     }
 
     // GET
