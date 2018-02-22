@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import Player.*;
+import Weapons.*;
 
 public class Main extends Application{
 
@@ -33,8 +34,10 @@ public class Main extends Application{
     // Oppretter player objekt
     Player player = new Player();
     
-    // Arraylist for Enemies
+    // Arraylist for Enemies og bullets
     private ArrayList<Enemy> enemies = new ArrayList<>();
+    private ArrayList<Bullet> bullets = new ArrayList<>();
+    private int bulletCount = 0; // antall kuler som har blitt fyrt av
     
     // GraphicsContext og Spillvariabler
     private GraphicsContext gc; // Brukes for å tegne primitive rektangler - kan evt byttes ut når vi implementerer sprites?
@@ -143,6 +146,13 @@ public class Main extends Application{
                 time += 0.05;
                 drawPlayer(gc);
                 detectCollision();
+                if (bulletCount > 0) {
+                    for (Bullet bullet : bullets) {
+                        bullet.travel();
+                    }
+                    detectHit();
+                    drawBullets(gc);
+                }
 
                 if (time >= 0.35) { // Hvis vi trenger en funksjon som ikke *må* oppdateres hvert tick av animationtimeren
                     // Do something
@@ -154,9 +164,10 @@ public class Main extends Application{
         return root; // Returnerer root til start()
     }
     
-    // Metode for å skyte - trenger implementasjon
+    // Metode for å skyte
     public void shoot() {
-        System.out.println("PEWPEWPEW!");
+        bullets.add(new Bullet(player.getX()+player.getWidth(), player.getY()+(player.getHeight())/2)); // Setter X og Y posisjon for kula til midten foran på player figuren
+        bulletCount++;
     }
     
     // Metode for å tegne player - Primitiv rektangel, må byttes ut med sprite
@@ -168,19 +179,63 @@ public class Main extends Application{
         player.setOldY(player.getY()); // Setter oldY verdi, for å viske ut riktig posisjon neste frame
     }
     
+    // Metode for å tegne fiender - Primitiv rektangel, må byttes ut med sprites
     public void drawEnemy(GraphicsContext gc) {
-        gc.setStroke(Color.RED); // Player farge
+        gc.setStroke(Color.RED); // Enemy farge
         gc.setLineWidth(3); // Linjebredde
         for (Enemy enemy : enemies){
-            gc.clearRect(enemy.x()-1, enemy.y()-1, 53, 53); 
+            gc.clearRect(enemy.x()-1, enemy.y()-1, 53, 53); // Mangler "old" posisjon for å kunne viske ut forrige frame
             gc.strokeRect(enemy.x(), enemy.y(), 50, 50); // Setter bredde og høyde til 50 for nå
         }      
     }
     
-    // Metode for å detecte kollisjon - trenger implementasjon
-    public void detectCollision() {
-        // DO SOMETHING
+    // Metode for å tegne kuler
+    public void drawBullets(GraphicsContext gc) {
+        gc.setStroke(Color.YELLOW); // Kulefarge
+        gc.setLineWidth(1); // Kulestørrelse (Kun grafisk representasjon)
+        for (Bullet bullet : bullets) {
+            gc.clearRect(bullet.getOldX()-2, bullet.getOldY()-2, 6, 6); // "visker ut" forrige frame før det tegnes en ny - må være større verdier enn x og y posisjon
+            gc.strokeRect(bullet.getX(), bullet.getY(), 2, 2); // tegner ny kule til skjerm
+            bullet.setOldX(bullet.getX()); // setter gamle koordinater
+            bullet.setOldY(bullet.getOldY());
+        }
     }
     
+    // Metode for å detecte kollisjon mellom player og enemy - ikke prosjektiler
+    public void detectCollision() {
+        for (Enemy enemy : enemies) { // Looper igjennom liste med enemyobjekter
+            int enemyWidth = 50; // Midlertidig bredde
+            int enemyHeight = 50; // Midlertidig høyde
+            if (enemy.x() < player.getX()+player.getWidth() && enemy.y() < player.getY()+player.getHeight()) {
+                if (player.getX() < enemy.x()+enemyWidth && player.getY() < enemy.y()+enemyHeight) {
+                    // Kollisjon detected
+                    collisions++;
+                    String lText = "Collisions: " + Integer.toString(collisions);
+                    lifeText.setText(lText); // Skriver collisions til screen                    
+                }
+            }
+        }
+    }  
+    
+    // Metode for å detecte hit mellom playerBullet og enemy (utestet til enemy systemet er implementert)
+    public void detectHit() {
+        int enemyWidth = 50; // Midlertidig bredde
+        int enemyHeight = 50; // Midlertidig høyde
+        for (Bullet bullet : bullets) {
+            for (Enemy enemy : enemies) {
+                if (bullet.getX() < enemy.x()+enemyWidth && bullet.getY() < enemy.y()+enemyHeight) {
+                    if (bullet.getX() > enemy.x() && bullet.getY() > enemy.y()+enemyHeight) { // Troor det her blir riktig..?
+                        // Enemy got hit!
+                        System.out.println("hit!");
+                    }
+                }
+            }
+        }
+    }
+    
+    // Metode for å detecte playerDamage fra enemy bullets - må implementeres
+    public void detectDamage() {
+        
+    }
     
 }
