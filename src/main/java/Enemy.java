@@ -42,7 +42,7 @@ public class Enemy {
     public void updatePosition(double newX, double newY){
         posX = newX;
         posY = newY;
-        //System.out.println(posX);
+        System.out.println("x: " + posX + ", y: " + posY);
     }
 
     // GET
