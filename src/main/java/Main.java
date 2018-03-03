@@ -11,6 +11,8 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
@@ -21,6 +23,15 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.geometry.Pos;
+import javafx.animation.KeyFrame;
+import javafx.util.Duration;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.animation.FadeTransition;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import Player.*;
 import Weapons.*;
 
@@ -37,15 +48,25 @@ public class Main extends Application{
     // Arraylist for Enemies og bullets
     private ArrayList<Enemy> enemies = new ArrayList<>();
     private ArrayList<Bullet> bullets = new ArrayList<>();
-    private int bulletCount = 0; // antall kuler som har blitt fyrt av
+    private int bulletCount = 0; // antall kuler som har blitt skutt
     
     // GraphicsContext og Spillvariabler
     private GraphicsContext gc; // Brukes for å tegne primitive rektangler - kan evt byttes ut når vi implementerer sprites?
     private double time;
+    private double time2;
     private Text scoreText;
     private Text lifeText;
     private int score = 0;
     private int collisions = 0;
+    
+    // Variabler for SplashScreen
+    private int cdCounter = 4;
+    private int rectX = 215;
+    private int rectY = 590;
+    
+    // Bildenoder for Countdown Spashscreen
+    StackPane cdPane = new StackPane();
+    ImageView imgView = new ImageView();    
     
     // Bakgrunnsbilde
     String imgpath = "image/background.jpg";
@@ -90,7 +111,7 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Working Title: Pippi");
         // oppretter rootpane, canvas og scene        
-        Scene scene = new Scene(initScene());
+        Scene scene = new Scene(startGameCountdown());
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -112,10 +133,11 @@ public class Main extends Application{
         });  
     }
     
-    private Parent initScene() {
-        // Initialize Game - Oppretter nodes
+    private Parent startGameCountdown() {
+        // Starter countdown før levelen,
+        // Oppretter nodes
         Pane root = new Pane();
-        
+
         // Oppretter Score og lifeText 
         String scoreT = "Score: " + Integer.toString(score);
         String lifeT = "Collisions: " + Integer.toString(collisions);
@@ -126,32 +148,157 @@ public class Main extends Application{
         lifeText.setFill(Color.WHITE);
         lifeText.setFont(Font.font("Verdana", 20));
         
-        // Videre oppsett for root - Backgrunn og størrelse
+        // Videre oppsett for root - Bakgrunn og størrelse
         root.setPrefSize(WIDTH, HEIGHT);
         root.setBackground(new Background(bg));
         Canvas canvas = new Canvas(WIDTH, HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
         // Legger nodes til root
-        root.getChildren().addAll(canvas, scoreText, lifeText);
+        root.getChildren().addAll(canvas, scoreText, lifeText);   
         
-        // Kaller metoder for Enemies
-        generateEnemies();
-        moveEnemies();
+        // Tegner "Black-Bars" under countdown
+        gc.setFill(Color.rgb(25, 25, 25));
+        gc.fillRect(0, 0, 1200, 225);
+        gc.fillRect(0, 575, 1200, 225);
+        
+        // Prøver å midtjustere CountDownBildene
+        cdPane.getChildren().add(imgView); // Globale variabler opprettet under main for å være tilgjengelige i andre metoder
+        imgView.setPreserveRatio(true); 
+        StackPane.setAlignment(imgView, Pos.CENTER);
+        cdPane.setAlignment(Pos.CENTER);           
+        
+        imgView.setX((WIDTH/2)-200); // Prøver å sette x-verdi for imageview
+        imgView.setY((HEIGHT/2)-50);
+        imgView.fitWidthProperty().bind(cdPane.widthProperty());
+        cdPane.setAlignment(Pos.CENTER);
+        
+        // Setter playersize for "zoom in" effekt
+        int playerTempWidth = player.getWidth(); // Lagrer player originalstørrelse som definert i player klassen
+        int playerTempHeight = player.getHeight();        
+        player.setWidth(100); // Setter høyere playersize, for "zoom in" effekt
+        player.setHeight(100);
+        
+        // Oppretter Timer - For å telle sekunder for CountDown    
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            
+            public int seconds = 1;
+            private final int maxSeconds = 4;
+            @Override
+            public void run() {
+                if (seconds < maxSeconds) {
+                    countDown(seconds); // Kaller metode for å bytte bildene på splashscreen
+                    seconds++;
+                }
+                else {
+                    cancel(); // Stopper timeren
+                    finishCountDown(playerTempWidth, playerTempHeight); // Kaller metode for å avslutte countdown
+                }
+            }
+        };timer.schedule(task, 0, 1000); // Starter timeren (0 = start now, 1000 er tickintervall - 1 sekund)
+        
+        // Legger cdPane til root (cdPane definert under main som global variabel)
+        root.getChildren().add(cdPane);
+        
+        initGame();
+        return root;
+    }    
+    
+    public void countDown(int seconds) {
+        // Metode for å bytte countdownbilder for splashscreen        
+        Image countDownImage = new Image("image/countdown/" + seconds + ".png"); // Bør vel ha exceptionhandling her
+        imgView.setImage(countDownImage);
+    }
+    
+    public void finishCountDown(int playerTempWidth, int playerTempHeight) {
+        // Metode for å vise "Fly!" splashscreen på skjermen, fjerne "blackbars", "zoome ut" player, og intitialiserer enemies
+        
+        AnimationTimer timer = new AnimationTimer() { // Bruker animationtimer
+            @Override
+            public void handle(long now) {
+                time += 0.05;
+                time2 += 0.03;
+                drawPlayer(gc); // Oppdaterer player tegning
+                
+                if (time >= 0.35) { 
+                    if (cdCounter < 10) {
+                        if (time2 >= 0.26) { // Timer2 - For tregere ticks (egentlig unødvendig - må ryddes opp)
+                            Image countDownImage = new Image("image/countdown/fly_" + cdCounter + ".png"); // Looper igjennom bildesekvens for "FLY!" splashscreen
+                            imgView.setImage(countDownImage);
+                            cdCounter++;
+                            time2 = 0;
+                        }
+                    }
+                    time = 0;
+                }
+                
+                if (cdCounter >= 10) {
+                    // Zoomer ut player
+                    if (player.getWidth() > playerTempWidth) {
+                            player.setWidth(player.getWidth()-2);
+                    }
+                    if (player.getHeight() > playerTempHeight) {
+                            player.setHeight(player.getHeight()-2);
+                            player.setY(player.getY()+1);
+                    }
+                    
+                    /* Prøver å fade ut siste splashscreen bilde
+                    KeyFrame startFadeOut = new KeyFrame(Duration.seconds(0.2), new KeyValue(imgView.opacityProperty(), 1.0));
+                    KeyFrame endFadeOut = new KeyFrame(Duration.seconds(0.5), new KeyValue(imgView.opacityProperty(), 0.0));
+                    Timeline timelineOn = new Timeline(startFadeOut, endFadeOut);
+                    timelineOn.setAutoReverse(false);
+                    timelineOn.play(); */
+                    
+                    /* Prøver å fade ut med fadetransition
+                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(500), imgView);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.play(); */
+
+                    // Animerer ut Top blackbar
+                    gc.clearRect(0, 0, 1200, 230);
+                    gc.fillRect(0, 0, 1200, rectX);
+                    rectX -= 10;
+
+                    // Animerer ut Nedre blackbar
+                    gc.clearRect(0, 560, 1200, 230);
+                    gc.fillRect(0, rectY, 1200, 225);
+                    rectY += 10;                
+
+                    if (player.getWidth() <= playerTempWidth && player.getHeight() <= playerTempHeight) {
+                        // Zoom ut animasjon ferdig, stopper timer
+                        this.stop();
+
+                        imgView.setImage(null); // Fjerner "Fly!" Bilde fra skjermen
+                        gc.clearRect(0, 0, 1200, 800); // clearer hele skjermen
+                        
+                        // Kaller metoder for Enemies
+                        generateEnemies();
+                        moveEnemies();                                    
+                    }  
+                }
+                
+            }
+        }; timer.start(); // Starter animationtimer    
+    }
+    
+    public void initGame() {
+        // Metode for å starte spillet etter Countdown
         
         // Animationtimer
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 time += 0.05;
-                drawPlayer(gc);
-                detectCollision();
+                drawPlayer(gc); // Oppdaterer player tegning
+                detectCollision(); // Sjekker om player kolliderer med enemy
                 if (bulletCount > 0) {
-                    for (Bullet bullet : bullets) {
-                        bullet.travel();
+                    for (Bullet bullet : bullets) { // Hvis det har blitt skutt kuler
+                        bullet.travel(); // Oppdaterer bulletposisjon
                     }
-                    detectHit();
-                    drawBullets(gc);
+                    detectHit(); // Sjekker om kulene har truffet noe
+                    drawBullets(gc); // Oppdaterer kule tegning
                 }
 
                 if (time >= 0.35) { // Hvis vi trenger en funksjon som ikke *må* oppdateres hvert tick av animationtimeren
@@ -159,9 +306,7 @@ public class Main extends Application{
                     time = 0;
                 }
             }
-        };
-        timer.start(); // Starter animationtimer  
-        return root; // Returnerer root til start()
+        }; timer.start(); // Starter animationtimer  
     }
     
     // Metode for å skyte
@@ -174,7 +319,7 @@ public class Main extends Application{
     public void drawPlayer(GraphicsContext gc) {
         gc.setStroke(Color.WHITE); // Player farge
         gc.setLineWidth(3); // Linjebredde
-        gc.clearRect(player.getX()-1, player.getOldY()-1, player.getWidth()+3, player.getHeight()+3); // "visker ut" forrige rektangel før det tegnes en ny - Må være større enn forrige frame, ellers blir det igjen litt av forrige rektangel
+        gc.clearRect(player.getX()-1, player.getOldY()-1, player.getWidth()+5, player.getHeight()+5); // "visker ut" forrige rektangel før det tegnes en ny - Må være større enn forrige frame, ellers blir det igjen litt av forrige rektangel
         gc.strokeRect(player.getX(), player.getY(), player.getWidth(), player.getHeight()); // tegner ny rektangel-frames
         player.setOldY(player.getY()); // Setter oldY verdi, for å viske ut riktig posisjon neste frame
     }
@@ -227,6 +372,7 @@ public class Main extends Application{
                     if (bullet.getX() > enemy.x() && bullet.getY() > enemy.y()+enemyHeight) { // Troor det her blir riktig..?
                         // Enemy got hit!
                         System.out.println("hit!");
+                        score++;
                     }
                 }
             }

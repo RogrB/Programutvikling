@@ -2,8 +2,8 @@ package Player;
 
 public class Player {
     
-    private int y = 325; // Startpunkt fra top
-    private int oldY = 30; // Old Y posisjon
+    private int y = 370; // Startpunkt fra top
+    private int oldY = 370; // Old Y posisjon
     private int x = 40; // Startpunkt fra venstre
     private int width = 30; // Bredde
     private int height = 30; // Høyde
