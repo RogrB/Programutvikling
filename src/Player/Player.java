@@ -11,6 +11,7 @@ public class Player {
     private boolean alive = true; // Spiller død/levende
     private boolean moving; // Om spiller er i bevegelse (brukes ikke ATM)
     private int score; // Poengsum
+    private PlayerDirection dir = PlayerDirection.NONE;
     
     // Getters og setters
     public int getY() {
@@ -87,12 +88,24 @@ public class Player {
     
     // Metoder for bevegelse - Flytter 5 pixler av gangen
     public void moveUp() {
-        this.y-=5;
+        //this.y-=5;
+        dir = PlayerDirection.UP;
     }
     
     public void moveDown() {
-        this.y+=5;
+        //this.y+=5;
+        dir = PlayerDirection.DOWN;
     }
+
+    public void moveStop() {
+        dir = PlayerDirection.NONE;
+    }
+
+    public void move() {
+        this.y = this.y + dir.next();
+    }
+
+
     
 
 }

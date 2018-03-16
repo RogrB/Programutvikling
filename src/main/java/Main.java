@@ -98,6 +98,7 @@ public class Main extends Application{
             public void handle(long now) {
                 for (Enemy enemy : enemies){
                     enemy.move();
+                    player.move();
                     drawEnemy(gc); // Kaller metode for å tegne enemies (primitive representasjoner)
                 }
             }
@@ -130,7 +131,18 @@ public class Main extends Application{
                     player.moveDown();
                 }
             }
-        });  
+        });
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP) { // Trykk på W eller ArrowUp
+                    player.moveStop();
+                }
+                if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN) { // Trykk på S eller ArrowDown
+                    player.moveStop();
+                }
+            }
+        });
     }
     
     private Parent startGameCountdown() {
