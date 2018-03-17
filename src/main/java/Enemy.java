@@ -1,20 +1,28 @@
 package main.java;
 
+import javafx.scene.image.ImageView;
+
 import static main.java.Main.SPEED_MODIFIER;
 
 public class Enemy {
 
     private final EnemyType TYPE;
+    private int x;
+    private int y;
 
     private MovementPattern pattern;
     private boolean dead;
     private int health;
+    private ImageView sprite;
 
     private double posX, posY;
 
-    public Enemy(EnemyType TYPE, MovementPattern pattern){
-        this.TYPE       = TYPE;
-        this.pattern    = pattern;
+    public Enemy(EnemyType TYPE, MovementPattern pattern, int x, int y){
+        this.TYPE= TYPE;
+        this.pattern = pattern;
+        this.x = x;
+        this.y = y;
+        sprite = new ImageView("assets/enemyBlue1.png");
 
         dead    = false;
         health  = this.TYPE.MAX_HEALTH;
@@ -73,5 +81,16 @@ public class Enemy {
 
     public void setPosY(int posY) {
         this.posY = posY;
+    }
+
+    public ImageView getSprite(){
+        return sprite;
+    }
+
+    public void update(){
+        sprite.relocate(x, y);
+        pattern.nextFrame();
+        posX = pattern.x;
+        posY = pattern.y;
     }
 }
