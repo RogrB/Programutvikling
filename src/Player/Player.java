@@ -3,6 +3,8 @@ package Player;
 import Weapons.Bullet;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
+import main.java.Main;
+
 import java.util.ArrayList;
 
 public class Player {
@@ -42,8 +44,11 @@ public class Player {
     }
 
     public void update(){
-        sprite.relocate(x, y);
-        this.y = this.y + dir.next();
+        if(y - (height / 2) > 0 && y + (height / 2) < Main.HEIGHT){
+            sprite.relocate(x, y);
+            this.y = this.y + dir.next();
+            System.out.println("y: " + y + "x: " + x);
+        }
     }
 
     public void setY(int y) {
@@ -116,23 +121,16 @@ public class Player {
 
     // Metoder for bevegelse - Flytter 5 pixler av gangen
     public void moveUp() {
-            //this.y-=5;
             dir = PlayerDirection.UP;
     }
 
     public void moveDown() {
-        //this.y+=5;
         dir = PlayerDirection.DOWN;
     }
 
     public void moveStop() {
         dir = PlayerDirection.NONE;
     }
-
-    public void move() {
-        this.y = this.y + dir.next();
-    }
-
 
     public boolean isAlive() {
         return alive;
