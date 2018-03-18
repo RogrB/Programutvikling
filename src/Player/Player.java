@@ -3,14 +3,14 @@ package Player;
 import Weapons.Bullet;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
-import main.java.Main;
+import main.java.GameView;
 
 import java.util.ArrayList;
 
 public class Player {
 
-    private int playerwidth = 75; // Bredde
-    private int playerhight = 112;// Høyde
+    public final int PLAYERWIDTH = 75;  // Bredde
+    public final int PLAYERHEIGHT = 112;// Høyde
 
     private int     y;                  // Startpunkt fra top
     private int     x;                  // Startpunkt fra venstre
@@ -18,24 +18,23 @@ public class Player {
     private boolean alive = true;       // Spiller død/levende
     private boolean moving;             // Om spiller er i bevegelse (brukes ikke ATM)
     private boolean canShoot = false;
-    private boolean canMove = true;
     private int     score;              // Poengsum
     private int     bulletCount = 0;    // antall kuler som har blitt skutt
 
-    private PlayerDirection     dir = PlayerDirection.NONE;
+    private PlayerMovement      move = new PlayerMovement();
     private ArrayList<Bullet>   bullets = new ArrayList<>();
 
     ImageView sprite = new ImageView("assets/playerShip2_red.png");
 
     public Player(){
-        this.y = (Main.HEIGHT + this.playerhight) / 2;
+        this.y = GameView.HEIGHT / 2 - this.PLAYERHEIGHT/ 2;
         this.x = 40;
         sprite.relocate(x, y);
     }
 
     public void shoot() {
         if(canShoot) {
-            bullets.add(new Bullet(x + playerwidth - 10, y + (playerhight / 2) + 3));
+            bullets.add(new Bullet(x + PLAYERWIDTH - 10, y + (PLAYERHEIGHT / 2) + 3));
             bulletCount++;
             AudioClip laser = new AudioClip("file:src/assets/newLaser.mp3");
             laser.setVolume(0.25);
@@ -44,35 +43,34 @@ public class Player {
     }
 
     public void update(){
-        /*if(y - (playerhight / 2) > 0 && y + (playerhight / 2) < Main.HEIGHT){
-            sprite.relocate(x, y);
-            this.y = this.y + dir.next();
-            System.out.println("y: " + y + "x: " + x);
-        }*/
         if(!playerIsOutOfBounds()){
-            this.y = this.y + dir.next();
+            this.y = this.y + move.next();
             sprite.relocate(x, y);
         }
     }
 
     private boolean playerIsOutOfBounds(){
-        if(y - dir.next() <= 0)
+        if(y + move.next() < 0) {
+            move.moveStop();
             return true;
-        else if(y + playerhight + dir.next() >= Main.HEIGHT)
+        }
+        if(y + PLAYERHEIGHT + move.next() >= GameView.HEIGHT) {
+            move.moveStop();
             return true;
+        }
         return false;
     }
 
     public void moveUp() {
-        dir = PlayerDirection.UP;
+        move.moveUp();
     }
 
     public void moveDown() {
-        dir = PlayerDirection.DOWN;
+        move.moveDown();
     }
 
     public void moveStop() {
-        dir = PlayerDirection.NONE;
+        move.moveSlow();
     }
 
     // Getters og setters
@@ -90,22 +88,6 @@ public class Player {
 
     public void setX(int x) {
         this.x = x;
-    }
-
-    public int getPlayerwidth() {
-        return this.playerwidth;
-    }
-
-    public void setPlayerwidth(int playerwidth) {
-        this.playerwidth = playerwidth;
-    }
-
-    public int getPlayerhight() {
-        return this.playerhight;
-    }
-
-    public void setPlayerhight(int playerhight) {
-        this.playerhight = playerhight;
     }
 
     public int getHealth() {
@@ -154,10 +136,6 @@ public class Player {
 
     public void setCanShoot(boolean bool){
         canShoot = bool;
-    }
-
-    public void setCanMove(boolean bool){
-        canMove = bool;
     }
 
     public boolean isAlive() {

@@ -1,61 +1,11 @@
 package main.java;
 
-import javafx.animation.AnimationTimer;
-import javafx.application.Application;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+public class Main {
 
-import java.util.ArrayList;
-import javafx.event.EventHandler;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.geometry.Pos;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
-import Player.*;
-import Weapons.*;
-import levels.LevelData;
-
-public class Main extends Application{
-
-    // Stage oppsett
-    public static final int WIDTH = 1200;
-    public static final int HEIGHT = 800;
-    public static final double SPEED_MODIFIER = 0.17;
-
-    GameLogic gl = new GameLogic();
-
-    private ArrayList<Enemy> enemies = new ArrayList<>();
-
-    // GraphicsContext og Spillvariabler
-    private GraphicsContext gc; // Brukes for å tegne primitive rektangler - kan evt byttes ut når vi implementerer sprites?
-    private double time;
-
-    // Bakgrunnsbilde
-    String imgpath = "image/background.jpg";
-    Image img = new Image(imgpath);
-    BackgroundImage bg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
+    //private ArrayList<Enemy> enemies = new ArrayList<>();
 
     // Start metode - Setter opp Scene
-    @Override
+    /*@Override
     public void start(Stage primaryStage) throws Exception {
 
         primaryStage.setTitle("Working Title: Pippi");
@@ -69,7 +19,7 @@ public class Main extends Application{
                     case '0':
                         break;
                     case '1':
-                        //enemies.add(new Enemy(EnemyType.SHIP, MovementPattern.SIN));
+                        //enemies.add(new Enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN));
                         break;
                 }
             }
@@ -104,9 +54,9 @@ public class Main extends Application{
                 }
             }
         });
-    }
+    }*/
 
-    public Parent initGame() {
+    /*public Parent initGame() {
         // Metode for å starte spillet etter Countdown
         Pane root = new Pane();
         root.setPrefSize(WIDTH, HEIGHT);
@@ -121,7 +71,6 @@ public class Main extends Application{
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                time += 0.05;
                 gl.player.update();
                 for(Enemy e : enemies){
                     e.update();
@@ -134,15 +83,10 @@ public class Main extends Application{
                     //detectHit(); // Sjekker om kulene har truffet noe
                     //drawBullets(gc); // Oppdaterer kule tegning
                 }
-
-                if (time >= 0.35) { // Hvis vi trenger en funksjon som ikke *må* oppdateres hvert tick av animationtimeren
-                    // Do something
-                    time = 0;
-                }
             }
         }; timer.start(); // Starter animationtimer
         return root;
-    }
+    }*/
 
     /*private double time2;
     private Text scoreText;
@@ -162,7 +106,7 @@ public class Main extends Application{
 
     // Metode for å generere fiender
     /*public void generateEnemies() {
-        //Enemy test = new Enemy(EnemyType.SHIP, MovementPattern.SIN);
+        //Enemy test = new Enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN);
         //enemies.add(test);
     }*/
 
@@ -210,7 +154,7 @@ public class Main extends Application{
                     case '0':
                         break;
                     case '1':
-                        enemies.add(new Enemy(EnemyType.SHIP, MovementPattern.SIN, j * 60, HEIGHT - (i * 60)));
+                        enemies.add(new Enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN, j * 60, HEIGHT - (i * 60)));
                         break;
                 }
             }
@@ -239,10 +183,10 @@ public class Main extends Application{
         cdPane.setAlignment(Pos.CENTER);
 
         // Setter playersize for "zoom in" effekt
-        int playerTempWidth = player.getPlayerwidth(); // Lagrer player originalstørrelse som definert i player klassen
-        int playerTempHeight = player.getPlayerhight();
-        player.setPlayerwidth(100); // Setter høyere playersize, for "zoom in" effekt
-        player.setPlayerhight(100);
+        int playerTempWidth = player.getPLAYERWIDTH(); // Lagrer player originalstørrelse som definert i player klassen
+        int playerTempHeight = player.getPLAYERHEIGHT();
+        player.setPLAYERWIDTH(100); // Setter høyere playersize, for "zoom in" effekt
+        player.setPLAYERHEIGHT(100);
 
         // Oppretter Timer - For å telle sekunder for CountDown
         Timer timer = new Timer();
@@ -304,11 +248,11 @@ public class Main extends Application{
 
                 if (cdCounter >= 10) {
                     // Zoomer ut player
-                    if (player.getPlayerwidth() > playerTempWidth) {
-                            player.setPlayerwidth(player.getPlayerwidth()-2);
+                    if (player.getPLAYERWIDTH() > playerTempWidth) {
+                            player.setPLAYERWIDTH(player.getPLAYERWIDTH()-2);
                     }
-                    if (player.getPlayerhight() > playerTempHeight) {
-                            player.setPlayerhight(player.getPlayerhight()-2);
+                    if (player.getPLAYERHEIGHT() > playerTempHeight) {
+                            player.setPLAYERHEIGHT(player.getPLAYERHEIGHT()-2);
                             player.setY(player.getY()+1);
                     }
 
@@ -335,7 +279,7 @@ public class Main extends Application{
                     gc.fillRect(0, rectY, 1200, 225);
                     rectY += 10;
 
-                    if (player.getPlayerwidth() <= playerTempWidth && player.getPlayerhight() <= playerTempHeight) {
+                    if (player.getPLAYERWIDTH() <= playerTempWidth && player.getPLAYERHEIGHT() <= playerTempHeight) {
                         // Zoom ut animasjon ferdig, stopper timer
                         this.stop();
 
@@ -379,7 +323,7 @@ public class Main extends Application{
         for (Enemy enemy : enemies) { // Looper igjennom liste med enemyobjekter
             int enemyWidth = 50; // Midlertidig bredde
             int enemyHeight = 50; // Midlertidig høyde
-            if (enemy.x() < player.getX()+player.getPlayerwidth() && enemy.y() < player.getY()+player.getPlayerhight()) {
+            if (enemy.x() < player.getX()+player.getPLAYERWIDTH() && enemy.y() < player.getY()+player.getPLAYERHEIGHT()) {
                 if (player.getX() < enemy.x()+enemyWidth && player.getY() < enemy.y()+enemyHeight) {
                     // Kollisjon detected
                     collisions++;

@@ -2,7 +2,7 @@ package main.java;
 
 import javafx.scene.image.ImageView;
 
-import static main.java.Main.SPEED_MODIFIER;
+import static main.java.GameController.SPEED_MODIFIER;
 
 public class Enemy {
 
@@ -10,14 +10,14 @@ public class Enemy {
     private int x;
     private int y;
 
-    private MovementPattern pattern;
+    private EnemyMovementPatterns pattern;
     private boolean dead;
     private int health;
     private ImageView sprite;
 
     private double posX, posY;
 
-    public Enemy(EnemyType TYPE, MovementPattern pattern, int x, int y){
+    public Enemy(EnemyType TYPE, EnemyMovementPatterns pattern, int x, int y){
         this.TYPE= TYPE;
         this.pattern = pattern;
         this.x = x;

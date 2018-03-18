@@ -1,8 +1,8 @@
 package main.java;
 
-import static main.java.Main.SPEED_MODIFIER;
+import static main.java.GameController.SPEED_MODIFIER;
 
-public enum MovementPattern {
+public enum EnemyMovementPatterns {
     LEFT,   LEFT_PULL,
     SIN,    SIN_REV,
     COS,    COS_REV,
@@ -19,7 +19,7 @@ public enum MovementPattern {
 
     private boolean triState;
 
-    MovementPattern() {
+    EnemyMovementPatterns() {
 
         x = 0;
         y = 0;
