@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -39,32 +40,13 @@ public class Main extends Application{
     public static final int HEIGHT = 800;
     public static final double SPEED_MODIFIER = 0.17;
 
-    // Oppretter player objekt
-    Player player = new Player();
-    Enemy eee = new Enemy(EnemyType.SHIP, MovementPattern.SIN, 400, 400);
+    GameLogic gl = new GameLogic();
 
-    // Arraylist for Enemies og bullets
     private ArrayList<Enemy> enemies = new ArrayList<>();
-
 
     // GraphicsContext og Spillvariabler
     private GraphicsContext gc; // Brukes for å tegne primitive rektangler - kan evt byttes ut når vi implementerer sprites?
     private double time;
-    private double time2;
-    private Text scoreText;
-    private Text lifeText;
-    private int score = 0;
-    private int collisions = 0;
-    private int levelWidth;
-
-    // Variabler for SplashScreen
-    private int cdCounter = 4;
-    private int rectX = 215;
-    private int rectY = 590;
-
-    // Bildenoder for Countdown Spashscreen
-    StackPane cdPane = new StackPane();
-    ImageView imgView = new ImageView();
 
     // Bakgrunnsbilde
     String imgpath = "image/background.jpg";
@@ -72,36 +54,14 @@ public class Main extends Application{
     BackgroundImage bg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
             new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
 
-    // Metode for å generere fiender
-    public void generateEnemies() {
-        //Enemy test = new Enemy(EnemyType.SHIP, MovementPattern.SIN);
-        //enemies.add(test);
-    }
-
-    // Metode for å flytte fiender
-    public void moveEnemies(){
-        AnimationTimer timer = new AnimationTimer() { // Bør muligens flyttes inn i eksisterende animationtimer i initScene()  ?
-            @Override
-            public void handle(long now) {
-                for (Enemy enemy : enemies){
-                    enemy.move();
-                    //player.move();
-                    drawEnemy(gc); // Kaller metode for å tegne enemies (primitive representasjoner)
-                }
-            }
-        };
-
-        timer.start();
-    }
-
     // Start metode - Setter opp Scene
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Working Title: Pippi");
-        // oppretter rootpane, canvas og scene
-        Scene scene = new Scene(startGameCountdown());
 
-        levelWidth = LevelData.LEVEL1[0].length() * 60;
+        primaryStage.setTitle("Working Title: Pippi");
+        Scene scene = new Scene(initGame());
+
+        //levelWidth = LevelData.LEVEL1[0].length() * 60;
         for(int i = 0; i < LevelData.LEVEL1.length; i++){
             String line = LevelData.LEVEL1[i];
             for(int j = 0; j < line.length(); j++){
@@ -123,13 +83,13 @@ public class Main extends Application{
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.SPACE) { // Trykk på Space
-                    player.shoot();
+                    gl.player.shoot();
                 }
                 if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP) { // Trykk på W eller ArrowUp
-                    player.moveUp();
+                    gl.player.moveUp();
                 }
                 if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN) { // Trykk på S eller ArrowDown
-                    player.moveDown();
+                    gl.player.moveDown();
                 }
             }
         });
@@ -137,16 +97,91 @@ public class Main extends Application{
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP) { // Trykk på W eller ArrowUp
-                    player.moveStop();
+                    gl.player.moveStop();
                 }
                 if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN) { // Trykk på S eller ArrowDown
-                    player.moveStop();
+                    gl.player.moveStop();
                 }
             }
         });
     }
 
-    private Parent startGameCountdown() {
+    public Parent initGame() {
+        // Metode for å starte spillet etter Countdown
+        Pane root = new Pane();
+        root.setPrefSize(WIDTH, HEIGHT);
+        root.setBackground(new Background(bg));
+        Canvas canvas = new Canvas(WIDTH, HEIGHT);
+        gc = canvas.getGraphicsContext2D();
+
+        //root.getChildren().addAll(canvas, player.getSprite(), scoreText, lifeText);
+        root.getChildren().addAll(canvas, gl.player.getSprite());
+
+        // Animationtimer
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                time += 0.05;
+                gl.player.update();
+                for(Enemy e : enemies){
+                    e.update();
+                }
+                //detectCollision(); // Sjekker om player kolliderer med enemy
+                if (gl.player.getBulletCount() > 0) {
+                    for (Bullet bullet : gl.player.getBullets()) { // Hvis det har blitt skutt kuler
+                        bullet.update(); // Oppdaterer bulletposisjon
+                    }
+                    //detectHit(); // Sjekker om kulene har truffet noe
+                    //drawBullets(gc); // Oppdaterer kule tegning
+                }
+
+                if (time >= 0.35) { // Hvis vi trenger en funksjon som ikke *må* oppdateres hvert tick av animationtimeren
+                    // Do something
+                    time = 0;
+                }
+            }
+        }; timer.start(); // Starter animationtimer
+        return root;
+    }
+
+    /*private double time2;
+    private Text scoreText;
+    private Text lifeText;
+    private int score = 0;
+    private int collisions = 0;
+    private int levelWidth;*/
+
+    // Variabler for SplashScreen
+    /*private int cdCounter = 4;
+    private int rectX = 215;
+    private int rectY = 590;*/
+
+    // Bildenoder for Countdown Spashscreen
+    /*StackPane cdPane = new StackPane();
+    ImageView imgView = new ImageView();*/
+
+    // Metode for å generere fiender
+    /*public void generateEnemies() {
+        //Enemy test = new Enemy(EnemyType.SHIP, MovementPattern.SIN);
+        //enemies.add(test);
+    }*/
+
+    // Metode for å flytte fiender
+    /*public void moveEnemies(){
+        AnimationTimer timer = new AnimationTimer() { // Bør muligens flyttes inn i eksisterende animationtimer i initScene()  ?
+            @Override
+            public void handle(long now) {
+                for (Enemy enemy : enemies){
+                    enemy.move();
+                    drawEnemy(gc); // Kaller metode for å tegne enemies (primitive representasjoner)
+                }
+            }
+        };
+
+        timer.start();
+    }*/
+
+    /*private Parent startGameCountdown() {
         // Starter countdown før levelen,
         // Oppretter nodes
         Pane root = new Pane();
@@ -204,10 +239,10 @@ public class Main extends Application{
         cdPane.setAlignment(Pos.CENTER);
 
         // Setter playersize for "zoom in" effekt
-        int playerTempWidth = player.getWidth(); // Lagrer player originalstørrelse som definert i player klassen
-        int playerTempHeight = player.getHeight();
-        player.setWidth(100); // Setter høyere playersize, for "zoom in" effekt
-        player.setHeight(100);
+        int playerTempWidth = player.getPlayerwidth(); // Lagrer player originalstørrelse som definert i player klassen
+        int playerTempHeight = player.getPlayerhight();
+        player.setPlayerwidth(100); // Setter høyere playersize, for "zoom in" effekt
+        player.setPlayerhight(100);
 
         // Oppretter Timer - For å telle sekunder for CountDown
         Timer timer = new Timer();
@@ -233,15 +268,15 @@ public class Main extends Application{
 
         initGame();
         return root;
-    }
+    }*/
 
-    public void countDown(int seconds) {
+    /*public void countDown(int seconds) {
         // Metode for å bytte countdownbilder for splashscreen
         Image countDownImage = new Image("image/countdown/" + seconds + ".png"); // Bør vel ha exceptionhandling her
         imgView.setImage(countDownImage);
-    }
+    }*/
 
-    public void finishCountDown(int playerTempWidth, int playerTempHeight) {
+    /*public void finishCountDown(int playerTempWidth, int playerTempHeight) {
         player.setCanShoot(true);
         player.setCanMove(true);
         // Metode for å vise "Fly!" splashscreen på skjermen, fjerne "blackbars", "zoome ut" player, og intitialiserer enemies
@@ -269,26 +304,26 @@ public class Main extends Application{
 
                 if (cdCounter >= 10) {
                     // Zoomer ut player
-                    if (player.getWidth() > playerTempWidth) {
-                            player.setWidth(player.getWidth()-2);
+                    if (player.getPlayerwidth() > playerTempWidth) {
+                            player.setPlayerwidth(player.getPlayerwidth()-2);
                     }
-                    if (player.getHeight() > playerTempHeight) {
-                            player.setHeight(player.getHeight()-2);
+                    if (player.getPlayerhight() > playerTempHeight) {
+                            player.setPlayerhight(player.getPlayerhight()-2);
                             player.setY(player.getY()+1);
                     }
 
-                    /* Prøver å fade ut siste splashscreen bilde
-                    KeyFrame startFadeOut = new KeyFrame(Duration.seconds(0.2), new KeyValue(imgView.opacityProperty(), 1.0));
-                    KeyFrame endFadeOut = new KeyFrame(Duration.seconds(0.5), new KeyValue(imgView.opacityProperty(), 0.0));
-                    Timeline timelineOn = new Timeline(startFadeOut, endFadeOut);
-                    timelineOn.setAutoReverse(false);
-                    timelineOn.play(); */
+                    // Prøver å fade ut siste splashscreen bilde
+                    //KeyFrame startFadeOut = new KeyFrame(Duration.seconds(0.2), new KeyValue(imgView.opacityProperty(), 1.0));
+                    //KeyFrame endFadeOut = new KeyFrame(Duration.seconds(0.5), new KeyValue(imgView.opacityProperty(), 0.0));
+                    //Timeline timelineOn = new Timeline(startFadeOut, endFadeOut);
+                    //timelineOn.setAutoReverse(false);
+                    //timelineOn.play();
 
-                    /* Prøver å fade ut med fadetransition
-                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(500), imgView);
-                    fadeTransition.setFromValue(1.0);
-                    fadeTransition.setToValue(0.0);
-                    fadeTransition.play(); */
+                    // Prøver å fade ut med fadetransition
+                    //FadeTransition fadeTransition = new FadeTransition(Duration.millis(500), imgView);
+                    //fadeTransition.setFromValue(1.0);
+                    //fadeTransition.setToValue(0.0);
+                    //fadeTransition.play();
 
                     // Animerer ut Top blackbar
                     gc.clearRect(0, 0, 1200, 230);
@@ -300,7 +335,7 @@ public class Main extends Application{
                     gc.fillRect(0, rectY, 1200, 225);
                     rectY += 10;
 
-                    if (player.getWidth() <= playerTempWidth && player.getHeight() <= playerTempHeight) {
+                    if (player.getPlayerwidth() <= playerTempWidth && player.getPlayerhight() <= playerTempHeight) {
                         // Zoom ut animasjon ferdig, stopper timer
                         this.stop();
 
@@ -315,65 +350,36 @@ public class Main extends Application{
 
             }
         }; timer.start(); // Starter animationtimer
-    }
-    public void initGame() {
-        // Metode for å starte spillet etter Countdown
+    }*/
 
-
-        // Animationtimer
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                time += 0.05;
-                player.update();
-                for(Enemy e : enemies){
-                    e.update();
-                }
-                detectCollision(); // Sjekker om player kolliderer med enemy
-                if (player.getBulletCount() > 0) {
-                    for (Bullet bullet : player.getBullets()) { // Hvis det har blitt skutt kuler
-                        bullet.update(); // Oppdaterer bulletposisjon
-                    }
-                    detectHit(); // Sjekker om kulene har truffet noe
-                    drawBullets(gc); // Oppdaterer kule tegning
-                }
-
-                if (time >= 0.35) { // Hvis vi trenger en funksjon som ikke *må* oppdateres hvert tick av animationtimeren
-                    // Do something
-                    time = 0;
-                }
-            }
-        }; timer.start(); // Starter animationtimer
-    }
+    // Metode for å tegne kuler
+    /*public void drawBullets(GraphicsContext gc) {
+        gc.setStroke(Color.YELLOW); // Kulefarge
+        gc.setLineWidth(1); // Kulestørrelse (Kun grafisk representasjon)
+        for (Bullet bullet : gl.player.getBullets()) {
+            gc.clearRect(bullet.getOldX()-2, bullet.getOldY()-2, 6, 6); // "visker ut" forrige frame før det tegnes en ny - må være større verdier enn x og y posisjon
+            gc.strokeRect(bullet.getX(), bullet.getY(), 2, 2); // tegner ny kule til skjerm
+            bullet.setOldX(bullet.getX()); // setter gamle koordinater
+            bullet.setOldY(bullet.getOldY());
+        }
+    }*/
 
     // Metode for å tegne fiender - Primitiv rektangel, må byttes ut med sprites
-    public void drawEnemy(GraphicsContext gc) {
+    /*public void drawEnemy(GraphicsContext gc) {
         gc.setStroke(Color.RED); // Enemy farge
         gc.setLineWidth(3); // Linjebredde
         for (Enemy enemy : enemies){
             gc.clearRect(enemy.x()-1, enemy.y()-1, 53, 53); // Mangler "old" posisjon for å kunne viske ut forrige frame
             gc.strokeRect(enemy.x(), enemy.y(), 50, 50); // Setter bredde og høyde til 50 for nå
         }
-    }
-
-    // Metode for å tegne kuler
-    public void drawBullets(GraphicsContext gc) {
-        gc.setStroke(Color.YELLOW); // Kulefarge
-        gc.setLineWidth(1); // Kulestørrelse (Kun grafisk representasjon)
-        for (Bullet bullet : player.getBullets()) {
-            gc.clearRect(bullet.getOldX()-2, bullet.getOldY()-2, 6, 6); // "visker ut" forrige frame før det tegnes en ny - må være større verdier enn x og y posisjon
-            gc.strokeRect(bullet.getX(), bullet.getY(), 2, 2); // tegner ny kule til skjerm
-            bullet.setOldX(bullet.getX()); // setter gamle koordinater
-            bullet.setOldY(bullet.getOldY());
-        }
-    }
+    }*/
 
     // Metode for å detecte kollisjon mellom player og enemy - ikke prosjektiler
-    public void detectCollision() {
+    /*public void detectCollision() {
         for (Enemy enemy : enemies) { // Looper igjennom liste med enemyobjekter
             int enemyWidth = 50; // Midlertidig bredde
             int enemyHeight = 50; // Midlertidig høyde
-            if (enemy.x() < player.getX()+player.getWidth() && enemy.y() < player.getY()+player.getHeight()) {
+            if (enemy.x() < player.getX()+player.getPlayerwidth() && enemy.y() < player.getY()+player.getPlayerhight()) {
                 if (player.getX() < enemy.x()+enemyWidth && player.getY() < enemy.y()+enemyHeight) {
                     // Kollisjon detected
                     collisions++;
@@ -382,10 +388,10 @@ public class Main extends Application{
                 }
             }
         }
-    }
+    }*/
 
     // Metode for å detecte hit mellom playerBullet og enemy (utestet til enemy systemet er implementert)
-    public void detectHit() {
+    /*public void detectHit() {
         int enemyWidth = 50; // Midlertidig bredde
         int enemyHeight = 50; // Midlertidig høyde
         for (Bullet bullet : player.getBullets()) {
@@ -399,11 +405,6 @@ public class Main extends Application{
                 }
             }
         }
-    }
-
-    // Metode for å detecte playerDamage fra enemy bullets - må implementeres
-    public void detectDamage() {
-
-    }
+    }*/
 
 }
