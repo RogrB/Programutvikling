@@ -20,7 +20,7 @@ public class GameLogic {
             @Override
             public void handle(long now) {
                 player.update();
-
+                
             }
         }; timer.start();
 

@@ -49,9 +49,8 @@ public class GameView extends Application {
         renderBullet(200, 200);
         return root;
     }
-    
+    final Image bullet = new Image("assets/laserBlue06.png");
     private void renderBullet(int x, int y) {
-        final Image bullet = new Image("assets/laserBlue06.png");
         graphics.drawImage(bullet, x, y);
     }
 }

@@ -41,6 +41,7 @@ public class Player{
             bulletCount++;
             laser.setVolume(0.25);
             laser.play();
+            System.out.println("PEW");
         }
     }
 
@@ -48,7 +49,14 @@ public class Player{
         if(!playerIsOutOfBounds()){
             this.y = this.y + move.next();
             spriteView.relocate(x, y);
+            
         }
+        
+        for (Bullet bullet : bullets) {
+            bullet.setX(bullet.getX()+12);
+            
+        }
+        
     }
 
     private boolean playerIsOutOfBounds(){
