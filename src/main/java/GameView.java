@@ -9,10 +9,12 @@ import javafx.stage.Stage;
 
 public class GameView extends Application {
 
+    // MVC-access
+    GameController gc = GameController.getInstance();
+    GameLogic gl = GameLogic.getInstance();
+
     public static final int WIDTH = 1200;
     public static final int HEIGHT = 800;
-
-    GameController gc = GameController.getInstance();
 
     // Background Image
     String imgpath = "image/background.jpg";
@@ -30,16 +32,6 @@ public class GameView extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
-
-
-        // ANIMATION TIMER, UPDATES VIEW
-        /*AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                gc.player.update();
-
-            }
-        }; timer.start();*/
     }
 
     private Parent initGame() {
@@ -47,9 +39,8 @@ public class GameView extends Application {
         root.setPrefSize(WIDTH, HEIGHT);
         root.setBackground(new Background(bg));
 
-        root.getChildren().addAll(gc.gl.player.getSpriteView());
+        root.getChildren().addAll(gl.player.getSpriteView());
 
         return root;
     }
-
 }

@@ -13,7 +13,8 @@ public class PlayerMovement {
     }
 
     public void move(int direction){
-        dir = direction;
+        if(this.dir != direction)
+            dir = direction;
     }
 
     public void moveStop(){

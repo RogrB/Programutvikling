@@ -9,6 +9,7 @@ public class GameController {
     private GameController(){}
     public static GameController getInstance(){ return inst; }
 
+    // MVC-access
     GameLogic gl = GameLogic.getInstance();
 
     public void setKeyListeners(Scene s){
