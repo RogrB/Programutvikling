@@ -25,7 +25,7 @@ public class GameController {
             @Override
             public void handle(long now) {
                 gm.player.update();
-                //updateBullets();
+                updateBullets();
             }
         }; timer.start();
 
@@ -33,7 +33,9 @@ public class GameController {
 
     private void updateBullets(){
         for (Bullet b : gm.player.getBullets()){
-            gv.renderBullet(b.getX(), b.getY());
+            // System.out.println(b.getX() + " " + b.getY());
+            // gv.renderBullet(b.getX(), b.getY());
+            System.out.println(gm.toString()); // prøver å finne årsaken til nullpointerexception gm.tostring funker mens gv.tostring gir feil
         }
     }
 }

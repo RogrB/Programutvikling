@@ -36,6 +36,7 @@ public class GameView extends ViewUtil {
 
     final Image bullet = new Image("assets/laserBlue06.png");
     public void renderBullet(double x, double y) {
-        graphics.drawImage(bullet, x, y);
+        //graphics.drawImage(bullet, x, y);
+        System.out.println(x + " " + y);
     }
 }
