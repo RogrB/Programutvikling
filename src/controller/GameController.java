@@ -25,7 +25,7 @@ public class GameController {
             @Override
             public void handle(long now) {
                 gm.player.update();
-                updateBullets();
+                //updateBullets();
             }
         }; timer.start();
 
