@@ -3,6 +3,7 @@ package main.java;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -13,6 +14,9 @@ public class GameView extends Application {
     public static final int HEIGHT = 800;
 
     GameController gc = GameController.getInstance();
+    
+    final Canvas canvas = new Canvas(WIDTH, HEIGHT);
+    final GraphicsContext graphics = canvas.getGraphicsContext2D();    
 
     // Background Image
     String imgpath = "image/background.jpg";
@@ -46,10 +50,16 @@ public class GameView extends Application {
         Pane root = new Pane();
         root.setPrefSize(WIDTH, HEIGHT);
         root.setBackground(new Background(bg));
-
-        root.getChildren().addAll(gc.gl.player.getSpriteView());
-
+        root.getChildren().addAll(gc.gl.player.getSpriteView(), canvas);
+        renderBullet(50, 50);
+        renderBullet(100, 100);
+        renderBullet(200, 200);
         return root;
+    }
+    
+    private void renderBullet(int x, int y) {
+        final Image bullet = new Image("assets/laserBlue06.png");
+        graphics.drawImage(bullet, x, y);
     }
 
 }
