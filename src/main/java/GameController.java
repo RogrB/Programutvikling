@@ -2,6 +2,7 @@ package main.java;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 
 public class GameController {
     // Singleton
@@ -19,6 +20,16 @@ public class GameController {
                 gl.player.move("UP");
             if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN)
                 gl.player.move("DOWN");
+        });
+
+        s.setOnMouseClicked(event ->{
+           if(event.getButton() == MouseButton.PRIMARY){
+               String msg =
+                       "(x: "       + event.getX()      + ", y: "       + event.getY()       + ") -- " +
+                               "(sceneX: "  + event.getSceneX() + ", sceneY: "  + event.getSceneY()  + ") -- " +
+                               "(screenX: " + event.getScreenX()+ ", screenY: " + event.getScreenY() + ")";
+               System.out.println(msg);
+           }
         });
 
         s.setOnKeyReleased(event -> {

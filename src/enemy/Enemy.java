@@ -1,5 +1,6 @@
 package enemy;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Enemy {
@@ -7,10 +8,13 @@ public class Enemy {
     private final EnemyType TYPE;
     private int x;
     private int y;
+    private int height;
+    private int width;
 
     private EnemyMovementPatterns pattern;
     private boolean dead;
     private int health;
+    private Image spriteImg;
     private ImageView sprite;
 
     private double posX, posY;
@@ -20,7 +24,10 @@ public class Enemy {
         this.pattern = pattern;
         this.x = x;
         this.y = y;
-        sprite = new ImageView("assets/enemyBlue1.png");
+        spriteImg = new Image("assets/enemyBlue1.png");
+        sprite = new ImageView(spriteImg);
+        height = (int)spriteImg.getHeight();
+        width = (int)spriteImg.getWidth();
 
         dead    = false;
         health  = this.TYPE.MAX_HEALTH;
@@ -46,8 +53,8 @@ public class Enemy {
     }
 
     public void updatePosition(double newX, double newY){
-        posX = newX;
-        posY = newY;
+        x = (int)newX;
+        y = (int)newY;
         // System.out.println("x: " + posX + ", y: " + posY);
     }
 
@@ -70,6 +77,22 @@ public class Enemy {
 
     public double y() {
         return posY;
+    }
+
+    public int getX(){
+        return x;
+    }
+
+    public int getY(){
+        return y;
+    }
+
+    public int getHeight(){
+        return height;
+    }
+
+    public int getWidth(){
+        return width;
     }
 
     // SET

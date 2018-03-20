@@ -1,5 +1,8 @@
 package main.java;
 
+import enemy.Enemy;
+import enemy.EnemyMovementPatterns;
+import enemy.EnemyType;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -10,11 +13,16 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import levels.LevelData;
+
+import java.util.ArrayList;
 
 public class GameView extends Application {
 
     public static final int WIDTH = 1200;
     public static final int HEIGHT = 800;
+
+    public ArrayList<Enemy> enemies = new ArrayList<>();
 
     GameController gc = GameController.getInstance();
 
@@ -46,12 +54,41 @@ public class GameView extends Application {
         }; timer.start();*/
     }
 
+    public ArrayList getEnemies(){
+        return enemies;
+    }
+
     private Parent initGame() {
         Pane root = new Pane();
         root.setPrefSize(WIDTH, HEIGHT);
         root.setBackground(new Background(bg));
+        Enemy eee = new Enemy(EnemyType.SHIP, EnemyMovementPatterns.CLOCK, 400, 400);
+        eee.update();
 
-        root.getChildren().addAll(gc.gl.player.getSprite());
+        int levelWidth = LevelData.LEVEL2.length * 60;
+        for(int i = 0; i < LevelData.LEVEL2.length; i++){
+            String line = LevelData.LEVEL2[i];
+            for(int j = 0; j < line.length(); j++){
+                switch(line.charAt(j)){
+                    case '0':
+                        break;
+                    case '1':
+                        enemies.add(new Enemy(EnemyType.SHIP, EnemyMovementPatterns.CLOCK, 1 + (j * 100),1 + (i * 120)));
+                        System.out.format("Enemy added at x: %d, y: %d \n", i*60, j*60);
+                        break;
+                    case '2':
+                        enemies.add(new Enemy(EnemyType.ASTROID, EnemyMovementPatterns.CLOCK, 1 + (j * 100), 1 + (i * 120)));
+                        break;
+                }
+            }
+        }
+
+        for(Enemy e: enemies){
+            root.getChildren().add(e.getSprite());
+            e.update();
+        }
+
+        root.getChildren().addAll(gc.gl.player.getSprite(), eee.getSprite());
 
         return root;
     }
