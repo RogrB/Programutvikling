@@ -1,7 +1,7 @@
-package main.java;
+package model;
 
 import javafx.animation.AnimationTimer;
-import player.Player;
+import model.player.Player;
 
 public class GameLogic {
 
@@ -9,6 +9,7 @@ public class GameLogic {
     private static GameLogic inst = new GameLogic();
     private GameLogic(){ start(); }
     public static GameLogic getInstance(){ return inst; }
+
 
     public static final double SPEED_MODIFIER = 0.17;
     public Player player = new Player();

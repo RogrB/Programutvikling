@@ -1,9 +1,11 @@
-package main.java;
+package controller;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import model.GameLogic;
 
 public class GameController {
+
     // Singleton
     private static GameController inst = new GameController();
     private GameController(){}

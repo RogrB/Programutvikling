@@ -6,7 +6,7 @@ public class Main {
 
     }
 
-    //private ArrayList<enemy> enemies = new ArrayList<>();
+    //private ArrayList<model.enemy> enemies = new ArrayList<>();
 
     // Start metode - Setter opp Scene
     /*@Override
@@ -23,7 +23,7 @@ public class Main {
                     case '0':
                         break;
                     case '1':
-                        //enemies.add(new enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN));
+                        //enemies.add(new model.enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN));
                         break;
                 }
             }
@@ -37,13 +37,13 @@ public class Main {
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.SPACE) { // Trykk på Space
-                    gl.player.shoot();
+                    gl.model.player.shoot();
                 }
                 if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP) { // Trykk på W eller ArrowUp
-                    gl.player.moveUp();
+                    gl.model.player.moveUp();
                 }
                 if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN) { // Trykk på S eller ArrowDown
-                    gl.player.moveDown();
+                    gl.model.player.moveDown();
                 }
             }
         });
@@ -51,10 +51,10 @@ public class Main {
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP) { // Trykk på W eller ArrowUp
-                    gl.player.moveStop();
+                    gl.model.player.moveStop();
                 }
                 if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN) { // Trykk på S eller ArrowDown
-                    gl.player.moveStop();
+                    gl.model.player.moveStop();
                 }
             }
         });
@@ -68,20 +68,20 @@ public class Main {
         Canvas canvas = new Canvas(WIDTH, HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
-        //root.getChildren().addAll(canvas, player.getSpriteView(), scoreText, lifeText);
-        root.getChildren().addAll(canvas, gl.player.getSpriteView());
+        //root.getChildren().addAll(canvas, model.player.getSpriteView(), scoreText, lifeText);
+        root.getChildren().addAll(canvas, gl.model.player.getSpriteView());
 
         // Animationtimer
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                gl.player.update();
-                for(enemy e : enemies){
+                gl.model.player.update();
+                for(model.enemy e : enemies){
                     e.update();
                 }
-                //detectCollision(); // Sjekker om player kolliderer med enemy
-                if (gl.player.getBulletCount() > 0) {
-                    for (Bullet bullet : gl.player.getBullets()) { // Hvis det har blitt skutt kuler
+                //detectCollision(); // Sjekker om model.player kolliderer med model.enemy
+                if (gl.model.player.getBulletCount() > 0) {
+                    for (Bullet bullet : gl.model.player.getBullets()) { // Hvis det har blitt skutt kuler
                         bullet.update(); // Oppdaterer bulletposisjon
                     }
                     //detectHit(); // Sjekker om kulene har truffet noe
@@ -110,7 +110,7 @@ public class Main {
 
     // Metode for å generere fiender
     /*public void generateEnemies() {
-        //enemy test = new enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN);
+        //model.enemy test = new model.enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN);
         //enemies.add(test);
     }*/
 
@@ -119,8 +119,8 @@ public class Main {
         AnimationTimer timer = new AnimationTimer() { // Bør muligens flyttes inn i eksisterende animationtimer i initScene()  ?
             @Override
             public void handle(long now) {
-                for (enemy enemy : enemies){
-                    enemy.move();
+                for (model.enemy model.enemy : enemies){
+                    model.enemy.move();
                     drawEnemy(gc); // Kaller metode for å tegne enemies (primitive representasjoner)
                 }
             }
@@ -158,15 +158,15 @@ public class Main {
                     case '0':
                         break;
                     case '1':
-                        enemies.add(new enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN, j * 60, HEIGHT - (i * 60)));
+                        enemies.add(new model.enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN, j * 60, HEIGHT - (i * 60)));
                         break;
                 }
             }
         }
 
         // Legger nodes til root
-        root.getChildren().addAll(canvas, player.getSpriteView(), scoreText, lifeText);
-        for(enemy e : enemies){
+        root.getChildren().addAll(canvas, model.player.getSpriteView(), scoreText, lifeText);
+        for(model.enemy e : enemies){
             root.getChildren().add(e.getSpriteView());
         }
 
@@ -187,10 +187,10 @@ public class Main {
         cdPane.setAlignment(Pos.CENTER);
 
         // Setter playersize for "zoom in" effekt
-        int playerTempWidth = player.getPLAYERWIDTH(); // Lagrer player originalstørrelse som definert i player klassen
-        int playerTempHeight = player.getPLAYERHEIGHT();
-        player.setPLAYERWIDTH(100); // Setter høyere playersize, for "zoom in" effekt
-        player.setPLAYERHEIGHT(100);
+        int playerTempWidth = model.player.getPLAYERWIDTH(); // Lagrer model.player originalstørrelse som definert i model.player klassen
+        int playerTempHeight = model.player.getPLAYERHEIGHT();
+        model.player.setPLAYERWIDTH(100); // Setter høyere playersize, for "zoom in" effekt
+        model.player.setPLAYERHEIGHT(100);
 
         // Oppretter Timer - For å telle sekunder for CountDown
         Timer timer = new Timer();
@@ -220,28 +220,28 @@ public class Main {
 
     /*public void countDown(int seconds) {
         // Metode for å bytte countdownbilder for splashscreen
-        Image countDownImage = new Image("image/countdown/" + seconds + ".png"); // Bør vel ha exceptionhandling her
+        Image countDownImage = new Image("assets.image/countdown/" + seconds + ".png"); // Bør vel ha exceptionhandling her
         imgView.setImage(countDownImage);
     }*/
 
     /*public void finishCountDown(int playerTempWidth, int playerTempHeight) {
-        player.setCanShoot(true);
-        player.setCanMove(true);
-        // Metode for å vise "Fly!" splashscreen på skjermen, fjerne "blackbars", "zoome ut" player, og intitialiserer enemies
+        model.player.setCanShoot(true);
+        model.player.setCanMove(true);
+        // Metode for å vise "Fly!" splashscreen på skjermen, fjerne "blackbars", "zoome ut" model.player, og intitialiserer enemies
 
         AnimationTimer timer = new AnimationTimer() { // Bruker animationtimer
             @Override
             public void handle(long now) {
                 time += 0.05;
                 time2 += 0.03;
-                player.update();
-                for(enemy e : enemies){
+                model.player.update();
+                for(model.enemy e : enemies){
                     e.update();
                 }
                 if (time >= 0.35) {
                     if (cdCounter < 10) {
                         if (time2 >= 0.26) { // Timer2 - For tregere ticks (egentlig unødvendig - må ryddes opp)
-                            Image countDownImage = new Image("image/countdown/fly_" + cdCounter + ".png"); // Looper igjennom bildesekvens for "FLY!" splashscreen
+                            Image countDownImage = new Image("assets.image/countdown/fly_" + cdCounter + ".png"); // Looper igjennom bildesekvens for "FLY!" splashscreen
                             imgView.setImage(countDownImage);
                             cdCounter++;
                             time2 = 0;
@@ -251,13 +251,13 @@ public class Main {
                 }
 
                 if (cdCounter >= 10) {
-                    // Zoomer ut player
-                    if (player.getPLAYERWIDTH() > playerTempWidth) {
-                            player.setPLAYERWIDTH(player.getPLAYERWIDTH()-2);
+                    // Zoomer ut model.player
+                    if (model.player.getPLAYERWIDTH() > playerTempWidth) {
+                            model.player.setPLAYERWIDTH(model.player.getPLAYERWIDTH()-2);
                     }
-                    if (player.getPLAYERHEIGHT() > playerTempHeight) {
-                            player.setPLAYERHEIGHT(player.getPLAYERHEIGHT()-2);
-                            player.setY(player.getY()+1);
+                    if (model.player.getPLAYERHEIGHT() > playerTempHeight) {
+                            model.player.setPLAYERHEIGHT(model.player.getPLAYERHEIGHT()-2);
+                            model.player.setY(model.player.getY()+1);
                     }
 
                     // Prøver å fade ut siste splashscreen bilde
@@ -283,7 +283,7 @@ public class Main {
                     gc.fillRect(0, rectY, 1200, 225);
                     rectY += 10;
 
-                    if (player.getPLAYERWIDTH() <= playerTempWidth && player.getPLAYERHEIGHT() <= playerTempHeight) {
+                    if (model.player.getPLAYERWIDTH() <= playerTempWidth && model.player.getPLAYERHEIGHT() <= playerTempHeight) {
                         // Zoom ut animasjon ferdig, stopper timer
                         this.stop();
 
@@ -304,7 +304,7 @@ public class Main {
     /*public void drawBullets(GraphicsContext gc) {
         gc.setStroke(Color.YELLOW); // Kulefarge
         gc.setLineWidth(1); // Kulestørrelse (Kun grafisk representasjon)
-        for (Bullet bullet : gl.player.getBullets()) {
+        for (Bullet bullet : gl.model.player.getBullets()) {
             gc.clearRect(bullet.getOldX()-2, bullet.getOldY()-2, 6, 6); // "visker ut" forrige frame før det tegnes en ny - må være større verdier enn x og y posisjon
             gc.strokeRect(bullet.getX(), bullet.getY(), 2, 2); // tegner ny kule til skjerm
             bullet.setOldX(bullet.getX()); // setter gamle koordinater
@@ -314,21 +314,21 @@ public class Main {
 
     // Metode for å tegne fiender - Primitiv rektangel, må byttes ut med sprites
     /*public void drawEnemy(GraphicsContext gc) {
-        gc.setStroke(Color.RED); // enemy farge
+        gc.setStroke(Color.RED); // model.enemy farge
         gc.setLineWidth(3); // Linjebredde
-        for (enemy enemy : enemies){
-            gc.clearRect(enemy.x()-1, enemy.y()-1, 53, 53); // Mangler "old" posisjon for å kunne viske ut forrige frame
-            gc.strokeRect(enemy.x(), enemy.y(), 50, 50); // Setter bredde og høyde til 50 for nå
+        for (model.enemy model.enemy : enemies){
+            gc.clearRect(model.enemy.x()-1, model.enemy.y()-1, 53, 53); // Mangler "old" posisjon for å kunne viske ut forrige frame
+            gc.strokeRect(model.enemy.x(), model.enemy.y(), 50, 50); // Setter bredde og høyde til 50 for nå
         }
     }*/
 
-    // Metode for å detecte kollisjon mellom player og enemy - ikke prosjektiler
+    // Metode for å detecte kollisjon mellom model.player og model.enemy - ikke prosjektiler
     /*public void detectCollision() {
-        for (enemy enemy : enemies) { // Looper igjennom liste med enemyobjekter
+        for (model.enemy model.enemy : enemies) { // Looper igjennom liste med enemyobjekter
             int enemyWidth = 50; // Midlertidig bredde
             int enemyHeight = 50; // Midlertidig høyde
-            if (enemy.x() < player.getX()+player.getPLAYERWIDTH() && enemy.y() < player.getY()+player.getPLAYERHEIGHT()) {
-                if (player.getX() < enemy.x()+enemyWidth && player.getY() < enemy.y()+enemyHeight) {
+            if (model.enemy.x() < model.player.getX()+model.player.getPLAYERWIDTH() && model.enemy.y() < model.player.getY()+model.player.getPLAYERHEIGHT()) {
+                if (model.player.getX() < model.enemy.x()+enemyWidth && model.player.getY() < model.enemy.y()+enemyHeight) {
                     // Kollisjon detected
                     collisions++;
                     String lText = "Collisions: " + Integer.toString(collisions);
@@ -338,15 +338,15 @@ public class Main {
         }
     }*/
 
-    // Metode for å detecte hit mellom playerBullet og enemy (utestet til enemy systemet er implementert)
+    // Metode for å detecte hit mellom playerBullet og model.enemy (utestet til model.enemy systemet er implementert)
     /*public void detectHit() {
         int enemyWidth = 50; // Midlertidig bredde
         int enemyHeight = 50; // Midlertidig høyde
-        for (Bullet bullet : player.getBullets()) {
-            for (enemy enemy : enemies) {
-                if (bullet.getX() < enemy.x()+enemyWidth && bullet.getY() < enemy.y()+enemyHeight) {
-                    if (bullet.getX() > enemy.x() && bullet.getY() > enemy.y()+enemyHeight) { // Troor det her blir riktig..?
-                        // enemy got hit!
+        for (Bullet bullet : model.player.getBullets()) {
+            for (model.enemy model.enemy : enemies) {
+                if (bullet.getX() < model.enemy.x()+enemyWidth && bullet.getY() < model.enemy.y()+enemyHeight) {
+                    if (bullet.getX() > model.enemy.x() && bullet.getY() > model.enemy.y()+enemyHeight) { // Troor det her blir riktig..?
+                        // model.enemy got hit!
                         System.out.println("hit!");
                         score++;
                     }

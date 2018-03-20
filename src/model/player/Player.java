@@ -1,10 +1,10 @@
-package player;
+package model.player;
 
 import javafx.scene.image.Image;
-import weapons.Bullet;
+import model.weapons.Bullet;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
-import main.java.GameView;
+import view.GameView;
 
 import java.util.ArrayList;
 

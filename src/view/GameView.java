@@ -1,4 +1,4 @@
-package main.java;
+package view;
 
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -7,8 +7,16 @@ import javafx.scene.canvas.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import controller.GameController;
+import model.GameLogic;
 
 public class GameView extends Application {
+
+    // Singleton
+    /*private static GameView inst = new GameView();
+    private GameView(){}
+    public static GameView getInstance(){ return inst; }*/
+
 
     // MVC-access
     GameController gc = GameController.getInstance();
@@ -16,12 +24,12 @@ public class GameView extends Application {
 
     public static final int WIDTH = 1200;
     public static final int HEIGHT = 800;
-    
+
     final Canvas canvas = new Canvas(WIDTH, HEIGHT);
     final GraphicsContext graphics = canvas.getGraphicsContext2D();    
 
     // Background Image
-    String imgpath = "image/background.jpg";
+    String imgpath = "assets/image/background.jpg";
     Image img = new Image(imgpath);
     BackgroundImage bg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
             new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
