@@ -1,13 +1,9 @@
 package main.java;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -51,7 +47,7 @@ public class GameView extends Application {
         root.setPrefSize(WIDTH, HEIGHT);
         root.setBackground(new Background(bg));
 
-        root.getChildren().addAll(gc.gl.player.getSprite());
+        root.getChildren().addAll(gc.gl.player.getSpriteView());
 
         return root;
     }

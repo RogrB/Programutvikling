@@ -1,5 +1,6 @@
 package player;
 
+import javafx.scene.image.Image;
 import weapons.Bullet;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
@@ -11,9 +12,10 @@ public class Player{
 
     private int x;
     private int y;
-    ImageView sprite = new ImageView("assets/playerShip2_red.png");
-    private double height = sprite.getFitHeight();
-    private double width = sprite.getFitWidth();
+    Image spriteImg = new Image("assets/playerShip2_red.png");
+    ImageView spriteView = new ImageView(spriteImg);
+    private int height = (int) spriteImg.getHeight();
+    private int width = (int) spriteImg.getWidth();
     private int health = 3;
     private boolean alive = true;
     private boolean moving;
@@ -23,19 +25,19 @@ public class Player{
     private AudioClip laser = new AudioClip("file:src/assets/newLaser.mp3");
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
-    private PlayerMovement      move = new PlayerMovement();
+    private PlayerMovement move = new PlayerMovement();
 
 
 
     public Player(){
-        this.y = GameView.HEIGHT / 2 - (int)this.height/ 2;
+        this.y = GameView.HEIGHT / 2 - this.height/ 2;
         this.x = 40;
-        sprite.relocate(x, y);
+        spriteView.relocate(x, y);
     }
 
     public void shoot() {
         if(canShoot) {
-            bullets.add(new Bullet(x + (int)this.width - 10, y + ((int) this.height / 2) + 3));
+            bullets.add(new Bullet(x + this.width - 10, y + (this.height / 2) + 3));
             bulletCount++;
             laser.setVolume(0.25);
             laser.play();
@@ -45,7 +47,7 @@ public class Player{
     public void update(){
         if(!playerIsOutOfBounds()){
             this.y = this.y + move.next();
-            sprite.relocate(x, y);
+            spriteView.relocate(x, y);
         }
     }
 
@@ -54,7 +56,7 @@ public class Player{
             move.moveStop();
             return true;
         }
-        if(y + (int)this.height + move.next() >= GameView.HEIGHT) {
+        if(y + this.height + move.next() >= GameView.HEIGHT) {
             move.moveStop();
             return true;
         }
@@ -111,8 +113,8 @@ public class Player{
         return bulletCount;
     }
 
-    public ImageView getSprite() {
-        return sprite;
+    public ImageView getSpriteView() {
+        return spriteView;
     }
 
     public AudioClip getLaser() {

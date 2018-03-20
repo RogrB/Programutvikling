@@ -68,8 +68,8 @@ public class Main {
         Canvas canvas = new Canvas(WIDTH, HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
-        //root.getChildren().addAll(canvas, player.getSprite(), scoreText, lifeText);
-        root.getChildren().addAll(canvas, gl.player.getSprite());
+        //root.getChildren().addAll(canvas, player.getSpriteView(), scoreText, lifeText);
+        root.getChildren().addAll(canvas, gl.player.getSpriteView());
 
         // Animationtimer
         AnimationTimer timer = new AnimationTimer() {
@@ -165,9 +165,9 @@ public class Main {
         }
 
         // Legger nodes til root
-        root.getChildren().addAll(canvas, player.getSprite(), scoreText, lifeText);
+        root.getChildren().addAll(canvas, player.getSpriteView(), scoreText, lifeText);
         for(enemy e : enemies){
-            root.getChildren().add(e.getSprite());
+            root.getChildren().add(e.getSpriteView());
         }
 
         // Tegner "Black-Bars" under countdown
