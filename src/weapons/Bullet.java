@@ -1,4 +1,4 @@
-package Weapons;
+package weapons;
 
 import javafx.scene.image.ImageView;
 

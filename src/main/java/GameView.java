@@ -16,7 +16,7 @@ public class GameView extends Application {
     public static final int WIDTH = 1200;
     public static final int HEIGHT = 800;
 
-    GameController controller = new GameController();
+    GameController gc = GameController.getInstance();
 
     // Background Image
     String imgpath = "image/background.jpg";
@@ -30,41 +30,20 @@ public class GameView extends Application {
         primaryStage.setTitle("Working Title: Pippi");
         Scene scene = new Scene(initGame());
 
+        gc.setKeyListeners(scene);
+
         primaryStage.setScene(scene);
         primaryStage.show();
 
 
-        // KEYBOARD INPUTS
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.SPACE)
-                    controller.keyPressedSpace();
-                if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP)
-                    controller.keyPressedUp();
-                if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN)
-                    controller.keyPressedDown();
-
-            }
-        });
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP)
-                    controller.keyReleasedUp();
-                if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN)
-                    controller.keyReleasedDown();
-            }
-        });
-
-
         // ANIMATION TIMER, UPDATES VIEW
-        AnimationTimer timer = new AnimationTimer() {
+        /*AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                controller.player.update();
+                gc.player.update();
+
             }
-        }; timer.start();
+        }; timer.start();*/
     }
 
     private Parent initGame() {
@@ -72,7 +51,7 @@ public class GameView extends Application {
         root.setPrefSize(WIDTH, HEIGHT);
         root.setBackground(new Background(bg));
 
-        root.getChildren().addAll(controller.player.getSprite());
+        root.getChildren().addAll(gc.gl.player.getSprite());
 
         return root;
     }

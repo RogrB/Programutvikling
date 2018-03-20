@@ -2,7 +2,11 @@ package main.java;
 
 public class Main {
 
-    //private ArrayList<Enemy> enemies = new ArrayList<>();
+    public static void main (String[] args){
+
+    }
+
+    //private ArrayList<enemy> enemies = new ArrayList<>();
 
     // Start metode - Setter opp Scene
     /*@Override
@@ -19,7 +23,7 @@ public class Main {
                     case '0':
                         break;
                     case '1':
-                        //enemies.add(new Enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN));
+                        //enemies.add(new enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN));
                         break;
                 }
             }
@@ -72,7 +76,7 @@ public class Main {
             @Override
             public void handle(long now) {
                 gl.player.update();
-                for(Enemy e : enemies){
+                for(enemy e : enemies){
                     e.update();
                 }
                 //detectCollision(); // Sjekker om player kolliderer med enemy
@@ -106,7 +110,7 @@ public class Main {
 
     // Metode for å generere fiender
     /*public void generateEnemies() {
-        //Enemy test = new Enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN);
+        //enemy test = new enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN);
         //enemies.add(test);
     }*/
 
@@ -115,7 +119,7 @@ public class Main {
         AnimationTimer timer = new AnimationTimer() { // Bør muligens flyttes inn i eksisterende animationtimer i initScene()  ?
             @Override
             public void handle(long now) {
-                for (Enemy enemy : enemies){
+                for (enemy enemy : enemies){
                     enemy.move();
                     drawEnemy(gc); // Kaller metode for å tegne enemies (primitive representasjoner)
                 }
@@ -154,7 +158,7 @@ public class Main {
                     case '0':
                         break;
                     case '1':
-                        enemies.add(new Enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN, j * 60, HEIGHT - (i * 60)));
+                        enemies.add(new enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN, j * 60, HEIGHT - (i * 60)));
                         break;
                 }
             }
@@ -162,7 +166,7 @@ public class Main {
 
         // Legger nodes til root
         root.getChildren().addAll(canvas, player.getSprite(), scoreText, lifeText);
-        for(Enemy e : enemies){
+        for(enemy e : enemies){
             root.getChildren().add(e.getSprite());
         }
 
@@ -231,7 +235,7 @@ public class Main {
                 time += 0.05;
                 time2 += 0.03;
                 player.update();
-                for(Enemy e : enemies){
+                for(enemy e : enemies){
                     e.update();
                 }
                 if (time >= 0.35) {
@@ -310,9 +314,9 @@ public class Main {
 
     // Metode for å tegne fiender - Primitiv rektangel, må byttes ut med sprites
     /*public void drawEnemy(GraphicsContext gc) {
-        gc.setStroke(Color.RED); // Enemy farge
+        gc.setStroke(Color.RED); // enemy farge
         gc.setLineWidth(3); // Linjebredde
-        for (Enemy enemy : enemies){
+        for (enemy enemy : enemies){
             gc.clearRect(enemy.x()-1, enemy.y()-1, 53, 53); // Mangler "old" posisjon for å kunne viske ut forrige frame
             gc.strokeRect(enemy.x(), enemy.y(), 50, 50); // Setter bredde og høyde til 50 for nå
         }
@@ -320,7 +324,7 @@ public class Main {
 
     // Metode for å detecte kollisjon mellom player og enemy - ikke prosjektiler
     /*public void detectCollision() {
-        for (Enemy enemy : enemies) { // Looper igjennom liste med enemyobjekter
+        for (enemy enemy : enemies) { // Looper igjennom liste med enemyobjekter
             int enemyWidth = 50; // Midlertidig bredde
             int enemyHeight = 50; // Midlertidig høyde
             if (enemy.x() < player.getX()+player.getPLAYERWIDTH() && enemy.y() < player.getY()+player.getPLAYERHEIGHT()) {
@@ -339,10 +343,10 @@ public class Main {
         int enemyWidth = 50; // Midlertidig bredde
         int enemyHeight = 50; // Midlertidig høyde
         for (Bullet bullet : player.getBullets()) {
-            for (Enemy enemy : enemies) {
+            for (enemy enemy : enemies) {
                 if (bullet.getX() < enemy.x()+enemyWidth && bullet.getY() < enemy.y()+enemyHeight) {
                     if (bullet.getX() > enemy.x() && bullet.getY() > enemy.y()+enemyHeight) { // Troor det her blir riktig..?
-                        // Enemy got hit!
+                        // enemy got hit!
                         System.out.println("hit!");
                         score++;
                     }

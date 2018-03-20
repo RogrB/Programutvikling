@@ -1,6 +1,6 @@
 package main.java;
 
-import Weapons.Bullet;
+import weapons.Bullet;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 

@@ -1,8 +1,6 @@
-package main.java;
+package enemy;
 
 import javafx.scene.image.ImageView;
-
-import static main.java.GameController.SPEED_MODIFIER;
 
 public class Enemy {
 
