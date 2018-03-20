@@ -37,13 +37,13 @@ public class GameView extends Application {
 
 
         // ANIMATION TIMER, UPDATES VIEW
-        AnimationTimer timer = new AnimationTimer() {
+        /*AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 gc.player.update();
 
             }
-        }; timer.start();
+        }; timer.start();*/
     }
 
     private Parent initGame() {
@@ -51,7 +51,7 @@ public class GameView extends Application {
         root.setPrefSize(WIDTH, HEIGHT);
         root.setBackground(new Background(bg));
 
-        root.getChildren().addAll(gc.player.getSprite());
+        root.getChildren().addAll(gc.gl.player.getSprite());
 
         return root;
     }

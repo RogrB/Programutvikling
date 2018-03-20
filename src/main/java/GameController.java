@@ -13,55 +13,24 @@ public class GameController {
     private GameController(){}
     public static GameController getInstance(){ return inst; }
 
-    public static final double SPEED_MODIFIER = 0.17;
-
-    public Player player = new Player();
+    GameLogic gl = GameLogic.getInstance();
 
     public void setKeyListeners(Scene s){
-        s.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.SPACE)
-                    keyPressedSpace();
-                if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP)
-                    keyPressedUp();
-                if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN)
-                    keyPressedDown();
-            }
+        s.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.SPACE)
+                gl.player.shoot();
+            if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP)
+                gl.player.moveUp();
+            if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN)
+                gl.player.moveDown();
         });
-        s.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP)
-                    keyReleasedUp();
-                if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN)
-                    keyReleasedDown();
-            }
+
+        s.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP)
+                gl.player.moveStop();
+            if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN)
+                gl.player.moveStop();
         });
-    }
-
-    public void keyPressedUp(){
-        player.moveUp();
-    }
-
-    public void keyPressedDown(){
-        player.moveDown();
-    }
-
-    public void keyReleasedUp(){
-        player.moveStop();
-    }
-
-    public void keyReleasedDown(){
-        player.moveStop();
-    }
-
-    public void keyPressedSpace(){
-        player.shoot();
-    }
-
-    public void keyReleasedSpace(){
-
     }
 
 }
