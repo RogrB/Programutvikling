@@ -13,19 +13,19 @@ public class GameController {
 
 
     public void keyPressedUp(){
-        player.moveUp();
+        player.move("UP");
     }
 
     public void keyPressedDown(){
-        player.moveDown();
+        player.move("DOWN");
     }
 
     public void keyReleasedUp(){
-        player.moveStop();
+        player.move("STOP");
     }
 
     public void keyReleasedDown(){
-        player.moveStop();
+        player.move("STOP");
     }
 
     public void keyPressedSpace(){

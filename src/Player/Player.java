@@ -7,36 +7,36 @@ import main.java.GameView;
 
 import java.util.ArrayList;
 
-public class Player {
+public class Player{
 
-    public final int PLAYERWIDTH = 75;  // Bredde
-    public final int PLAYERHEIGHT = 112;// Høyde
-
-    private int     y;                  // Startpunkt fra top
-    private int     x;                  // Startpunkt fra venstre
-    private int     health = 3;         // Helse
-    private boolean alive = true;       // Spiller død/levende
-    private boolean moving;             // Om spiller er i bevegelse (brukes ikke ATM)
-    private boolean canShoot = false;
-    private int     score;              // Poengsum
-    private int     bulletCount = 0;    // antall kuler som har blitt skutt
-
-    private PlayerMovement      move = new PlayerMovement();
-    private ArrayList<Bullet>   bullets = new ArrayList<>();
-
+    private int x;
+    private int y;
     ImageView sprite = new ImageView("assets/playerShip2_red.png");
+    private double height = sprite.getFitHeight();
+    private double width = sprite.getFitWidth();
+    private int health = 3;
+    private boolean alive = true;
+    private boolean moving;
+    private boolean canShoot = true;
+    private int bulletCount = 0;
+    private int score;
+    private AudioClip laser = new AudioClip("file:src/assets/newLaser.mp3");
+
+    private ArrayList<Bullet> bullets = new ArrayList<>();
+    private PlayerMovement      move = new PlayerMovement();
+
+
 
     public Player(){
-        this.y = GameView.HEIGHT / 2 - this.PLAYERHEIGHT/ 2;
+        this.y = GameView.HEIGHT / 2 - (int)this.height/ 2;
         this.x = 40;
         sprite.relocate(x, y);
     }
 
     public void shoot() {
         if(canShoot) {
-            bullets.add(new Bullet(x + PLAYERWIDTH - 10, y + (PLAYERHEIGHT / 2) + 3));
+            bullets.add(new Bullet(x + (int)this.width - 10, y + ((int) this.height / 2) + 3));
             bulletCount++;
-            AudioClip laser = new AudioClip("file:src/assets/newLaser.mp3");
             laser.setVolume(0.25);
             laser.play();
         }
@@ -54,88 +54,44 @@ public class Player {
             move.moveStop();
             return true;
         }
-        if(y + PLAYERHEIGHT + move.next() >= GameView.HEIGHT) {
+        if(y + (int)this.height + move.next() >= GameView.HEIGHT) {
             move.moveStop();
             return true;
         }
         return false;
     }
 
-    public void moveUp() {
-        move.moveUp();
-    }
-
-    public void moveDown() {
-        move.moveDown();
-    }
-
-    public void moveStop() {
-        move.moveSlow();
-    }
-
-    // Getters og setters
-    public int getY() {
-        return this.y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public void move(String dir){
+        switch(dir){
+            case "UP":
+                move.move(-1);
+                break;
+            case "DOWN":
+                move.move(1);
+                break;
+            case "STOP":
+                move.move(0);
+        }
     }
 
     public int getX() {
-        return this.x;
+        return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public int getY() {
+        return y;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public double getWidth() {
+        return width;
     }
 
     public int getHealth() {
-        return this.health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public void setAlive(boolean alive) {
-        this.alive = alive;
-    }
-
-    public boolean getAlive() {
-        return this.alive;
-    }
-
-    public boolean getMoving() {
-        return this.moving;
-    }
-
-    public void setMoving(boolean moving) {
-        this.moving = moving;
-    }
-
-    public int getScore() {
-        return this.score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public ArrayList<Bullet> getBullets() {
-        return bullets;
-    }
-
-    public int getBulletCount() {
-        return bulletCount;
-    }
-
-    public ImageView getSprite(){
-        return sprite;
-    }
-
-    public void setCanShoot(boolean bool){
-        canShoot = bool;
+        return health;
     }
 
     public boolean isAlive() {
@@ -144,5 +100,26 @@ public class Player {
 
     public boolean isMoving() {
         return moving;
+    }
+
+    public boolean isCanShoot() {
+        return canShoot;
+    }
+
+
+    public int getBulletCount() {
+        return bulletCount;
+    }
+
+    public ImageView getSprite() {
+        return sprite;
+    }
+
+    public AudioClip getLaser() {
+        return laser;
+    }
+
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
     }
 }

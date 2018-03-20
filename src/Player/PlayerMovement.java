@@ -12,16 +12,8 @@ public class PlayerMovement {
         dir = 0;
     }
 
-    public void moveUp(){
-        dir = -1;
-    }
-
-    public void moveDown(){
-        dir = 1;
-    }
-
-    public void moveSlow(){
-        dir = 0;
+    public void move(int direction){
+        dir = direction;
     }
 
     public void moveStop(){
