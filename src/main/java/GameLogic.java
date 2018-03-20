@@ -10,6 +10,7 @@ public class GameLogic {
     public static GameLogic getInstance() { return inst; }
 
 
+
     public void timer () {
 
         // ANIMATION TIMER, UPDATES VIEW

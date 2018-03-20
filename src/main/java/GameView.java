@@ -13,16 +13,10 @@ import javafx.stage.Stage;
 
 public class GameView extends Application {
 
-    // Singleton
-    private static GameView inst = new GameView();
-    private GameView(){}
-    public static GameView getInstance() { return inst; }
-
-
     public static final int WIDTH = 1200;
     public static final int HEIGHT = 800;
 
-    GameController controller = GameController.getInstance();
+    GameController controller = new GameController();
 
     // Background Image
     String imgpath = "image/background.jpg";

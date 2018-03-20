@@ -4,11 +4,6 @@ import player.*;
 
 public class GameController {
 
-    // Singleton
-    private static GameController inst = new GameController();
-    private GameController(){}
-    public static GameController getInstance() { return inst; }
-
     public static final double SPEED_MODIFIER = 0.17;
 
     public Player player = new Player();
