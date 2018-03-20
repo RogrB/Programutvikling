@@ -1,6 +1,6 @@
-package enemy;
+package model.enemy;
 
-import static main.java.GameLogic.SPEED_MODIFIER;
+import static model.GameModel.SPEED_MODIFIER;
 
 public enum EnemyMovementPatterns {
     LEFT,   LEFT_PULL,

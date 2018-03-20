@@ -1,4 +1,4 @@
-package enemy;
+package model.enemy;
 
 import javafx.scene.image.Image;
 

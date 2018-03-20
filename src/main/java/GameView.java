@@ -1,8 +1,7 @@
 package main.java;
 
-import enemy.Enemy;
-import enemy.EnemyMovementPatterns;
-import enemy.EnemyType;
+import controller.GameController;
+import model.enemy.Enemy;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -13,7 +12,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import levels.LevelData;
+import model.enemy.EnemyMovementPatterns;
+import model.enemy.EnemyType;
+import model.levels.LevelData;
 
 import java.util.ArrayList;
 

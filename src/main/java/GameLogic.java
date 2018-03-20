@@ -1,8 +1,8 @@
 package main.java;
 
-import enemy.Enemy;
+import model.enemy.Enemy;
 import javafx.animation.AnimationTimer;
-import player.Player;
+import model.player.Player;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ public class GameLogic {
     public static GameLogic getInstance() { return inst; }
 
     public static final double SPEED_MODIFIER = 0.17;
-    public Player player = new Player();
+    public Player player = Player.getInst();
     public ArrayList<Enemy> enemies = gw.getEnemies();
 
 

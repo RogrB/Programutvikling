@@ -1,4 +1,4 @@
-package player;
+package model.player;
 
 public class PlayerMovement {
     private final int MAX_SPEED = 20;
@@ -7,13 +7,17 @@ public class PlayerMovement {
     private int speed;
     private int dir;
 
+    //private ArrayList<> logDir = new ArrayList<>();
+
     public PlayerMovement() {
         speed = 0;
         dir = 0;
     }
 
     public void move(int direction){
-        dir = direction;
+        if(this.dir != direction) {
+            dir = direction;
+        }
     }
 
     public void moveStop(){
