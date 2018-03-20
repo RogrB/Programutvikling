@@ -18,9 +18,9 @@ build/classes/main/java/Main.class
 build/classes/main/java/Main$3.class
 build/classes/main/java/Main$2.class
 build/classes/main/java/Main$1.class
-build/classes/main/java/Enemy.class
+build/classes/main/java/enemy.class
 build/classes/image/background.jpg
-build/classes/Player/Player.class
+build/classes/player/player.class
 build/classes/Character/Character.class
 build/built-jar.properties
 dist/web-files/javafx-chrome.png
@@ -200,4 +200,4 @@ build/classes/image/countdown/fly_4.png
 build/classes/image/countdown/3.png
 build/classes/image/countdown/2.png
 build/classes/image/countdown/1.png
-build/classes/Weapons/Bullet.class
+build/classes/weapons/Bullet.class

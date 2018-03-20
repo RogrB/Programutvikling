@@ -1,4 +1,4 @@
-package main.java;
+package enemy;
 
 import static main.java.GameController.SPEED_MODIFIER;
 

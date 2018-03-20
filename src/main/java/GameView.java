@@ -13,10 +13,16 @@ import javafx.stage.Stage;
 
 public class GameView extends Application {
 
+    // Singleton
+    private static GameView inst = new GameView();
+    private GameView(){}
+    public static GameView getInstance() { return inst; }
+
+
     public static final int WIDTH = 1200;
     public static final int HEIGHT = 800;
 
-    GameController controller = new GameController();
+    GameController controller = GameController.getInstance();
 
     // Background Image
     String imgpath = "image/background.jpg";
@@ -44,7 +50,6 @@ public class GameView extends Application {
                     controller.keyPressedUp();
                 if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN)
                     controller.keyPressedDown();
-
             }
         });
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -63,6 +68,7 @@ public class GameView extends Application {
             @Override
             public void handle(long now) {
                 controller.player.update();
+
             }
         }; timer.start();
     }

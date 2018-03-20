@@ -1,11 +1,13 @@
 package main.java;
 
-import Player.*;
-import javafx.animation.AnimationTimer;
-import javafx.application.Application;
-import javafx.stage.Stage;
+import player.*;
 
 public class GameController {
+
+    // Singleton
+    private static GameController inst = new GameController();
+    private GameController(){}
+    public static GameController getInstance() { return inst; }
 
     public static final double SPEED_MODIFIER = 0.17;
 

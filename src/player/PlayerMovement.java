@@ -1,4 +1,4 @@
-package Player;
+package player;
 
 public class PlayerMovement {
     private final int MAX_SPEED = 20;
