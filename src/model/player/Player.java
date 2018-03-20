@@ -10,6 +10,10 @@ import java.util.ArrayList;
 
 public class Player{
 
+    // Singleton
+    private static Player inst = new Player();
+    public static Player getInst(){ return inst; }
+
     private int x;
     private int y;
     Image spriteImg = new Image("assets/playerShip2_red.png");
@@ -29,8 +33,8 @@ public class Player{
 
 
 
-    public Player(){
-        this.y = GameView.HEIGHT / 2 - this.height/ 2;
+    private Player(){
+        this.y = GameView.GAME_HEIGHT / 2 - this.height/ 2;
         this.x = 40;
         spriteView.relocate(x, y);
     }
@@ -49,14 +53,14 @@ public class Player{
         if(!playerIsOutOfBounds()){
             this.y = this.y + move.next();
             spriteView.relocate(x, y);
-            
         }
-        
+        updateBullets();
+    }
+
+    private void updateBullets(){
         for (Bullet bullet : bullets) {
-            bullet.setX(bullet.getX()+12);
-            
+            bullet.setX(bullet.getX() + 12);
         }
-        
     }
 
     private boolean playerIsOutOfBounds(){
@@ -64,7 +68,7 @@ public class Player{
             move.moveStop();
             return true;
         }
-        if(y + this.height + move.next() >= GameView.HEIGHT) {
+        if(y + this.height + move.next() >= GameView.GAME_HEIGHT) {
             move.moveStop();
             return true;
         }
@@ -115,7 +119,6 @@ public class Player{
     public boolean isCanShoot() {
         return canShoot;
     }
-
 
     public int getBulletCount() {
         return bulletCount;

@@ -1,64 +1,41 @@
 package view;
 
-import javafx.application.Application;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.canvas.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 import controller.GameController;
-import model.GameLogic;
+import model.GameModel;
 
-public class GameView extends Application {
+public class GameView extends ViewUtil {
 
     // Singleton
-    /*private static GameView inst = new GameView();
+    private static GameView inst = new GameView();
     private GameView(){}
-    public static GameView getInstance(){ return inst; }*/
+    public static GameView getInst(){ return inst; }
 
 
     // MVC-access
     GameController gc = GameController.getInstance();
-    GameLogic gl = GameLogic.getInstance();
+    GameModel gm = GameModel.getInstance();
 
-    public static final int WIDTH = 1200;
-    public static final int HEIGHT = 800;
+    final Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
+    final GraphicsContext graphics = canvas.getGraphicsContext2D();
 
-    final Canvas canvas = new Canvas(WIDTH, HEIGHT);
-    final GraphicsContext graphics = canvas.getGraphicsContext2D();    
-
-    // Background Image
-    String imgpath = "assets/image/background.jpg";
-    Image img = new Image(imgpath);
-    BackgroundImage bg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-            new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false));
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
-        primaryStage.setTitle("Working Title: Pippi");
-        Scene scene = new Scene(initGame());
-
-        gc.setKeyListeners(scene);
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    private Parent initGame() {
+    public Parent initGame() {
         Pane root = new Pane();
-        root.setPrefSize(WIDTH, HEIGHT);
-        root.setBackground(new Background(bg));
+        root.setPrefSize(GAME_WIDTH, GAME_HEIGHT);
+        root.setBackground(getBackGroundImage());
 
-        root.getChildren().addAll(gl.player.getSpriteView(), canvas);
+        root.getChildren().addAll(gm.player.getSpriteView(), canvas);
         renderBullet(50, 50);
         renderBullet(100, 100);
         renderBullet(200, 200);
         return root;
     }
+
     final Image bullet = new Image("assets/laserBlue06.png");
-    private void renderBullet(int x, int y) {
+    public void renderBullet(double x, double y) {
         graphics.drawImage(bullet, x, y);
     }
 }

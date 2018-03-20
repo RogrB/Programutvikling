@@ -1,10 +1,39 @@
 package main.java;
 
-public class Main {
+import controller.GameController;
+import controller.UserInputs;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import view.GameView;
 
-    public static void main (String[] args){
+public class Main extends Application {
 
+    GameView gv = GameView.getInst();
+    GameController gc = GameController.getInstance();
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("Working Title: Pippi");
+        Scene scene = new Scene(gv.initGame());
+
+        UserInputs userInputs = new UserInputs(scene);
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     //private ArrayList<model.enemy> enemies = new ArrayList<>();
 
@@ -63,9 +92,9 @@ public class Main {
     /*public Parent initGame() {
         // Metode for å starte spillet etter Countdown
         Pane root = new Pane();
-        root.setPrefSize(WIDTH, HEIGHT);
+        root.setPrefSize(GAME_WIDTH, GAME_HEIGHT);
         root.setBackground(new Background(bg));
-        Canvas canvas = new Canvas(WIDTH, HEIGHT);
+        Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
         //root.getChildren().addAll(canvas, model.player.getSpriteView(), scoreText, lifeText);
@@ -145,9 +174,9 @@ public class Main {
         lifeText.setFont(Font.font("Verdana", 20));
 
         // Videre oppsett for root - Bakgrunn og størrelse
-        root.setPrefSize(WIDTH, HEIGHT);
+        root.setPrefSize(GAME_WIDTH, GAME_HEIGHT);
         root.setBackground(new Background(bg));
-        Canvas canvas = new Canvas(WIDTH, HEIGHT);
+        Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
         levelWidth = LevelData.LEVEL1[0].length() * 80;
@@ -158,7 +187,7 @@ public class Main {
                     case '0':
                         break;
                     case '1':
-                        enemies.add(new model.enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN, j * 60, HEIGHT - (i * 60)));
+                        enemies.add(new model.enemy(EnemyType.SHIP, EnemyMovementPatterns.SIN, j * 60, GAME_HEIGHT - (i * 60)));
                         break;
                 }
             }
@@ -181,8 +210,8 @@ public class Main {
         StackPane.setAlignment(imgView, Pos.CENTER);
         cdPane.setAlignment(Pos.CENTER);
 
-        imgView.setX((WIDTH/2)-200); // Prøver å sette x-verdi for imageview
-        imgView.setY((HEIGHT/2)-50);
+        imgView.setX((GAME_WIDTH/2)-200); // Prøver å sette x-verdi for imageview
+        imgView.setY((GAME_HEIGHT/2)-50);
         imgView.fitWidthProperty().bind(cdPane.widthProperty());
         cdPane.setAlignment(Pos.CENTER);
 

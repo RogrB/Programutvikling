@@ -1,35 +1,39 @@
 package controller;
 
+import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import model.GameLogic;
+import model.GameModel;
+import model.weapons.Bullet;
+import view.GameView;
 
 public class GameController {
 
     // Singleton
     private static GameController inst = new GameController();
-    private GameController(){}
+    private GameController(){ start(); }
     public static GameController getInstance(){ return inst; }
 
     // MVC-access
-    GameLogic gl = GameLogic.getInstance();
+    GameModel gm = GameModel.getInstance();
+    GameView gv = GameView.getInst();
 
-    public void setKeyListeners(Scene s){
-        s.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.SPACE)
-                gl.player.shoot();
-            if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP)
-                gl.player.move("UP");
-            if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN)
-                gl.player.move("DOWN");
-        });
+    public void start() {
 
-        s.setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP)
-                gl.player.move("STOP");
-            if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN)
-                gl.player.move("STOP");
-        });
+        // ANIMATION TIMER, UPDATES VIEW
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                gm.player.update();
+                updateBullets();
+            }
+        }; timer.start();
+
     }
 
+    private void updateBullets(){
+        for (Bullet b : gm.player.getBullets()){
+            gv.renderBullet(b.getX(), b.getY());
+        }
+    }
 }
