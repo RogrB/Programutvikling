@@ -6,6 +6,13 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import controller.GameController;
 import model.GameModel;
+import model.enemy.Enemy;
+import model.enemy.EnemyMovementPatterns;
+import model.enemy.EnemyType;
+import model.levels.LevelData;
+import model.levels.LevelLoader;
+
+import java.util.ArrayList;
 
 public class GameView extends ViewUtil {
 
@@ -21,13 +28,23 @@ public class GameView extends ViewUtil {
 
     final Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
     final GraphicsContext graphics = canvas.getGraphicsContext2D();
+    final LevelLoader level2 = new LevelLoader(LevelData.LEVEL2);
+    ArrayList<Enemy> enemies = level2.getEnemies();
 
     public Parent initGame() {
         Pane root = new Pane();
+        Pane enems = new Pane();
         root.setPrefSize(GAME_WIDTH, GAME_HEIGHT);
         root.setBackground(getBackGroundImage());
+//        Enemy eee = new Enemy(EnemyType.SHIP, EnemyMovementPatterns.CLOCK, 800, 40);
+//        eee.update();
+//        enemies.add(eee);
 
-        root.getChildren().addAll(gm.player.getSpriteView(), canvas);
+        for(Enemy e : enemies){
+            enems.getChildren().add(e.getSprite());
+        }
+
+        root.getChildren().addAll(gm.player.getSpriteView(), enems, canvas);
         renderBullet(50, 50);
         renderBullet(100, 100);
         renderBullet(200, 200);
