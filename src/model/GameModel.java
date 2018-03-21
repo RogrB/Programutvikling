@@ -16,7 +16,7 @@ public class GameModel {
 
     // MVC-access
     GameView gv = GameView.getInst();
-
+    
     public static final double SPEED_MODIFIER = 0.17;
 
     public Player player = Player.getInst();

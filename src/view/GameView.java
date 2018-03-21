@@ -13,7 +13,7 @@ public class GameView extends ViewUtil {
     private static GameView inst = new GameView();
     private GameView(){}
     public static GameView getInst(){ return inst; }
-
+    
 
     // MVC-access
     GameController gc = GameController.getInstance();
