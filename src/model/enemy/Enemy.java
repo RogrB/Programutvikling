@@ -71,14 +71,6 @@ public class Enemy {
         return health;
     }
 
-    public double x() {
-        return posX;
-    }
-
-    public double y() {
-        return posY;
-    }
-
     public int getX(){
         return x;
     }
@@ -95,23 +87,14 @@ public class Enemy {
         return width;
     }
 
-    // SET
-    public void setPosX(int posX) {
-        this.posX = posX;
-    }
-
-    public void setPosY(int posY) {
-        this.posY = posY;
-    }
-
     public ImageView getSprite(){
         return sprite;
     }
 
     public void update(){
-        sprite.relocate(x, y);
         pattern.nextFrame();
-        posX = pattern.x;
-        posY = pattern.y;
+        x = (int)pattern.x;
+        y = (int)pattern.y;
+        sprite.relocate(x, y);
     }
 }
