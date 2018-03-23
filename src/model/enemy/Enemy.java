@@ -58,6 +58,11 @@ public class Enemy {
         // System.out.println("x: " + posX + ", y: " + posY);
     }
 
+    public void updatePatternStartingPoint(double x, double y){
+        pattern.x = x;
+        pattern.y = y;
+    }
+
     // GET
     public boolean isDead() {
         return dead;
@@ -89,6 +94,10 @@ public class Enemy {
 
     public ImageView getSprite(){
         return sprite;
+    }
+
+    public EnemyMovementPatterns getPattern() {
+        return pattern;
     }
 
     public void update(){

@@ -26,6 +26,8 @@ public class LevelLoader {
                         e.update();
                         //System.out.format("Enemy created at x: %d, y: %d \n", e.getX(), e.getY());
                         enemies.add(e);
+                        e.updatePatternStartingPoint(e.getX(), e.getY());
+
                         break;
                     case '2':
                         System.out.println("Detected a 2");

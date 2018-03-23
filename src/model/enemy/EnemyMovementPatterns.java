@@ -21,8 +21,6 @@ public enum EnemyMovementPatterns {
 
     EnemyMovementPatterns() {
 
-        x = 0;
-        y = 0;
 
         if(this.name() == "TRI"){
             triState = true;
@@ -101,5 +99,6 @@ public enum EnemyMovementPatterns {
     private double rads(double i){
         return Math.toRadians(i);
     }
+
 
 }
