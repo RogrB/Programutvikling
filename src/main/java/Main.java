@@ -5,15 +5,17 @@ import controller.UserInputs;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.GameModel;
 import view.GameView;
 
 public class Main extends Application {
 
-    GameView gv = GameView.getInst();
-    GameController gc = GameController.getInstance();
+    public static GameView gv = GameView.getInstance();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        gv.setup();
+
         primaryStage.setTitle("Working Title: Pippi");
         Scene scene = new Scene(gv.initGame());
 
