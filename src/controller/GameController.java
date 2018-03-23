@@ -42,11 +42,12 @@ public class GameController {
             public void handle(long now) {
                 gm.player.update();
                 for(Enemy e : enemies){
-//                    e.update();
                     System.out.println("X" + e.getX());
+                    e.update();
+                    // System.out.println(e.getX());
                 }
 
-                //updateBullets();
+                updateBullets();
             }
         }; timer.start();
 
@@ -54,8 +55,8 @@ public class GameController {
 
     private void updateBullets(){
         for (Bullet b : gm.player.getBullets()){
-            System.out.println(b.getX() + " " + b.getY());
-            // gv.renderBullet(b.getX(), b.getY());
+            // System.out.println(b.getX() + " " + b.getY());
+            gv.renderBullet(b.getX(), b.getY());
             //System.out.println(gv.toString()); // prøver å finne årsaken til nullpointerexception gm.tostring funker mens gv.tostring gir feil
         }
     }

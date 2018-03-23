@@ -45,7 +45,6 @@ public class Player{
             bulletCount++;
             laser.setVolume(0.25);
             laser.play();
-            System.out.println("PEW");
         }
     }
 

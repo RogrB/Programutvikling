@@ -74,15 +74,13 @@ public class GameView {
         }
 
         root.getChildren().addAll(gm.player.getSpriteView(), enems, canvas);
-        renderBullet(50, 50);
-        renderBullet(100, 100);
-        renderBullet(200, 200);
         return root;
     }
 
     final Image bullet = new Image("assets/laserBlue06.png");
     public void renderBullet(double x, double y) {
-        //graphics.drawImage(bullet, x, y);
-        System.out.println(x + " " + y);
+        graphics.clearRect(x-12, y-3, 50, 16); // x, y, width, height
+        graphics.drawImage(bullet, x, y);
+        // System.out.println(x + " " + y);
     }
 }
