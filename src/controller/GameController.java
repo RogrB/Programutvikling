@@ -42,9 +42,7 @@ public class GameController {
             public void handle(long now) {
                 gm.player.update();
                 for(Enemy e : enemies){
-                    System.out.println("X" + e.getX());
                     e.update();
-                    // System.out.println(e.getX());
                 }
 
                 updateBullets();
@@ -52,6 +50,7 @@ public class GameController {
         }; timer.start();
 
     }
+
 
     private void updateBullets(){
         for (Bullet b : gm.player.getBullets()){

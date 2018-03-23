@@ -11,15 +11,16 @@ public class Enemy {
     private int height;
     private int width;
 
-    private EnemyMovementPatterns pattern;
+    private EnemyMovementPattern pattern;
     private boolean dead;
     private int health;
     private Image spriteImg;
     private ImageView sprite;
+    int i = 100;
 
     private double posX, posY;
 
-    public Enemy(EnemyType TYPE, EnemyMovementPatterns pattern, int x, int y){
+    public Enemy(EnemyType TYPE, EnemyMovementPattern pattern, int x, int y){
         this.TYPE= TYPE;
         this.pattern = pattern;
         this.x = x;
@@ -31,6 +32,8 @@ public class Enemy {
 
         dead    = false;
         health  = this.TYPE.MAX_HEALTH;
+
+        sprite.relocate(x, y);
     }
 
     // FUNCTIONS
@@ -45,11 +48,6 @@ public class Enemy {
 
     public void die() {
         dead = true;
-    }
-
-    public void move(){
-        pattern.nextFrame();
-        updatePosition(pattern.x, pattern.y);
     }
 
     public void updatePosition(double newX, double newY){
@@ -96,14 +94,23 @@ public class Enemy {
         return sprite;
     }
 
-    public EnemyMovementPatterns getPattern() {
+    public EnemyMovementPattern getPattern(){
         return pattern;
     }
 
+    public void move(){
+
+        sprite.relocate(i, i);
+        i += 10;
+        System.out.println(i);
+    }
+
     public void update(){
+        sprite.relocate(x, y);
         pattern.nextFrame();
         x = (int)pattern.x;
         y = (int)pattern.y;
-        sprite.relocate(x, y);
+        System.out.format("X: %d, Y: %d \n", x, y);
+        pattern.resetCoords();
     }
 }

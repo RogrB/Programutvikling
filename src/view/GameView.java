@@ -5,11 +5,8 @@ import javafx.scene.canvas.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import controller.GameController;
-import main.java.Main;
 import model.GameModel;
 import model.enemy.Enemy;
-import model.enemy.EnemyMovementPatterns;
-import model.enemy.EnemyType;
 import model.levels.LevelData;
 import model.levels.LevelLoader;
 
@@ -68,19 +65,24 @@ public class GameView {
         Pane enems = new Pane();
         root.setPrefSize(GAME_WIDTH, GAME_HEIGHT);
         root.setBackground(getBackGroundImage());
+//        Enemy eee = new Enemy(EnemyType.SHIP, EnemyMovementPatterns.CLOCK, 800, 40);
+//        eee.update();
+//        enemies.add(eee);
 
         for(Enemy e : enemies){
             enems.getChildren().add(e.getSprite());
         }
 
         root.getChildren().addAll(gm.player.getSpriteView(), enems, canvas);
+        renderBullet(50, 50);
+        renderBullet(100, 100);
+        renderBullet(200, 200);
         return root;
     }
 
     final Image bullet = new Image("assets/laserBlue06.png");
     public void renderBullet(double x, double y) {
-        graphics.clearRect(x-12, y-3, 50, 16); // x, y, width, height
-        graphics.drawImage(bullet, x, y);
-        // System.out.println(x + " " + y);
+        //graphics.drawImage(bullet, x, y);
+        //System.out.println(x + " " + y);
     }
 }

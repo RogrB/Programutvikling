@@ -1,7 +1,7 @@
 package model.levels;
 
 import model.enemy.Enemy;
-import model.enemy.EnemyMovementPatterns;
+import model.enemy.EnemyMovementPattern;
 import model.enemy.EnemyType;
 
 import java.util.ArrayList;
@@ -22,8 +22,9 @@ public class LevelLoader {
                     case '0':
                         break;
                     case '1':
-                        Enemy e = new Enemy(EnemyType.SHIP, EnemyMovementPatterns.CLOCK, 120 * j, 140 * i);
-                        e.update();
+                        EnemyMovementPattern pattern = new EnemyMovementPattern("CLOCK", 120 * j, 140 * i);
+                        Enemy e = new Enemy(EnemyType.SHIP, pattern, 120 * j, 140 * i);
+                        System.out.println(e.getPattern().x);
                         //System.out.format("Enemy created at x: %d, y: %d \n", e.getX(), e.getY());
                         enemies.add(e);
                         e.updatePatternStartingPoint(e.getX(), e.getY());
