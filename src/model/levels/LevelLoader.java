@@ -24,7 +24,7 @@ public class LevelLoader {
                     case '1':
                         Enemy e = new Enemy(EnemyType.SHIP, EnemyMovementPatterns.CLOCK, 120 * j, 140 * i);
                         e.update();
-                        System.out.format("Enemy created at x: %d, y: %d \n", e.getX(), e.getY());
+                        //System.out.format("Enemy created at x: %d, y: %d \n", e.getX(), e.getY());
                         enemies.add(e);
                         break;
                     case '2':
