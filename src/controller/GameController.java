@@ -46,6 +46,7 @@ public class GameController {
                 }
 
                 updateBullets();
+                detectHit();
             }
         }; timer.start();
 
@@ -53,10 +54,23 @@ public class GameController {
 
 
     private void updateBullets(){
-        for (Bullet b : gm.player.getBullets()){
-            // System.out.println(b.getX() + " " + b.getY());
-            gv.renderBullet(b.getX(), b.getY());
-            //System.out.println(gv.toString()); // prøver å finne årsaken til nullpointerexception gm.tostring funker mens gv.tostring gir feil
+        for (Bullet bullet : gm.player.getBullets()){
+            gv.renderBullet(bullet);
+        }
+    }
+    
+    public void detectHit() {
+        // Metode for å sjekke om playerbullet traff enemy
+        for (Bullet bullet : gm.player.getBullets()) {
+            for (Enemy enemy : enemies) {
+                if (enemy.getX() < bullet.getX() + bullet.getWidth() && enemy.getY() < bullet.getY() + bullet.getHeight()) {
+                    if (bullet.getX() < enemy.getX() + enemy.getWidth() && bullet.getY() < enemy.getY() + enemy.getHeight()) {
+                        // Enemy got hit
+                        System.out.println("HIT!");
+                        // Do something
+                    }
+                }
+            }
         }
     }
 }

@@ -31,7 +31,7 @@ public class Player{
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private PlayerMovement move = new PlayerMovement();
 
-
+    
 
     private Player(){
         this.y = GameView.GAME_HEIGHT / 2 - this.height/ 2;

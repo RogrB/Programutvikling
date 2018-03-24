@@ -110,7 +110,7 @@ public class Enemy {
         pattern.nextFrame();
         x = (int)pattern.x;
         y = (int)pattern.y;
-        System.out.format("X: %d, Y: %d \n", x, y);
+        // System.out.format("X: %d, Y: %d \n", x, y);
         pattern.resetCoords();
     }
 }

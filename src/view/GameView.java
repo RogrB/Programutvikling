@@ -9,6 +9,7 @@ import model.GameModel;
 import model.enemy.Enemy;
 import model.levels.LevelData;
 import model.levels.LevelLoader;
+import model.weapons.Bullet;
 
 import java.util.ArrayList;
 
@@ -74,15 +75,13 @@ public class GameView {
         }
 
         root.getChildren().addAll(gm.player.getSpriteView(), enems, canvas);
-        renderBullet(50, 50);
-        renderBullet(100, 100);
-        renderBullet(200, 200);
         return root;
     }
 
-    final Image bullet = new Image("assets/laserBlue06.png");
-    public void renderBullet(double x, double y) {
-        //graphics.drawImage(bullet, x, y);
-        //System.out.println(x + " " + y);
+    
+    public void renderBullet(Bullet bullet) {
+        // Metode for å tegne bullets til canvas
+        graphics.clearRect(bullet.getX()-12, bullet.getY()-13, bullet.getWidth(), bullet.getHeight()+10); // x, y, width, height
+        graphics.drawImage(bullet.getSpriteImage(), bullet.getX(), bullet.getY()-10);        
     }
 }
