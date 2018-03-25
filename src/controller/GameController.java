@@ -97,8 +97,23 @@ public class GameController {
     }
     
     public void detectDamage() {
-        // Metode for å sjekke om player ble truffet av enemy prosjektil
-        // Må implementere enemy skytemekanisme
+        // Metode for å sjekke om player ble truffet av enemybullet
+        for (Enemy enemy : enemies) {
+            for (EnemyBulletBasic ebullet : enemy.getBullet()) {
+                if (gm.player.getX() < ebullet.getX() + ebullet.getWidth() && gm.player.getY() < ebullet.getY() + ebullet.getHeight()) {
+                    if (ebullet.getX() < gm.player.getX() + gm.player.getWidth() && ebullet.getY() < gm.player.getY() + gm.player.getHeight()) {                    
+                        if (!gm.player.getImmunity()) {
+                            if (gm.player.getHealth() == 1) {
+                                gameOver();
+                            }
+                            else {
+                                gm.player.takeDamage();
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     public void gameOver() {
