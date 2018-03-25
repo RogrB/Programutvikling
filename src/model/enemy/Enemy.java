@@ -1,14 +1,18 @@
 package model.enemy;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import model.Entity;
+import model.weapons.Bullet;
+
+import java.util.Random;
 
 public class Enemy extends Entity {
 
     private final EnemyType TYPE;
     private EnemyMovementPattern pattern;
     int i = 100;
+
+    private final int CHANCE_TO_SHOOT = 2000;
+    private int chanceToShoot = CHANCE_TO_SHOOT;
 
     public Enemy(EnemyType enemyType, EnemyMovementPattern pattern, int x, int y){
         super(
@@ -22,15 +26,11 @@ public class Enemy extends Entity {
         this.pattern = pattern;
         height = sprite.getHeight();
         width = sprite.getWidth();
+        canShoot = true;
 
         health = this.TYPE.MAX_HEALTH;
 
         sprite.getView().relocate(x, y);
-    }
-
-    public void updatePosition(double newX, double newY){
-        x = (int)newX;
-        y = (int)newY;
     }
 
     public void updatePatternStartingPoint(double x, double y){
@@ -39,10 +39,6 @@ public class Enemy extends Entity {
     }
 
     // GET
-    public EnemyType getTYPE() {
-        return TYPE;
-    }
-
     public int getHealth() {
         return health;
     }
@@ -53,27 +49,41 @@ public class Enemy extends Entity {
 
     @Override
     public void update(){
-        sprite.getView().relocate(x, y);
         pattern.nextFrame();
         x = (int)pattern.x;
         y = (int)pattern.y;
-        pattern.resetCoords();
+        //pattern.resetCoords();
+        sprite.getView().relocate(x, y);
+        shoot();
+        updateBullets();
     }
 
     @Override
     public void move(String dir){
-        sprite.getView().relocate(i, i);
+        /*sprite.getView().relocate(i, i);
         i += 10;
-        System.out.println(i);
+        System.out.println(i);*/
     }
 
     @Override
     public void shoot() {
-
+        Random random = new Random();
+        if(canShoot()) {
+            if(random.nextInt(CHANCE_TO_SHOOT) < chanceToShoot) {
+                chanceToShoot--;
+            }
+            else {
+                System.out.println("Shoot");
+                chanceToShoot = CHANCE_TO_SHOOT;
+                bullets.add(new Bullet(x + 10, y + (this.height / 2) - 8));
+                bulletCount++;
+            }
+        }
     }
 
-    @Override
-    public void takeDamage() {
-
+    private void updateBullets(){
+        for (Bullet bullet : bullets) {
+            bullet.setX(bullet.getX() - 12);
+        }
     }
 }

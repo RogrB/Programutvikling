@@ -35,7 +35,6 @@ public abstract class Entity {
     public abstract void update();
     public abstract void move(String dir);
     public abstract void shoot();
-    public abstract void takeDamage();
 
     public int getX() {
         return x;
@@ -94,4 +93,14 @@ public abstract class Entity {
     public void setHealth(int health) {
         this.health = health;
     }
+
+    public void takeDamage(){
+        takeDamage(-1);
+    }
+
+    public void takeDamage(int dmg){
+        dmg = Math.abs(dmg);
+        health -= dmg;
+    }
+
 }

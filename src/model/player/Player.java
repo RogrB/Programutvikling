@@ -19,10 +19,9 @@ public class Player extends Entity {
 
     private int score;
     private boolean immunity = false;
+    private int immunityTimer;
 
     private PlayerMovement move = new PlayerMovement();
-    private int teller;
-    
 
     private Player(){
         super(
@@ -84,7 +83,7 @@ public class Player extends Entity {
 
     private void updateBullets(){
         for (Bullet bullet : bullets) {
-            bullet.setX(bullet.getX() + 12);
+            bullet.setX(bullet.getX() + 20);
         }
     }
 
@@ -92,22 +91,22 @@ public class Player extends Entity {
     public void takeDamage() {
         // Metode for immunityframes etter damage
         this.immunity = true;
-        this.health--;
+        super.takeDamage();
         System.out.println("Immunity starts");
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             
             @Override
             public void run() {
-                teller++;
-                if (teller == 2) { // 3 sekunder med immunity før man kan ta damage igjen
-                    teller = 0;
-                    immunity = false;                    
+                immunityTimer++;
+                if (immunityTimer == 10) { // 3 sekunder med immunity før man kan ta damage igjen
+                    immunityTimer = 0;
+                    immunity = false;
                     System.out.println("Immunity ends");
                     this.cancel();
                 }
             }
-        }, 0, 1000);
+        }, 0, 200);
         System.out.println("Health is now " + this.health);
     }
 
@@ -115,8 +114,4 @@ public class Player extends Entity {
         return this.immunity;
     }
 
-    public void setImmunity(boolean immunity) {
-        this.immunity = immunity;
-    }
-    
 }

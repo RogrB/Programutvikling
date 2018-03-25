@@ -14,7 +14,7 @@ public class GameModel {
     GameView gv;
 
 
-    public static final double SPEED_MODIFIER = 0.17;
+    public static final double SPEED_MODIFIER = 1;
 
     public Player player = Player.getInst();
 

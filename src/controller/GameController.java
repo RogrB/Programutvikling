@@ -55,6 +55,11 @@ public class GameController {
         for (Bullet bullet : gm.player.getBullets()){
             gv.renderBullet(bullet);
         }
+        for (Enemy enemy : enemies){
+            for(Bullet bullet : enemy.getBullets()) {
+                gv.renderBullet(bullet);
+            }
+        }
     }
     
     public void detectHit() {

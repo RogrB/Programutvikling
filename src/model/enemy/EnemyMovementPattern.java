@@ -4,11 +4,11 @@ import static model.GameModel.SPEED_MODIFIER;
 
 public class EnemyMovementPattern {
 
-    private double modDepth = 50;
+    private double modDepth = 3;
     private double modLength = 1;
     private double modSpeed = 20;
 
-    public int framesAlive = 0;
+    public double framesAlive = 0;
 
     public double x, y;
     public double patX, patY;
@@ -77,7 +77,7 @@ public class EnemyMovementPattern {
              case "COS_REV":
              case "TRI":
              case "TRI_REV":
-                 return framesAlive * SPEED_MODIFIER;
+                 return framesAlive;
              case "CLOCK":
              case "CLOCK_REV":
                  return Math.sin(rads(framesAlive/modLength)) * modDepth;
@@ -88,7 +88,7 @@ public class EnemyMovementPattern {
     }
 
     public void nextFrame(){
-        framesAlive--;
+        framesAlive = framesAlive - (1 * SPEED_MODIFIER);
         patX = nextX();
         patY = nextY();
 
