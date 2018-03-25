@@ -1,8 +1,9 @@
 package model.player;
 
-import javafx.scene.image.Image;
+import assets.java.Audio;
+import assets.java.Sprite;
+import model.Entity;
 import model.weapons.Bullet;
-import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 import view.GameView;
 import java.util.Timer;
@@ -10,51 +11,45 @@ import java.util.TimerTask;
 
 import java.util.ArrayList;
 
-public class Player{
+public class Player extends Entity {
 
     // Singleton
     private static Player inst = new Player();
     public static Player getInst(){ return inst; }
 
-    private int x;
-    private int y;
-    Image spriteImg = new Image("assets/playerShip2_red.png");
-    ImageView spriteView = new ImageView(spriteImg);
-    private int height = (int) spriteImg.getHeight();
-    private int width = (int) spriteImg.getWidth();
-    private int health = 3;
-    private boolean alive = true;
-    private boolean moving;
-    private boolean canShoot = true;
-    private int bulletCount = 0;
     private int score;
-    private AudioClip laser = new AudioClip("file:src/assets/newLaser.mp3");
     private boolean immunity = false;
 
-    private ArrayList<Bullet> bullets = new ArrayList<>();
     private PlayerMovement move = new PlayerMovement();
     private int teller;
     
 
     private Player(){
-        this.y = GameView.GAME_HEIGHT / 2 - this.height/ 2;
-        this.x = 40;
-        spriteView.relocate(x, y);
+        super(
+                Sprite.PLAYER,
+                40,
+                GameView.GAME_HEIGHT / 2 - (int) Sprite.PLAYER.getHeight() / 2,
+                3
+        );
+
+        setCanShoot(true);
+        shot = Audio.PLAYER_SHOT;
+        getSprite().relocate(x, y);
     }
 
     public void shoot() {
-        if(canShoot) {
+        if(canShoot()) {
             bullets.add(new Bullet(x + this.width - 10, y + (this.height / 2) - 8));
             bulletCount++;
-            laser.setVolume(0.25);
-            laser.play();
+            getShot().setVolume(0.25);
+            getShot().play();
         }
     }
 
     public void update(){
         if(!playerIsOutOfBounds()){
             this.y = this.y + move.next();
-            spriteView.relocate(x, y);
+            getSprite().relocate(x, y);
         }
         updateBullets();
     }
@@ -90,58 +85,6 @@ public class Player{
         }
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public boolean isAlive() {
-        return alive;
-    }
-
-    public boolean isMoving() {
-        return moving;
-    }
-
-    public boolean isCanShoot() {
-        return canShoot;
-    }
-
-    public int getBulletCount() {
-        return bulletCount;
-    }
-
-    public ImageView getSpriteView() {
-        return spriteView;
-    }
-
-    public AudioClip getLaser() {
-        return laser;
-    }
-
-    public ArrayList<Bullet> getBullets() {
-        return bullets;
-    }
-    
-    public void setHealth(int health) {
-        this.health = health;
-    }
-    
     public boolean getImmunity() {
         return this.immunity;
     }

@@ -19,7 +19,7 @@ public class Bullet {
         this.y = y;
         this.oldX = x;
         this.oldY = y;
-        spriteImg = new Image("assets/laserBlue06.png");
+        spriteImg = new Image("assets/image/laserBlue06.png");
         sprite = new ImageView(spriteImg);
         height = (int)spriteImg.getHeight();
         width = (int)spriteImg.getWidth();                

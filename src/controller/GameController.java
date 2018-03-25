@@ -28,10 +28,6 @@ public class GameController {
         gv = GameView.getInstance();
         level2 = new LevelLoader(LevelData.LEVEL2);
         enemies = level2.getEnemies();
-
-        start();
-        System.out.println("Controller sin View: " + gv);
-        System.out.println("Controller sin Model: " + gm);
     }
 
     public void start() {

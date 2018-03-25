@@ -21,8 +21,8 @@ public class GameView {
     public static GameView getInstance(){ return inst; }
 
     // MVC-access
-    GameController gc;
-    GameModel gm;
+    GameController gc = GameController.getInstance();
+    GameModel gm = GameModel.getInstance();
 
     public static final int GAME_WIDTH = 1200;
     public static final int GAME_HEIGHT = 800;
@@ -35,12 +35,9 @@ public class GameView {
     private static final String BG_IMG = "assets/image/background.jpg";
 
     public void setup(){
-        gm = GameModel.getInstance();
         gm.setup();
-        gc = GameController.getInstance();
         gc.setup();
-        System.out.println("View sin Controller: " + gc);
-        System.out.println("View sin Model: " + gm);
+        gc.start();
     }
 
     public Background getBackGroundImage(){
@@ -74,7 +71,7 @@ public class GameView {
             enems.getChildren().add(e.getSprite());
         }
 
-        root.getChildren().addAll(gm.player.getSpriteView(), enems, canvas);
+        root.getChildren().addAll(gm.player.getSprite(), enems, canvas);
         return root;
     }
 

@@ -25,7 +25,7 @@ public class Enemy {
         this.pattern = pattern;
         this.x = x;
         this.y = y;
-        spriteImg = new Image("assets/enemyBlue1.png");
+        spriteImg = new Image("assets/image/enemyBlue1.png");
         sprite = new ImageView(spriteImg);
         height = (int)spriteImg.getHeight();
         width = (int)spriteImg.getWidth();

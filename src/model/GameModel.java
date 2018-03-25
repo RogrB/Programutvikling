@@ -20,6 +20,5 @@ public class GameModel {
 
     public void setup(){
         gv = GameView.getInstance();
-        System.out.println("Model sin View: " + gv);
     }
 }

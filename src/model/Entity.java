@@ -1,5 +1,7 @@
 package model;
 
+import assets.java.Audio;
+import assets.java.Sprite;
 import model.weapons.Bullet;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
@@ -7,41 +9,33 @@ import javafx.scene.media.AudioClip;
 import java.util.ArrayList;
 
 public abstract class Entity {
-    private int x;
-    private int y;
-    private double height;
-    private double width;
-    private int health;
-    private boolean alive;
-    private boolean moving;
-    private boolean canShoot;
-    private boolean canMove;
-    private int bulletCount;
-    private ImageView sprite;
-    private AudioClip shot;
+    protected int x, y;
+    protected double height, width;
+    protected int health;
+    protected boolean alive;
+    protected boolean canShoot;
+    protected boolean canMove;
+    protected int bulletCount;
+    private Sprite sprite;
+    protected Audio shot;
 
-    private ArrayList<Bullet> bullets = new ArrayList<>();
+    protected ArrayList<Bullet> bullets = new ArrayList<>();
 
-
-    public Entity(int x, int y, int health, boolean alive, boolean moving, boolean canShoot, boolean canMove, int bulletCount){
+    public Entity(Sprite sprite, int x, int y, int health){
+        this.sprite = sprite;
         this.x = x;
         this.y = y;
-        this.height = sprite.getFitHeight();
-        this.width = sprite.getFitWidth();
+        this.height = sprite.getHeight();
+        this.width = sprite.getWidth();
         this.health = health;
-        this.alive = alive;
-        this.moving = moving;
-        this.canShoot = canShoot;
-        this.canMove = canMove;
-        this.bulletCount = bulletCount;
-        this.sprite = sprite;
-        this.shot = shot;
+        this.alive = true;
+        this.bulletCount = 0;
     }
 
     public abstract void shoot();
-
     public abstract void update();
     public abstract void move(String dir);
+    public abstract void takeDamage();
 
     public int getX() {
         return x;
@@ -51,12 +45,12 @@ public abstract class Entity {
         return y;
     }
 
-    public double getHeight() {
-        return height;
+    public int getHeight() {
+        return (int) height;
     }
 
-    public double getWidth() {
-        return width;
+    public int getWidth() {
+        return (int) width;
     }
 
     public int getHealth() {
@@ -67,15 +61,13 @@ public abstract class Entity {
         return alive;
     }
 
-    public boolean isMoving() {
-        return moving;
-    }
-
-    public boolean isCanShoot() {
+    public boolean canShoot() {
         return canShoot;
     }
 
-    public boolean isCanMove() {
+    protected void setCanShoot(boolean canShoot) { this.canShoot = canShoot; }
+
+    public boolean canMove() {
         return canMove;
     }
 
@@ -84,14 +76,22 @@ public abstract class Entity {
     }
 
     public ImageView getSprite() {
-        return sprite;
+        return sprite.getView();
     }
 
     public AudioClip getShot() {
-        return shot;
+        return shot.getAudio();
+    }
+
+    protected void setShot(Audio audio){
+        shot = audio;
     }
 
     public ArrayList<Bullet> getBullets() {
         return bullets;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }
