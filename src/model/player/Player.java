@@ -5,6 +5,8 @@ import model.weapons.Bullet;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 import view.GameView;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import java.util.ArrayList;
 
@@ -27,10 +29,11 @@ public class Player{
     private int bulletCount = 0;
     private int score;
     private AudioClip laser = new AudioClip("file:src/assets/newLaser.mp3");
+    private boolean immunity = false;
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private PlayerMovement move = new PlayerMovement();
-
+    private int teller;
     
 
     private Player(){
@@ -41,7 +44,7 @@ public class Player{
 
     public void shoot() {
         if(canShoot) {
-            bullets.add(new Bullet(x + this.width - 10, y + (this.height / 2) + 3));
+            bullets.add(new Bullet(x + this.width - 10, y + (this.height / 2) - 8));
             bulletCount++;
             laser.setVolume(0.25);
             laser.play();
@@ -134,4 +137,38 @@ public class Player{
     public ArrayList<Bullet> getBullets() {
         return bullets;
     }
+    
+    public void setHealth(int health) {
+        this.health = health;
+    }
+    
+    public boolean getImmunity() {
+        return this.immunity;
+    }
+    
+    public void setImmunity(boolean immunity) {
+        this.immunity = immunity;
+    }
+    
+    public void takeDamage() {
+        // Metode for immunityframes etter damage
+        this.health--;
+        System.out.println("Immunity starts");
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            
+            @Override
+            public void run() {
+                teller++;
+                if (teller == 3) {
+                    teller = 0;
+                    immunity = false;                    
+                    System.out.println("Immunity ends");
+                    this.cancel();
+                }
+            }
+        }, 0, 1000);
+        System.out.println("Health is now " + this.health);
+    }
+    
 }

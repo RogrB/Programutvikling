@@ -47,6 +47,8 @@ public class GameController {
 
                 updateBullets();
                 detectHit();
+                detectCollision();
+                detectDamage();
             }
         }; timer.start();
 
@@ -67,10 +69,42 @@ public class GameController {
                     if (bullet.getX() < enemy.getX() + enemy.getWidth() && bullet.getY() < enemy.getY() + enemy.getHeight()) {
                         // Enemy got hit
                         System.out.println("HIT!");
+                        gm.player.takeDamage(); // Tester immunityframes her kun for trigger
                         // Do something
                     }
                 }
             }
         }
     }
+    
+    public void detectCollision() {
+        // Metode for å sjekke om player ble truffet av enemy - ikke prosjektil
+        for (Enemy enemy: enemies) {
+            if (enemy.getX() < gm.player.getX() + gm.player.getWidth() && enemy.getY() < gm.player.getY() + gm.player.getHeight()) {
+                if (gm.player.getX() < enemy.getX() + enemy.getWidth() && gm.player.getY() < enemy.getY() + enemy.getHeight()) {
+                    System.out.println("Player hit by enemy object");
+                    if (!gm.player.getImmunity()) {
+                        if (gm.player.getHealth() == 1) {
+                            gameOver();
+                        }
+                        else {
+                            gm.player.setImmunity(true);
+                            gm.player.takeDamage();
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    public void detectDamage() {
+        // Metode for å sjekke om player ble truffet av enemy prosjektil
+        // Må implementere enemy skytemekanisme
+    }
+    
+    public void gameOver() {
+        // Is ded!
+        System.out.println("Game Over!");
+    }
+    
 }
