@@ -26,4 +26,9 @@ public class EnemyBulletBasic extends Bullet {
         return this.height;
     }
     
+    @Override
+    public Image getSpriteImage() {
+        return spriteImg;
+    }
+    
 }
