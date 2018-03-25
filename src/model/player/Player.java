@@ -37,27 +37,13 @@ public class Player extends Entity {
         getSprite().relocate(x, y);
     }
 
-    public void shoot() {
-        if(canShoot()) {
-            bullets.add(new Bullet(x + this.width - 10, y + (this.height / 2) - 8));
-            bulletCount++;
-            getShot().setVolume(0.25);
-            getShot().play();
-        }
-    }
-
+    @Override
     public void update(){
         if(!playerIsOutOfBounds()){
             this.y = this.y + move.next();
             getSprite().relocate(x, y);
         }
         updateBullets();
-    }
-
-    private void updateBullets(){
-        for (Bullet bullet : bullets) {
-            bullet.setX(bullet.getX() + 12);
-        }
     }
 
     private boolean playerIsOutOfBounds(){
@@ -72,6 +58,7 @@ public class Player extends Entity {
         return false;
     }
 
+    @Override
     public void move(String dir){
         switch(dir){
             case "UP":
@@ -85,14 +72,23 @@ public class Player extends Entity {
         }
     }
 
-    public boolean getImmunity() {
-        return this.immunity;
+    @Override
+    public void shoot() {
+        if(canShoot()) {
+            bullets.add(new Bullet(x + this.width - 10, y + (this.height / 2) - 8));
+            bulletCount++;
+            getShot().setVolume(0.25);
+            getShot().play();
+        }
     }
-    
-    public void setImmunity(boolean immunity) {
-        this.immunity = immunity;
+
+    private void updateBullets(){
+        for (Bullet bullet : bullets) {
+            bullet.setX(bullet.getX() + 12);
+        }
     }
-    
+
+    @Override
     public void takeDamage() {
         // Metode for immunityframes etter damage
         this.health--;
@@ -112,6 +108,14 @@ public class Player extends Entity {
             }
         }, 0, 1000);
         System.out.println("Health is now " + this.health);
+    }
+
+    public boolean getImmunity() {
+        return this.immunity;
+    }
+
+    public void setImmunity(boolean immunity) {
+        this.immunity = immunity;
     }
     
 }

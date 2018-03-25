@@ -16,7 +16,7 @@ public abstract class Entity {
     protected boolean canShoot;
     protected boolean canMove;
     protected int bulletCount;
-    private Sprite sprite;
+    protected Sprite sprite;
     protected Audio shot;
 
     protected ArrayList<Bullet> bullets = new ArrayList<>();
@@ -32,9 +32,9 @@ public abstract class Entity {
         this.bulletCount = 0;
     }
 
-    public abstract void shoot();
     public abstract void update();
     public abstract void move(String dir);
+    public abstract void shoot();
     public abstract void takeDamage();
 
     public int getX() {
@@ -65,7 +65,7 @@ public abstract class Entity {
         return canShoot;
     }
 
-    protected void setCanShoot(boolean canShoot) { this.canShoot = canShoot; }
+    public void setCanShoot(boolean canShoot) { this.canShoot = canShoot; }
 
     public boolean canMove() {
         return canMove;
@@ -83,7 +83,7 @@ public abstract class Entity {
         return shot.getAudio();
     }
 
-    protected void setShot(Audio audio){
+    public void setShot(Audio audio){
         shot = audio;
     }
 
