@@ -5,7 +5,7 @@ import model.GameModel;
 import model.enemy.Enemy;
 import model.levels.LevelData;
 import model.levels.LevelLoader;
-import model.weapons.Bullet;
+import model.weapons.*;
 import view.GameView;
 
 import java.util.ArrayList;
@@ -56,8 +56,8 @@ public class GameController {
             gv.renderBullet(bullet);
         }
         for (Enemy enemy : enemies){
-            for(Bullet bullet : enemy.getBullets()) {
-                gv.renderBullet(bullet);
+            for(EnemyBulletBasic b : enemy.getBullet()) {
+                gv.renderEnemyBullet(b);
             }
         }
     }

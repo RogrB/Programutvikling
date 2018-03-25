@@ -1,7 +1,8 @@
 package model.enemy;
 
+import java.util.ArrayList;
 import model.Entity;
-import model.weapons.Bullet;
+import model.weapons.EnemyBulletBasic;
 
 import java.util.Random;
 
@@ -13,6 +14,8 @@ public class Enemy extends Entity {
 
     private final int CHANCE_TO_SHOOT = 2000;
     private int chanceToShoot = CHANCE_TO_SHOOT;
+    
+    protected ArrayList<EnemyBulletBasic> ebullets = new ArrayList<>();
 
     public Enemy(EnemyType enemyType, EnemyMovementPattern pattern, int x, int y){
         super(
@@ -75,15 +78,19 @@ public class Enemy extends Entity {
             else {
                 System.out.println("Shoot");
                 chanceToShoot = CHANCE_TO_SHOOT;
-                bullets.add(new Bullet(x + 10, y + (this.height / 2) - 8));
+                ebullets.add(new EnemyBulletBasic(x + 10, y + (this.height / 2) - 8));
                 bulletCount++;
             }
         }
     }
 
     private void updateBullets(){
-        for (Bullet bullet : bullets) {
-            bullet.setX(bullet.getX() - 12);
+        for (EnemyBulletBasic b : ebullets) {
+            b.setX(b.getX() - 12);
         }
+    }
+    
+    public ArrayList<EnemyBulletBasic> getBullet() { // Kan ikke override metoden i superklassen - forskjellige datatyper
+        return ebullets;
     }
 }

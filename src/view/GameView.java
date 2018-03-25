@@ -9,7 +9,7 @@ import model.GameModel;
 import model.enemy.Enemy;
 import model.levels.LevelData;
 import model.levels.LevelLoader;
-import model.weapons.Bullet;
+import model.weapons.*;
 
 import java.util.ArrayList;
 
@@ -78,7 +78,12 @@ public class GameView {
     
     public void renderBullet(Bullet bullet) {
         // Metode for å tegne bullets til canvas
-        graphics.clearRect(bullet.getX()-12, bullet.getY(), bullet.getWidth(), bullet.getHeight()+10); // x, y, width, height
+        graphics.clearRect(bullet.getX()-20, bullet.getY(), bullet.getWidth()+20, bullet.getHeight()+20); // x, y, width, height
         graphics.drawImage(bullet.getSpriteImage(), bullet.getX(), bullet.getY());        
+    }
+    
+    public void renderEnemyBullet(EnemyBulletBasic bullet) {
+        graphics.clearRect(bullet.getX(), bullet.getY(), bullet.getWidth()+20, bullet.getHeight());
+        graphics.drawImage(bullet.getSpriteImage(), bullet.getX(), bullet.getY());
     }
 }
