@@ -91,6 +91,7 @@ public class Player extends Entity {
     @Override
     public void takeDamage() {
         // Metode for immunityframes etter damage
+        this.immunity = true;
         this.health--;
         System.out.println("Immunity starts");
         Timer timer = new Timer();
@@ -99,7 +100,7 @@ public class Player extends Entity {
             @Override
             public void run() {
                 teller++;
-                if (teller == 3) {
+                if (teller == 2) { // 3 sekunder med immunity før man kan ta damage igjen
                     teller = 0;
                     immunity = false;                    
                     System.out.println("Immunity ends");

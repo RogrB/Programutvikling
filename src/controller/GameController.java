@@ -65,7 +65,6 @@ public class GameController {
                     if (bullet.getX() < enemy.getX() + enemy.getWidth() && bullet.getY() < enemy.getY() + enemy.getHeight()) {
                         // Enemy got hit
                         System.out.println("HIT!");
-                        gm.player.takeDamage(); // Tester immunityframes her kun for trigger
                         // Do something
                     }
                 }
@@ -84,7 +83,6 @@ public class GameController {
                             gameOver();
                         }
                         else {
-                            gm.player.setImmunity(true);
                             gm.player.takeDamage();
                         }
                     }
