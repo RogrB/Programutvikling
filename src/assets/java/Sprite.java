@@ -6,9 +6,7 @@ import javafx.scene.image.ImageView;
 public enum Sprite {
     PLAYER("assets/image/playerShip2_red.png"),
     ASTROID("assets/image/enemyBlue1.png"),
-    ENEMY_SHIP("assets/image/enemyBlue1.png"),
-    PLAYERBLINK("assets/image/playerShip3_red.png"),
-    PLAYERBLINK2("assets/image/playerShip4_red.png");
+    ENEMY_SHIP("assets/image/enemyBlue1.png");
     
 
     Image img;

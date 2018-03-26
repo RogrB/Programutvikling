@@ -10,6 +10,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import java.util.ArrayList;
+import javafx.scene.image.Image;
 
 public class Player extends Entity {
 
@@ -21,7 +22,6 @@ public class Player extends Entity {
     private boolean immunity = false;
     private int immunityTimer;
     private int blinkCounter;
-    private Timer blinkTimer;
 
     private PlayerMovement move = new PlayerMovement();
 
@@ -95,7 +95,7 @@ public class Player extends Entity {
         this.immunity = true;
         super.takeDamage();
         System.out.println("Immunity starts");
-        // immunityBlink();
+        immunityBlink();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             
@@ -106,7 +106,6 @@ public class Player extends Entity {
                     immunityTimer = 0;
                     immunity = false;
                     System.out.println("Immunity ends");
-                    // immunityBlinkStop();
                     this.cancel();
                 }
             }
@@ -120,34 +119,33 @@ public class Player extends Entity {
     
     public void immunityBlink() {
         // Blinkeanimasjon for immunityframes
+        Timer blinkTimer = new Timer();
         blinkTimer.schedule(new TimerTask() {
             
             @Override
             public void run() {
-                blinkCounter++;
+                blinkCounter++;           
                 switch(blinkCounter) {
                     case 5:
-                        inst.setSprite(Sprite.PLAYERBLINK);
+                        inst.getSprite().setImage(new Image("assets/image/playerShip3_red.png"));
                         break;
                     case 10:
-                        inst.setSprite(Sprite.PLAYERBLINK2);
+                        inst.getSprite().setImage(new Image("assets/image/playerShip4_red.png"));
                         break;
                     case 15:
-                        inst.setSprite(Sprite.PLAYERBLINK);
+                        inst.getSprite().setImage(new Image("assets/image/playerShip3_red.png"));
                         break;
                     case 20:
-                        inst.setSprite(Sprite.PLAYER);
+                        inst.getSprite().setImage(new Image("assets/image/playerShip2_red.png"));
                         blinkCounter = 0;
                         break;
                 }
+                if (immunityTimer == 9) {
+                    this.cancel();
+                    inst.getSprite().setImage(new Image("assets/image/playerShip2_red.png"));
+                }                     
             }
-        }, 0, 10);        
-    }
-    
-    public void immunityBlinkStop() {
-        // Stopper blinkeanimasjon for immunityframes
-        inst.setSprite(Sprite.PLAYER);
-        blinkTimer.cancel();
+        }, 0, 20);        
     }
 
 }
