@@ -10,19 +10,17 @@ public class Bullet {
     private double oldY;
     private int width;
     private int height;
-    
-    private Image spriteImg;
-    private ImageView sprite;
+
+    private Image sprite;
 
     public Bullet(double x, double y) {
         this.x = x;
         this.y = y;
         this.oldX = x;
         this.oldY = y;
-        spriteImg = new Image("assets/image/laserBlue06.png");
-        sprite = new ImageView(spriteImg);
-        height = (int)spriteImg.getHeight();
-        width = (int)spriteImg.getWidth();                
+        sprite = new Image("assets/image/laserBlue06.png");
+        height = (int)sprite.getHeight();
+        width = (int)sprite.getWidth();
     }
 
     public double getX() {
@@ -70,12 +68,13 @@ public class Bullet {
         this.x+= 12;
     }
 
-    public ImageView getSprite(){
-        return sprite;
-    }
     
     public Image getSpriteImage() {
-        return spriteImg;
+        return sprite;
+    }
+
+    public void clearImage() {
+        this.sprite = new Image("assets/image/damage/clear.png");
     }
     
 }

@@ -31,5 +31,9 @@ public class EnemyBulletBasic extends Bullet {
     public Image getSpriteImage() {
         return spriteImg;
     }
+
+    public void clearImage() {
+        this.spriteImg = new Image("assets/image/damage/clear.png");
+    }
     
 }
