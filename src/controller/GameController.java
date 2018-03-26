@@ -11,6 +11,7 @@ import view.GameView;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GameController {
 
@@ -71,18 +72,37 @@ public class GameController {
     
     public void detectHit() {
         // Metode for å sjekke om playerbullet traff enemy
-        for (Bullet bullet : gm.player.getBullets()) {
-            for (Enemy enemy : enemies) {
+
+        Iterator<Bullet> bulletIterator = gm.player.getBullets().iterator();
+        Iterator<Enemy> enemyIterator = enemies.iterator();
+
+        while(bulletIterator.hasNext()){
+            Bullet bullet = bulletIterator.next();
+            while(enemyIterator.hasNext()){
+                Enemy enemy = enemyIterator.next();
                 if (enemy.getX() < bullet.getX() + bullet.getWidth() && enemy.getY() < bullet.getY() + bullet.getHeight()) {
                     if (bullet.getX() < enemy.getX() + enemy.getWidth() && bullet.getY() < enemy.getY() + enemy.getHeight()) {
                         // Enemy got hit
                         System.out.println("HIT!");
+                        enemy.takeDamage();
+                        if(enemy.getHealth() == 0){
+                            enemyIterator.remove();
+                            enemy.getSprite().setImage(null);
+                        }
+                        bullet.clearImage();
+                        gv.renderBullet(bullet);
                         damage.add(new Damage((int)bullet.getX(), (int)bullet.getY()));
+                        bulletIterator.remove();
                         // Do something
                     }
                 }
             }
+
         }
+
+//        for (Bullet bullet : gm.player.getBullets()) {
+//
+//        }
     }
     
     public void detectCollision() {
@@ -94,6 +114,7 @@ public class GameController {
                     if (!gm.player.getImmunity()) {
                         if (gm.player.getHealth() == 1) {
                             gameOver();
+                            gm.player.getSprite().setImage(null);
                         }
                         else {
                             gm.player.takeDamage();
@@ -106,18 +127,26 @@ public class GameController {
     
     public void detectDamage() {
         // Metode for å sjekke om player ble truffet av enemybullet
-        for (Enemy enemy : enemies) {
-            for (EnemyBulletBasic ebullet : enemy.getBullet()) {
+        Iterator<Enemy> enemyIterator = enemies.iterator();
+        while(enemyIterator.hasNext()){
+            Enemy enemy = enemyIterator.next();
+            Iterator<EnemyBulletBasic> eBulletIterator = enemy.getBullet().iterator();
+            while(eBulletIterator.hasNext()){
+                EnemyBulletBasic ebullet = eBulletIterator.next();
                 if (gm.player.getX() < ebullet.getX() + ebullet.getWidth() && gm.player.getY() < ebullet.getY() + ebullet.getHeight()) {
-                    if (ebullet.getX() < gm.player.getX() + gm.player.getWidth() && ebullet.getY() < gm.player.getY() + gm.player.getHeight()) {                    
+                    if (ebullet.getX() < gm.player.getX() + gm.player.getWidth() && ebullet.getY() < gm.player.getY() + gm.player.getHeight()) {
                         if (!gm.player.getImmunity()) {
                             if (gm.player.getHealth() == 1) {
                                 gameOver();
+                                gm.player.getSprite().setImage(null);
                             }
                             else {
                                 gm.player.takeDamage();
                             }
                         }
+                        ebullet.clearImage();
+                        gv.renderEnemyBullet(ebullet);
+                        eBulletIterator.remove();
                     }
                 }
             }
