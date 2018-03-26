@@ -20,6 +20,8 @@ public class Player extends Entity {
     private int score;
     private boolean immunity = false;
     private int immunityTimer;
+    private int blinkCounter;
+    private Timer blinkTimer;
 
     private PlayerMovement move = new PlayerMovement();
 
@@ -28,7 +30,7 @@ public class Player extends Entity {
                 Sprite.PLAYER,
                 40,
                 GameView.GAME_HEIGHT / 2 - (int) Sprite.PLAYER.getHeight() / 2,
-                3
+                5
         );
 
         setCanShoot(true);
@@ -93,6 +95,7 @@ public class Player extends Entity {
         this.immunity = true;
         super.takeDamage();
         System.out.println("Immunity starts");
+        // immunityBlink();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             
@@ -103,6 +106,7 @@ public class Player extends Entity {
                     immunityTimer = 0;
                     immunity = false;
                     System.out.println("Immunity ends");
+                    // immunityBlinkStop();
                     this.cancel();
                 }
             }
@@ -112,6 +116,38 @@ public class Player extends Entity {
 
     public boolean getImmunity() {
         return this.immunity;
+    }
+    
+    public void immunityBlink() {
+        // Blinkeanimasjon for immunityframes
+        blinkTimer.schedule(new TimerTask() {
+            
+            @Override
+            public void run() {
+                blinkCounter++;
+                switch(blinkCounter) {
+                    case 5:
+                        inst.setSprite(Sprite.PLAYERBLINK);
+                        break;
+                    case 10:
+                        inst.setSprite(Sprite.PLAYERBLINK2);
+                        break;
+                    case 15:
+                        inst.setSprite(Sprite.PLAYERBLINK);
+                        break;
+                    case 20:
+                        inst.setSprite(Sprite.PLAYER);
+                        blinkCounter = 0;
+                        break;
+                }
+            }
+        }, 0, 10);        
+    }
+    
+    public void immunityBlinkStop() {
+        // Stopper blinkeanimasjon for immunityframes
+        inst.setSprite(Sprite.PLAYER);
+        blinkTimer.cancel();
     }
 
 }

@@ -4,45 +4,37 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.image.Image;
 
-public class Damage {
-    // Klasse for damage animasjon
-    private int x;
-    private int y;
+public class DamageEnemyBasic extends Damage {
+    // Klasse for damage animasjon - EnemyBasic
     private double width;
     private double height;
     private int teller;
-    boolean finished = false;
     
-    private Image sprite = new Image("assets/image/damage/laserBlue08.png");
+    private Image sprite = new Image("assets/image/damage/laserRed08.png");
     
-    public Damage(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public DamageEnemyBasic(int x, int y) {
+        super(x, y);
         this.width = sprite.getWidth();
         this.height = sprite.getHeight();
         this.display();
     }
     
-    public int getX() {
-        return this.x;
-    }
-    
-    public int getY() {
-        return this.y;
-    }
-    
+    @Override
     public Image getSprite() {
         return this.sprite;
     }
     
+    @Override
     public double getWidth() {
         return this.width;
     }
     
+    @Override
     public double getHeight() {
         return this.height;
     }
     
+    @Override
     public void display() {
         // Viser damageAnimasjon på
         Timer timer = new Timer();
@@ -53,22 +45,22 @@ public class Damage {
                 teller++;
                 switch(teller) {
                     case 5:
-                        sprite = new Image("assets/image/damage/laserBlue09.png");
+                        sprite = new Image("assets/image/damage/laserRed09.png");
                         break;
                     case 10:
-                        sprite = new Image("assets/image/damage/laserBlue10.png");
+                        sprite = new Image("assets/image/damage/laserRed10.png");
                         break;
                     case 15:
-                        sprite = new Image("assets/image/damage/laserBlue11.png");
+                        sprite = new Image("assets/image/damage/laserRed11.png");
                         break;
                     case 20:
-                        sprite = new Image("assets/image/damage/laserBlue10.png");
+                        sprite = new Image("assets/image/damage/laserRed10.png");
                         break;
                     case 25:
-                        sprite = new Image("assets/image/damage/laserBlue09.png");
+                        sprite = new Image("assets/image/damage/laserRed09.png");
                         break;
                     case 30:
-                        sprite = new Image("assets/image/damage/laserBlue08.png");
+                        sprite = new Image("assets/image/damage/laserRed08.png");
                         break;
                     case 35:
                         finished = true;
@@ -80,13 +72,9 @@ public class Damage {
         }, 0, 10);
     }
     
-    public boolean getFinished() {
-        return this.finished;
-    }
-    
+    @Override
     public void clearImage() {
         this.sprite = new Image("assets/image/damage/clear.png");
     }
-    
     
 }

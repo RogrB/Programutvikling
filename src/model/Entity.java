@@ -102,5 +102,9 @@ public abstract class Entity {
         dmg = Math.abs(dmg);
         health -= dmg;
     }
+    
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
+    }
 
 }

@@ -111,6 +111,7 @@ public class GameController {
                 if (gm.player.getX() < ebullet.getX() + ebullet.getWidth() && gm.player.getY() < ebullet.getY() + ebullet.getHeight()) {
                     if (ebullet.getX() < gm.player.getX() + gm.player.getWidth() && ebullet.getY() < gm.player.getY() + gm.player.getHeight()) {                    
                         if (!gm.player.getImmunity()) {
+                            damage.add(new DamageEnemyBasic((int)ebullet.getX(), (int)ebullet.getY()));
                             if (gm.player.getHealth() == 1) {
                                 gameOver();
                             }
@@ -133,7 +134,6 @@ public class GameController {
         // Fjerner damage animasjon etter den er ferdig
         for (Damage damage : damage) {
             if (damage.getFinished()) {
-                damage.clearImage();
                 damage = null;
             }
         }
