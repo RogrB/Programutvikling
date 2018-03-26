@@ -6,7 +6,9 @@ import model.enemy.Enemy;
 import model.levels.LevelData;
 import model.levels.LevelLoader;
 import model.weapons.*;
+import model.weapons.damage.*;
 import view.GameView;
+
 
 import java.util.ArrayList;
 
@@ -22,6 +24,7 @@ public class GameController {
     GameView gv;
     ArrayList<Enemy> enemies;
     LevelLoader level2;
+    ArrayList<Damage> damage = new ArrayList<>();
 
     public void setup(){
         gm = GameModel.getInstance();
@@ -45,6 +48,7 @@ public class GameController {
                 detectHit();
                 detectCollision();
                 detectDamage();
+                clearDamage();
             }
         }; timer.start();
 
@@ -60,6 +64,9 @@ public class GameController {
                 gv.renderEnemyBullet(b);
             }
         }
+        for (Damage damage : damage) {
+            gv.renderDamage(damage);
+        }
     }
     
     public void detectHit() {
@@ -70,6 +77,7 @@ public class GameController {
                     if (bullet.getX() < enemy.getX() + enemy.getWidth() && bullet.getY() < enemy.getY() + enemy.getHeight()) {
                         // Enemy got hit
                         System.out.println("HIT!");
+                        damage.add(new Damage((int)bullet.getX(), (int)bullet.getY()));
                         // Do something
                     }
                 }
@@ -119,6 +127,16 @@ public class GameController {
     public void gameOver() {
         // Is ded!
         System.out.println("Game Over!");
+    }
+    
+    public void clearDamage() {
+        // Fjerner damage animasjon etter den er ferdig
+        for (Damage damage : damage) {
+            if (damage.getFinished()) {
+                damage.clearImage();
+                damage = null;
+            }
+        }
     }
     
 }

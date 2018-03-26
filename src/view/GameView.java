@@ -10,6 +10,7 @@ import model.enemy.Enemy;
 import model.levels.LevelData;
 import model.levels.LevelLoader;
 import model.weapons.*;
+import model.weapons.damage.*;
 
 import java.util.ArrayList;
 
@@ -83,7 +84,14 @@ public class GameView {
     }
     
     public void renderEnemyBullet(EnemyBulletBasic bullet) {
+        // Metode for å tegne enemybullets til canvas
         graphics.clearRect(bullet.getX(), bullet.getY(), bullet.getWidth()+20, bullet.getHeight());
         graphics.drawImage(bullet.getSpriteImage(), bullet.getX(), bullet.getY());
+    }
+    
+    public void renderDamage(Damage damage) {
+        // Metode for å tegne damage-animasjon til canvas
+        graphics.clearRect(damage.getX()-3, damage.getY()-3, damage.getWidth()+6, damage.getHeight()+6);
+        graphics.drawImage(damage.getSprite(), damage.getX(), damage.getY());
     }
 }
