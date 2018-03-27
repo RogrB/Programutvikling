@@ -7,10 +7,10 @@ import model.Existance;
 public class Bullet extends Existance {
     private Sprite sprite;
 
-    public Bullet(int x, int y) {
+    public Bullet(int x, int y, Sprite sprite) {
         this.x = x;
         this.y = y;
-        sprite = Sprite.WEAPON_PLAYER_BASIC;
+        this.sprite = sprite;
         height = (int)sprite.getHeight();
         width = (int)sprite.getWidth();
     }

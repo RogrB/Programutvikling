@@ -1,39 +1,11 @@
 package model.weapons;
 
 
-import javafx.scene.image.Image;
+import assets.java.Sprite;
 
 public class EnemyBulletBasic extends Bullet {
-    private int width;
-    private int height;
-    
-    private Image spriteImg = new Image("assets/image/laserRed.png");
-    
-
     public EnemyBulletBasic(int x, int y) {
-        super(x, y);
-        height = (int)spriteImg.getHeight();
-        width = (int)spriteImg.getWidth();                
-    }
-    
-
-    @Override
-    public int getWidth() {
-        return this.width;
-    }
-    
-    @Override
-    public int getHeight() {
-        return this.height;
-    }
-    
-    @Override
-    public Image getSpriteImage() {
-        return spriteImg;
-    }
-
-    public void clearImage() {
-        this.spriteImg = new Image("assets/image/damage/clear.png");
+        super(x, y, Sprite.WEAPON_ENEMY_BASIC);
     }
     
 }

@@ -28,11 +28,13 @@ public class Enemy extends Entity {
 
         this.TYPE = enemyType;
         this.pattern = pattern;
+
         height = (int) sprite.getHeight();
         width = (int) sprite.getWidth();
-        canShoot = true;
 
-        health = this.TYPE.MAX_HEALTH;
+        canShoot = TYPE.canShoot();
+        weapon = TYPE.WEAPON;
+        health = TYPE.MAX_HEALTH;
 
         sprite.getView().relocate(x, y);
     }
@@ -56,17 +58,7 @@ public class Enemy extends Entity {
         pattern.nextFrame();
         x = (int)pattern.x;
         y = (int)pattern.y;
-        //pattern.resetCoords();
         sprite.getView().relocate(x, y);
-        //shoot();
-        //updateBullets();
-    }
-
-    @Override
-    public void move(String dir){
-        /*sprite.getView().relocate(i, i);
-        i += 10;
-        System.out.println(i);*/
     }
 
     @Override

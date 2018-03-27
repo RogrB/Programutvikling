@@ -16,6 +16,7 @@ public abstract class Entity extends Existance {
     protected int bulletCount;
     protected Sprite sprite;
     protected Audio shot;
+    protected Sprite weapon;
 
     protected ArrayList<Bullet> bullets = new ArrayList<>();
 
@@ -31,7 +32,6 @@ public abstract class Entity extends Existance {
     }
 
     public abstract void update();
-    public abstract void move(String dir);
     public abstract void shoot();
 
     public int getHealth() {

@@ -36,6 +36,7 @@ public class Player extends Entity {
         setCanShoot(true);
         shot = Audio.PLAYER_SHOT;
         getSprite().relocate(x, y);
+        weapon = Sprite.WEAPON_PLAYER_BASIC;
     }
 
     @Override
@@ -59,7 +60,6 @@ public class Player extends Entity {
         return false;
     }
 
-    @Override
     public void move(String dir){
         switch(dir){
             case "UP":
@@ -76,7 +76,7 @@ public class Player extends Entity {
     @Override
     public void shoot() {
         if(canShoot()) {
-            bullets.add(new Bullet(x + this.width - 10, y + (this.height / 2) - 8));
+            bullets.add(new Bullet(x + this.width - 10, y + (this.height / 2) - 8, weapon));
             bulletCount++;
             getShot().setVolume(0.25);
             getShot().play();
