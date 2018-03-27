@@ -4,12 +4,10 @@ import assets.java.Audio;
 import assets.java.Sprite;
 import model.Entity;
 import model.weapons.Bullet;
-import javafx.scene.media.AudioClip;
 import view.GameView;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import java.util.ArrayList;
 import javafx.scene.image.Image;
 
 public class Player extends Entity {

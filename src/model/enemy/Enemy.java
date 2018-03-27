@@ -2,7 +2,7 @@ package model.enemy;
 
 import model.Entity;
 import model.GameModel;
-import model.weapons.EnemyBulletBasic;
+import model.weapons.Bullet;
 
 import java.util.Random;
 
@@ -70,7 +70,7 @@ public class Enemy extends Entity {
             }
             else {
                 chanceToShoot = CHANCE_TO_SHOOT;
-                gm.getEnemyBullets().add(new EnemyBulletBasic(x + 10, y + (this.height / 2) - 8));
+                gm.getEnemyBullets().add(new Bullet(x + 10, y + (this.height / 2) - 8, weapon));
                 bulletCount++;
             }
         }

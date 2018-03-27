@@ -1,7 +1,7 @@
 package model;
 
 import model.player.Player;
-import model.weapons.EnemyBulletBasic;
+import model.weapons.Bullet;
 import view.GameView;
 
 import java.util.ArrayList;
@@ -20,10 +20,10 @@ public class GameModel {
     public static final double SPEED_MODIFIER = 1;
 
     public Player player = Player.getInst();
-    private ArrayList<EnemyBulletBasic> ebullets = new ArrayList<>();
+    private ArrayList<Bullet> enemyBullets = new ArrayList<>();
 
-    public ArrayList<EnemyBulletBasic> getEnemyBullets() {
-        return ebullets;
+    public ArrayList<Bullet> getEnemyBullets() {
+        return enemyBullets;
     }
 
     public void setup(){

@@ -63,7 +63,7 @@ public class GameController {
         for (Bullet bullet : gm.player.getBullets()){
             gv.renderBullet(bullet);
         }
-        for(EnemyBulletBasic b : gm.getEnemyBullets()) {
+        for(Bullet b : gm.getEnemyBullets()) {
             b.setX(b.getX() - 12);
             gv.renderEnemyBullet(b);
         }
@@ -132,9 +132,9 @@ public class GameController {
         Iterator<Enemy> enemyIterator = enemies.iterator();
         while(enemyIterator.hasNext()){
             Enemy enemy = enemyIterator.next();
-            Iterator<EnemyBulletBasic> eBulletIterator = gm.getEnemyBullets().iterator();
+            Iterator<Bullet> eBulletIterator = gm.getEnemyBullets().iterator();
             while(eBulletIterator.hasNext()){
-                EnemyBulletBasic ebullet = eBulletIterator.next();
+                Bullet ebullet = eBulletIterator.next();
                 if (gm.player.getX() < ebullet.getX() + ebullet.getWidth() && gm.player.getY() < ebullet.getY() + ebullet.getHeight()) {
                     if (ebullet.getX() < gm.player.getX() + gm.player.getWidth() && ebullet.getY() < gm.player.getY() + gm.player.getHeight()) {
                         if (!gm.player.getImmunity()) {

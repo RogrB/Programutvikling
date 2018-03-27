@@ -83,7 +83,7 @@ public class GameView {
         graphics.drawImage(bullet.getSpriteImage(), bullet.getX(), bullet.getY());        
     }
     
-    public void renderEnemyBullet(EnemyBulletBasic bullet) {
+    public void renderEnemyBullet(Bullet bullet) {
         // Metode for å tegne enemybullets til canvas
         graphics.clearRect(bullet.getX(), bullet.getY(), bullet.getWidth()+20, bullet.getHeight());
         graphics.drawImage(bullet.getSpriteImage(), bullet.getX(), bullet.getY());
