@@ -8,9 +8,7 @@ import javafx.scene.media.AudioClip;
 
 import java.util.ArrayList;
 
-public abstract class Entity {
-    protected int x, y;
-    protected double height, width;
+public abstract class Entity extends Existance {
     protected int health;
     protected boolean alive;
     protected boolean canShoot;
@@ -25,8 +23,8 @@ public abstract class Entity {
         this.sprite = sprite;
         this.x = x;
         this.y = y;
-        this.height = sprite.getHeight();
-        this.width = sprite.getWidth();
+        this.height = (int) sprite.getHeight();
+        this.width = (int) sprite.getWidth();
         this.health = health;
         this.alive = true;
         this.bulletCount = 0;
@@ -35,22 +33,6 @@ public abstract class Entity {
     public abstract void update();
     public abstract void move(String dir);
     public abstract void shoot();
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getHeight() {
-        return (int) height;
-    }
-
-    public int getWidth() {
-        return (int) width;
-    }
 
     public int getHealth() {
         return health;

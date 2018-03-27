@@ -1,12 +1,15 @@
 package model.enemy;
 
-import java.util.ArrayList;
 import model.Entity;
+import model.GameModel;
 import model.weapons.EnemyBulletBasic;
 
 import java.util.Random;
 
 public class Enemy extends Entity {
+
+    // MVC-access
+    GameModel gm = GameModel.getInstance();
 
     private final EnemyType TYPE;
     private EnemyMovementPattern pattern;
@@ -14,8 +17,6 @@ public class Enemy extends Entity {
 
     private final int CHANCE_TO_SHOOT = 2000;
     private int chanceToShoot = CHANCE_TO_SHOOT;
-    
-    protected ArrayList<EnemyBulletBasic> ebullets = new ArrayList<>();
 
     public Enemy(EnemyType enemyType, EnemyMovementPattern pattern, int x, int y){
         super(
@@ -27,8 +28,8 @@ public class Enemy extends Entity {
 
         this.TYPE = enemyType;
         this.pattern = pattern;
-        height = sprite.getHeight();
-        width = sprite.getWidth();
+        height = (int) sprite.getHeight();
+        width = (int) sprite.getWidth();
         canShoot = true;
 
         health = this.TYPE.MAX_HEALTH;
@@ -57,8 +58,8 @@ public class Enemy extends Entity {
         y = (int)pattern.y;
         //pattern.resetCoords();
         sprite.getView().relocate(x, y);
-        shoot();
-        updateBullets();
+        //shoot();
+        //updateBullets();
     }
 
     @Override
@@ -76,21 +77,11 @@ public class Enemy extends Entity {
                 chanceToShoot--;
             }
             else {
-                System.out.println("Shoot");
                 chanceToShoot = CHANCE_TO_SHOOT;
-                ebullets.add(new EnemyBulletBasic(x + 10, y + (this.height / 2) - 8));
+                gm.getEnemyBullets().add(new EnemyBulletBasic(x + 10, y + (this.height / 2) - 8));
                 bulletCount++;
             }
         }
     }
 
-    private void updateBullets(){
-        for (EnemyBulletBasic b : ebullets) {
-            b.setX(b.getX() - 12);
-        }
-    }
-    
-    public ArrayList<EnemyBulletBasic> getBullet() { // Kan ikke override metoden i superklassen - forskjellige datatyper
-        return ebullets;
-    }
 }

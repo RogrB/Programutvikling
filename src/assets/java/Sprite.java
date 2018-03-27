@@ -4,9 +4,19 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public enum Sprite {
-    PLAYER("assets/image/playerShip2_red.png"),
+
+    // Enemies
     ASTROID("assets/image/enemyBlue1.png"),
-    ENEMY_SHIP("assets/image/enemyBlue1.png");
+    ENEMY_SHIP("assets/image/enemyBlue1.png"),
+
+    // Weapons
+    WEAPON_PLAYER_BASIC("assets/image/laserBlue06.png"),
+
+    WEAPON_ENEMY_BASIC("assets/image/laserRed.png"),
+
+    // Other
+    PLAYER("assets/image/playerShip2_red.png"),
+    CLEAR("assets/image/damage/clear.png");
     
 
     Image img;
@@ -27,5 +37,9 @@ public enum Sprite {
 
     public ImageView getView(){
         return view;
+    }
+
+    public Image getImg() {
+        return img;
     }
 }

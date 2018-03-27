@@ -10,7 +10,7 @@ public class EnemyBulletBasic extends Bullet {
     private Image spriteImg = new Image("assets/image/laserRed.png");
     
 
-    public EnemyBulletBasic(double x, double y) {
+    public EnemyBulletBasic(int x, int y) {
         super(x, y);
         height = (int)spriteImg.getHeight();
         width = (int)spriteImg.getWidth();                

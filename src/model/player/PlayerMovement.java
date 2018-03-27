@@ -7,8 +7,6 @@ public class PlayerMovement {
     private int speed;
     private int dir;
 
-    //private ArrayList<> logDir = new ArrayList<>();
-
     public PlayerMovement() {
         speed = 0;
         dir = 0;

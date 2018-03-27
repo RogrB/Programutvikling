@@ -23,6 +23,8 @@ public class GameController {
     // MVC-access
     GameModel gm;
     GameView gv;
+
+    // Level data
     ArrayList<Enemy> enemies;
     LevelLoader level2;
     ArrayList<Damage> damage = new ArrayList<>();
@@ -43,6 +45,7 @@ public class GameController {
                 gm.player.update();
                 for(Enemy e : enemies){
                     e.update();
+                    e.shoot();
                 }
 
                 updateBullets();
@@ -60,10 +63,9 @@ public class GameController {
         for (Bullet bullet : gm.player.getBullets()){
             gv.renderBullet(bullet);
         }
-        for (Enemy enemy : enemies){
-            for(EnemyBulletBasic b : enemy.getBullet()) {
-                gv.renderEnemyBullet(b);
-            }
+        for(EnemyBulletBasic b : gm.getEnemyBullets()) {
+            b.setX(b.getX() - 12);
+            gv.renderEnemyBullet(b);
         }
         for (Damage damage : damage) {
             gv.renderDamage(damage);
@@ -130,7 +132,7 @@ public class GameController {
         Iterator<Enemy> enemyIterator = enemies.iterator();
         while(enemyIterator.hasNext()){
             Enemy enemy = enemyIterator.next();
-            Iterator<EnemyBulletBasic> eBulletIterator = enemy.getBullet().iterator();
+            Iterator<EnemyBulletBasic> eBulletIterator = gm.getEnemyBullets().iterator();
             while(eBulletIterator.hasNext()){
                 EnemyBulletBasic ebullet = eBulletIterator.next();
                 if (gm.player.getX() < ebullet.getX() + ebullet.getWidth() && gm.player.getY() < ebullet.getY() + ebullet.getHeight()) {
