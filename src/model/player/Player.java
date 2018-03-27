@@ -4,7 +4,10 @@ import assets.java.Audio;
 import assets.java.Sprite;
 import model.Entity;
 import model.weapons.Bullet;
+import model.weapons.Weapon;
 import view.GameView;
+
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -16,11 +19,12 @@ public class Player extends Entity {
     private static Player inst = new Player();
     public static Player getInst(){ return inst; }
 
-    private int score;
+    // State
     private boolean immunity = false;
     private int immunityTimer;
     private int blinkCounter;
 
+    private ArrayList<Bullet> bullets = new ArrayList<>();
     private PlayerMovement move = new PlayerMovement();
 
     private Player(){
@@ -34,7 +38,7 @@ public class Player extends Entity {
         setCanShoot(true);
         shot = Audio.PLAYER_SHOT;
         getSprite().relocate(x, y);
-        weapon = Sprite.WEAPON_PLAYER_BASIC;
+        weapon = Weapon.PLAYER_BASIC;
     }
 
     @Override
@@ -146,4 +150,7 @@ public class Player extends Entity {
         }, 0, 20);        
     }
 
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
+    }
 }

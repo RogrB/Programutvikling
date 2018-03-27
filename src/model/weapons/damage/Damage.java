@@ -22,11 +22,11 @@ public class Damage {
         this.height = sprite.getHeight();
         this.display();
     }
-    
+
     public int getX() {
         return this.x;
     }
-    
+
     public int getY() {
         return this.y;
     }
@@ -34,15 +34,15 @@ public class Damage {
     public Image getSprite() {
         return this.sprite;
     }
-    
+
     public double getWidth() {
         return this.width;
     }
-    
+
     public double getHeight() {
         return this.height;
     }
-    
+
     public void display() {
         // Viser damageAnimasjon på
         Timer timer = new Timer();

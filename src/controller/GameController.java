@@ -101,10 +101,6 @@ public class GameController {
             }
 
         }
-
-//        for (Bullet bullet : gm.player.getBullets()) {
-//
-//        }
     }
     
     public void detectCollision() {

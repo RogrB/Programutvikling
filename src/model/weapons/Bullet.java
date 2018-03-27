@@ -5,22 +5,24 @@ import javafx.scene.image.Image;
 import model.Existance;
 
 public class Bullet extends Existance {
-    private Sprite sprite;
+    private final Weapon WEAPON;
+    private Image img;
 
-    public Bullet(int x, int y, Sprite sprite) {
+    public Bullet(int x, int y, Weapon weapon) {
         this.x = x;
         this.y = y;
-        this.sprite = sprite;
-        height = (int)sprite.getHeight();
-        width = (int)sprite.getWidth();
+        WEAPON = weapon;
+        img = WEAPON.SPRITE.getImg();
+        height = (int)weapon.SPRITE.getHeight();
+        width = (int)weapon.SPRITE.getWidth();
     }
 
     public Image getSpriteImage() {
-        return sprite.getImg();
+        return img;
     }
 
     public void clearImage() {
-        this.sprite = Sprite.CLEAR;
+        img = Sprite.CLEAR.getImg();
     }
     
 }

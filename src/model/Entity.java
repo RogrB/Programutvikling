@@ -5,6 +5,7 @@ import assets.java.Sprite;
 import model.weapons.Bullet;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
+import model.weapons.Weapon;
 
 import java.util.ArrayList;
 
@@ -16,9 +17,7 @@ public abstract class Entity extends Existance {
     protected int bulletCount;
     protected Sprite sprite;
     protected Audio shot;
-    protected Sprite weapon;
-
-    protected ArrayList<Bullet> bullets = new ArrayList<>();
+    protected Weapon weapon;
 
     public Entity(Sprite sprite, int x, int y, int health){
         this.sprite = sprite;
@@ -66,10 +65,6 @@ public abstract class Entity extends Existance {
 
     public void setShot(Audio audio){
         shot = audio;
-    }
-
-    public ArrayList<Bullet> getBullets() {
-        return bullets;
     }
 
     public void setHealth(int health) {
