@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.image.Image;
 import model.GameModel;
 import model.enemy.Enemy;
 import model.levels.LevelData;
@@ -10,8 +11,11 @@ import model.weapons.damage.*;
 import view.GameView;
 
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameController {
 
@@ -28,6 +32,7 @@ public class GameController {
     ArrayList<Enemy> enemies;
     LevelLoader level2;
     ArrayList<Damage> damage = new ArrayList<>();
+    public ArrayList<BulletHitAnimation> bulletHitAnimations = new ArrayList<>();
 
     public void setup(){
         gm = GameModel.getInstance();
@@ -109,7 +114,7 @@ public class GameController {
             if (enemy.getX() < gm.player.getX() + gm.player.getWidth() && enemy.getY() < gm.player.getY() + gm.player.getHeight()) {
                 if (gm.player.getX() < enemy.getX() + enemy.getWidth() && gm.player.getY() < enemy.getY() + enemy.getHeight()) {
                     System.out.println("Player hit by enemy object");
-                    if (!gm.player.getImmunity()) {
+                    if (!gm.player.isImmune()) {
                         if (gm.player.getHealth() == 1) {
                             gameOver();
                             gm.player.getSprite().setImage(null);
@@ -133,7 +138,7 @@ public class GameController {
                 Bullet ebullet = eBulletIterator.next();
                 if (gm.player.getX() < ebullet.getX() + ebullet.getWidth() && gm.player.getY() < ebullet.getY() + ebullet.getHeight()) {
                     if (ebullet.getX() < gm.player.getX() + gm.player.getWidth() && ebullet.getY() < gm.player.getY() + gm.player.getHeight()) {
-                        if (!gm.player.getImmunity()) {
+                        if (!gm.player.isImmune()) {
                             damage.add(new DamageEnemyBasic((int)ebullet.getX(), (int)ebullet.getY()));
                             if (gm.player.getHealth() == 1) {
                                 gameOver();
@@ -151,6 +156,50 @@ public class GameController {
             }
         }
     }
+
+
+    /////////////////////////////////////////////////
+    // Prøver å normalisere og skrive tørrere kode
+
+    /*private void shotByEnemy(){
+        for(Bullet b : gm.getEnemyBullets()){
+            if(bulletHitsPlayer(b)){
+                if(gm.player.isImmune()){
+                    initImmunity();
+                }
+                b.hasHit(true);
+                bulletHitAnimations.add(new BulletHitAnimation(b));
+                //gm.getEnemyBullets().remove(b); // DENNE SKAPER MASSE ERROR DRITT
+
+                //System.out.println(bulletHitAnimations.size());
+            }
+        }
+    }
+
+    private boolean bulletHitsPlayer(Bullet b) {
+        if (gm.player.getX() < b.getX() + b.getWidth() && gm.player.getY() < b.getY() + b.getHeight()) {
+            if (b.getX() < gm.player.getX() + gm.player.getWidth() && b.getY() < gm.player.getY() + gm.player.getHeight()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void initImmunity(){
+        gm.player.setImmunity(true);
+        System.out.println("Immunity Start");
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                gm.player.setImmunity(false);
+                System.out.println("Immunity End");
+            }
+        }, gm.player.getImmunityTime());
+
+    }*/
+    ////////////////////////////////////////////
     
     public void gameOver() {
         // Is ded!

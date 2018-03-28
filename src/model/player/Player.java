@@ -21,6 +21,7 @@ public class Player extends Entity {
 
     // State
     private boolean immunity = false;
+    private int immunityTime = 3000;
     private int immunityTimer;
     private int blinkCounter;
 
@@ -115,10 +116,14 @@ public class Player extends Entity {
         System.out.println("Health is now " + this.health);
     }
 
-    public boolean getImmunity() {
+    public boolean isImmune() {
         return this.immunity;
     }
-    
+    public void setImmunity(boolean immunity) { this.immunity = immunity; }
+    public int getImmunityTime() {
+        return immunityTime;
+    }
+
     public void immunityBlink() {
         // Blinkeanimasjon for immunityframes
         Timer blinkTimer = new Timer();
@@ -145,9 +150,9 @@ public class Player extends Entity {
                 if (immunityTimer == 9) {
                     this.cancel();
                     inst.getSprite().setImage(new Image("assets/image/playerShip2_red.png"));
-                }                     
+                }
             }
-        }, 0, 20);        
+        }, 0, 20);
     }
 
     public ArrayList<Bullet> getBullets() {

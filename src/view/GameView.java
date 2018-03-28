@@ -91,4 +91,10 @@ public class GameView {
         graphics.clearRect(damage.getX()-3, damage.getY()-3, damage.getWidth()+6, damage.getHeight()+6);
         graphics.drawImage(damage.getSprite(), damage.getX(), damage.getY());
     }
+
+    public void renderBulletHits(BulletHitAnimation b) {
+        // Metode for å tegne damage-animasjon til canvas
+        graphics.clearRect(b.X-3, b.Y-3, b.WIDTH+6, b.HEIGHT+6);
+        graphics.drawImage(b.getImage(), b.X, b.Y);
+    }
 }

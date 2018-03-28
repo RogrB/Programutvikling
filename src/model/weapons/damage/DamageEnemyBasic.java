@@ -6,32 +6,20 @@ import javafx.scene.image.Image;
 
 public class DamageEnemyBasic extends Damage {
     // Klasse for damage animasjon - EnemyBasic
-    private double width;
-    private double height;
     private int teller;
     
     private Image sprite = new Image("assets/image/damage/laserRed08.png");
     
     public DamageEnemyBasic(int x, int y) {
         super(x, y);
-        this.width = sprite.getWidth();
-        this.height = sprite.getHeight();
+        width = (int)sprite.getWidth();
+        height = (int)sprite.getHeight();
         this.display();
     }
     
     @Override
     public Image getSprite() {
         return this.sprite;
-    }
-    
-    @Override
-    public double getWidth() {
-        return this.width;
-    }
-    
-    @Override
-    public double getHeight() {
-        return this.height;
     }
     
     @Override

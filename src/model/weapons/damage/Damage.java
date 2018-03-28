@@ -3,13 +3,10 @@ package model.weapons.damage;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.image.Image;
+import model.Existance;
 
-public class Damage {
+public class Damage extends Existance {
     // Klasse for damage animasjon
-    private int x;
-    private int y;
-    private double width;
-    private double height;
     private int teller;
     boolean finished = false;
     
@@ -18,8 +15,8 @@ public class Damage {
     public Damage(int x, int y) {
         this.x = x;
         this.y = y;
-        this.width = sprite.getWidth();
-        this.height = sprite.getHeight();
+        width = (int)sprite.getWidth();
+        height = (int)sprite.getHeight();
         this.display();
     }
 
@@ -33,14 +30,6 @@ public class Damage {
     
     public Image getSprite() {
         return this.sprite;
-    }
-
-    public double getWidth() {
-        return this.width;
-    }
-
-    public double getHeight() {
-        return this.height;
     }
 
     public void display() {

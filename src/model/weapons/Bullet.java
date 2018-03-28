@@ -5,8 +5,9 @@ import javafx.scene.image.Image;
 import model.Existance;
 
 public class Bullet extends Existance {
-    private final Weapon WEAPON;
+    public final Weapon WEAPON;
     private Image img;
+    private boolean isHit = false;
 
     public Bullet(int x, int y, Weapon weapon) {
         this.x = x;
@@ -23,6 +24,20 @@ public class Bullet extends Existance {
 
     public void clearImage() {
         img = Sprite.CLEAR.getImg();
+    }
+
+    public void hasHit(Boolean hit) { this.isHit = hit; }
+
+    @Override
+    public void setX(int x){
+        if(!isHit)
+            super.setX(x);
+    }
+
+    @Override
+    public void setY(int y){
+        if(!isHit)
+            super.setY(y);
     }
     
 }
