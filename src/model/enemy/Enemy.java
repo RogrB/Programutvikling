@@ -13,7 +13,6 @@ public class Enemy extends Entity {
 
     private final EnemyType TYPE;
     private EnemyMovementPattern pattern;
-    int i = 100;
 
     private final int CHANCE_TO_SHOOT = 2000;
     private int chanceToShoot = CHANCE_TO_SHOOT;

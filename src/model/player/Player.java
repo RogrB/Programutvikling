@@ -22,7 +22,6 @@ public class Player extends Entity {
     // State
     private boolean immunity = false;
     private int immunityTime = 3000;
-    private int immunityTimer;
     private int blinkCounter;
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
@@ -93,27 +92,25 @@ public class Player extends Entity {
     }
 
     @Override
-    public void takeDamage() {
-        // Metode for immunityframes etter damage
-        this.immunity = true;
-        super.takeDamage();
-        System.out.println("Immunity starts");
+    public void takeDamage(){
+        if(!isImmune()){
+            initImmunity();
+            super.takeDamage();
+        }
+    }
+
+    private void initImmunity(){
+        setImmunity(true);
         immunityBlink();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
-            
+
             @Override
             public void run() {
-                immunityTimer++;
-                if (immunityTimer == 10) { // 3 sekunder med immunity før man kan ta damage igjen
-                    immunityTimer = 0;
-                    immunity = false;
-                    System.out.println("Immunity ends");
-                    this.cancel();
-                }
+                setImmunity(false);
             }
-        }, 0, 200);
-        System.out.println("Health is now " + this.health);
+        }, getImmunityTime());
+
     }
 
     public boolean isImmune() {
@@ -124,7 +121,7 @@ public class Player extends Entity {
         return immunityTime;
     }
 
-    public void immunityBlink() {
+    private void immunityBlink() {
         // Blinkeanimasjon for immunityframes
         Timer blinkTimer = new Timer();
         blinkTimer.schedule(new TimerTask() {

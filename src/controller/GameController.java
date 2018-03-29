@@ -11,8 +11,6 @@ import view.GameView;
 
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GameController {
 
@@ -51,11 +49,9 @@ public class GameController {
                 }
 
                 updateBullets();
-                //detectHit();
                 detectCollision();
-                ifEnemyShot();
-                ifShotByEnemy();
-                clearDamage();
+                detectEnemyShotByPlayer();
+                detectPlayerShotByEnemy();
             }
         }; timer.start();
 
@@ -71,7 +67,63 @@ public class GameController {
             gv.renderEnemyBullet(b);
         }
     }
-    
+
+    private void detectEnemyShotByPlayer(){
+        for(Bullet b : gm.player.getBullets()){
+            for(Enemy e : enemies){
+                if(playerBulletHitsEnemy(b, e)){
+                    e.takeDamage(b.getDmg());
+                    b.hasHit();
+                }
+            }
+        }
+    }
+
+    private void detectPlayerShotByEnemy(){
+        for(Bullet b : gm.getEnemyBullets()){
+            if(enemyBulletHitsPlayer(b)){
+                gm.player.takeDamage();
+                b.hasHit();
+            }
+        }
+    }
+
+    private boolean playerBulletHitsEnemy(Bullet b, Enemy e){
+        if (e.getX() < b.getX() + b.getWidth() && e.getY() < b.getY() + b.getHeight()) {
+            if (b.getX() < e.getX() + e.getWidth() && b.getY() < b.getY() + e.getHeight()) {
+                return true;
+            }
+        } return false;
+    }
+
+    private boolean enemyBulletHitsPlayer(Bullet b) {
+        if (gm.player.getX() < b.getX() + b.getWidth() && gm.player.getY() < b.getY() + b.getHeight()) {
+            if (b.getX() < gm.player.getX() + gm.player.getWidth() && b.getY() < gm.player.getY() + gm.player.getHeight()) {
+                return true;
+            }
+        } return false;
+    }
+
+    public void detectCollision() {
+        // Metode for å sjekke om player ble truffet av enemy - ikke prosjektil
+        for (Enemy enemy: enemies) {
+            if (enemy.getX() < gm.player.getX() + gm.player.getWidth() && enemy.getY() < gm.player.getY() + gm.player.getHeight()) {
+                if (gm.player.getX() < enemy.getX() + enemy.getWidth() && gm.player.getY() < enemy.getY() + enemy.getHeight()) {
+                    System.out.println("Player hit by enemy object");
+                    if (!gm.player.isImmune()) {
+                        if (gm.player.getHealth() == 1) {
+                            gameOver();
+                            gm.player.getSprite().setImage(null);
+                        }
+                        else {
+                            gm.player.takeDamage();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     /*public void detectHit() {
         // Metode for å sjekke om playerbullet traff enemy
 
@@ -100,66 +152,9 @@ public class GameController {
                 }
             }
         }
-    }*/
-
-    private void ifEnemyShot(){
-        for(Bullet b : gm.player.getBullets()){
-            for(Enemy e : enemies){
-                if(bulletHitsEnemy(b, e)){
-                    e.takeDamage(b.getDmg());
-                    b.hasHit();
-                }
-            }
-        }
     }
 
-    private void purge(){
-        for(Enemy e : enemies){
-            if(!e.isAlive()){
-                enemies.remove(e);
-            }
-        }
-        for(Bullet b : gm.getEnemyBullets()){
-            if(b.pleasePurge()){
-                gm.getEnemyBullets().remove(b);
-            }
-        }
-        for(Bullet b : gm.player.getBullets()){
-            if(b.pleasePurge()){
-                gm.player.getBullets().remove(b);
-            }
-        }
-    }
-
-    private boolean bulletHitsEnemy(Bullet b, Enemy e){
-        if (e.getX() < b.getX() + b.getWidth() && e.getY() < b.getY() + b.getHeight()) {
-            if (b.getX() < e.getX() + e.getWidth() && b.getY() < b.getY() + e.getHeight()) {
-                return true;
-            }
-        } return false;
-    }
-    
-    public void detectCollision() {
-        // Metode for å sjekke om player ble truffet av enemy - ikke prosjektil
-        for (Enemy enemy: enemies) {
-            if (enemy.getX() < gm.player.getX() + gm.player.getWidth() && enemy.getY() < gm.player.getY() + gm.player.getHeight()) {
-                if (gm.player.getX() < enemy.getX() + enemy.getWidth() && gm.player.getY() < enemy.getY() + enemy.getHeight()) {
-                    System.out.println("Player hit by enemy object");
-                    if (!gm.player.isImmune()) {
-                        if (gm.player.getHealth() == 1) {
-                            gameOver();
-                            gm.player.getSprite().setImage(null);
-                        }
-                        else {
-                            gm.player.takeDamage();
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    /*public void detectDamage() {
+    public void detectDamage() {
         // Metode for å sjekke om player ble truffet av enemybullet
         Iterator<Enemy> enemyIterator = enemies.iterator();
         while(enemyIterator.hasNext()){
@@ -186,57 +181,26 @@ public class GameController {
                 }
             }
         }
-    }*/
-
-
-    /////////////////////////////////////////////////
-    // Prøver å normalisere og skrive tørrere kode
-
-    private void ifShotByEnemy(){
-        for(Bullet b : gm.getEnemyBullets()){
-            if(bulletHitsPlayer(b)){
-                if(!gm.player.isImmune()){
-                    initImmunity();
-                }
-                b.hasHit();
-            }
-        }
     }
 
-    private boolean bulletHitsPlayer(Bullet b) {
-        if (gm.player.getX() < b.getX() + b.getWidth() && gm.player.getY() < b.getY() + b.getHeight()) {
-            if (b.getX() < gm.player.getX() + gm.player.getWidth() && b.getY() < gm.player.getY() + gm.player.getHeight()) {
-                return true;
-            }
-        } return false;
-    }
-
-    private void initImmunity(){
-        gm.player.setImmunity(true);
-        System.out.println("Immunity Start");
-        gm.player.immunityBlink();
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                gm.player.setImmunity(false);
-                System.out.println("Immunity End");
-            }
-        }, gm.player.getImmunityTime());
-
-    }
-    
-    public void gameOver() {
-        // Is ded!
-        System.out.println("Game Over!");
-    }
-    
     public void clearDamage() {
         // Fjerner damage animasjon etter den er ferdig
         for (Damage damage : damage) {
             if (damage.getFinished()) {
                 damage = null;
+            }
+        }
+    }*/
+    
+    public void gameOver() {
+        // Is ded!
+        System.out.println("Game Over!");
+    }
+
+    private void purge(){
+        for(Enemy e : enemies){
+            if(!e.isAlive()){
+                enemies.remove(e);
             }
         }
     }
