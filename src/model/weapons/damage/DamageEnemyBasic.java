@@ -4,7 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.image.Image;
 
-public class DamageEnemyBasic extends Damage {
+/*public class DamageEnemyBasic extends Damage {
     // Klasse for damage animasjon - EnemyBasic
     private int teller;
     
@@ -65,4 +65,4 @@ public class DamageEnemyBasic extends Damage {
         this.sprite = new Image("assets/image/damage/clear.png");
     }
     
-}
+}*/

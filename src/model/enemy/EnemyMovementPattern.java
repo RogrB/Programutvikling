@@ -101,6 +101,11 @@ public class EnemyMovementPattern {
         y = origY;
     }
 
+    public void setStartPosision(double x, double y){
+        this.x = x;
+        this.y = y;
+    }
+
     private double rads(double i){
         return Math.toRadians(i);
     }

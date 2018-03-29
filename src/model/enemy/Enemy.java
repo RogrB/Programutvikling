@@ -39,11 +39,6 @@ public class Enemy extends Entity {
         sprite.getView().relocate(x, y);
     }
 
-    public void updatePatternStartingPoint(double x, double y){
-        pattern.x = x;
-        pattern.y = y;
-    }
-
     // GET
     public int getHealth() {
         return health;

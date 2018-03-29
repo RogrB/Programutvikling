@@ -147,7 +147,7 @@ public class Player extends Entity {
                         blinkCounter = 0;
                         break;
                 }
-                if (immunityTimer == 9) {
+                if (!immunity) {
                     this.cancel();
                     inst.getSprite().setImage(new Image("assets/image/playerShip2_red.png"));
                 }
