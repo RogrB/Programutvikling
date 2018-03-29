@@ -8,7 +8,7 @@ import view.GameView;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BulletHitAnimation {
+/*public class BulletHitAnimation {
 
     GameController gc = GameController.getInstance();
     GameView gv = GameView.getInstance();
@@ -68,4 +68,4 @@ public class BulletHitAnimation {
     public Image getImage() {
         return image;
     }
-}
+}*/

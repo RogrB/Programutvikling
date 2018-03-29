@@ -1,6 +1,5 @@
 package controller;
 
-import assets.java.Sprite;
 import javafx.animation.AnimationTimer;
 import model.GameModel;
 import model.enemy.Enemy;
@@ -12,7 +11,6 @@ import view.GameView;
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -28,7 +26,7 @@ public class GameController {
     GameView gv;
 
     // Level data
-    ArrayList<Enemy> enemies;
+    public ArrayList<Enemy> enemies;
     LevelLoader level2;
     ArrayList<Damage> damage = new ArrayList<>();
 
@@ -45,6 +43,7 @@ public class GameController {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                purge();
                 gm.player.update();
                 for(Enemy e : enemies){
                     e.update();
@@ -107,8 +106,27 @@ public class GameController {
         for(Bullet b : gm.player.getBullets()){
             for(Enemy e : enemies){
                 if(bulletHitsEnemy(b, e)){
-                    e.takeDamage(b.WEAPON.DMG);
+                    e.takeDamage(b.getDmg());
+                    b.hasHit();
                 }
+            }
+        }
+    }
+
+    private void purge(){
+        for(Enemy e : enemies){
+            if(!e.isAlive()){
+                enemies.remove(e);
+            }
+        }
+        for(Bullet b : gm.getEnemyBullets()){
+            if(b.pleasePurge()){
+                gm.getEnemyBullets().remove(b);
+            }
+        }
+        for(Bullet b : gm.player.getBullets()){
+            if(b.pleasePurge()){
+                gm.player.getBullets().remove(b);
             }
         }
     }

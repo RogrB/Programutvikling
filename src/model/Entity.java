@@ -41,6 +41,10 @@ public abstract class Entity extends Existance {
         return alive;
     }
 
+    public void isDead(){
+        alive = false;
+    }
+
     public boolean canShoot() {
         return canShoot;
     }
@@ -78,6 +82,10 @@ public abstract class Entity extends Existance {
     public void takeDamage(int dmg){
         dmg = Math.abs(dmg);
         health -= dmg;
+        if(health <= 0) {
+            sprite.getView().setImage(null);
+            isDead();
+        }
     }
     
     public void setSprite(Sprite sprite) {

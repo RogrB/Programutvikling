@@ -1,23 +1,23 @@
 package model.weapons;
 
 import assets.java.Sprite;
-import controller.GameController;
 import javafx.scene.image.Image;
 import model.Existance;
-import model.GameModel;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Bullet extends Existance {
 
-    public final Weapon WEAPON;
+    private final Weapon WEAPON;
     private Sprite sprite;
     private boolean isHit = false;
 
     // Animation variables
-    private final int ANIM_SPEED = 20000;
+    private final int ANIM_SPEED = 1000;
     private int animCounter = 0;
+    int animIndex = 0;
+    private boolean pleasePurge = false;
 
     public Bullet(int x, int y, Weapon weapon) {
         this.x = x;
@@ -52,6 +52,12 @@ public class Bullet extends Existance {
             super.setY(y);
     }
 
+    public int getDmg(){
+        if(isHit)
+            return WEAPON.DMG;
+        return 0;
+    }
+
     private void alterSprite(Sprite s){
         sprite = s;
         setNewDimensions(s);
@@ -68,24 +74,30 @@ public class Bullet extends Existance {
             @Override
             public void run() {
                 if(animCounter < WEAPON.BULLET_HIT.length) {
-                    alterSprite(WEAPON.BULLET_HIT[animCounter]);
+                    animIndex = animCounter;
+                    alterSprite(WEAPON.BULLET_HIT[animIndex]);
                 } else if (animCounter >= (WEAPON.BULLET_HIT.length * 2)) {
                     timer.cancel();
                     timer.purge();
-                    bulletPurge();
+                    setPleasePurge(true);
                 } else if (animCounter >= (WEAPON.BULLET_HIT.length * 2)-1) {
                     alterSprite(Sprite.CLEAR);
                 } else {
-                    alterSprite(WEAPON.BULLET_HIT[WEAPON.BULLET_HIT.length - (animCounter - WEAPON.BULLET_HIT.length + 2)]);
+                    animIndex = WEAPON.BULLET_HIT.length - (animCounter - WEAPON.BULLET_HIT.length + 2);
+                    alterSprite(WEAPON.BULLET_HIT[animIndex]);
                 }
-                System.out.print(animCounter);
+                System.out.print(animIndex);
                 animCounter++;
             }
         }, 0, ANIM_SPEED);
     }
 
-    private void bulletPurge() {
-        GameModel.getInstance().getEnemyBullets().remove(this);
+    private void setPleasePurge(boolean purge){
+        pleasePurge = purge;
+    }
+
+    public boolean pleasePurge(){
+        return pleasePurge;
     }
     
 }
