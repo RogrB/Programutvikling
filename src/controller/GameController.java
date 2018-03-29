@@ -11,6 +11,7 @@ import view.GameView;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GameController {
 
@@ -198,9 +199,14 @@ public class GameController {
     }
 
     private void purge(){
-        for(Enemy e : enemies){
-            if(!e.isAlive()){
-                enemies.remove(e);
+        Iterator<Enemy> enemyIterator = enemies.iterator();
+
+        Enemy e = enemyIterator.next();
+        while(enemyIterator.hasNext()){
+            if(e.isAlive()){
+                enemyIterator.remove();
+                e = null;
+
             }
         }
     }
