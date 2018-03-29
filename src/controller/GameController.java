@@ -75,6 +75,8 @@ public class GameController {
                 if(playerBulletHitsEnemy(b, e)){
                     e.takeDamage(b.getDmg());
                     b.hasHit();
+                    b.clearImage();
+                    gv.renderBullet(b);
                 }
             }
         }
