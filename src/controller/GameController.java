@@ -202,10 +202,20 @@ public class GameController {
 
     private void purge(){
         Iterator<Enemy> enemyIterator = enemies.iterator();
-
+        if(enemies.size() == 0){
+            return;
+        }
         Enemy e = enemyIterator.next();
+        if(enemies.size() == 1){
+            if(!e.isAlive()){
+                System.out.println("Removing enemy");
+                enemyIterator.remove();
+            }
+        }
         while(enemyIterator.hasNext()){
-            if(e.isAlive()){
+            System.out.println("Hey there");
+            if(!e.isAlive()){
+                System.out.println("Removing enemy");
                 enemyIterator.remove();
                 e = null;
 
