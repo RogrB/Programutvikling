@@ -93,7 +93,7 @@ public class GameController {
 
     private boolean playerBulletHitsEnemy(Bullet b, Enemy e){
         if (e.getX() < b.getX() + b.getWidth() && e.getY() < b.getY() + b.getHeight()) {
-            if (b.getX() < e.getX() + e.getWidth() && b.getY() < b.getY() + e.getHeight()) {
+            if (b.getX() < e.getX() + e.getWidth() && b.getY() < e.getY() + e.getHeight()) {
                 return true;
             }
         } return false;

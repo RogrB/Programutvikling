@@ -24,7 +24,18 @@ public enum Sprite {
 
     // Other
     PLAYER("assets/image/playerShip2_red.png"),
-    CLEAR("assets/image/damage/clear.png");
+    CLEAR("assets/image/damage/clear.png"),
+    
+    // Player Death
+    PLAYER_DEATH_1("assets/image/playerDeath/playerDeath_001.png"),
+    PLAYER_DEATH_2("assets/image/playerDeath/playerDeath_002.png"),
+    PLAYER_DEATH_3("assets/image/playerDeath/playerDeath_003.png"),
+    PLAYER_DEATH_4("assets/image/playerDeath/playerDeath_004.png"),
+    PLAYER_DEATH_5("assets/image/playerDeath/playerDeath_005.png"),
+    PLAYER_DEATH_6("assets/image/playerDeath/playerDeath_006.png"),
+    PLAYER_DEATH_7("assets/image/playerDeath/playerDeath_007.png"),
+    PLAYER_DEATH_8("assets/image/playerDeath/playerDeath_008.png"),
+    PLAYER_DEATH_9("assets/image/playerDeath/playerDeath_009.png");
     
 
     Image img;

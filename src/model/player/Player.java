@@ -21,8 +21,9 @@ public class Player extends Entity {
 
     // State
     private boolean immunity = false;
-    private int immunityTime = 3000;
+    private int immunityTime = 2000;
     private int blinkCounter;
+    private final int fireRate = 300; // Bør flyttes til individuelle weapons (Høyere tall gir tregere skudd)
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private PlayerMovement move = new PlayerMovement();
@@ -82,7 +83,22 @@ public class Player extends Entity {
             bulletCount++;
             getShot().setVolume(0.25);
             getShot().play();
+            setCanShoot(false);
+            shotTimer();
         }
+    }
+    
+    public void shotTimer() {
+        // Metode for å begrense hvor ofte man kan skyte
+        Timer shotTimer = new Timer();
+        shotTimer.schedule(new TimerTask() {
+            
+            @Override
+            public void run() {
+                setCanShoot(true);
+                this.cancel();
+            }
+        }, fireRate);        
     }
 
     private void updateBullets(){
