@@ -112,7 +112,7 @@ public abstract class Entity extends Existance {
                     this.cancel();
                 }
             }
-        }, 0, 800);
+        }, 0, 80);
     }
 
 }
