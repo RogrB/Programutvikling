@@ -91,4 +91,9 @@ public class GameView {
         graphics.clearRect(damage.getX()-3, damage.getY()-3, damage.getWidth()+6, damage.getHeight()+6);
         graphics.drawImage(damage.getSprite(), damage.getX(), damage.getY());
     }
+    
+    public void gameOver() {
+        // Is ded!
+        graphics.drawImage(new Image("assets/image/gameover.png"), (GAME_WIDTH/2) - 368, (GAME_HEIGHT/2) - 51);
+    }
 }

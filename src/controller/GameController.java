@@ -23,6 +23,8 @@ public class GameController {
     // MVC-access
     GameModel gm;
     GameView gv;
+    
+    private boolean tickLeft = true; // Om enemies skal ticke mot venstre
 
     // Level data
     public ArrayList<Enemy> enemies;
@@ -53,6 +55,13 @@ public class GameController {
                 detectCollision();
                 detectEnemyShotByPlayer();
                 detectPlayerShotByEnemy();
+                if (tickLeft) {
+                    tickLeft();
+                }
+                if (!gm.player.isAlive()) {
+                    gv.gameOver();
+                    this.stop();
+                }
             }
         }; timer.start();
 
@@ -115,7 +124,6 @@ public class GameController {
                     System.out.println("Player hit by enemy object");
                     if (!gm.player.isImmune()) {
                         if (gm.player.getHealth() == 1) {
-                            gameOver();
                             gm.player.getSprite().setImage(null);
                         }
                         else {
@@ -194,11 +202,6 @@ public class GameController {
             }
         }
     }*/
-    
-    public void gameOver() {
-        // Is ded!
-        System.out.println("Game Over!");
-    }
 
     private void purge(){
         Iterator<Enemy> enemyIterator = enemies.iterator();
@@ -220,6 +223,12 @@ public class GameController {
                 e = null;
 
             }
+        }
+    }
+    
+    private void tickLeft() {
+        for (Enemy enemy: enemies) {
+            enemy.setX(enemy.getX() - enemy.getLeftTick());
         }
     }
     
