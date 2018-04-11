@@ -10,8 +10,8 @@ import java.util.TimerTask;
 
 public class Bullet extends Existance {
 
-    private final Weapon WEAPON;
-    private Sprite sprite;
+    protected final Weapon WEAPON;
+    protected Sprite sprite;
     private boolean isHit = false;
 
     // Animation variables
@@ -59,6 +59,10 @@ public class Bullet extends Existance {
             return WEAPON.DMG;
         return 0;
     }
+    
+    public int getFireRate() {
+        return WEAPON.FIRERATE;
+    }
 
     private void alterSprite(Sprite s){
         sprite = s;
@@ -102,6 +106,10 @@ public class Bullet extends Existance {
 
         if(GameModel.getInstance().player.getBullets().contains(this))
             GameModel.getInstance().player.getBullets().remove(this);
+    }
+    
+    public void move() {
+        this.x += 20;
     }
     
 }

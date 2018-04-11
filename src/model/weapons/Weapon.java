@@ -4,18 +4,22 @@ import assets.java.Sprite;
 
 public enum Weapon {
 
-    //              Sprite                          Damage  HitAnimation
-    PLAYER_BASIC(   Sprite.WEAPON_PLAYER_BASIC,     1,      BulletHit.PLAYER_BASIC),
-    ENEMY_BASIC(    Sprite.WEAPON_ENEMY_BASIC,      1,      BulletHit.ENEMY_BASIC);
+    //                  Sprite                          Damage  FireRate    HitAnimation            
+    PLAYER_BASIC(       Sprite.WEAPON_PLAYER_BASIC,     1,      300,        BulletHit.PLAYER_BASIC),
+    PLAYER_UPGRADED(    Sprite.WEAPON_PLAYER_UPGRADE1,     1,      150,        BulletHit.PLAYER_BASIC),
+    PLAYER_UPGRADED2(   Sprite.WEAPON_PLAYER_UPGRADE2,  2,      300,        BulletHit.PLAYER_BASIC),
+    ENEMY_BASIC(        Sprite.WEAPON_ENEMY_BASIC,      1,      300,        BulletHit.ENEMY_BASIC);
 
 
     public final Sprite SPRITE;
     public final int DMG;
+    public final int FIRERATE;
     public final Sprite[] BULLET_HIT;
 
-    Weapon(Sprite sprite, int dmg, BulletHit bulletHit){
+    Weapon(Sprite sprite, int dmg, int fireRate, BulletHit bulletHit){
         SPRITE = sprite;
         DMG = dmg;
+        FIRERATE = fireRate;
         BULLET_HIT = bulletHit.getSprites();
     }
 }

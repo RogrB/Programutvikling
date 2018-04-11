@@ -3,8 +3,7 @@ package model.player;
 import assets.java.Audio;
 import assets.java.Sprite;
 import model.Entity;
-import model.weapons.Bullet;
-import model.weapons.Weapon;
+import model.weapons.*;
 import view.GameView;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class Player extends Entity {
     private boolean immunity = false;
     private int immunityTime = 2000;
     private int blinkCounter;
-    private final int fireRate = 300; // Bør flyttes til individuelle weapons (Høyere tall gir tregere skudd)
+    private String weaponType = "Bullet";
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private PlayerMovement move = new PlayerMovement();
@@ -62,6 +61,25 @@ public class Player extends Entity {
         }
         return false;
     }
+    
+    public String getWeaponType() {
+        return this.weaponType;
+    }
+    
+    public void setWeaponType(String weaponType) {
+        this.weaponType = weaponType;
+    }
+    
+    public void powerUp() {
+        switch(getWeaponType()) {
+            case "Bullet":
+                setWeaponType("Upgrade1");
+                break;
+            case "Upgrade1":
+                setWeaponType("Upgrade2");
+                break;
+        }
+    }
 
     public void move(String dir){
         switch(dir){
@@ -79,7 +97,17 @@ public class Player extends Entity {
     @Override
     public void shoot() {
         if(canShoot()) {
-            bullets.add(new Bullet(x + this.width - 10, y + (this.height / 2) - 8, weapon));
+            switch(getWeaponType()) {
+                case "Bullet":
+                    bullets.add(new Bullet(x + this.width - 10, y + (this.height / 2) - 8, weapon));
+                    break;
+                case "Upgrade1":
+                    bullets.add(new Upgrade1(x + this.width - 10, y + (this.height / 2) - 8, weapon));
+                    break;
+                case "Upgrade2":
+                    bullets.add(new Upgrade2(x + this.width - 10, y + (this.height / 2) - 8, weapon));
+                    break;                    
+            }
             bulletCount++;
             getShot().setVolume(0.25);
             getShot().play();
@@ -97,13 +125,14 @@ public class Player extends Entity {
             public void run() {
                 setCanShoot(true);
                 this.cancel();
+                
             }
-        }, fireRate);        
+        }, bullets.get(bullets.size()-1).getFireRate()); 
     }
 
     private void updateBullets(){
         for (Bullet bullet : bullets) {
-            bullet.setX(bullet.getX() + 20);
+            bullet.move();
         }
     }
 
