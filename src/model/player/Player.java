@@ -110,8 +110,10 @@ public class Player extends Entity {
     @Override
     public void takeDamage(){
         if(!isImmune()){
-            initImmunity();
             super.takeDamage();
+            if (isAlive()) {
+                initImmunity();
+            }
         }
     }
 
