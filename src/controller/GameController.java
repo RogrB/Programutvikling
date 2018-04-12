@@ -84,12 +84,12 @@ public class GameController {
                 if(b.collidesWith(e)){
                     System.out.println("Hit");
                 }
-                if(playerBulletHitsEnemy(b, e)){
+                /*if(playerBulletHitsEnemy(b, e)){
                     e.takeDamage(b.getDmg());
                     b.hasHit();
                     b.clearImage();
                     gv.renderBullet(b);
-                }
+                }*/
             }
         }
     }

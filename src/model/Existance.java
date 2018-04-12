@@ -29,16 +29,13 @@ public abstract class Existance {
         this.y = y;
     }
 
-    public boolean collidesWith(Existance y){
-        if(getX() + getWidth() > y.getX() &&
-                y.getX() + getWidth() > getX()){
-
-            if(getY() + getHeight() > y.getY() &&
-                    y.getY() + getHeight() > getY()){
+    public boolean collidesWith(Existance target){
+        if (getX() < target.getX() + target.getWidth() && getY() < target.getY() + target.getHeight()) {
+            if (target.getX() < getX() + getWidth() && target.getY() < getY() + getHeight()) {
                 return true;
             }
         }
         return false;
     }
-
+    
 }
