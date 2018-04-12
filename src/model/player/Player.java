@@ -81,6 +81,9 @@ public class Player extends Entity {
             case "Upgrade2":
                 setWeaponType("HeatSeeking");
                 break;
+            case "HeatSeeking":
+                setWeaponType("Doubles");
+                break;
         }
     }
 
@@ -112,6 +115,9 @@ public class Player extends Entity {
                     break;        
                 case "HeatSeeking":
                     bullets.add(new HeatSeeking(x + this.width - 10, y + (this.height / 2) - 8, weapon));
+                    break;
+                case "Doubles":
+                    bullets.add(new Doubles(x + this.width - 10, y + (this.height / 2) - 20, weapon));
                     break;
             }
             bulletCount++;

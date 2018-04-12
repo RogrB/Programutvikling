@@ -50,7 +50,6 @@ public class HeatSeeking extends Bullet {
     public void moveMissile() {
         if (target != null) {
             x = (x < target.getX()) ? x+7 : x-7;
-            System.out.println(Math.abs(target.getY() - y));
             if (Math.abs(target.getY() - y) < 7) {
                 y = (y < target.getY()) ? y+1 : y-1;
             }
