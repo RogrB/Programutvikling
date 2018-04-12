@@ -76,7 +76,7 @@ public class GameView {
     
     public void renderBullet(Bullet bullet) {
         // Metode for å tegne bullets til canvas
-        graphics.clearRect(bullet.getX()-20, bullet.getY(), bullet.getWidth()+20, bullet.getHeight()+20); // x, y, width, height
+        graphics.clearRect(bullet.getX()-50, bullet.getY()-50, bullet.getWidth()+100, bullet.getHeight()+100); // x, y, width, height
         graphics.drawImage(bullet.getSpriteImage(), bullet.getX(), bullet.getY());        
     }
     

@@ -18,6 +18,7 @@ public enum Sprite {
     
     WEAPON_PLAYER_UPGRADE1("assets/image/laserBlue07.png"),
     WEAPON_PLAYER_UPGRADE2("assets/image/laserYellow.png"),
+    WEAPON_PLAYER_HEATSEEKING("assets/image/missile01.png"),
 
     WEAPON_ENEMY_BASIC("assets/image/laserRed.png"),
     WEAPON_ENEMY_BASIC_DMG_1("assets/image/damage/laserRed08.png"),
