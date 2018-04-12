@@ -22,8 +22,7 @@ public class LevelLoader {
                     case '0':
                         break;
                     case '1':
-                        EnemyMovementPattern pattern = EnemyMovementPattern.SIN;
-                        //Enemy e = new Enemy(EnemyType.SHIP, pattern, 120 * j, 140 * i);
+                        EnemyMovementPattern pattern = EnemyMovementPattern.BOSS_EIGHT;
                         Enemy e = new Enemy(EnemyType.SHIP, pattern, 200 * j, 140 * i);
                         System.out.format("Enemy created at x: %d, y: %d \n", e.getX(), e.getY());
                         enemies.add(e);

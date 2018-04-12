@@ -1,22 +1,30 @@
 package model.enemy;
 
-import static model.GameModel.SPEED_MODIFIER;
+import static java.lang.Math.*;
 
 public enum EnemyMovementPattern {
 
-    LEFT,   LEFT_PULSATING,
-    SIN,    SIN_REVERSED,
-    COS,    COS_REVERSED,
-    TRI,    TRI_REVERSED,
-    BOSS_LINE;
+    LEFT,       LEFT_PULSATING,
+    SIN,        SIN_REVERSED,
+    COS,        COS_REVERSED,
+    TRI,        TRI_REVERSED,
+
+    MADNESS_01, MADNESS_02, MADNESS_03,
+    BOSS_LINE,  BOSS_EIGHT, BOSS_OVAL;
 
     private double x, y;
     private double movementSpeed;
     private int framesAlive;
     private double modDepth, modSpeed;
 
-    private boolean triState;
+    // Triangle functionality
+    private boolean triState = false;
     private int triCount;
+
+    // Boss functionality
+    private boolean bossInitializing = true;
+    private int bossCounter;
+    private final int BOSS_INIT_TIME = 250;
 
     EnemyMovementPattern(){
         movementSpeed = 1;  // Hastigheten til fienden.
@@ -25,8 +33,6 @@ public enum EnemyMovementPattern {
 
         if(name() == "TRI")
             triState = true;
-        else if (name() == "TRI_REVERSED")
-            triState = false;
     }
 
     private void nextX(){
@@ -40,46 +46,97 @@ public enum EnemyMovementPattern {
             case "TRI_REVERSED":
                 x -= movementSpeed * 2;
                 break;
+
             case "LEFT_PULSATING":
-                x -= Math.cos(rads(framesAlive * modSpeed * movementSpeed)) * getModifiersMultiplied() + (movementSpeed * 2);
+                x -= cos(rads(framesAlive * modSpeed * movementSpeed)) * getModifiersMultiplied() + (movementSpeed * 2);
                 break;
+
             case "BOSS_LINE":
+                bossInit();
+                break;
+
+            case "BOSS_EIGHT":
+                bossInit();
+                if(!bossInitializing)
+                    x -= cos(rads(framesAlive * modSpeed * movementSpeed)) * getModifiersMultiplied();
+                break;
+
+            case "BOSS_OVAL":
+                bossInit();
+                if(!bossInitializing)
+                    x -= sin(rads(framesAlive * modSpeed * movementSpeed)) * getModifiersMultiplied();
+                break;
+
+            case "MADNESS_01":
+            case "MADNESS_03":
+                x -= cos(rads(framesAlive * modSpeed * movementSpeed)) * getModifiersMultiplied() + (movementSpeed * 2);
+                break;
+
+            case "MADNESS_02":
+                x -= cos(rads(framesAlive * modSpeed * movementSpeed * 2)) * getModifiersMultiplied() + (movementSpeed * 2);
+                break;
 
         }
     }
 
     private void nextY(){
-        switch(this.name()){
+        switch(this.name()) {
             case "LEFT":
             case "LEFT_PULSATING":
                 break;
+
             case "SIN":
-                y -= Math.sin(rads(framesAlive * modSpeed * movementSpeed)) * getModifiersMultiplied();
+                y -= sin(rads(framesAlive * modSpeed * movementSpeed)) * getModifiersMultiplied();
                 break;
+
             case "SIN_REVERSED":
-                y += Math.sin(rads(framesAlive * modSpeed * movementSpeed)) * getModifiersMultiplied();
+                y += sin(rads(framesAlive * modSpeed * movementSpeed)) * getModifiersMultiplied();
                 break;
+
             case "COS":
-                y -= Math.cos(rads(framesAlive * modSpeed * movementSpeed)) * getModifiersMultiplied();
+                y -= cos(rads(framesAlive * modSpeed * movementSpeed)) * getModifiersMultiplied();
                 break;
+
             case "COS_REVERSED":
-                y += Math.cos(rads(framesAlive * modSpeed * movementSpeed)) * getModifiersMultiplied();
+                y += cos(rads(framesAlive * modSpeed * movementSpeed)) * getModifiersMultiplied();
                 break;
+
+            case "BOSS_EIGHT":
+                if (!bossInitializing)
+                    y -= cos(rads(framesAlive * modSpeed * movementSpeed / 2)) * getModifiersMultiplied();
+                break;
+
+            case "BOSS_OVAL":
+                if (!bossInitializing)
+                    y -= cos(rads(framesAlive * modSpeed * movementSpeed)) * getModifiersMultiplied() * 2;
+                break;
+
+            case "BOSS_LINE":
+                if (bossInitializing)
+                    break;
+
             case "TRI":
             case "TRI_REVERSED":
-
-                if(triState)
+                if (triState)
                     y -= getModifiersMultiplied();
                 else
                     y += getModifiersMultiplied();
 
                 triCount++;
 
-                if(triCount > 60 * modDepth / modSpeed / movementSpeed) {
+                if (triCount > 60 * modDepth / modSpeed / movementSpeed) {
                     triState = !triState;
                     triCount = 0;
                 }
-                System.out.println(triCount);
+                break;
+
+            case "MADNESS_01":
+            case "MADNESS_02":
+                y -= cos(rads(framesAlive * modSpeed * movementSpeed / 2)) * getModifiersMultiplied();
+                break;
+
+            case "MADNESS_03":
+                y -= cos(rads(framesAlive * modSpeed * movementSpeed / 2)) * getModifiersMultiplied();
                 break;
 
         }
@@ -126,8 +183,17 @@ public enum EnemyMovementPattern {
         this.movementSpeed = movementSpeed;
     }
 
+    private void bossInit(){
+        if(bossCounter < BOSS_INIT_TIME) {
+            framesAlive = 0;
+            x--;
+            bossCounter++;
+        } else
+            bossInitializing = false;
+    }
+
     private double rads(double i){
-        return Math.toRadians(i);
+        return toRadians(i);
     }
 
     private double getModifiersMultiplied(){

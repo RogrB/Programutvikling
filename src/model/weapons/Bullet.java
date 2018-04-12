@@ -41,6 +41,8 @@ public class Bullet extends Existance {
 
     public void hasHit() {
         isHit = true;
+        oldX = getX();
+        oldY = getY();
         bulletDie();
     }
 
