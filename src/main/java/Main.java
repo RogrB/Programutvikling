@@ -106,14 +106,14 @@ public class Main extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                gl.model.player.update();
+                gl.model.player.updatePosition();
                 for(model.enemy e : enemies){
-                    e.update();
+                    e.updatePosition();
                 }
                 //detectCollision(); // Sjekker om model.player kolliderer med model.enemy
                 if (gl.model.player.getBulletCount() > 0) {
                     for (Bullet bullet : gl.model.player.getBullets()) { // Hvis det har blitt skutt kuler
-                        bullet.update(); // Oppdaterer bulletposisjon
+                        bullet.updatePosition(); // Oppdaterer bulletposisjon
                     }
                     //detectHit(); // Sjekker om kulene har truffet noe
                     //drawBullets(gc); // Oppdaterer kule tegning
@@ -265,9 +265,9 @@ public class Main extends Application {
             public void handle(long now) {
                 time += 0.05;
                 time2 += 0.03;
-                model.player.update();
+                model.player.updatePosition();
                 for(model.enemy e : enemies){
-                    e.update();
+                    e.updatePosition();
                 }
                 if (time >= 0.35) {
                     if (cdCounter < 10) {

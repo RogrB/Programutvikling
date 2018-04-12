@@ -29,6 +29,7 @@ public class Enemy extends Entity {
 
         this.TYPE = enemyType;
         this.pattern = pattern;
+        pattern.setStartPosition(x, y);
 
         height = (int) sprite.getHeight();
         width = (int) sprite.getWidth();
@@ -51,9 +52,10 @@ public class Enemy extends Entity {
 
     @Override
     public void update(){
-        pattern.nextFrame();
-        setX((int)pattern.x);
-        setY((int)pattern.y);
+        //pattern.nextFrame();
+        pattern.updatePosition();
+        x = pattern.getX();
+        y = pattern.getY();
         sprite.getView().relocate(getX(), getY());
     }
 

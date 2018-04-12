@@ -2,7 +2,83 @@ package model.enemy;
 
 import static model.GameModel.SPEED_MODIFIER;
 
-public class EnemyMovementPattern {
+public enum EnemyMovementPattern {
+
+    LEFT,
+    SIN,    SIN_REVERSED,
+    COS,    COS_REVERSED;
+
+    private double x, y;
+    private double movementSpeed;
+    private int framesAlive;
+    private double modDepth, modSpeed;
+
+    EnemyMovementPattern(){
+        movementSpeed = 2;  // Hastigheten til fienden.
+        modDepth = 2;       // Modulasjonsdybden til oscillatoren
+        modSpeed = 2;       // Frekvensen til oscillatoren
+    }
+
+    private void nextX(){
+        switch(this.name()){
+            case "LEFT":
+            case "SIN":
+            case "SIN_REVERSED":
+            case "COS":
+            case "COS_REVERSED":
+                x -= movementSpeed;
+                break;
+        }
+    }
+
+    private void nextY(){
+        switch(this.name()){
+            case "LEFT":
+                break;
+            case "SIN":
+                y -= Math.sin(rads(framesAlive * modSpeed * movementSpeed)) * modDepth * modSpeed * movementSpeed;
+                break;
+            case "SIN_REVERSED":
+                y += Math.sin(rads(framesAlive * modSpeed * movementSpeed)) * modDepth * modSpeed * movementSpeed;
+                break;
+            case "COS":
+                y -= Math.cos(rads(framesAlive * modSpeed * movementSpeed)) * modDepth * modSpeed * movementSpeed;
+                break;
+            case "COS_REVERSED":
+                y += Math.cos(rads(framesAlive * modSpeed * movementSpeed)) * modDepth * modSpeed * movementSpeed;
+                break;
+        }
+    }
+
+    public void updatePosition(){
+        framesAlive++;
+        nextX();
+        nextY();
+    }
+
+    public void setStartPosition(int x, int y){
+        if(this.x == 0 && this.y == 0){
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    public int getX() {
+        return (int)x;
+    }
+
+    public int getY() {
+        return (int)y;
+    }
+
+    private double rads(double i){
+        return Math.toRadians(i);
+    }
+
+}
+
+
+/*public class EnemyMovementPattern {
 
     private double modDepth = 3;
     private double modLength = 1;
@@ -109,4 +185,4 @@ public class EnemyMovementPattern {
     private double rads(double i){
         return Math.toRadians(i);
     }
-}
+}*/

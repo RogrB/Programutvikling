@@ -52,7 +52,7 @@ public class GameController {
                 }
 
                 updateBullets();
-                detectCollision();
+                detectPlayerCollidesWithEnemy();
                 detectEnemyShotByPlayer();
                 detectPlayerShotByEnemy();
                 if (tickLeft) {
@@ -72,55 +72,45 @@ public class GameController {
         for (Bullet bullet : gm.player.getBullets()){
             gv.renderBullet(bullet);
         }
-        for(Bullet b : gm.getEnemyBullets()) {
-            b.setX(b.getX() - 12);
-            gv.renderEnemyBullet(b);
+        for(Bullet bullet : gm.getEnemyBullets()) {
+            bullet.setX(bullet.getX() - 12);
+            gv.renderEnemyBullet(bullet);
         }
     }
 
     private void detectEnemyShotByPlayer(){
-        for(Bullet b : gm.player.getBullets()){
-            for(Enemy e : enemies){
-                if(b.collidesWith(e)){
-                    System.out.println("Hit");
+        for(Bullet bullet : gm.player.getBullets()){
+            for(Enemy enemy : enemies){
+                if(bullet.collidesWith(enemy)){
+                    enemy.takeDamage(bullet.getDmg());
+                    bullet.hasHit();
+                    bullet.clearImage();
+                    gv.renderBullet(bullet);
                 }
-                /*if(playerBulletHitsEnemy(b, e)){
-                    e.takeDamage(b.getDmg());
-                    b.hasHit();
-                    b.clearImage();
-                    gv.renderBullet(b);
-                }*/
             }
         }
     }
 
     private void detectPlayerShotByEnemy(){
-        for(Bullet b : gm.getEnemyBullets()){
-            if(enemyBulletHitsPlayer(b)){
+        for(Bullet bullet : gm.getEnemyBullets()){
+            if(bullet.collidesWith(gm.player)){
                 gm.player.takeDamage();
-                b.hasHit();
+                bullet.hasHit();
             }
         }
     }
 
-    private boolean playerBulletHitsEnemy(Bullet b, Enemy e){
-        if (e.getX() < b.getX() + b.getWidth() && e.getY() < b.getY() + b.getHeight()) {
-            if (b.getX() < e.getX() + e.getWidth() && b.getY() < e.getY() + e.getHeight()) {
-                return true;
+    private void detectPlayerCollidesWithEnemy(){
+        for (Enemy enemy: enemies) {
+            if(enemy.collidesWith(gm.player)){
+                gm.player.takeDamage();
+                enemy.takeDamage();
             }
-        } return false;
-    }
-
-    private boolean enemyBulletHitsPlayer(Bullet b) {
-        if (gm.player.getX() < b.getX() + b.getWidth() && gm.player.getY() < b.getY() + b.getHeight()) {
-            if (b.getX() < gm.player.getX() + gm.player.getWidth() && b.getY() < gm.player.getY() + gm.player.getHeight()) {
-                return true;
-            }
-        } return false;
+        }
     }
 
     // Metode for å sjekke om player ble truffet av enemy - ikke prosjektil
-    public void detectCollision() {
+    /*public void detectCollision() {
         for (Enemy enemy: enemies) {
             if (enemy.getX() < gm.player.getX() + gm.player.getWidth() && enemy.getY() < gm.player.getY() + gm.player.getHeight()) {
                 if (gm.player.getX() < enemy.getX() + enemy.getWidth() && gm.player.getY() < enemy.getY() + enemy.getHeight()) {
@@ -136,7 +126,7 @@ public class GameController {
                 }
             }
         }
-    }
+    }*/
 
     private void purge(){
         Iterator<Enemy> enemyIterator = enemies.iterator();

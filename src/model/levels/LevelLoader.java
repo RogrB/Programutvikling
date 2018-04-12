@@ -22,12 +22,11 @@ public class LevelLoader {
                     case '0':
                         break;
                     case '1':
-                        EnemyMovementPattern pattern = new EnemyMovementPattern("CLOCK", 120 * j, 140 * i);
-                        Enemy e = new Enemy(EnemyType.SHIP, pattern, 120 * j, 140 * i);
-                        System.out.println(e.getPattern().x);
-                        //System.out.format("Enemy created at x: %d, y: %d \n", e.getX(), e.getY());
+                        EnemyMovementPattern pattern = EnemyMovementPattern.COS;
+                        //Enemy e = new Enemy(EnemyType.SHIP, pattern, 120 * j, 140 * i);
+                        Enemy e = new Enemy(EnemyType.SHIP, pattern, 200 * j, 140 * i);
+                        System.out.format("Enemy created at x: %d, y: %d \n", e.getX(), e.getY());
                         enemies.add(e);
-                        e.getPattern().setStartPosision(e.getX(), e.getY());
 
                         break;
                     case '2':
@@ -36,9 +35,7 @@ public class LevelLoader {
 
                 }
             }
-
         }
-
     }
 
     public ArrayList getEnemies(){
