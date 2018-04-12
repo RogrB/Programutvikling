@@ -45,26 +45,21 @@ public class HeatSeeking extends Bullet {
                 targetIndex++;
             }
         }
-        System.out.println("Locked on " + closestX + " , " + closestY);
+        System.out.println("Locked on " + closestX + " , " + closestY);  // Printout
         target = enemies.get(targetIndex-1);
         locked = true;
-        System.out.println(target);
+        System.out.println(target);  // Printout
     }
     
     public void moveMissile() {
         if (target != null) {
-            if (x < target.getX()) {
-                x += 7;
+            x = (x < target.getX()) ? x+7 : x-7;
+            if (y - target.getY() < 7) {
+                y = (y < target.getY()) ? y+2 : y-2;
             }
             else {
-                x -= 7;
+                y = (y < target.getY()) ? y+7 : y-7;    
             }
-            if (y < target.getY()) {
-                y += 7;
-            }
-            else {
-                y -= 7;
-            }        
         }
     }
     
