@@ -7,7 +7,8 @@ public enum EnemyMovementPattern {
     LEFT,   LEFT_PULSATING,
     SIN,    SIN_REVERSED,
     COS,    COS_REVERSED,
-    TRI,    TRI_REVERSED;
+    TRI,    TRI_REVERSED,
+    BOSS_LINE;
 
     private double x, y;
     private double movementSpeed;
@@ -41,6 +42,9 @@ public enum EnemyMovementPattern {
                 break;
             case "LEFT_PULSATING":
                 x -= Math.cos(rads(framesAlive * modSpeed * movementSpeed)) * getModifiersMultiplied() + (movementSpeed * 2);
+                break;
+            case "BOSS_LINE":
+
         }
     }
 

@@ -12,7 +12,7 @@ public class HeatSeeking extends Bullet {
     ArrayList<Enemy> enemies = gc.getEnemies();
     private boolean locked = false;
     Enemy target;
-    
+
     public HeatSeeking(int x, int y, Weapon weapon) {
         super(
         x,
@@ -22,6 +22,9 @@ public class HeatSeeking extends Bullet {
     
     @Override
     public void move() {
+        oldX = getX();
+        oldY = getY();
+
         if (enemies.isEmpty()) {
             x += 15;
         }
@@ -58,5 +61,4 @@ public class HeatSeeking extends Bullet {
             }
         }
     }
-    
 }

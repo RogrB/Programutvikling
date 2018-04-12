@@ -1,16 +1,18 @@
 package view;
 
+import assets.java.Sprite;
 import javafx.scene.Parent;
 import javafx.scene.canvas.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import controller.GameController;
+import model.Entity;
+import model.Existance;
 import model.GameModel;
 import model.enemy.Enemy;
 import model.levels.LevelData;
 import model.levels.LevelLoader;
 import model.weapons.*;
-import model.weapons.damage.*;
 
 import java.util.ArrayList;
 
@@ -75,21 +77,8 @@ public class GameView {
 
     
     public void renderBullet(Bullet bullet) {
-        // Metode for å tegne bullets til canvas
-        graphics.clearRect(bullet.getX()-50, bullet.getY()-50, bullet.getWidth()+100, bullet.getHeight()+100); // x, y, width, height
-        graphics.drawImage(bullet.getSpriteImage(), bullet.getX(), bullet.getY());        
-    }
-    
-    public void renderEnemyBullet(Bullet bullet) {
-        // Metode for å tegne enemybullets til canvas
-        graphics.clearRect(bullet.getX(), bullet.getY(), bullet.getWidth()+20, bullet.getHeight());
+        graphics.clearRect(bullet.getOldX(), bullet.getOldY(), bullet.getWidth(), bullet.getHeight());
         graphics.drawImage(bullet.getSpriteImage(), bullet.getX(), bullet.getY());
-    }
-    
-    public void renderDamage(Damage damage) {
-        // Metode for å tegne damage-animasjon til canvas
-        graphics.clearRect(damage.getX()-3, damage.getY()-3, damage.getWidth()+6, damage.getHeight()+6);
-        graphics.drawImage(damage.getSprite(), damage.getX(), damage.getY());
     }
     
     public void gameOver() {

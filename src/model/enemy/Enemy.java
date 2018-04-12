@@ -16,8 +16,6 @@ public class Enemy extends Entity {
 
     private final int CHANCE_TO_SHOOT = 2000;
     private int chanceToShoot = CHANCE_TO_SHOOT;
-    
-    private int leftTickRate = 5; // Antall pixels enemy flyttes til venstre for hvert tick
 
     public Enemy(EnemyType enemyType, EnemyMovementPattern pattern, int x, int y){
         super(
@@ -74,12 +72,4 @@ public class Enemy extends Entity {
         }
     }
     
-    public int getLeftTick() {
-        return this.leftTickRate;
-    }
-    
-    public void setLeftTick(int tick) {
-        this.leftTickRate = tick;
-    }
-
 }

@@ -14,6 +14,8 @@ public class Bullet extends Existance {
     protected Sprite sprite;
     private boolean isHit = false;
 
+    protected int oldX, oldY;
+
     // Animation variables
     private final int ANIM_SPEED = 20;
     private int animCounter = 0;
@@ -44,14 +46,18 @@ public class Bullet extends Existance {
 
     @Override
     public void setX(int x){
-        if(!isHit)
+        if(!isHit) {
+            oldX = getX();
             super.setX(x);
+        }
     }
 
     @Override
     public void setY(int y){
-        if(!isHit)
+        if(!isHit) {
+            oldY = getY();
             super.setY(y);
+        }
     }
     
     public int getDmg(){
@@ -110,6 +116,14 @@ public class Bullet extends Existance {
     
     public void move() {
         this.setX(getX() + 20);
+        this.setY(getY());
     }
-    
+
+    public int getOldX() {
+        return oldX;
+    }
+
+    public int getOldY() {
+        return oldY;
+    }
 }

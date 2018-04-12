@@ -22,13 +22,10 @@ public class GameController {
     // MVC-access
     GameModel gm;
     GameView gv;
-    
-    private boolean tickLeft = true; // Om enemies skal ticke mot venstre
 
     // Level data
     public ArrayList<Enemy> enemies;
     LevelLoader level2;
-    ArrayList<Damage> damage = new ArrayList<>();
 
     public void setup(){
         gm = GameModel.getInstance();
@@ -54,16 +51,13 @@ public class GameController {
                 detectPlayerCollidesWithEnemy();
                 detectEnemyShotByPlayer();
                 detectPlayerShotByEnemy();
-                if (tickLeft) {
-                    tickLeft();
-                }
+
                 if (!gm.player.isAlive()) {
                     gv.gameOver();
                     this.stop();
                 }
             }
         }; timer.start();
-
     }
 
 
@@ -73,7 +67,8 @@ public class GameController {
         }
         for(Bullet bullet : gm.getEnemyBullets()) {
             bullet.setX(bullet.getX() - 12);
-            gv.renderEnemyBullet(bullet);
+            bullet.setY(bullet.getY());
+            gv.renderBullet(bullet);
         }
     }
 
@@ -108,25 +103,6 @@ public class GameController {
         }
     }
 
-    // Metode for å sjekke om player ble truffet av enemy - ikke prosjektil
-    /*public void detectCollision() {
-        for (Enemy enemy: enemies) {
-            if (enemy.getX() < gm.player.getX() + gm.player.getWidth() && enemy.getY() < gm.player.getY() + gm.player.getHeight()) {
-                if (gm.player.getX() < enemy.getX() + enemy.getWidth() && gm.player.getY() < enemy.getY() + enemy.getHeight()) {
-                    System.out.println("Player hit by enemy object");
-                    if (!gm.player.isImmune()) {
-                        if (gm.player.getHealth() == 1) {
-                            gm.player.getSprite().setImage(null);
-                        }
-                        else {
-                            gm.player.takeDamage();
-                        }
-                    }
-                }
-            }
-        }
-    }*/
-
     private void purge(){
         Iterator<Enemy> enemyIterator = enemies.iterator();
         if(enemies.size() == 0){
@@ -145,14 +121,7 @@ public class GameController {
                 System.out.println("Removing enemy");
                 enemyIterator.remove();
                 e = null;
-
             }
-        }
-    }
-    
-    private void tickLeft() {
-        for (Enemy enemy: enemies) {
-            enemy.setX(enemy.getX() - enemy.getLeftTick());
         }
     }
     
