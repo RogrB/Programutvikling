@@ -164,4 +164,8 @@ public class GameController {
         }
     }
     
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+    
 }

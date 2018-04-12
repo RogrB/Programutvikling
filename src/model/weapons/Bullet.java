@@ -53,7 +53,7 @@ public class Bullet extends Existance {
         if(!isHit)
             super.setY(y);
     }
-
+    
     public int getDmg(){
         if(!isHit)
             return WEAPON.DMG;
