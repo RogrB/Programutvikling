@@ -13,7 +13,6 @@ public class HeatSeeking extends Bullet {
     private boolean locked = false;
     Enemy target;
     
-    
     public HeatSeeking(int x, int y, Weapon weapon) {
         super(
         x,
@@ -24,7 +23,7 @@ public class HeatSeeking extends Bullet {
     @Override
     public void move() {
         if (enemies.isEmpty()) {
-            x += 10;
+            x += 15;
         }
         else {
             if (!locked) {
@@ -35,27 +34,25 @@ public class HeatSeeking extends Bullet {
     }
     
     public void setLock() {
+        // Finner nærmeste enemy i X aksen og låser inn target
         int closestX = 2500;
-        int closestY = 0;
         int targetIndex = 0;
         for (Enemy enemy : enemies) {
             if (enemy.getX() < closestX && enemy.getX() > 20) {
                 closestX = enemy.getX();
-                closestY = enemy.getY();
                 targetIndex++;
             }
         }
-        System.out.println("Locked on " + closestX + " , " + closestY);  // Printout
         target = enemies.get(targetIndex-1);
         locked = true;
-        System.out.println(target);  // Printout
     }
     
     public void moveMissile() {
         if (target != null) {
             x = (x < target.getX()) ? x+7 : x-7;
-            if (y - target.getY() < 7) {
-                y = (y < target.getY()) ? y+2 : y-2;
+            System.out.println(Math.abs(target.getY() - y));
+            if (Math.abs(target.getY() - y) < 7) {
+                y = (y < target.getY()) ? y+1 : y-1;
             }
             else {
                 y = (y < target.getY()) ? y+7 : y-7;    
