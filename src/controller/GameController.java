@@ -2,13 +2,12 @@ package controller;
 
 import javafx.animation.AnimationTimer;
 import model.GameModel;
-import model.enemy.Enemy;
+import model.enemy.*;
 import model.levels.LevelData;
 import model.levels.LevelLoader;
 import model.weapons.*;
 import model.weapons.damage.*;
 import view.GameView;
-
 
 import java.util.ArrayList;
 import java.util.Iterator;

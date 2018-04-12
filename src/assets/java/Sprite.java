@@ -8,6 +8,7 @@ public enum Sprite {
     // Enemies
     ASTROID("assets/image/enemyBlue1.png"),
     ENEMY_SHIP("assets/image/enemyBlue1.png"),
+    ENEMY_BOSS01("assets/image/boss01.png"),
 
     // Weapons
     WEAPON_PLAYER_BASIC("assets/image/laserBlue06.png"),
