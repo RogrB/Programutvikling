@@ -110,6 +110,18 @@ public enum EnemyMovementPattern {
         this.y += y;
     }
 
+    public void setModDepth(double modDepth) {
+        this.modDepth = modDepth;
+    }
+
+    public void setModSpeed(double modSpeed) {
+        this.modSpeed = modSpeed;
+    }
+
+    public void setMovementSpeed(double movementSpeed) {
+        this.movementSpeed = movementSpeed;
+    }
+
     private double rads(double i){
         return Math.toRadians(i);
     }
