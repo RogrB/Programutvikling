@@ -81,6 +81,9 @@ public class GameController {
     private void detectEnemyShotByPlayer(){
         for(Bullet b : gm.player.getBullets()){
             for(Enemy e : enemies){
+                if(b.collidesWith(e)){
+                    System.out.println("Hit");
+                }
                 if(playerBulletHitsEnemy(b, e)){
                     e.takeDamage(b.getDmg());
                     b.hasHit();

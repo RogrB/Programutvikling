@@ -25,8 +25,8 @@ public abstract class Entity extends Existance {
 
     public Entity(Sprite sprite, int x, int y, int health){
         this.sprite = sprite;
-        this.x = x;
-        this.y = y;
+        this.setX(x);
+        this.setY(y);
         this.height = (int) sprite.getHeight();
         this.width = (int) sprite.getWidth();
         this.health = health;

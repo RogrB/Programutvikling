@@ -22,8 +22,8 @@ public class Bullet extends Existance {
     private Timer timer = null;
 
     public Bullet(int x, int y, Weapon weapon) {
-        this.x = x;
-        this.y = y;
+        this.setX(x);
+        this.setY(y);
         WEAPON = weapon;
         sprite = WEAPON.SPRITE;
         setNewDimensions(sprite);
@@ -109,7 +109,7 @@ public class Bullet extends Existance {
     }
     
     public void move() {
-        this.x += 20;
+        this.setX(getX() + 20);
     }
     
 }

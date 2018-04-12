@@ -52,9 +52,9 @@ public class Enemy extends Entity {
     @Override
     public void update(){
         pattern.nextFrame();
-        x = (int)pattern.x;
-        y = (int)pattern.y;
-        sprite.getView().relocate(x, y);
+        setX((int)pattern.x);
+        setY((int)pattern.y);
+        sprite.getView().relocate(getX(), getY());
     }
 
     @Override

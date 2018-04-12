@@ -28,4 +28,17 @@ public abstract class Existance {
     public void setY(int y) {
         this.y = y;
     }
+
+    public boolean collidesWith(Existance y){
+        if(getX() + getWidth() > y.getX() &&
+                y.getX() + getWidth() > getX()){
+
+            if(getY() + getHeight() > y.getY() &&
+                    y.getY() + getHeight() > getY()){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
