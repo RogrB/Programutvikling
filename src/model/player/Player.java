@@ -17,12 +17,17 @@ public class Player extends Entity {
     // Singleton
     private static Player inst = new Player();
     public static Player getInst(){ return inst; }
+    
+    GameView gv = GameView.getInstance();
 
     // State
     private boolean immunity = false;
     private int immunityTime = 2000;
     private int blinkCounter;
     private String weaponType = "Bullet";
+    private boolean shield = false;
+    private Sprite shieldSprite = Sprite.SHIELD1;
+    private int shieldHealth = 2;
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private PlayerMovement move = new PlayerMovement();
@@ -90,7 +95,7 @@ public class Player extends Entity {
                 break;
         }
     }
-
+    
     public void move(String dir){
         switch(dir){
             case "UP":
@@ -159,10 +164,20 @@ public class Player extends Entity {
 
     @Override
     public void takeDamage(){
-        if(!isImmune()){
-            super.takeDamage();
-            if (isAlive()) {
-                initImmunity();
+        if (!shield) {
+            if(!isImmune()){
+                super.takeDamage();
+                if (isAlive()) {
+                    initImmunity();
+                }
+            }
+        }
+        else {
+            if (getShieldHealth() > 1) {
+                setShieldHealth(getShieldHealth()-1);
+            }
+            else {
+                removeShield();
             }
         }
     }
@@ -191,6 +206,7 @@ public class Player extends Entity {
 
     private void immunityBlink() {
         // Blinkeanimasjon for immunityframes
+        System.out.println("Immunity start");
         Timer blinkTimer = new Timer();
         blinkTimer.schedule(new TimerTask() {
             
@@ -213,6 +229,7 @@ public class Player extends Entity {
                         break;
                 }
                 if (!immunity) {
+                    System.out.println("immunity end");
                     this.cancel();
                     inst.getSprite().setImage(new Image("assets/image/playerShip2_red.png"));
                 }
@@ -222,5 +239,37 @@ public class Player extends Entity {
 
     public ArrayList<Bullet> getBullets() {
         return bullets;
+    }
+    
+    public void setShield() {
+        this.width = (int) sprite.getWidth() + 10;
+        this.shield = true;
+        this.shieldSprite = Sprite.SHIELD1;
+    }
+    
+    public void removeShield() {
+        this.width = (int) sprite.getWidth();        
+        this.shield = false;
+        this.shieldSprite = Sprite.CLEAR;
+    }
+    
+    public Sprite getShieldSprite() {
+        return this.shieldSprite;
+    }
+    
+    public void setShieldSprite(Sprite sprite) {
+        this.shieldSprite = sprite;
+    }
+    
+    public boolean hasShield() {
+        return this.shield;
+    }
+    
+    public void setShieldHealth(int shield) {
+        this.shieldHealth = shield;
+    }
+    
+    public int getShieldHealth() {
+        return this.shieldHealth;
     }
 }

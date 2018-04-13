@@ -34,7 +34,9 @@ public class GameController {
         gm = GameModel.getInstance();
         gv = GameView.getInstance();
         enemies = gv.getEnemies();
-        powerups.add(new PowerUp(Sprite.POWERUP, 1220, 643));
+        powerups.add(new PowerUp(Sprite.WEAPON_POWERUP, 1220, 643));
+        powerups.add(new PowerUp(Sprite.HEALTH_POWERUP, 1420, 557));
+        powerups.add(new PowerUp(Sprite.SHIELD_POWERUP, 800, 427));
     }
 
     public void start() {
@@ -45,6 +47,9 @@ public class GameController {
             public void handle(long now) {
                 purge();
                 gm.player.update();
+                if(gm.player.hasShield()) {
+                    gv.renderShield();
+                }
                 for(Enemy e : enemies){
                     e.update();
                     gv.renderImage(e);

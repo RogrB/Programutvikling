@@ -2,7 +2,6 @@
 package model;
 
 import assets.java.Sprite;
-import javafx.scene.image.Image;
 
 public class PowerUp extends Existance {
     
@@ -24,8 +23,20 @@ public class PowerUp extends Existance {
     
     public void powerUp() {
         if (!used) {
-            gm.player.powerUp();
-            System.out.println("PowerUp!");
+            switch(this.sprite) {
+                case WEAPON_POWERUP:
+                    gm.player.powerUp(); 
+                    System.out.println("Weapon upgraded");
+                    break;
+                case HEALTH_POWERUP:
+                    gm.player.setHealth(gm.player.getHealth() + 1);
+                    System.out.println("Health up");
+                    break;
+                case SHIELD_POWERUP:
+                    gm.player.setShield();
+                    System.out.println("Shield!");
+                    break;
+            }
             used = true;
             this.sprite = sprite.CLEAR; // Trenger en Purge funksjon
         }

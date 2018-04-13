@@ -90,7 +90,6 @@ public abstract class Entity extends Existance {
     }
     
     public void animateDeath() {
-        System.out.println("deathanim");
         Timer deathTimer = new Timer();
         deathTimer.schedule(new TimerTask() {
             
