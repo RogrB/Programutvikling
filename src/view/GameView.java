@@ -13,6 +13,7 @@ import model.enemy.Enemy;
 import model.levels.LevelData;
 import model.levels.LevelLoader;
 import model.weapons.*;
+import model.PowerUp;
 
 import java.util.ArrayList;
 
@@ -84,5 +85,12 @@ public class GameView {
     public void gameOver() {
         // Is ded!
         graphics.drawImage(new Image("assets/image/gameover.png"), (GAME_WIDTH/2) - 368, (GAME_HEIGHT/2) - 51);
+    }
+    
+    public void renderPowerUp(PowerUp powerup) {
+        if (powerup != null) {
+            graphics.clearRect(powerup.getX(), powerup.getY(), powerup.getWidth()+20, powerup.getHeight());
+            graphics.drawImage(powerup.getSpriteImage(), powerup.getX(), powerup.getY());
+        }
     }
 }

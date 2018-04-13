@@ -1,5 +1,6 @@
 package controller;
 
+import assets.java.Sprite;
 import javafx.animation.AnimationTimer;
 import model.GameModel;
 import model.enemy.*;
@@ -8,6 +9,7 @@ import model.levels.LevelLoader;
 import model.weapons.*;
 import model.weapons.damage.*;
 import view.GameView;
+import model.PowerUp;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,6 +27,7 @@ public class GameController {
 
     // Level data
     public ArrayList<Enemy> enemies;
+    public ArrayList<PowerUp> powerups = new ArrayList();
     LevelLoader level2;
 
     public void setup(){
@@ -32,6 +35,7 @@ public class GameController {
         gv = GameView.getInstance();
         level2 = new LevelLoader(LevelData.LEVEL2);
         enemies = level2.getEnemies();
+        powerups.add(new PowerUp(Sprite.POWERUP, 1220, 643));
     }
 
     public void start() {
@@ -46,12 +50,18 @@ public class GameController {
                     e.update();
                     e.shoot();
                 }
+                if (!powerups.isEmpty()) {
+                    for(PowerUp p : powerups) {
+                        p.move();
+                        gv.renderPowerUp(p);
+                    }
+                }
 
                 updateBullets();
                 detectPlayerCollidesWithEnemy();
                 detectEnemyShotByPlayer();
                 detectPlayerShotByEnemy();
-
+                detectPowerUp();
                 if (!gm.player.isAlive()) {
                     gv.gameOver();
                     this.stop();
@@ -99,6 +109,16 @@ public class GameController {
             if(enemy.collidesWith(gm.player)){
                 gm.player.takeDamage();
                 enemy.takeDamage();
+            }
+        }
+    }
+    
+    private void detectPowerUp() {
+        if (!powerups.isEmpty()) {
+            for (PowerUp p : powerups) {
+                if(p.collidesWith(gm.player)) {
+                    p.powerUp();
+                }
             }
         }
     }

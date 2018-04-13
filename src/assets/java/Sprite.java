@@ -32,6 +32,7 @@ public enum Sprite {
     // Other
     PLAYER("assets/image/playerShip2_red.png"),
     CLEAR("assets/image/damage/clear.png"),
+    POWERUP("assets/image/powerUpBlue.png"),
     
     // Player Death
     PLAYER_DEATH_1("assets/image/playerDeath/playerDeath_001.png"),
