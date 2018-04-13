@@ -31,6 +31,7 @@ public enum Sprite {
 
     // Other
     PLAYER("assets/image/playerShip2_red.png"),
+
     CLEAR("assets/image/damage/clear.png"),
     WEAPON_POWERUP("assets/image/powerUp.png"),
     HEALTH_POWERUP("assets/image/healthUp.png"),
@@ -83,6 +84,7 @@ public enum Sprite {
 
     public void setImage(Image img){
         this.img = img;
+        view.setImage(img);
     }
 
 }

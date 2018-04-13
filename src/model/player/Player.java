@@ -215,16 +215,16 @@ public class Player extends Entity {
                 blinkCounter++;           
                 switch(blinkCounter) {
                     case 5:
-                        inst.getSprite().setImage(new Image("assets/image/playerShip3_red.png"));
+                        getSprite().setImage(new Image("assets/image/playerShip3_red.png"));
                         break;
                     case 10:
-                        inst.getSprite().setImage(new Image("assets/image/playerShip4_red.png"));
+                        getSprite().setImage(new Image("assets/image/playerShip4_red.png"));
                         break;
                     case 15:
-                        inst.getSprite().setImage(new Image("assets/image/playerShip3_red.png"));
+                        getSprite().setImage(new Image("assets/image/playerShip3_red.png"));
                         break;
                     case 20:
-                        inst.getSprite().setImage(new Image("assets/image/playerShip2_red.png"));
+                        getSprite().setImage(new Image("assets/image/playerShip2_red.png"));
                         blinkCounter = 0;
                         break;
                 }
