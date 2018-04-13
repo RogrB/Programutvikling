@@ -49,7 +49,6 @@ public class Player extends Entity {
     @Override
     public void update(){
         if(!playerIsOutOfBounds()){
-            //this.y = this.y + move.next();
             setY(getY() + move.next());
             getSprite().getImageView().relocate(getX(), getY());
         }
@@ -138,12 +137,11 @@ public class Player extends Entity {
             getShot().setVolume(0.25);
             getShot().play();
             setCanShoot(false);
-            shotTimer();
+            shotDelayTimer();
         }
     }
     
-    public void shotTimer() {
-        // Metode for å begrense hvor ofte man kan skyte
+    public void shotDelayTimer() {
         Timer shotTimer = new Timer();
         shotTimer.schedule(new TimerTask() {
             
@@ -184,7 +182,7 @@ public class Player extends Entity {
 
     private void initImmunity(){
         setImmunity(true);
-        immunityBlink();
+        immunityBlinkAnimation();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
 
@@ -204,8 +202,7 @@ public class Player extends Entity {
         return immunityTime;
     }
 
-    private void immunityBlink() {
-        // Blinkeanimasjon for immunityframes
+    private void immunityBlinkAnimation() {
         System.out.println("Immunity start");
         Timer blinkTimer = new Timer();
         blinkTimer.schedule(new TimerTask() {
@@ -215,16 +212,16 @@ public class Player extends Entity {
                 blinkCounter++;           
                 switch(blinkCounter) {
                     case 5:
-                        inst.getSprite().setImage(new Image("assets/image/playerShip3_red.png"));
+                        getSprite().setImage(new Image("assets/image/playerShip3_red.png"));
                         break;
                     case 10:
-                        inst.getSprite().setImage(new Image("assets/image/playerShip4_red.png"));
+                        getSprite().setImage(new Image("assets/image/playerShip4_red.png"));
                         break;
                     case 15:
-                        inst.getSprite().setImage(new Image("assets/image/playerShip3_red.png"));
+                        getSprite().setImage(new Image("assets/image/playerShip3_red.png"));
                         break;
                     case 20:
-                        inst.getSprite().setImage(new Image("assets/image/playerShip2_red.png"));
+                        getSprite().setImage(new Image("assets/image/playerShip2_red.png"));
                         blinkCounter = 0;
                         break;
                 }

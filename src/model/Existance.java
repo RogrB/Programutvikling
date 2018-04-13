@@ -2,6 +2,8 @@ package model;
 
 import assets.java.Sprite;
 
+import static view.GameView.GAME_WIDTH;
+
 public abstract class Existance {
 
     private int x, y;
@@ -64,5 +66,23 @@ public abstract class Existance {
         }
         return false;
     }
-    
+
+    public boolean isOffScreenLeft(){
+        if (x + width < 0)
+            return true;
+        return false;
+    }
+
+    public boolean isOffScreenRight(){
+        if(x > GAME_WIDTH)
+            return true;
+        return false;
+    }
+
+    public boolean isOffScreen(){
+        if(isOffScreenLeft() && isOffScreenRight())
+            return true;
+        return false;
+    }
+
 }

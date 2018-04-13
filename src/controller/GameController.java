@@ -4,10 +4,8 @@ import assets.java.Sprite;
 import javafx.animation.AnimationTimer;
 import model.GameModel;
 import model.enemy.*;
-import model.levels.LevelData;
 import model.levels.LevelLoader;
 import model.weapons.*;
-import model.weapons.damage.*;
 import view.GameView;
 import model.PowerUp;
 
@@ -62,7 +60,7 @@ public class GameController {
                     }
                 }
 
-                updateBullets();
+                moveAllBullets();
                 detectPlayerCollidesWithEnemy();
                 detectEnemyShotByPlayer();
                 detectPlayerShotByEnemy();
@@ -76,15 +74,32 @@ public class GameController {
     }
 
 
-    private void updateBullets(){
+    private void moveAllBullets(){
         for (Bullet bullet : gm.player.getBullets()){
             gv.renderImage(bullet);
         }
-        for(Bullet bullet : gm.getEnemyBullets()) {
+
+        Iterator<Bullet> bulletIterator = gm.getEnemyBullets().iterator();
+        while(bulletIterator.hasNext()){
+            Bullet bullet = bulletIterator.next();
+
+            if(bullet.isOffScreenLeft()) {
+                bullet.purgeThis();
+            } else {
+                bullet.setX(bullet.getX() - 12);
+                bullet.setY(bullet.getY());
+                gv.renderImage(bullet);
+            }
+        }
+        
+        // Bytte ut med Iterator?
+        /*for(Bullet bullet : gm.getEnemyBullets()) {
+            if(bullet.isOffScreenLeft())
+                bullet.purgeThis(); // Gir null pointer exception
             bullet.setX(bullet.getX() - 12);
             bullet.setY(bullet.getY());
             gv.renderImage(bullet);
-        }
+        }*/
     }
 
     private void detectEnemyShotByPlayer(){
