@@ -41,7 +41,7 @@ public class Enemy extends Entity {
         if(TYPE.SHOOTING_CHANCE == 0)
             canShoot = false;
 
-        sprite.getView().relocate(x, y);
+        sprite.getImageView().relocate(x, y);
     }
 
     // GET-SET
@@ -59,9 +59,9 @@ public class Enemy extends Entity {
     @Override
     public void update(){
         pattern.updatePosition();
-        x = pattern.getX();
-        y = pattern.getY();
-        sprite.getView().relocate(getX(), getY());
+        setX(pattern.getX());
+        setY(pattern.getY());
+        sprite.getImageView().relocate(getX(), getY());
     }
 
     @Override
@@ -73,7 +73,7 @@ public class Enemy extends Entity {
             }
             else {
                 timerToShoot = chanceToShoot;
-                gm.getEnemyBullets().add(new Bullet(x + 10, y + (this.height / 2) - 8, weapon));
+                gm.getEnemyBullets().add(new Bullet(getX() + 10, getY() + (this.height / 2) - 8, weapon));
                 bulletCount++;
             }
         }

@@ -70,18 +70,17 @@ public class GameView {
         System.out.println(enemies.size());
 
         for(Enemy e : enemies){
-            enems.getChildren().addAll(e.getSprite());
+            enems.getChildren().addAll(e.getSprite().getImageView());
             System.out.println(enems.getChildren());
         }
 
-        root.getChildren().addAll(gm.player.getSprite(), enems, canvas);
+        root.getChildren().addAll(gm.player.getSprite().getImageView(), enems, canvas);
         return root;
     }
 
-    
-    public void renderBullet(Bullet bullet) {
-        graphics.clearRect(bullet.getOldX(), bullet.getOldY(), bullet.getWidth(), bullet.getHeight());
-        graphics.drawImage(bullet.getSpriteImage(), bullet.getX(), bullet.getY());
+    public void renderImage(Existance object) {
+        graphics.clearRect(object.getOldX(), object.getOldY(), object.getWidth(), object.getHeight());
+        graphics.drawImage(object.getSprite().getImage(), object.getX(), object.getY());
     }
 
     public ArrayList<Enemy> getEnemies(){
@@ -93,10 +92,10 @@ public class GameView {
         graphics.drawImage(new Image("assets/image/gameover.png"), (GAME_WIDTH/2) - 368, (GAME_HEIGHT/2) - 51);
     }
     
-    public void renderPowerUp(PowerUp powerup) {
+    /*public void renderPowerUp(PowerUp powerup) {
         if (powerup != null) {
             graphics.clearRect(powerup.getX(), powerup.getY(), powerup.getWidth()+20, powerup.getHeight());
-            graphics.drawImage(powerup.getSpriteImage(), powerup.getX(), powerup.getY());
+            graphics.drawImage(powerup.getSprite().getImage(), powerup.getX(), powerup.getY());
         }
-    }
+    }*/
 }

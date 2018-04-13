@@ -11,10 +11,10 @@ import java.util.TimerTask;
 public class Bullet extends Existance {
 
     protected final Weapon WEAPON;
-    protected Sprite sprite;
+    //protected Sprite sprite;
     private boolean isHit = false;
 
-    protected int oldX, oldY;
+    //protected int oldX, oldY;
 
     // Animation variables
     private final int ANIM_SPEED = 20;
@@ -31,9 +31,9 @@ public class Bullet extends Existance {
         setNewDimensions(sprite);
     }
 
-    public Image getSpriteImage() {
+    /*public Image getSpriteImage() {
         return sprite.getImg();
-    }
+    }*/
 
     public void clearImage() {
         sprite = Sprite.CLEAR;
@@ -41,15 +41,14 @@ public class Bullet extends Existance {
 
     public void hasHit() {
         isHit = true;
-        oldX = getX();
-        oldY = getY();
+        setOldX(getX());
+        setOldY(getY());
         bulletDie();
     }
 
     @Override
     public void setX(int x){
         if(!isHit) {
-            oldX = getX();
             super.setX(x);
         }
     }
@@ -57,7 +56,6 @@ public class Bullet extends Existance {
     @Override
     public void setY(int y){
         if(!isHit) {
-            oldY = getY();
             super.setY(y);
         }
     }
@@ -119,13 +117,5 @@ public class Bullet extends Existance {
     public void move() {
         this.setX(getX() + 20);
         this.setY(getY());
-    }
-
-    public int getOldX() {
-        return oldX;
-    }
-
-    public int getOldY() {
-        return oldY;
     }
 }

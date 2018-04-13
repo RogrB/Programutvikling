@@ -52,7 +52,7 @@ public class GameController {
                 if (!powerups.isEmpty()) {
                     for(PowerUp p : powerups) {
                         p.move();
-                        gv.renderPowerUp(p);
+                        gv.renderImage(p);
                     }
                 }
 
@@ -72,12 +72,12 @@ public class GameController {
 
     private void updateBullets(){
         for (Bullet bullet : gm.player.getBullets()){
-            gv.renderBullet(bullet);
+            gv.renderImage(bullet);
         }
         for(Bullet bullet : gm.getEnemyBullets()) {
             bullet.setX(bullet.getX() - 12);
             bullet.setY(bullet.getY());
-            gv.renderBullet(bullet);
+            gv.renderImage(bullet);
         }
     }
 
@@ -88,7 +88,7 @@ public class GameController {
                     enemy.takeDamage(bullet.getDmg());
                     bullet.hasHit();
                     bullet.clearImage();
-                    gv.renderBullet(bullet);
+                    gv.renderImage(bullet);
                 }
             }
         }

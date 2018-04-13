@@ -2,12 +2,10 @@ package model;
 
 import assets.java.Audio;
 import assets.java.Sprite;
-import model.weapons.Bullet;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 import model.weapons.Weapon;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.image.Image;
@@ -18,7 +16,6 @@ public abstract class Entity extends Existance {
     protected boolean canShoot;
     protected boolean canMove;
     protected int bulletCount;
-    protected Sprite sprite;
     protected Audio shot;
     protected Weapon weapon;
     private int deathAnimCounter;
@@ -64,10 +61,6 @@ public abstract class Entity extends Existance {
         return bulletCount;
     }
 
-    public ImageView getSprite() {
-        return sprite.getView();
-    }
-
     public AudioClip getShot() {
         return shot.getAudio();
     }
@@ -105,7 +98,7 @@ public abstract class Entity extends Existance {
             public void run() {
                 if (deathAnimCounter < 9) {
                     deathAnimCounter++;
-                    getSprite().setImage(new Image("assets/image/playerDeath/playerDeath_00" + deathAnimCounter + ".png"));
+                    sprite.setImage(new Image("assets/image/playerDeath/playerDeath_00" + deathAnimCounter + ".png"));
                 }
                 else {
                     getSprite().setImage(null);

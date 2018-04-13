@@ -13,24 +13,16 @@ public class Damage extends Existance {
     private Image sprite = new Image("assets/image/damage/laserBlue08.png");
     
     public Damage(int x, int y) {
-        this.x = x;
-        this.y = y;
+        setX(x);
+        setY(y);
         width = (int)sprite.getWidth();
         height = (int)sprite.getHeight();
         this.display();
     }
 
-    public int getX() {
-        return this.x;
-    }
-
-    public int getY() {
-        return this.y;
-    }
-    
-    public Image getSprite() {
+    /*public Image getSprite() {
         return this.sprite;
-    }
+    }*/
 
     public void display() {
         // Viser damageAnimasjon på

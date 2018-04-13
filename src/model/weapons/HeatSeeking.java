@@ -22,11 +22,13 @@ public class HeatSeeking extends Bullet {
     
     @Override
     public void move() {
-        oldX = getX();
-        oldY = getY();
+
+        setOldX(getX());
+        setOldY(getY());
 
         if (enemies.isEmpty()) {
-            x += 15;
+            //x += 15;
+            setX(getX() + 15);
         }
         else {
             if (!locked) {
@@ -52,12 +54,12 @@ public class HeatSeeking extends Bullet {
     
     public void moveMissile() {
         if (target != null) {
-            x = (x < target.getX()) ? x+7 : x-7;
-            if (Math.abs(target.getY() - y) < 7) {
-                y = (y < target.getY()) ? y+1 : y-1;
+            setX((getX() < target.getX()) ? getX()+7 : getX()-7);
+            if (Math.abs(target.getY() - getY()) < 7) {
+                setY((getY() < target.getY()) ? getY()+1 : getY()-1);
             }
             else {
-                y = (y < target.getY()) ? y+7 : y-7;    
+                setY((getY() < target.getY()) ? getY()+7 : getY()-7);
             }
         }
     }

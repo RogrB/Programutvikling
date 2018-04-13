@@ -66,15 +66,15 @@ public enum Sprite {
         return img.getWidth();
     }
 
-    public ImageView getView(){
+    public ImageView getImageView(){
         return view;
     }
 
-    public Image getImg() {
+    public Image getImage() {
         return img;
     }
 
-    public void setImg(Image img){
+    public void setImage(Image img){
         this.img = img;
     }
 

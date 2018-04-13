@@ -37,25 +37,26 @@ public class Player extends Entity {
 
         setCanShoot(true);
         shot = Audio.PLAYER_SHOT;
-        getSprite().relocate(x, y);
+        getSprite().getImageView().relocate(getX(), getY());
         weapon = Weapon.PLAYER_BASIC;
     }
 
     @Override
     public void update(){
         if(!playerIsOutOfBounds()){
-            this.y = this.y + move.next();
-            getSprite().relocate(x, y);
+            //this.y = this.y + move.next();
+            setY(getY() + move.next());
+            getSprite().getImageView().relocate(getX(), getY());
         }
         updateBullets();
     }
 
     private boolean playerIsOutOfBounds(){
-        if(y + move.next() < 0) {
+        if(getY() + move.next() < 0) {
             move.moveStop();
             return true;
         }
-        if(y + this.height + move.next() >= GameView.GAME_HEIGHT) {
+        if(getY() + this.height + move.next() >= GameView.GAME_HEIGHT) {
             move.moveStop();
             return true;
         }
@@ -108,24 +109,24 @@ public class Player extends Entity {
         if(canShoot()) {
             switch(getWeaponType()) {
                 case "Bullet":
-                    bullets.add(new Bullet(x + this.width - 10, y + (this.height / 2) - 8, weapon));
+                    bullets.add(new Bullet(getX() + this.width - 10, getY() + (this.height / 2) - 8, weapon));
                     break;
                 case "Upgrade1":
-                    bullets.add(new Upgrade1(x + this.width - 10, y + (this.height / 2) - 8, weapon));
+                    bullets.add(new Upgrade1(getX() + this.width - 10, getY() + (this.height / 2) - 8, weapon));
                     break;
                 case "Upgrade2":
-                    bullets.add(new Upgrade2(x + this.width - 10, y + (this.height / 2) - 8, weapon));
+                    bullets.add(new Upgrade2(getX() + this.width - 10, getY() + (this.height / 2) - 8, weapon));
                     break;        
                 case "HeatSeeking":
-                    bullets.add(new HeatSeeking(x + this.width - 10, y + (this.height / 2) - 8, weapon));
+                    bullets.add(new HeatSeeking(getX() + this.width - 10, getY() + (this.height / 2) - 8, weapon));
                     break;
                 case "Doubles":
-                    bullets.add(new Doubles(x + this.width - 10, y + (this.height / 2) - 25, weapon));
-                    bullets.add(new Doubles(x + this.width - 10, y + (this.height / 2) + 15, weapon));
+                    bullets.add(new Doubles(getX() + this.width - 10, getY() + (this.height / 2) - 25, weapon));
+                    bullets.add(new Doubles(getX() + this.width - 10, getY() + (this.height / 2) + 15, weapon));
                     break;
                 case "DoubleSwirl":
-                    bullets.add(new DoubleSwirl(x + this.width, y + (this.height / 2) - 25, weapon, true));
-                    bullets.add(new DoubleSwirl(x + this.width - 10, y + (this.height / 2) + 15, weapon, false));                    
+                    bullets.add(new DoubleSwirl(getX() + this.width, getY() + (this.height / 2) - 25, weapon, true));
+                    bullets.add(new DoubleSwirl(getX() + this.width - 10, getY() + (this.height / 2) + 15, weapon, false));
                     break;
             }
             bulletCount++;
