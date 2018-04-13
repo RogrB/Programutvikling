@@ -34,7 +34,7 @@ public class GameView {
     final Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
     final GraphicsContext graphics = canvas.getGraphicsContext2D();
     LevelLoader level2 = new LevelLoader(LevelData.LEVEL2);
-    ArrayList<Enemy> enemies = level2.getEnemies();
+    ArrayList<Enemy> enemies = level2.getEnemies(); // trengs den her lenger?
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
@@ -64,17 +64,11 @@ public class GameView {
 
     public Parent initGame() {
         Pane root = new Pane();
-        Pane enems = new Pane();
         root.setPrefSize(GAME_WIDTH, GAME_HEIGHT);
         root.setBackground(getBackGroundImage());
-        System.out.println(enemies.size());
 
-        for(Enemy e : enemies){
-            enems.getChildren().addAll(e.getSprite().getImageView());
-            System.out.println(enems.getChildren());
-        }
 
-        root.getChildren().addAll(gm.player.getSprite().getImageView(), enems, canvas);
+        root.getChildren().addAll(gm.player.getSprite().getImageView(), canvas);
         return root;
     }
 
@@ -82,8 +76,12 @@ public class GameView {
         graphics.clearRect(object.getOldX(), object.getOldY(), object.getWidth(), object.getHeight());
         graphics.drawImage(object.getSprite().getImage(), object.getX(), object.getY());
     }
+    
+    public void clearLast(Existance object) {
+        graphics.clearRect(object.getOldX()-10, object.getOldY()-10, object.getWidth()+30, object.getHeight()+30);
+    }
 
-    public ArrayList<Enemy> getEnemies(){
+    public ArrayList<Enemy> getEnemies(){ // trengs denne her?
         return enemies;
     }
 

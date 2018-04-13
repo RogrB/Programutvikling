@@ -81,7 +81,6 @@ public abstract class Entity extends Existance {
         dmg = Math.abs(dmg);
         health -= dmg;
         if(health <= 0) {
-            isDead();
             animateDeath();
         }
     }
@@ -91,6 +90,7 @@ public abstract class Entity extends Existance {
     }
     
     public void animateDeath() {
+        System.out.println("deathanim");
         Timer deathTimer = new Timer();
         deathTimer.schedule(new TimerTask() {
             
@@ -101,7 +101,8 @@ public abstract class Entity extends Existance {
                     sprite.setImage(new Image("assets/image/playerDeath/playerDeath_00" + deathAnimCounter + ".png"));
                 }
                 else {
-                    getSprite().setImage(null);
+                    sprite.setImage(new Image("assets/image/damage/clear.png"));
+                    isDead();
                     this.cancel();
                 }
             }

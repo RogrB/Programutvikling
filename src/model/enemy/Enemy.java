@@ -2,6 +2,7 @@ package model.enemy;
 
 import model.Entity;
 import model.GameModel;
+import view.GameView;
 import model.weapons.Bullet;
 
 import java.util.Random;
@@ -10,6 +11,7 @@ public class Enemy extends Entity {
 
     // MVC-access
     GameModel gm = GameModel.getInstance();
+    GameView gv = GameView.getInstance();
 
     private final EnemyType TYPE;
     private EnemyMovementPattern pattern;
@@ -61,7 +63,8 @@ public class Enemy extends Entity {
         pattern.updatePosition();
         setX(pattern.getX());
         setY(pattern.getY());
-        sprite.getImageView().relocate(getX(), getY());
+        // gv.renderImage(this); // Gir nullpointer .. setter i gamecontroller for now
+        // sprite.getImageView().relocate(getX(), getY());
     }
 
     @Override

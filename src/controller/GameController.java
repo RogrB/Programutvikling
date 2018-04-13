@@ -47,6 +47,7 @@ public class GameController {
                 gm.player.update();
                 for(Enemy e : enemies){
                     e.update();
+                    gv.renderImage(e);
                     e.shoot();
                 }
                 if (!powerups.isEmpty()) {
@@ -131,6 +132,7 @@ public class GameController {
             Enemy e = enemyIterator.next();
             if(!e.isAlive()){
                 System.out.println("Removing enemy");
+                gv.clearLast(e);
                 enemyIterator.remove();
             }
         }
