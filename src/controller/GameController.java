@@ -33,8 +33,7 @@ public class GameController {
     public void setup(){
         gm = GameModel.getInstance();
         gv = GameView.getInstance();
-        level2 = new LevelLoader(LevelData.LEVEL2);
-        enemies = level2.getEnemies();
+        enemies = gv.getEnemies();
         powerups.add(new PowerUp(Sprite.POWERUP, 1220, 643));
     }
 
@@ -128,15 +127,15 @@ public class GameController {
         if(enemies.size() == 0){
             return;
         }
-        Enemy e = enemyIterator.next();
         if(enemies.size() == 1){
+            Enemy e = enemyIterator.next();
             if(!e.isAlive()){
                 System.out.println("Removing enemy");
                 enemyIterator.remove();
             }
         }
         while(enemyIterator.hasNext()){
-            System.out.println("Hey there");
+            Enemy e = enemyIterator.next();
             if(!e.isAlive()){
                 System.out.println("Removing enemy");
                 enemyIterator.remove();

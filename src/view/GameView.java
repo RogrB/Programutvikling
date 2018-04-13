@@ -33,7 +33,7 @@ public class GameView {
 
     final Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
     final GraphicsContext graphics = canvas.getGraphicsContext2D();
-    final LevelLoader level2 = new LevelLoader(LevelData.LEVEL2);
+    LevelLoader level2 = new LevelLoader(LevelData.LEVEL2);
     ArrayList<Enemy> enemies = level2.getEnemies();
 
     private static final String BG_IMG = "assets/image/background.jpg";
@@ -70,6 +70,7 @@ public class GameView {
 
         for(Enemy e : enemies){
             enems.getChildren().add(e.getSprite());
+            System.out.println(enems.getChildren());
         }
 
         root.getChildren().addAll(gm.player.getSprite(), enems, canvas);
@@ -81,7 +82,11 @@ public class GameView {
         graphics.clearRect(bullet.getOldX(), bullet.getOldY(), bullet.getWidth(), bullet.getHeight());
         graphics.drawImage(bullet.getSpriteImage(), bullet.getX(), bullet.getY());
     }
-    
+
+    public ArrayList<Enemy> getEnemies(){
+        return enemies;
+    }
+
     public void gameOver() {
         // Is ded!
         graphics.drawImage(new Image("assets/image/gameover.png"), (GAME_WIDTH/2) - 368, (GAME_HEIGHT/2) - 51);
