@@ -49,9 +49,13 @@ public enum Sprite {
     Image img;
     ImageView view;
 
+    public final int HEIGHT, WIDTH;
+
     Sprite(String src){
         this.img =  new Image(src) ;
         this.view = new ImageView(this.img);
+        HEIGHT = (int) img.getHeight();
+        WIDTH = (int) img.getWidth();
     }
 
     public double getHeight(){

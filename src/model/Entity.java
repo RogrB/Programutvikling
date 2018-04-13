@@ -21,7 +21,7 @@ public abstract class Entity extends Existance {
     protected Sprite sprite;
     protected Audio shot;
     protected Weapon weapon;
-    private int deathAnimCounter;    
+    private int deathAnimCounter;
 
     public Entity(Sprite sprite, int x, int y, int health){
         this.sprite = sprite;
