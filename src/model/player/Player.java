@@ -84,6 +84,9 @@ public class Player extends Entity {
             case "HeatSeeking":
                 setWeaponType("Doubles");
                 break;
+            case "Doubles":
+                setWeaponType("DoubleSwirl");
+                break;
         }
     }
 
@@ -117,7 +120,12 @@ public class Player extends Entity {
                     bullets.add(new HeatSeeking(x + this.width - 10, y + (this.height / 2) - 8, weapon));
                     break;
                 case "Doubles":
-                    bullets.add(new Doubles(x + this.width - 10, y + (this.height / 2) - 20, weapon));
+                    bullets.add(new Doubles(x + this.width - 10, y + (this.height / 2) - 25, weapon));
+                    bullets.add(new Doubles(x + this.width - 10, y + (this.height / 2) + 15, weapon));
+                    break;
+                case "DoubleSwirl":
+                    bullets.add(new DoubleSwirl(x + this.width, y + (this.height / 2) - 25, weapon, true));
+                    bullets.add(new DoubleSwirl(x + this.width - 10, y + (this.height / 2) + 15, weapon, false));                    
                     break;
             }
             bulletCount++;
