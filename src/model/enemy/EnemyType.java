@@ -9,7 +9,7 @@ public enum EnemyType {
     //          Health      Sprite                  Shooting chance     Weapon
     ASTROID(    1,          Sprite.ASTROID,         0,                  null),
     SHIP(       2,          Sprite.ENEMY_SHIP,      3000,               Weapon.ENEMY_BASIC),
-    BOSS01(     20,         Sprite.ENEMY_BOSS01,    700,                Weapon.PLAYER_DOUBLES);
+    BOSS01(     20,         Sprite.ENEMY_BOSS01,    700,                Weapon.PLAYER_DOUBLESWIRL);
 
     public final int MAX_HEALTH;
     public final Sprite SPRITE;
