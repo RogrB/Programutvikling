@@ -14,8 +14,8 @@ public class Enemy extends Entity {
     private final EnemyType TYPE;
     private EnemyMovementPattern pattern;
 
-    private final int CHANCE_TO_SHOOT = 2000;
-    private int chanceToShoot = CHANCE_TO_SHOOT;
+    private int chanceToShoot;
+    private int timerToShoot;
 
     public Enemy(EnemyType enemyType, EnemyMovementPattern pattern, int x, int y){
         super(
@@ -35,22 +35,29 @@ public class Enemy extends Entity {
         canShoot = TYPE.canShoot();
         weapon = TYPE.WEAPON;
         health = TYPE.MAX_HEALTH;
+        chanceToShoot = TYPE.SHOOTING_CHANCE;
+        timerToShoot = chanceToShoot;
+
+        if(TYPE.SHOOTING_CHANCE == 0)
+            canShoot = false;
 
         sprite.getView().relocate(x, y);
     }
 
-    // GET
+    // GET-SET
     public int getHealth() {
         return health;
     }
-
     public EnemyMovementPattern getPattern(){
         return pattern;
     }
 
+    public void setChanceToShoot(int chanceToShoot) {
+        this.chanceToShoot = chanceToShoot;
+    }
+
     @Override
     public void update(){
-        //pattern.nextFrame();
         pattern.updatePosition();
         x = pattern.getX();
         y = pattern.getY();
@@ -61,11 +68,11 @@ public class Enemy extends Entity {
     public void shoot() {
         Random random = new Random();
         if(canShoot()) {
-            if(random.nextInt(CHANCE_TO_SHOOT) < chanceToShoot) {
-                chanceToShoot--;
+            if(random.nextInt(chanceToShoot) < timerToShoot) {
+                timerToShoot--;
             }
             else {
-                chanceToShoot = CHANCE_TO_SHOOT;
+                timerToShoot = chanceToShoot;
                 gm.getEnemyBullets().add(new Bullet(x + 10, y + (this.height / 2) - 8, weapon));
                 bulletCount++;
             }

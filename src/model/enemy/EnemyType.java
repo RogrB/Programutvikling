@@ -6,18 +6,20 @@ import model.weapons.Weapon;
 
 public enum EnemyType {
 
-    //          Health      Sprite                  Weapon
-    ASTROID(    1,          Sprite.ASTROID,         null),
-    SHIP(       2,          Sprite.ENEMY_SHIP,      Weapon.ENEMY_BASIC),
-    BOSS01(     20,         Sprite.ENEMY_BOSS01,    Weapon.ENEMY_BASIC);
+    //          Health      Sprite                  Shooting chance     Weapon
+    ASTROID(    1,          Sprite.ASTROID,         0,                  null),
+    SHIP(       2,          Sprite.ENEMY_SHIP,      3000,               Weapon.ENEMY_BASIC),
+    BOSS01(     20,         Sprite.ENEMY_BOSS01,    700,                Weapon.PLAYER_DOUBLES);
 
     public final int MAX_HEALTH;
     public final Sprite SPRITE;
+    public final int SHOOTING_CHANCE;
     public final Weapon WEAPON;
 
-    EnemyType(int MAX_HEALTH, Sprite sprite, Weapon weapon) {
+    EnemyType(int MAX_HEALTH, Sprite sprite, int shootingChance, Weapon weapon) {
         this.MAX_HEALTH = MAX_HEALTH;
         this.SPRITE = sprite;
+        this.SHOOTING_CHANCE = shootingChance;
         this.WEAPON = weapon;
     }
 
