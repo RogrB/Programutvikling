@@ -22,14 +22,14 @@ public class LevelLoader {
                     case '0':
                         break;
                     case '1':
-                        EnemyMovementPattern pattern = EnemyMovementPattern.BOSS_EIGHT;
-                        Enemy e = new Enemy(EnemyType.BOSS01, pattern, 200 * j, 140 * i);
-                        System.out.format("Enemy created at x: %d, y: %d \n", e.getX(), e.getY());
-                        enemies.add(e);
-
+                        enemies.add(new Enemy(EnemyType.SHIP, EnemyMovementPattern.LEFT_PULSATING,  1 + (j * 100), 1 + (i * 120)));
                         break;
                     case '2':
-                        System.out.println("Detected a 2");
+                        enemies.add(new Enemy(EnemyType.ASTROID, EnemyMovementPattern.COS, 1 + (j * 100), 1 + (i * 120)));
+                        break;
+                    case '3':
+                        // I fremtiden burde EnemyType og EnemyMovementPattern hos denne bli funnet via levelnavn somehow
+                        enemies.add(new Enemy(EnemyType.BOSS01, EnemyMovementPattern.BOSS_EIGHT, 200 * j, 140 * i));
 
 
                 }

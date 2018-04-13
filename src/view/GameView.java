@@ -67,9 +67,10 @@ public class GameView {
         Pane enems = new Pane();
         root.setPrefSize(GAME_WIDTH, GAME_HEIGHT);
         root.setBackground(getBackGroundImage());
+        System.out.println(enemies.size());
 
         for(Enemy e : enemies){
-            enems.getChildren().add(e.getSprite());
+            enems.getChildren().addAll(e.getSprite());
             System.out.println(enems.getChildren());
         }
 
