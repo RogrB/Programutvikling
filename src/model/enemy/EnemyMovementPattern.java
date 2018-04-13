@@ -2,15 +2,19 @@ package model.enemy;
 
 import static java.lang.Math.*;
 
-public enum EnemyMovementPattern {
+public class EnemyMovementPattern {
 
-    LEFT,       LEFT_PULSATING,
-    SIN,        SIN_REVERSED,
-    COS,        COS_REVERSED,
-    TRI,        TRI_REVERSED,
+    /*
+    * LEFT,       LEFT_PULSATING,
+    * SIN,        SIN_REVERSED,
+    * COS,        COS_REVERSED,
+    * TRI,        TRI_REVERSED,
+    *
+    * MADNESS_01, MADNESS_02, MADNESS_03,
+    * BOSS_LINE,  BOSS_EIGHT, BOSS_OVAL;
+    * */
 
-    MADNESS_01, MADNESS_02, MADNESS_03,
-    BOSS_LINE,  BOSS_EIGHT, BOSS_OVAL;
+    private String name;
 
     private double x, y;
     private double movementSpeed;
@@ -26,17 +30,20 @@ public enum EnemyMovementPattern {
     private int bossCounter;
     private final int BOSS_INIT_TIME = 250;
 
-    EnemyMovementPattern(){
+    public EnemyMovementPattern(String name){
+
+        this.name = name;
+
         movementSpeed = 1;  // Hastigheten til fienden.
         modDepth = 2;       // Modulasjonsdybden til oscillatoren
         modSpeed = 2;       // Frekvensen til oscillatoren
 
-        if(name() == "TRI")
+        if(name == "TRI")
             triState = true;
     }
 
     private void nextX(){
-        switch(this.name()){
+        switch(name){
             case "LEFT":
             case "SIN":
             case "SIN_REVERSED":
@@ -80,7 +87,7 @@ public enum EnemyMovementPattern {
     }
 
     private void nextY(){
-        switch(this.name()) {
+        switch(name) {
             case "LEFT":
             case "LEFT_PULSATING":
                 break;

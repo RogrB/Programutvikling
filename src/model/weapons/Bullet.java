@@ -11,10 +11,7 @@ import java.util.TimerTask;
 public class Bullet extends Existance {
 
     protected final Weapon WEAPON;
-    //protected Sprite sprite;
     private boolean isHit = false;
-
-    //protected int oldX, oldY;
 
     // Animation variables
     private final int ANIM_SPEED = 20;
@@ -30,10 +27,6 @@ public class Bullet extends Existance {
         sprite = WEAPON.SPRITE;
         setNewDimensions(sprite);
     }
-
-    /*public Image getSpriteImage() {
-        return sprite.getImg();
-    }*/
 
     public void clearImage() {
         sprite = Sprite.CLEAR;
