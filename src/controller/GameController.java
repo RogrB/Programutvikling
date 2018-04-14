@@ -91,7 +91,7 @@ public class GameController {
                 gv.renderImage(bullet);
             }
         }
-        
+
         // Bytte ut med Iterator?
         /*for(Bullet bullet : gm.getEnemyBullets()) {
             if(bullet.isOffScreenLeft())
