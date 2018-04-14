@@ -54,7 +54,7 @@ public class GameController {
                 }
                 for(Enemy e : enemies){
                     e.update();
-                    gv.renderImage(e);
+                    gv.renderEnemies(e);
                     e.shoot();
                 }
                 if (!powerups.isEmpty()) {
@@ -81,7 +81,7 @@ public class GameController {
 
     private void moveAllBullets(){
         for (Bullet bullet : gm.player.getBullets()){
-            gv.renderImage(bullet);
+            gv.renderBullets(bullet);
         }
 
         try {
@@ -90,7 +90,7 @@ public class GameController {
                 Bullet bullet = bulletIterator.next();
                 bullet.setX(bullet.getX() - 12);
                 bullet.setY(bullet.getY());
-                gv.renderImage(bullet);
+                gv.renderBullets(bullet);
             }
         } catch(Exception e) {
             System.out.println("Shit happened: " + e);
@@ -113,7 +113,7 @@ public class GameController {
                     enemy.takeDamage(bullet.getDmg());
                     bullet.hasHit();
                     bullet.clearImage();
-                    gv.renderImage(bullet);
+                    gv.renderBullets(bullet);
                 }
             }
         }
