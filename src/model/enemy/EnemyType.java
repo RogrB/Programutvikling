@@ -24,8 +24,8 @@ public enum EnemyType {
     UFOYELLOW(  2,          Sprite.UFO_YELLOW,      3000,                Weapon.ENEMY_BASIC),
     
     // Bosstypes
-    BOSS01(     20,         Sprite.ENEMY_BOSS01,    700,                Weapon.PLAYER_DOUBLESWIRL),
-    BOSS02(     20,         Sprite.ENEMY_BOSS02,    700,                Weapon.PLAYER_DOUBLESWIRL);
+    BOSS01(     20,         Sprite.ENEMY_BOSS01,    700,                Weapon.ENEMY_CIRCLE),
+    BOSS02(     20,         Sprite.ENEMY_BOSS02,    700,                Weapon.ENEMY_CIRCLE);
 
     public final int MAX_HEALTH;
     public final Sprite SPRITE;
