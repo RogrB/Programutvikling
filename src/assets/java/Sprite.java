@@ -13,6 +13,8 @@ public enum Sprite {
     ASTROID5("assets/image/enemies/meteor/meteor005.png"),
     ASTROID6("assets/image/enemies/meteor/meteor006.png"),
     ASTROID7("assets/image/enemies/meteor/meteor007.png"),
+    ASTROID8("assets/image/enemies/meteor/meteor008.png"),
+    
     ENEMY_BLUE01("assets/image/enemies/enemyBlue1.png"),
     ENEMY_BLUE02("assets/image/enemies/enemyBlue2.png"),
     ENEMY_GREEN01("assets/image/enemies/enemyGreen1.png"),
@@ -49,18 +51,21 @@ public enum Sprite {
     WEAPON_ENEMY_BASIC_DMG_3("assets/image/damage/laserRed10.png"),
     WEAPON_ENEMY_BASIC_DMG_4("assets/image/damage/laserRed11.png"),
 
-    // Other
+    // Player
     PLAYER("assets/image/player/playerShip2_red.png"),
-
-    CLEAR("assets/image/damage/clear.png"),
-    WEAPON_POWERUP("assets/image/powerUp.png"),
-    HEALTH_POWERUP("assets/image/healthUp.png"),
-    SHIELD_POWERUP("assets/image/powerUpShield.png"),
+    PLAYER_BLINK1("assets/image/player/playerShip3_red.png"),
+    PLAYER_BLINK2("assets/image/player/playerShip4_red.png"),
     
     // Shield
     SHIELD1("assets/image/player/shield1.png"),
     SHIELD2("assets/image/player/shield2.png"),
     SHIELD3("assets/image/player/shield3.png"),
+    
+    // Other
+    CLEAR("assets/image/damage/clear.png"),
+    WEAPON_POWERUP("assets/image/powerUp.png"),
+    HEALTH_POWERUP("assets/image/healthUp.png"),
+    SHIELD_POWERUP("assets/image/powerUpShield.png"),    
     
     // Player Death
     PLAYER_DEATH_1("assets/image/playerDeath/playerDeath_001.png"),

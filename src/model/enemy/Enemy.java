@@ -1,11 +1,14 @@
 package model.enemy;
 
+import assets.java.Sprite;
 import model.Entity;
 import model.GameModel;
 import view.GameView;
 import model.weapons.Bullet;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Enemy extends Entity {
 
@@ -18,6 +21,7 @@ public class Enemy extends Entity {
 
     private int chanceToShoot;
     private int timerToShoot;
+    private int animCounter;
 
     public Enemy(EnemyType enemyType, EnemyMovementPattern pattern, int x, int y){
         super(
@@ -44,6 +48,9 @@ public class Enemy extends Entity {
             canShoot = false;
 
         sprite.getImageView().relocate(x, y);
+        if (this.TYPE == TYPE.ASTROID) {
+            animateAstroid();
+        }
     }
 
     // GET-SET
@@ -80,6 +87,41 @@ public class Enemy extends Entity {
                 bulletCount++;
             }
         }
+    }
+    
+    private void animateAstroid() {
+        Timer blinkTimer = new Timer();
+        blinkTimer.schedule(new TimerTask() {
+            
+            @Override
+            public void run() {
+                switch(animCounter) {
+                    case 5:
+                        getSprite().setImage(Sprite.ASTROID2.getImage());
+                        break;
+                    case 10:
+                        getSprite().setImage(Sprite.ASTROID3.getImage());
+                        break;
+                    case 15:
+                        getSprite().setImage(Sprite.ASTROID4.getImage());
+                        break;
+                    case 20:
+                        getSprite().setImage(Sprite.ASTROID5.getImage());
+                        break;
+                    case 25:
+                        getSprite().setImage(Sprite.ASTROID6.getImage());
+                        break;   
+                    case 30:
+                        getSprite().setImage(Sprite.ASTROID7.getImage());
+                        break;      
+                    case 35:
+                        getSprite().setImage(Sprite.ASTROID8.getImage());
+                        animCounter = 0;
+                        break;                            
+                }
+                animCounter++;           
+            }
+        }, 0, 20);        
     }
     
 }
