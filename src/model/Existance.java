@@ -80,9 +80,7 @@ public abstract class Existance {
     }
 
     public boolean isOffScreen(){
-        if(isOffScreenLeft() && isOffScreenRight())
-            return true;
-        return false;
+        return isOffScreenLeft() || isOffScreenRight();
     }
 
 }

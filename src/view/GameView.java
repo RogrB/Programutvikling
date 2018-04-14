@@ -32,7 +32,15 @@ public class GameView {
     public static final int GAME_HEIGHT = 800;
 
     final Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
+    final Canvas hudCanvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
+    final Canvas bulletLayerCanvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
+    final Canvas enemyLayerCanvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
+    
     final GraphicsContext graphics = canvas.getGraphicsContext2D();
+    final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
+    final GraphicsContext bulletLayer = bulletLayerCanvas.getGraphicsContext2D();
+    final GraphicsContext enemyLayer = enemyLayerCanvas.getGraphicsContext2D();
+    
     LevelLoader level2 = new LevelLoader(LevelData.LEVEL2);
     ArrayList<Enemy> enemies = level2.getEnemies(); // trengs den her lenger?
 
@@ -68,13 +76,23 @@ public class GameView {
         root.setBackground(getBackGroundImage());
 
 
-        root.getChildren().addAll(gm.player.getSprite().getImageView(), canvas);
+        root.getChildren().addAll(gm.player.getSprite().getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas);
         return root;
     }
 
     public void renderImage(Existance object) {
         graphics.clearRect(object.getOldX(), object.getOldY(), object.getWidth(), object.getHeight());
         graphics.drawImage(object.getSprite().getImage(), object.getX(), object.getY());
+    }
+    
+    public void renderBullets(Existance object) {
+        bulletLayer.clearRect(object.getOldX(), object.getOldY(), object.getWidth(), object.getHeight());
+        bulletLayer.drawImage(object.getSprite().getImage(), object.getX(), object.getY());        
+    }
+    
+    public void renderEnemies(Existance object) {
+        enemyLayer.clearRect(object.getOldX(), object.getOldY(), object.getWidth(), object.getHeight());
+        enemyLayer.drawImage(object.getSprite().getImage(), object.getX(), object.getY());        
     }
     
     public void clearLast(Existance object) {
@@ -93,5 +111,15 @@ public class GameView {
     public void renderShield() {
         graphics.clearRect(gm.player.getX(), gm.player.getY()-30, gm.player.getWidth()+5, gm.player.getHeight()+70);
         graphics.drawImage(gm.player.getShieldSprite().getImage(), gm.player.getX(), gm.player.getY()-1);
+    }
+    
+    public void renderHUD(HUD h, boolean shield) {
+        hud.clearRect(15, 15, 120, 50);
+        hud.drawImage(h.getPlayerIcon(), 20, 20);
+        hud.drawImage(h.getNumeralX(), 50, 20);
+        hud.drawImage(h.getLifeCounter(), 70, 20);
+        if(shield) {
+            hud.drawImage(h.getShieldIcon(), 20, 50);
+        }
     }
 }

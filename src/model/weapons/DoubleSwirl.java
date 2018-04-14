@@ -12,7 +12,7 @@ public class DoubleSwirl extends Bullet {
         super(
         x,
         y,
-        weapon.PLAYER_DOUBLES);
+        weapon.PLAYER_DOUBLESWIRL);
         this.top = top;
         if (top) {
             this.goingUp = false;

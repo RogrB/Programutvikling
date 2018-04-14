@@ -12,6 +12,8 @@ public class Bullet extends Existance {
 
     protected final Weapon WEAPON;
     private boolean isHit = false;
+    
+    GameModel gm = GameModel.getInstance();
 
     // Animation variables
     private final int ANIM_SPEED = 20;
@@ -42,6 +44,9 @@ public class Bullet extends Existance {
     public void setX(int x){
         if(!isHit) {
             super.setX(x);
+        }
+        if(isOffScreen()) {
+            purgeThis();
         }
     }
 
@@ -99,11 +104,14 @@ public class Bullet extends Existance {
     }
 
     public void purgeThis(){
-        if(GameModel.getInstance().getEnemyBullets().contains(this))
-            GameModel.getInstance().getEnemyBullets().remove(this);
-
-        if(GameModel.getInstance().player.getBullets().contains(this))
-            GameModel.getInstance().player.getBullets().remove(this);
+        if (!gm.getEnemyBullets().isEmpty()) {
+            if(gm.getEnemyBullets().contains(this))
+                gm.getEnemyBullets().remove(this);
+        }
+        if (!gm.player.getBullets().isEmpty()) {
+            if(gm.player.getBullets().contains(this))
+                gm.player.getBullets().remove(this);
+        }
     }
     
     public void move() {
