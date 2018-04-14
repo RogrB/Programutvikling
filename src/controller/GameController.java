@@ -7,6 +7,7 @@ import model.enemy.*;
 import model.levels.LevelLoader;
 import model.weapons.*;
 import view.GameView;
+import view.HUD;
 import model.PowerUp;
 
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ public class GameController {
     // MVC-access
     GameModel gm;
     GameView gv;
+    
+    HUD hud;
 
     // Level data
     public ArrayList<Enemy> enemies;
@@ -31,6 +34,7 @@ public class GameController {
     public void setup(){
         gm = GameModel.getInstance();
         gv = GameView.getInstance();
+        hud = HUD.getInstance();
         enemies = gv.getEnemies();
         powerups.add(new PowerUp(Sprite.WEAPON_POWERUP, 1220, 643));
         powerups.add(new PowerUp(Sprite.HEALTH_POWERUP, 1420, 557));
@@ -65,6 +69,7 @@ public class GameController {
                 detectEnemyShotByPlayer();
                 detectPlayerShotByEnemy();
                 detectPowerUp();
+                hud.renderHUD();
                 if (!gm.player.isAlive()) {
                     gv.gameOver();
                     this.stop();
@@ -79,12 +84,16 @@ public class GameController {
             gv.renderImage(bullet);
         }
 
-        Iterator<Bullet> bulletIterator = gm.getEnemyBullets().iterator();
-        while(bulletIterator.hasNext()){
-            Bullet bullet = bulletIterator.next();
-            bullet.setX(bullet.getX() - 12);
-            bullet.setY(bullet.getY());
-            gv.renderImage(bullet);
+        try {
+            Iterator<Bullet> bulletIterator = gm.getEnemyBullets().iterator();
+            while(bulletIterator.hasNext()){
+                Bullet bullet = bulletIterator.next();
+                bullet.setX(bullet.getX() - 12);
+                bullet.setY(bullet.getY());
+                gv.renderImage(bullet);
+            }
+        } catch(Exception e) {
+            System.out.println("Shit happened: " + e);
         }
         
         // Bytte ut med Iterator?

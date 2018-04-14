@@ -155,8 +155,12 @@ public class Player extends Entity {
     }
 
     private void updateBullets(){
+        try {
         for (Bullet bullet : bullets) {
             bullet.move();
+        }
+        } catch(Exception e) {
+            System.out.println("Bullets out of array, yo: " + e);
         }
     }
 

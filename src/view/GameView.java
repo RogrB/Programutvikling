@@ -33,6 +33,10 @@ public class GameView {
 
     final Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
     final GraphicsContext graphics = canvas.getGraphicsContext2D();
+    
+    final Canvas hudCanvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
+    final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
+    
     LevelLoader level2 = new LevelLoader(LevelData.LEVEL2);
     ArrayList<Enemy> enemies = level2.getEnemies(); // trengs den her lenger?
 
@@ -68,7 +72,7 @@ public class GameView {
         root.setBackground(getBackGroundImage());
 
 
-        root.getChildren().addAll(gm.player.getSprite().getImageView(), canvas);
+        root.getChildren().addAll(gm.player.getSprite().getImageView(), canvas, hudCanvas);
         return root;
     }
 
@@ -93,5 +97,15 @@ public class GameView {
     public void renderShield() {
         graphics.clearRect(gm.player.getX(), gm.player.getY()-30, gm.player.getWidth()+5, gm.player.getHeight()+70);
         graphics.drawImage(gm.player.getShieldSprite().getImage(), gm.player.getX(), gm.player.getY()-1);
+    }
+    
+    public void renderHUD(HUD h, boolean shield) {
+        hud.clearRect(15, 15, 120, 50);
+        hud.drawImage(h.getPlayerIcon(), 20, 20);
+        hud.drawImage(h.getNumeralX(), 50, 20);
+        hud.drawImage(h.getLifeCounter(), 70, 20);
+        if(shield) {
+            hud.drawImage(h.getShieldIcon(), 20, 50);
+        }
     }
 }
