@@ -212,23 +212,23 @@ public class Player extends Entity {
                 blinkCounter++;           
                 switch(blinkCounter) {
                     case 5:
-                        getSprite().setImage(new Image("assets/image/playerShip3_red.png"));
+                        getSprite().setImage(new Image("assets/image/player/playerShip3_red.png"));
                         break;
                     case 10:
-                        getSprite().setImage(new Image("assets/image/playerShip4_red.png"));
+                        getSprite().setImage(new Image("assets/image/player/playerShip4_red.png"));
                         break;
                     case 15:
-                        getSprite().setImage(new Image("assets/image/playerShip3_red.png"));
+                        getSprite().setImage(new Image("assets/image/player/playerShip3_red.png"));
                         break;
                     case 20:
-                        getSprite().setImage(new Image("assets/image/playerShip2_red.png"));
+                        getSprite().setImage(new Image("assets/image/player/playerShip2_red.png"));
                         blinkCounter = 0;
                         break;
                 }
                 if (!immunity) {
                     System.out.println("immunity end");
                     this.cancel();
-                    inst.getSprite().setImage(new Image("assets/image/playerShip2_red.png"));
+                    inst.getSprite().setImage(new Image("assets/image/player/playerShip2_red.png"));
                 }
             }
         }, 0, 20);

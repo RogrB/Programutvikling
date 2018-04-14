@@ -22,7 +22,7 @@ public class LevelLoader {
                     case '0':
                         break;
                     case '1':
-                        enemies.add(new Enemy(EnemyType.SHIP, new EnemyMovementPattern("LEFT_PULSATING"),  1 + (j * 100), 1 + (i * 120)));
+                        enemies.add(new Enemy(EnemyType.BLUE1, new EnemyMovementPattern("LEFT_PULSATING"),  1 + (j * 100), 1 + (i * 120)));
                         break;
                     case '2':
                         enemies.add(new Enemy(EnemyType.ASTROID, new EnemyMovementPattern("COS"), 1 + (j * 100), 1 + (i * 120)));

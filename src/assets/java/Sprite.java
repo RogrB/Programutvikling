@@ -6,9 +6,29 @@ import javafx.scene.image.ImageView;
 public enum Sprite {
 
     // Enemies
-    ASTROID("assets/image/enemyBlue1.png"),
-    ENEMY_SHIP("assets/image/enemyBlue1.png"),
-    ENEMY_BOSS01("assets/image/boss01.png"),
+    ASTROID1("assets/image/enemies/meteor/meteor001.png"),
+    ASTROID2("assets/image/enemies/meteor/meteor002.png"),
+    ASTROID3("assets/image/enemies/meteor/meteor003.png"),
+    ASTROID4("assets/image/enemies/meteor/meteor004.png"),
+    ASTROID5("assets/image/enemies/meteor/meteor005.png"),
+    ASTROID6("assets/image/enemies/meteor/meteor006.png"),
+    ASTROID7("assets/image/enemies/meteor/meteor007.png"),
+    ENEMY_BLUE01("assets/image/enemies/enemyBlue1.png"),
+    ENEMY_BLUE02("assets/image/enemies/enemyBlue2.png"),
+    ENEMY_GREEN01("assets/image/enemies/enemyGreen1.png"),
+    ENEMY_ORANGE1("assets/image/enemies/enemyOrange1.png"),
+    ENEMY_RED1("assets/image/enemies/enemyRed1.png"),
+    ENEMY_RED2("assets/image/enemies/enemyRed2.png"),
+    ENEMY_RED3("assets/image/enemies/enemyRed3.png"),
+    ENEMY_RED_BIG("assets/image/enemies/enemyRedBig.png"),
+    
+    UFO_BLUE("assets/image/enemies/ufoBlue.png"),
+    UFO_GREEN("assets/image/enemies/ufoGreen.png"),
+    UFO_RED("assets/image/enemies/ufoRed.png"),
+    UFO_YELLOW("assets/image/enemies/ufoYellow.png"),
+    
+    ENEMY_BOSS01("assets/image/enemies/boss01.png"),
+    ENEMY_BOSS02("assets/image/enemies/boss02.png"),
 
     // Weapons
     WEAPON_PLAYER_BASIC("assets/image/laserBlue06.png"),
@@ -30,7 +50,7 @@ public enum Sprite {
     WEAPON_ENEMY_BASIC_DMG_4("assets/image/damage/laserRed11.png"),
 
     // Other
-    PLAYER("assets/image/playerShip2_red.png"),
+    PLAYER("assets/image/player/playerShip2_red.png"),
 
     CLEAR("assets/image/damage/clear.png"),
     WEAPON_POWERUP("assets/image/powerUp.png"),
@@ -38,9 +58,9 @@ public enum Sprite {
     SHIELD_POWERUP("assets/image/powerUpShield.png"),
     
     // Shield
-    SHIELD1("assets/image/shield1.png"),
-    SHIELD2("assets/image/shield2.png"),
-    SHIELD3("assets/image/shield3.png"),
+    SHIELD1("assets/image/player/shield1.png"),
+    SHIELD2("assets/image/player/shield2.png"),
+    SHIELD3("assets/image/player/shield3.png"),
     
     // Player Death
     PLAYER_DEATH_1("assets/image/playerDeath/playerDeath_001.png"),
