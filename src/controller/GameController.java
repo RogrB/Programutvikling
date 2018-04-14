@@ -82,14 +82,9 @@ public class GameController {
         Iterator<Bullet> bulletIterator = gm.getEnemyBullets().iterator();
         while(bulletIterator.hasNext()){
             Bullet bullet = bulletIterator.next();
-
-            if(bullet.isOffScreenLeft()) {
-                bullet.purgeThis();
-            } else {
-                bullet.setX(bullet.getX() - 12);
-                bullet.setY(bullet.getY());
-                gv.renderImage(bullet);
-            }
+            bullet.setX(bullet.getX() - 12);
+            bullet.setY(bullet.getY());
+            gv.renderImage(bullet);
         }
         
         // Bytte ut med Iterator?
