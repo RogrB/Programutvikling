@@ -10,6 +10,7 @@ public abstract class Existance {
     private int x, y;
     private int oldX, oldY;
     protected int height, width;
+    protected int oldHeight, oldWidth;
 
     protected Image image;
 
@@ -57,6 +58,14 @@ public abstract class Existance {
         return oldY;
     }
 
+    public int getOldHeight(){
+        return oldHeight;
+    }
+
+    public int getOldWidth() {
+        return oldWidth;
+    }
+
     public Image getImage(){
         return  image;
     }
@@ -72,6 +81,8 @@ public abstract class Existance {
     }
 
     private void setNewDimensions(){
+        oldHeight = height;
+        oldWidth = width;
         height = (int) image.getHeight();
         width = (int) image.getWidth();
     }
