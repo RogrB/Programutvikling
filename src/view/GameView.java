@@ -79,20 +79,19 @@ public class GameView {
         return root;
     }
 
-    public void renderImage(Existance object) {
-        graphics.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
-        graphics.drawImage(object.getImage(), object.getX(), object.getY());
+    public void render(Existance object) {
+        GraphicsContext gc;
+        if(object instanceof Bullet)
+            gc = bulletLayer;
+        else if(object instanceof Enemy)
+            gc = enemyLayer;
+        else
+            gc = graphics;
+
+        gc.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
+        gc.drawImage(object.getImage(), object.getX(), object.getY());
     }
-    
-    public void renderBullets(Existance object) {
-        bulletLayer.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
-        bulletLayer.drawImage(object.getImage(), object.getX(), object.getY());
-    }
-    
-    public void renderEnemies(Existance object) {
-        enemyLayer.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
-        enemyLayer.drawImage(object.getImage(), object.getX(), object.getY());
-    }
+
     
     public void clearLast(Existance object) {
         graphics.clearRect(object.getOldX()-10, object.getOldY()-10, object.getWidth()+30, object.getHeight()+30);
