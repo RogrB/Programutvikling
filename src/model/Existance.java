@@ -80,7 +80,7 @@ public abstract class Existance {
         setNewDimensions();
     }
 
-    private void setNewDimensions(){
+    protected void setNewDimensions(){
         oldHeight = height;
         oldWidth = width;
         height = (int) image.getHeight();

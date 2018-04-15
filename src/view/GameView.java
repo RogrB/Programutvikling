@@ -86,10 +86,10 @@ public class GameView {
     }
     
     public void renderBullets(Existance object) {
-        bulletLayer.clearRect(object.getOldX(), object.getOldY(), object.getWidth(), object.getHeight());
-        //bulletLayer.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
-        bulletLayer.drawImage(object.getSprite().getImage(), object.getX(), object.getY());
-        //bulletLayer.drawImage(object.getImage(), object.getX(), object.getY());
+        //bulletLayer.clearRect(object.getOldX(), object.getOldY(), object.getWidth(), object.getHeight());
+        bulletLayer.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
+        //bulletLayer.drawImage(object.getSprite().getImage(), object.getX(), object.getY());
+        bulletLayer.drawImage(object.getImage(), object.getX(), object.getY());
     }
     
     public void renderEnemies(Existance object) {

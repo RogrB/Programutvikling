@@ -27,8 +27,7 @@ public abstract class Entity extends Existance {
         this.setY(y);
         this.height = (int) sprite.getHeight();
         this.width = (int) sprite.getWidth();
-        this.oldHeight = height;
-        this.oldWidth = width;
+        setNewDimensions();
         this.health = health;
         this.alive = true;
         this.bulletCount = 0;
