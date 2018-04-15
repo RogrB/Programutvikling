@@ -42,7 +42,7 @@ public class Player extends Entity {
 
         setCanShoot(true);
         shot = Audio.PLAYER_SHOT;
-        getSprite().getImageView().relocate(getX(), getY());
+        getImageView().relocate(getX(), getY());
         weapon = Weapon.PLAYER_BASIC;
     }
 
@@ -50,7 +50,7 @@ public class Player extends Entity {
     public void update(){
         if(!playerIsOutOfBounds()){
             setY(getY() + move.next());
-            getSprite().getImageView().relocate(getX(), getY());
+            getImageView().relocate(getX(), getY());
         }
         updateBullets();
     }
@@ -216,23 +216,23 @@ public class Player extends Entity {
                 blinkCounter++;           
                 switch(blinkCounter) {
                     case 5:
-                        getSprite().setImage(new Image("assets/image/player/playerShip3_red.png"));
+                        getImageView().setImage(new Image("assets/image/player/playerShip3_red.png"));
                         break;
                     case 10:
-                        getSprite().setImage(new Image("assets/image/player/playerShip4_red.png"));
+                        getImageView().setImage(new Image("assets/image/player/playerShip4_red.png"));
                         break;
                     case 15:
-                        getSprite().setImage(new Image("assets/image/player/playerShip3_red.png"));
+                        getImageView().setImage(new Image("assets/image/player/playerShip3_red.png"));
                         break;
                     case 20:
-                        getSprite().setImage(new Image("assets/image/player/playerShip2_red.png"));
+                        getImageView().setImage(new Image("assets/image/player/playerShip2_red.png"));
                         blinkCounter = 0;
                         break;
                 }
                 if (!immunity) {
                     System.out.println("immunity end");
                     this.cancel();
-                    inst.getSprite().setImage(new Image("assets/image/player/playerShip2_red.png"));
+                    getImageView().setImage(new Image("assets/image/player/playerShip2_red.png"));
                 }
             }
         }, 0, 20);
@@ -243,13 +243,13 @@ public class Player extends Entity {
     }
     
     public void setShield() {
-        this.width = (int) sprite.getWidth() + 10;
+        this.width = (int) getWidth() + 10;
         this.shield = true;
         this.shieldSprite = Sprite.SHIELD1;
     }
     
     public void removeShield() {
-        this.width = (int) sprite.getWidth();        
+        this.width = (int) getWidth();
         this.shield = false;
         this.shieldSprite = Sprite.CLEAR;
     }

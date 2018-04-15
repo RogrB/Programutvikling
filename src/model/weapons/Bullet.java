@@ -30,7 +30,7 @@ public class Bullet extends Existance {
     }
 
     public void clearImage() {
-        sprite = Sprite.CLEAR;
+        newSprite(Sprite.CLEAR);
     }
 
     public void hasHit() {

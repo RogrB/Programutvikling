@@ -75,8 +75,8 @@ public class GameView {
         root.setPrefSize(GAME_WIDTH, GAME_HEIGHT);
         root.setBackground(getBackGroundImage());
 
-
-        root.getChildren().addAll(gm.player.getSprite().getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas);
+        //root.getChildren().addAll(gm.player.getSprite().getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas);
+        root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas);
         return root;
     }
 
@@ -110,7 +110,7 @@ public class GameView {
     
     public void renderShield() {
         graphics.clearRect(gm.player.getX(), gm.player.getY()-30, gm.player.getWidth()+5, gm.player.getHeight()+70);
-        graphics.drawImage(gm.player.getShieldSprite().getImage(), gm.player.getX(), gm.player.getY()-1);
+        graphics.drawImage(gm.player.getImage(), gm.player.getX(), gm.player.getY()-1);
     }
     
     public void renderHUD(HUD h, boolean shield) {

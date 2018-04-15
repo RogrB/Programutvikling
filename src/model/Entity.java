@@ -21,7 +21,7 @@ public abstract class Entity extends Existance {
     private int deathAnimCounter;
 
     public Entity(Sprite sprite, int x, int y, int health){
-        this.sprite = sprite;
+        //this.sprite = sprite;
         newSprite(sprite);
         setNewDimensions();
         this.setX(x);
@@ -87,9 +87,9 @@ public abstract class Entity extends Existance {
         }
     }
     
-    public void setSprite(Sprite sprite) {
+    /*public void setSprite(Sprite sprite) {
         this.sprite = sprite;
-    }
+    }*/
     
     public void animateDeath() {
         Timer deathTimer = new Timer();

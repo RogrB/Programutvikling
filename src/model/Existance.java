@@ -16,7 +16,11 @@ public abstract class Existance {
     protected Image image;
     protected ImageView imageView;
 
-    protected Sprite sprite;
+    /*protected Sprite sprite;
+
+    public Sprite getSprite(){
+        return sprite;
+    }*/
 
     public int getX() {
         return x;
@@ -72,6 +76,10 @@ public abstract class Existance {
         return  image;
     }
 
+    public ImageView getImageView() {
+        return imageView;
+    }
+
     public void newSprite(Sprite sprite){
         newSprite(sprite.src);
     }
@@ -87,10 +95,6 @@ public abstract class Existance {
         oldWidth = width;
         height = (int) image.getHeight();
         width = (int) image.getWidth();
-    }
-
-    public Sprite getSprite(){
-        return sprite;
     }
 
     public boolean collidesWith(Existance target){

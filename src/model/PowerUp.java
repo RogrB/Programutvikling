@@ -11,14 +11,11 @@ public class PowerUp extends Existance {
     private String name;
     
     public PowerUp(Sprite sprite, int x, int y) {
-        //this.sprite = sprite;
         newSprite(sprite);
         setNewDimensions();
         setX(x);
         setY(y);
         name = sprite.name();
-        /*this.height = (int) sprite.getHeight();
-        this.width = (int) sprite.getWidth();*/
     }
     
     public void move() {
@@ -43,8 +40,7 @@ public class PowerUp extends Existance {
                     break;
             }
             used = true;
-            //this.sprite = sprite.CLEAR; // Trenger en Purge funksjon
-            newSprite(Sprite.CLEAR);
+            newSprite(Sprite.CLEAR); // Trenger en Purge funksjon
         }
     }
     
