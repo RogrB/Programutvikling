@@ -85,4 +85,8 @@ public enum Sprite {
     Sprite(String src){
         this.src = src;
     }
+    
+    public String getSrc() {
+        return this.src;
+    }
 }

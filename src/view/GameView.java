@@ -108,7 +108,7 @@ public class GameView {
     
     public void renderShield() {
         graphics.clearRect(gm.player.getX(), gm.player.getY()-30, gm.player.getWidth()+5, gm.player.getHeight()+70);
-        graphics.drawImage(gm.player.getImage(), gm.player.getX(), gm.player.getY()-1);
+        graphics.drawImage(new Image(gm.player.getShieldSprite().getSrc()), gm.player.getX(), gm.player.getY()-1);
     }
     
     public void renderHUD(HUD h, boolean shield) {
