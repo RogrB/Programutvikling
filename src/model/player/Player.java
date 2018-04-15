@@ -36,7 +36,7 @@ public class Player extends Entity {
         super(
                 Sprite.PLAYER,
                 40,
-                GameView.GAME_HEIGHT / 2 - (int) Sprite.PLAYER.getHeight() / 2,
+                GameView.GAME_HEIGHT / 2 - (int) new Image(Sprite.PLAYER.src).getHeight() / 2,
                 5
         );
 

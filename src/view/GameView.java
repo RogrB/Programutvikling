@@ -75,7 +75,6 @@ public class GameView {
         root.setPrefSize(GAME_WIDTH, GAME_HEIGHT);
         root.setBackground(getBackGroundImage());
 
-        //root.getChildren().addAll(gm.player.getSprite().getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas);
         root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas);
         return root;
     }

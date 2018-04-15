@@ -79,45 +79,10 @@ public enum Sprite {
     PLAYER_DEATH_7("assets/image/playerDeath/playerDeath_007.png"),
     PLAYER_DEATH_8("assets/image/playerDeath/playerDeath_008.png"),
     PLAYER_DEATH_9("assets/image/playerDeath/playerDeath_009.png");
-    
-
-    Image img;
-    ImageView view;
 
     public String src;
 
-    //public final int HEIGHT, WIDTH;
-
     Sprite(String src){
-        this.img =  new Image(src) ;
-        this.view = new ImageView(this.img);
-        /*HEIGHT = (int) img.getHeight();
-        WIDTH = (int) img.getWidth();*/
         this.src = src;
-    }
-
-    public double getHeight(){
-        return img.getHeight();
-    }
-
-    public double getWidth(){
-        return img.getWidth();
-    }
-
-    /*public ImageView getImageView(){
-        return view;
-    }
-
-    public Image getImage() {
-        return img;
-    }
-
-    public void setImage(Image img){
-        this.img = img;
-        view.setImage(img);
-    }*/
-
-    public String imgSrc() {
-        return src;
     }
 }

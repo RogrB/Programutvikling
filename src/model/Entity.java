@@ -21,13 +21,10 @@ public abstract class Entity extends Existance {
     private int deathAnimCounter;
 
     public Entity(Sprite sprite, int x, int y, int health){
-        //this.sprite = sprite;
         newSprite(sprite);
         setNewDimensions();
         this.setX(x);
         this.setY(y);
-        this.height = (int) sprite.getHeight();
-        this.width = (int) sprite.getWidth();
         this.health = health;
         this.alive = true;
         this.bulletCount = 0;
@@ -87,10 +84,6 @@ public abstract class Entity extends Existance {
         }
     }
     
-    /*public void setSprite(Sprite sprite) {
-        this.sprite = sprite;
-    }*/
-    
     public void animateDeath() {
         Timer deathTimer = new Timer();
         deathTimer.schedule(new TimerTask() {
@@ -109,5 +102,4 @@ public abstract class Entity extends Existance {
             }
         }, 0, 80);
     }
-
 }

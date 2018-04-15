@@ -16,12 +16,6 @@ public abstract class Existance {
     protected Image image;
     protected ImageView imageView;
 
-    /*protected Sprite sprite;
-
-    public Sprite getSprite(){
-        return sprite;
-    }*/
-
     public int getX() {
         return x;
     }
