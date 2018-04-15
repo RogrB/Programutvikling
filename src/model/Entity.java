@@ -23,11 +23,11 @@ public abstract class Entity extends Existance {
     public Entity(Sprite sprite, int x, int y, int health){
         this.sprite = sprite;
         newSprite(sprite);
+        setNewDimensions();
         this.setX(x);
         this.setY(y);
         this.height = (int) sprite.getHeight();
         this.width = (int) sprite.getWidth();
-        setNewDimensions();
         this.health = health;
         this.alive = true;
         this.bulletCount = 0;

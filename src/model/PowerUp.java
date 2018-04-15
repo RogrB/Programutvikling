@@ -7,13 +7,18 @@ public class PowerUp extends Existance {
     
     private boolean used = false;
     GameModel gm = GameModel.getInstance();
+
+    private String name;
     
     public PowerUp(Sprite sprite, int x, int y) {
-        this.sprite = sprite;
+        //this.sprite = sprite;
+        newSprite(sprite);
+        setNewDimensions();
         setX(x);
         setY(y);
-        this.height = (int) sprite.getHeight();
-        this.width = (int) sprite.getWidth();        
+        name = sprite.name();
+        /*this.height = (int) sprite.getHeight();
+        this.width = (int) sprite.getWidth();*/
     }
     
     public void move() {
@@ -23,22 +28,23 @@ public class PowerUp extends Existance {
     
     public void powerUp() {
         if (!used) {
-            switch(this.sprite) {
-                case WEAPON_POWERUP:
+            switch(this.name) {
+                case "WEAPON_POWERUP":
                     gm.player.powerUp(); 
                     System.out.println("Weapon upgraded");
                     break;
-                case HEALTH_POWERUP:
+                case "HEALTH_POWERUP":
                     gm.player.setHealth(gm.player.getHealth() + 1);
                     System.out.println("Health up");
                     break;
-                case SHIELD_POWERUP:
+                case "SHIELD_POWERUP":
                     gm.player.setShield();
                     System.out.println("Shield!");
                     break;
             }
             used = true;
-            this.sprite = sprite.CLEAR; // Trenger en Purge funksjon
+            //this.sprite = sprite.CLEAR; // Trenger en Purge funksjon
+            newSprite(Sprite.CLEAR);
         }
     }
     
