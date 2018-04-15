@@ -25,8 +25,6 @@ public class Bullet extends Existance {
         this.setX(x);
         this.setY(y);
         WEAPON = weapon;
-        //sprite = WEAPON.SPRITE;
-        //setNewDimensions(sprite);
         newSprite(weapon.SPRITE);
         setNewDimensions();
     }
@@ -69,16 +67,6 @@ public class Bullet extends Existance {
         return WEAPON.FIRERATE;
     }
 
-    /*private void alterSprite(Sprite s){
-        sprite = s;
-        setNewDimensions(s);
-    }
-
-    private void setNewDimensions(Sprite s){
-        width = (int)s.getWidth();
-        height = (int)s.getHeight();
-    }*/
-
     private void bulletDie(){
         if(timer == null) {
             timer = new Timer();
@@ -87,7 +75,6 @@ public class Bullet extends Existance {
                 public void run() {
                     if (animCounter < WEAPON.BULLET_HIT.length) {
                         animIndex = animCounter;
-                        //alterSprite(WEAPON.BULLET_HIT[animIndex]);
                         newSprite(WEAPON.BULLET_HIT[animIndex]);
                     } else if (animCounter >= (WEAPON.BULLET_HIT.length * 2)) {
 
@@ -95,11 +82,9 @@ public class Bullet extends Existance {
                         timer.purge();
                         purgeThis();
                     } else if (animCounter >= (WEAPON.BULLET_HIT.length * 2) - 1) {
-                        //alterSprite(Sprite.CLEAR);
                         newSprite(Sprite.CLEAR);
                     } else {
                         animIndex = WEAPON.BULLET_HIT.length - (animCounter - WEAPON.BULLET_HIT.length + 2);
-                        //alterSprite(WEAPON.BULLET_HIT[animIndex]);
                         newSprite(WEAPON.BULLET_HIT[animIndex]);
                     }
                     animCounter++;

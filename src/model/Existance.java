@@ -2,6 +2,7 @@ package model;
 
 import assets.java.Sprite;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import static view.GameView.GAME_WIDTH;
 
@@ -13,6 +14,7 @@ public abstract class Existance {
     protected int oldHeight, oldWidth;
 
     protected Image image;
+    protected ImageView imageView;
 
     protected Sprite sprite;
 
@@ -71,12 +73,12 @@ public abstract class Existance {
     }
 
     public void newSprite(Sprite sprite){
-        image = new Image(sprite.imgSrc());
-        setNewDimensions();
+        newSprite(sprite.src);
     }
 
     public void newSprite(String src){
         image = new Image(src);
+        imageView = new ImageView(image);
         setNewDimensions();
     }
 

@@ -81,21 +81,17 @@ public class GameView {
     }
 
     public void renderImage(Existance object) {
-        graphics.clearRect(object.getOldX(), object.getOldY(), object.getWidth(), object.getHeight());
-        graphics.drawImage(object.getSprite().getImage(), object.getX(), object.getY());
+        graphics.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
+        graphics.drawImage(object.getImage(), object.getX(), object.getY());
     }
     
     public void renderBullets(Existance object) {
-        //bulletLayer.clearRect(object.getOldX(), object.getOldY(), object.getWidth(), object.getHeight());
         bulletLayer.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
-        //bulletLayer.drawImage(object.getSprite().getImage(), object.getX(), object.getY());
         bulletLayer.drawImage(object.getImage(), object.getX(), object.getY());
     }
     
     public void renderEnemies(Existance object) {
-        //enemyLayer.clearRect(object.getOldX(), object.getOldY(), object.getWidth(), object.getHeight());
         enemyLayer.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
-        //enemyLayer.drawImage(object.getSprite().getImage(), object.getX(), object.getY());
         enemyLayer.drawImage(object.getImage(), object.getX(), object.getY());
     }
     

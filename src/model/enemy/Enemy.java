@@ -70,8 +70,6 @@ public class Enemy extends Entity {
         pattern.updatePosition();
         setX(pattern.getX());
         setY(pattern.getY());
-        // gv.renderImage(this); // Gir nullpointer .. setter i gamecontroller for now
-        // sprite.getImageView().relocate(getX(), getY());
     }
 
     @Override

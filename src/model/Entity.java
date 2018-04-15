@@ -99,7 +99,6 @@ public abstract class Entity extends Existance {
             public void run() {
                 if (deathAnimCounter < 9) {
                     deathAnimCounter++;
-                    //sprite.setImage(new Image("assets/image/playerDeath/playerDeath_00" + deathAnimCounter + ".png"));
                     newSprite("assets/image/playerDeath/playerDeath_00" + deathAnimCounter + ".png");
                 }
                 else {

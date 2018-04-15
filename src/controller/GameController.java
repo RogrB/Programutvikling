@@ -95,15 +95,6 @@ public class GameController {
         } catch(Exception e) {
             System.out.println("Shit happened: " + e);
         }
-        
-        // Bytte ut med Iterator?
-        /*for(Bullet bullet : gm.getEnemyBullets()) {
-            if(bullet.isOffScreenLeft())
-                bullet.purgeThis(); // Gir null pointer exception
-            bullet.setX(bullet.getX() - 12);
-            bullet.setY(bullet.getY());
-            gv.renderImage(bullet);
-        }*/
     }
 
     private void detectEnemyShotByPlayer(){
