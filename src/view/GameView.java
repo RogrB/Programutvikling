@@ -92,7 +92,8 @@ public class GameView {
     
     public void renderEnemies(Existance object) {
         enemyLayer.clearRect(object.getOldX(), object.getOldY(), object.getWidth(), object.getHeight());
-        enemyLayer.drawImage(object.getSprite().getImage(), object.getX(), object.getY());        
+        //enemyLayer.drawImage(object.getSprite().getImage(), object.getX(), object.getY());
+        enemyLayer.drawImage(object.getImage(), object.getX(), object.getY());
     }
     
     public void clearLast(Existance object) {

@@ -98,24 +98,31 @@ public class Enemy extends Entity {
                 switch(animCounter) {
                     case 5:
                         getSprite().setImage(Sprite.ASTROID2.getImage());
+                        //newSprite(Sprite.ASTROID2);
                         break;
                     case 10:
                         getSprite().setImage(Sprite.ASTROID3.getImage());
+                        //newSprite(Sprite.ASTROID3);
                         break;
                     case 15:
                         getSprite().setImage(Sprite.ASTROID4.getImage());
+                        //newSprite(Sprite.ASTROID4);
                         break;
                     case 20:
                         getSprite().setImage(Sprite.ASTROID5.getImage());
+                        //newSprite(Sprite.ASTROID5);
                         break;
                     case 25:
                         getSprite().setImage(Sprite.ASTROID6.getImage());
-                        break;   
+                        //newSprite(Sprite.ASTROID6);
+                        break;
                     case 30:
                         getSprite().setImage(Sprite.ASTROID7.getImage());
+                        //newSprite(Sprite.ASTROID7);
                         break;      
                     case 35:
                         getSprite().setImage(Sprite.ASTROID8.getImage());
+                        //newSprite(Sprite.ASTROID8);
                         animCounter = 0;
                         break;                            
                 }

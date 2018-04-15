@@ -22,6 +22,7 @@ public abstract class Entity extends Existance {
 
     public Entity(Sprite sprite, int x, int y, int health){
         this.sprite = sprite;
+        newSprite(sprite);
         this.setX(x);
         this.setY(y);
         this.height = (int) sprite.getHeight();
@@ -97,10 +98,11 @@ public abstract class Entity extends Existance {
             public void run() {
                 if (deathAnimCounter < 9) {
                     deathAnimCounter++;
-                    sprite.setImage(new Image("assets/image/playerDeath/playerDeath_00" + deathAnimCounter + ".png"));
+                    //sprite.setImage(new Image("assets/image/playerDeath/playerDeath_00" + deathAnimCounter + ".png"));
+                    newSprite("assets/image/playerDeath/playerDeath_00" + deathAnimCounter + ".png");
                 }
                 else {
-                    sprite.setImage(new Image("assets/image/damage/clear.png"));
+                    newSprite("assets/image/damage/clear.png");
                     isDead();
                     this.cancel();
                 }

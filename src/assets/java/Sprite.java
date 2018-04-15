@@ -84,6 +84,8 @@ public enum Sprite {
     Image img;
     ImageView view;
 
+    public String src;
+
     public final int HEIGHT, WIDTH;
 
     Sprite(String src){
@@ -91,6 +93,7 @@ public enum Sprite {
         this.view = new ImageView(this.img);
         HEIGHT = (int) img.getHeight();
         WIDTH = (int) img.getWidth();
+        this.src = src;
     }
 
     public double getHeight(){
@@ -114,4 +117,7 @@ public enum Sprite {
         view.setImage(img);
     }
 
+    public String imgSrc() {
+        return src;
+    }
 }
