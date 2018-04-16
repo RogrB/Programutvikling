@@ -4,6 +4,7 @@ import assets.java.Sprite;
 import javafx.scene.image.Image;
 import model.Existance;
 import model.GameModel;
+import view.GameView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,10 +21,13 @@ public class Bullet extends Existance {
     private int animCounter = 0;
     private int animIndex = 0;
     private Timer timer = null;
+    private final int range;
+    private int travelled;
 
     public Bullet(int x, int y, Weapon weapon) {
         this.setX(x);
         this.setY(y);
+        range = 1100;
         WEAPON = weapon;
         newSprite(weapon.SPRITE);
         setNewDimensions();
@@ -107,5 +111,11 @@ public class Bullet extends Existance {
     public void move() {
         this.setX(getX() + 20);
         this.setY(getY());
+        travelled += 20;
+    }
+
+    public boolean outOfRange(){
+        System.out.println(travelled);
+        return travelled > range;
     }
 }

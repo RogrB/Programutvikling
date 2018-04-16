@@ -41,7 +41,7 @@ public class GameView {
     final GraphicsContext bulletLayer = bulletLayerCanvas.getGraphicsContext2D();
     final GraphicsContext enemyLayer = enemyLayerCanvas.getGraphicsContext2D();
     
-    LevelLoader level2 = new LevelLoader(LevelData.LEVEL2);
+    LevelLoader level2 = new LevelLoader(LevelData.LEVEL3);
     ArrayList<Enemy> enemies = level2.getEnemies(); // trengs den her lenger?
 
     private static final String BG_IMG = "assets/image/background.jpg";

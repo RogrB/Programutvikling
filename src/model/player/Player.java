@@ -158,6 +158,11 @@ public class Player extends Entity {
         try {
         for (Bullet bullet : bullets) {
             bullet.move();
+            if(bullet.outOfRange() == true){
+                bullet.clearImage();
+                bullets.remove(bullet);
+                System.out.println("Bullet removed");
+            }
         }
         } catch(Exception e) {
             System.out.println("Bullets out of array, yo: " + e);
