@@ -77,26 +77,19 @@ public abstract class Entity extends Existance {
         health -= dmg;
         if(health <= 0) {
             isDead();
-            animateDeath();
         }
     }
     
     public void animateDeath() {
-        Timer deathTimer = new Timer();
-        deathTimer.schedule(new TimerTask() {
-            
-            @Override
-            public void run() {
-                if (deathAnimCounter < 9) {
-                    deathAnimCounter++;
-                    newSprite("assets/image/playerDeath/playerDeath_00" + deathAnimCounter + ".png");
-                }
-                else {
-                    newSprite("assets/image/damage/clear.png");
-                    isReadyToPurge();
-                    this.cancel();
-                }
-            }
-        }, 0, 80);
+        deathAnimCounter++;
+        if (deathAnimCounter < 9) {
+            newSprite("assets/image/playerDeath/playerDeath_00" + deathAnimCounter + ".png");
+        } else {
+            newSprite(Sprite.CLEAR);
+        }
+        if (deathAnimCounter > 9 ){
+            setReadyToPurge();
+        }
     }
+
 }

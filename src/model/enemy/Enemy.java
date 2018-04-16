@@ -78,9 +78,16 @@ public class Enemy extends Entity {
     }
 
     public void update(Iterator i){
-        pattern.updatePosition();
-        setX(pattern.getX());
-        setY(pattern.getY());
+        if(isAlive()) {
+            pattern.updatePosition();
+            setX(pattern.getX());
+            setY(pattern.getY());
+        } else {
+            setOldX(getX());
+            setOldY(getY());
+            animateDeath();
+        }
+
         if(isOffScreen() || isReadyToPurge()){
             purge(i);
         } else
