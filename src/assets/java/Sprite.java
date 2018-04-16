@@ -89,4 +89,12 @@ public enum Sprite {
     public String getSrc() {
         return this.src;
     }
+
+    public int getHeight(){
+        return (int) new Image(src).getHeight();
+    }
+
+    public int getWidth(){
+        return (int) new Image(src).getWidth();
+    }
 }

@@ -127,11 +127,11 @@ public abstract class Existance {
         return isOffScreenLeft() || isOffScreenRight();
     }
 
-    public boolean isReadyToPurge(){
+    public boolean getReadyToPurge(){
         return readyToPurge;
     }
 
-    public void setReadyToPurge() {
+    public void isReadyToPurge() {
         this.readyToPurge = true;
     }
 

@@ -1,10 +1,8 @@
 package model.enemy;
 
 import assets.java.Sprite;
-import controller.GameController;
 import model.Entity;
 import model.GameModel;
-import view.GameView;
 import model.weapons.Bullet;
 
 import java.util.Iterator;
@@ -88,7 +86,7 @@ public class Enemy extends Entity {
             animateDeath();
         }
 
-        if(isOffScreen() || isReadyToPurge()){
+        if(isOffScreen() || getReadyToPurge()){
             purge(i);
         } else
             shoot();

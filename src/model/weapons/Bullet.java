@@ -1,10 +1,8 @@
 package model.weapons;
 
 import assets.java.Sprite;
-import javafx.scene.image.Image;
 import model.Existance;
 import model.GameModel;
-import view.GameView;
 
 import java.util.Iterator;
 import java.util.Timer;
@@ -14,8 +12,6 @@ public class Bullet extends Existance {
 
     protected final Weapon WEAPON;
     private boolean isHit = false;
-    
-    GameModel gm = GameModel.getInstance();
 
     // Animation variables
     private final int ANIM_SPEED = 20;
@@ -40,7 +36,7 @@ public class Bullet extends Existance {
     public void update(int x, int y, Iterator i){
         setX(getX() + x);
         setY(getY() + y);
-        if(isReadyToPurge() || isOffScreen())
+        if(getReadyToPurge() || isOffScreen())
             purge(i);
     }
 
@@ -81,7 +77,7 @@ public class Bullet extends Existance {
 
                         timer.cancel();
                         timer.purge();
-                        setReadyToPurge();
+                        isReadyToPurge();
                     } else if (animCounter >= (WEAPON.BULLET_HIT.length * 2) - 1) {
                         newSprite(Sprite.CLEAR);
                     } else {

@@ -13,6 +13,10 @@ import model.PowerUp;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
+
+import static view.GameView.GAME_HEIGHT;
+import static view.GameView.GAME_WIDTH;
 
 public class GameController {
 
@@ -56,6 +60,8 @@ public class GameController {
                 gm.player.update();
                 if(gm.player.hasShield())
                     gv.renderShield();
+
+                spawnPowerUps();
 
                 moveEnemies();
                 movePowerups();
@@ -144,6 +150,47 @@ public class GameController {
                 }
             }
         }
+    }
+
+    private void spawnPowerUps(){
+        Random random = new Random();
+        if(random.nextInt(1500) < 1) {
+            powerups.add(generateNewPowerUp());
+        }
+    }
+
+    private PowerUp generateNewPowerUp(){
+        Random rand = new Random();
+        int randNr = rand.nextInt(8);
+        Sprite sprite = null;
+        switch (randNr){
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                sprite = Sprite.SHIELD_POWERUP;
+                break;
+            case 4:
+            case 5:
+                sprite = Sprite.HEALTH_POWERUP;
+                break;
+            case 6:
+            case 7:
+                sprite = Sprite.WEAPON_POWERUP;
+                break;
+            /*case 8:
+                sprite = Sprite.DIE_POWERUP;
+                break;
+            case 9:
+                sprite = Sprite.IMMUNE_POWERUP;
+                break;*/
+        }
+        PowerUp res = new PowerUp(
+                sprite,
+                GAME_WIDTH - 1,
+                rand.nextInt(GAME_HEIGHT - sprite.getHeight())
+                );
+        return res;
     }
 
     private void detectGameOver(){

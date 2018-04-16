@@ -5,9 +5,6 @@ import assets.java.Sprite;
 import javafx.scene.media.AudioClip;
 import model.weapons.Weapon;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public abstract class Entity extends Existance {
     protected int health;
     protected boolean alive;
@@ -79,7 +76,7 @@ public abstract class Entity extends Existance {
             isDead();
         }
     }
-    
+
     public void animateDeath() {
         deathAnimCounter++;
         if (deathAnimCounter < 9) {
@@ -88,7 +85,7 @@ public abstract class Entity extends Existance {
             newSprite(Sprite.CLEAR);
         }
         if (deathAnimCounter > 9 ){
-            setReadyToPurge();
+            isReadyToPurge();
         }
     }
 

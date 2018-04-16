@@ -4,6 +4,10 @@ package model;
 import assets.java.Sprite;
 
 import java.util.Iterator;
+import java.util.Random;
+
+import static view.GameView.GAME_HEIGHT;
+import static view.GameView.GAME_WIDTH;
 
 public class PowerUp extends Existance {
     
@@ -22,7 +26,7 @@ public class PowerUp extends Existance {
     public void update(int x, int y, Iterator i){
         setX(getX() + x);
         setY(getY() + y);
-        if(isOffScreen() || isReadyToPurge())
+        if(isOffScreen() || getReadyToPurge())
             purge(i);
     }
     
@@ -43,8 +47,15 @@ public class PowerUp extends Existance {
                     break;
             }
             used = true;
-            newSprite(Sprite.CLEAR); // Trenger en Purge funksjon
+            newSprite(Sprite.CLEAR);
+            isReadyToPurge();
         }
+    }
+
+    public PowerUp newPowerUp(){
+        Random random = new Random();
+        int ySpawn = random.nextInt(GAME_HEIGHT - getHeight()) + getHeight();
+        return new PowerUp(Sprite.WEAPON_POWERUP, GAME_WIDTH - 1, ySpawn);
     }
     
 }
