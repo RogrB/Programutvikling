@@ -44,8 +44,8 @@ public class Enemy extends Entity {
         if(TYPE.SHOOTING_CHANCE == 0)
             canShoot = false;
 
-        if (this.TYPE == TYPE.ASTROID) {
-            animateAstroid();
+        if (this.TYPE == TYPE.ASTEROID) {
+            animateAsteroid();
         }
     }
 
@@ -83,7 +83,7 @@ public class Enemy extends Entity {
         }
     }
     
-    private void animateAstroid() {
+    private void animateAsteroid() {
         Timer blinkTimer = new Timer();
         blinkTimer.schedule(new TimerTask() {
             
@@ -92,25 +92,25 @@ public class Enemy extends Entity {
                 if(isAlive()) {
                     switch (animationCounter) {
                         case 5:
-                            newSprite(Sprite.ASTROID2);
+                            newSprite(Sprite.ASTEROID2);
                             break;
                         case 10:
-                            newSprite(Sprite.ASTROID3);
+                            newSprite(Sprite.ASTEROID3);
                             break;
                         case 15:
-                            newSprite(Sprite.ASTROID4);
+                            newSprite(Sprite.ASTEROID4);
                             break;
                         case 20:
-                            newSprite(Sprite.ASTROID5);
+                            newSprite(Sprite.ASTEROID5);
                             break;
                         case 25:
-                            newSprite(Sprite.ASTROID6);
+                            newSprite(Sprite.ASTEROID6);
                             break;
                         case 30:
-                            newSprite(Sprite.ASTROID7);
+                            newSprite(Sprite.ASTEROID7);
                             break;
                         case 35:
-                            newSprite(Sprite.ASTROID8);
+                            newSprite(Sprite.ASTEROID8);
                             animationCounter = 0;
                             break;
                     }

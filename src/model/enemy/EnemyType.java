@@ -7,7 +7,7 @@ import model.weapons.Weapon;
 public enum EnemyType {
 
     //          Health      Sprite                  Shooting chance     Weapon
-    ASTROID(    1,          Sprite.ASTROID1,        0,                  null),
+    ASTEROID(    1,          Sprite.ASTEROID1,        0,                  null),
     BLUE1(      2,          Sprite.ENEMY_BLUE01,    3000,               Weapon.ENEMY_BASIC),
     BLUE2(      2,          Sprite.ENEMY_BLUE02,    3000,               Weapon.ENEMY_BASIC),
     GREEN1(     2,          Sprite.ENEMY_GREEN01,   3000,               Weapon.ENEMY_BASIC),
