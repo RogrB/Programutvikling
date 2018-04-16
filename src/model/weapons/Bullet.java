@@ -14,7 +14,6 @@ public class Bullet extends Existance {
 
     protected final Weapon WEAPON;
     private boolean isHit = false;
-    private boolean readyToPurge;
     
     GameModel gm = GameModel.getInstance();
 
@@ -23,21 +22,14 @@ public class Bullet extends Existance {
     private int animCounter = 0;
     private int animIndex = 0;
     private Timer timer = null;
-    private final int range;
-    private int travelled;
 
     public Bullet(int x, int y, Weapon weapon) {
-        this.setX(x);
-        this.setY(y);
-        range = 1100;
+        super(x,y);
+        //this.setX(x);
+        //this.setY(y);
         WEAPON = weapon;
         newSprite(weapon.SPRITE);
         setNewDimensions();
-        readyToPurge = false;
-    }
-
-    public void clearImage() {
-        newSprite(Sprite.CLEAR);
     }
 
     public void hasHit() {
@@ -45,6 +37,13 @@ public class Bullet extends Existance {
         setOldX(getX());
         setOldY(getY());
         bulletDie();
+    }
+
+    public void update(int x, int y, Iterator i){
+        setX(getX() + x);
+        setY(getY() + y);
+        if(isReadyToPurge() || isOffScreen())
+            i.remove();
     }
 
     @Override
@@ -84,7 +83,6 @@ public class Bullet extends Existance {
 
                         timer.cancel();
                         timer.purge();
-                        //purgeThis();
                         setReadyToPurge();
                     } else if (animCounter >= (WEAPON.BULLET_HIT.length * 2) - 1) {
                         newSprite(Sprite.CLEAR);
@@ -96,36 +94,5 @@ public class Bullet extends Existance {
                 }
             }, 0, ANIM_SPEED);
         }
-    }
-
-    public void purgeThis(Iterator iterator){
-        if (!gm.getEnemyBullets().isEmpty()) {
-            /*if(gm.getEnemyBullets().contains(this))
-                gm.getEnemyBullets().remove(this);*/
-            iterator.remove();
-        }
-        if (!gm.player.getBullets().isEmpty()) {
-            if(gm.player.getBullets().contains(this))
-                gm.player.getBullets().remove(this);
-        }
-    }
-    
-    public void move() {
-        this.setX(getX() + 20);
-        this.setY(getY());
-        travelled += 20;
-    }
-
-    public boolean outOfRange(){
-        System.out.println(travelled);
-        return travelled > range;
-    }
-
-    public boolean isReadyToPurge(){
-        return readyToPurge;
-    }
-
-    public void setReadyToPurge() {
-        this.readyToPurge = true;
     }
 }

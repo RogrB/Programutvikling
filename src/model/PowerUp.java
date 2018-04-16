@@ -11,10 +11,9 @@ public class PowerUp extends Existance {
     private String name;
     
     public PowerUp(Sprite sprite, int x, int y) {
+        super(x, y);
         newSprite(sprite);
         setNewDimensions();
-        setX(x);
-        setY(y);
         name = sprite.name();
     }
     

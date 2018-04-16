@@ -19,10 +19,9 @@ public abstract class Entity extends Existance {
     private int deathAnimCounter;
 
     public Entity(Sprite sprite, int x, int y, int health){
+        super(x, y);
         newSprite(sprite);
         setNewDimensions();
-        this.setX(x);
-        this.setY(y);
         this.health = health;
         this.alive = true;
         this.bulletCount = 0;

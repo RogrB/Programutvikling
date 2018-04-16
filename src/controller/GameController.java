@@ -82,18 +82,17 @@ public class GameController {
 
 
     private void moveAllBullets(){
-        for (Bullet bullet : gm.player.getBullets()){
+        iterator = gm.player.getBullets().iterator();
+        while(iterator.hasNext()){
+            Bullet bullet = iterator.next();
+            bullet.update(20, 0, iterator);
             gv.render(bullet);
         }
 
         iterator = gm.getEnemyBullets().iterator();
         while(iterator.hasNext()){
             Bullet bullet = iterator.next();
-            bullet.setX(bullet.getX() - 12);
-            bullet.setY(bullet.getY());
-            if(bullet.isOffScreen() || bullet.isReadyToPurge()) { // Skal flyttes til Bullet.purgeThis()
-                iterator.remove();
-            }
+            bullet.update(-12, 0, iterator);
             gv.render(bullet);
         }
     }
@@ -104,8 +103,6 @@ public class GameController {
                 if(bullet.collidesWith(enemy)){
                     enemy.takeDamage(bullet.getDmg());
                     bullet.hasHit();
-                    bullet.clearImage();
-                    gv.render(bullet);
                 }
             }
         }
