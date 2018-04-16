@@ -2,6 +2,8 @@
 package model.weapons;
 
 
+import java.util.Iterator;
+
 public class DoubleSwirl extends Bullet {
     
     private boolean top;
@@ -20,7 +22,7 @@ public class DoubleSwirl extends Bullet {
     }     
     
     @Override
-    public void move() {
+    public void update(int x, int y, Iterator i) {
         this.setX(getX() + 20);
         if (top) {
             if (goingUp) {

@@ -1,11 +1,13 @@
 package model.enemy;
 
 import assets.java.Sprite;
+import controller.GameController;
 import model.Entity;
 import model.GameModel;
 import view.GameView;
 import model.weapons.Bullet;
 
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,7 +16,6 @@ public class Enemy extends Entity {
 
     // MVC-access
     GameModel gm = GameModel.getInstance();
-    GameView gv = GameView.getInstance();
 
     private final EnemyType TYPE;
     private EnemyMovementPattern pattern;
@@ -62,13 +63,6 @@ public class Enemy extends Entity {
     }
 
     @Override
-    public void update(){
-        pattern.updatePosition();
-        setX(pattern.getX());
-        setY(pattern.getY());
-    }
-
-    @Override
     public void shoot() {
         Random random = new Random();
         if(canShoot()) {
@@ -81,6 +75,16 @@ public class Enemy extends Entity {
                 bulletCount++;
             }
         }
+    }
+
+    public void update(Iterator i){
+        pattern.updatePosition();
+        setX(pattern.getX());
+        setY(pattern.getY());
+        if(isOffScreen() || isReadyToPurge()){
+            purge(i);
+        } else
+            shoot();
     }
     
     private void animateAsteroid() {

@@ -3,6 +3,8 @@ package model;
 
 import assets.java.Sprite;
 
+import java.util.Iterator;
+
 public class PowerUp extends Existance {
     
     private boolean used = false;
@@ -11,16 +13,17 @@ public class PowerUp extends Existance {
     private String name;
     
     public PowerUp(Sprite sprite, int x, int y) {
+        super(x, y);
         newSprite(sprite);
         setNewDimensions();
-        setX(x);
-        setY(y);
         name = sprite.name();
     }
-    
-    public void move() {
-        setX(getX() - 2);
-        setY(getY());
+
+    public void update(int x, int y, Iterator i){
+        setX(getX() + x);
+        setY(getY() + y);
+        if(isOffScreen() || isReadyToPurge())
+            purge(i);
     }
     
     public void powerUp() {

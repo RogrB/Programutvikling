@@ -4,6 +4,8 @@ import assets.java.Sprite;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.Iterator;
+
 import static view.GameView.GAME_WIDTH;
 
 public abstract class Existance {
@@ -12,9 +14,18 @@ public abstract class Existance {
     private int oldX, oldY;
     protected int height, width;
     protected int oldHeight, oldWidth;
+    private boolean readyToPurge;
 
     protected Image image;
     protected ImageView imageView;
+
+    public Existance(int x, int y){
+        this.x = x;
+        oldX = x;
+        this.y = y;
+        oldY = y;
+        readyToPurge = false;
+    }
 
     public int getX() {
         return x;
@@ -114,6 +125,18 @@ public abstract class Existance {
 
     public boolean isOffScreen(){
         return isOffScreenLeft() || isOffScreenRight();
+    }
+
+    public boolean isReadyToPurge(){
+        return readyToPurge;
+    }
+
+    public void setReadyToPurge() {
+        this.readyToPurge = true;
+    }
+
+    public void purge(Iterator iterator){
+        iterator.remove();
     }
 
 }

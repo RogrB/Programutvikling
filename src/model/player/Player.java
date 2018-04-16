@@ -46,13 +46,11 @@ public class Player extends Entity {
         weapon = Weapon.PLAYER_BASIC;
     }
 
-    @Override
     public void update(){
         if(!playerIsOutOfBounds()){
             setY(getY() + move.next());
             getImageView().relocate(getX(), getY());
         }
-        updateBullets();
     }
 
     private boolean playerIsOutOfBounds(){
@@ -154,20 +152,6 @@ public class Player extends Entity {
         }, bullets.get(bullets.size()-1).getFireRate()); 
     }
 
-    private void updateBullets(){
-        try {
-        for (Bullet bullet : bullets) {
-            bullet.move();
-            if(bullet.outOfRange() == true){
-                bullet.clearImage();
-                bullets.remove(bullet);
-                System.out.println("Bullet removed");
-            }
-        }
-        } catch(Exception e) {
-            System.out.println("Bullets out of array, yo: " + e);
-        }
-    }
 
     @Override
     public void takeDamage(){

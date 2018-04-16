@@ -4,6 +4,8 @@ package model.weapons;
 import controller.GameController;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import model.enemy.Enemy;
 
 public class HeatSeeking extends Bullet {
@@ -19,9 +21,9 @@ public class HeatSeeking extends Bullet {
         y,
         weapon.PLAYER_HEATSEEKING);
     }  
-    
+
     @Override
-    public void move() {
+    public void update(int x, int y, Iterator i) {
 
         setOldX(getX());
         setOldY(getY());

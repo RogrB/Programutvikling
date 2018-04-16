@@ -32,7 +32,11 @@ public class GameController {
     public ArrayList<PowerUp> powerups = new ArrayList();
     ArrayList<Enemy> enemies = level2.getEnemies();
 
-    Iterator<Bullet> iterator;
+    AnimationTimer gameMainTimer;
+
+    public Iterator<Bullet> bulletIterator;
+    public Iterator<Enemy> enemyIterator;
+    public Iterator<PowerUp> powerUpIterator;
 
     public void setup(){
         gm = GameModel.getInstance();
@@ -45,54 +49,60 @@ public class GameController {
     public void start() {
 
         // ANIMATION TIMER, UPDATES VIEW
-        AnimationTimer timer = new AnimationTimer() {
+        gameMainTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                purge();
-                gm.player.update();
-                if(gm.player.hasShield()) {
-                    gv.renderShield();
-                }
-                for(Enemy e : enemies){
-                    e.update();
-                    gv.render(e);
-                    e.shoot();
-                }
-                if (!powerups.isEmpty()) {
-                    for(PowerUp p : powerups) {
-                        p.move();
-                        gv.render(p);
-                    }
-                }
 
+                gm.player.update();
+                if(gm.player.hasShield())
+                    gv.renderShield();
+
+                moveEnemies();
+                movePowerups();
                 moveAllBullets();
+
                 detectPlayerCollidesWithEnemy();
                 detectEnemyShotByPlayer();
                 detectPlayerShotByEnemy();
-                detectPowerUp();
+                detectPlayerCollidesWithPowerUp();
+
                 hud.renderHUD();
-                if (!gm.player.isAlive()) {
-                    gv.gameOver();
-                    this.stop();
-                }
+
+                detectGameOver();
             }
-        }; timer.start();
+        }; gameMainTimer.start();
     }
 
+    private void moveEnemies(){
+        enemyIterator = enemies.iterator();
+        while(enemyIterator.hasNext()){
+            Enemy enemy = enemyIterator.next();
+            enemy.update(enemyIterator);
+            gv.render(enemy);
+        }
+    }
+
+    private void movePowerups(){
+        powerUpIterator = powerups.iterator();
+        while (powerUpIterator.hasNext()){
+            PowerUp powerUp = powerUpIterator.next();
+            powerUp.update(-2, 0, powerUpIterator);
+            gv.render(powerUp);
+        }
+    }
 
     private void moveAllBullets(){
-        for (Bullet bullet : gm.player.getBullets()){
+        bulletIterator = gm.player.getBullets().iterator();
+        while(bulletIterator.hasNext()){
+            Bullet bullet = bulletIterator.next();
+            bullet.update(20, 0, bulletIterator);
             gv.render(bullet);
         }
 
-        iterator = gm.getEnemyBullets().iterator();
-        while(iterator.hasNext()){
-            Bullet bullet = iterator.next();
-            bullet.setX(bullet.getX() - 12);
-            bullet.setY(bullet.getY());
-            if(bullet.isOffScreen() || bullet.isReadyToPurge()) { // Skal flyttes til Bullet.purgeThis()
-                iterator.remove();
-            }
+        bulletIterator = gm.getEnemyBullets().iterator();
+        while(bulletIterator.hasNext()){
+            Bullet bullet = bulletIterator.next();
+            bullet.update(-12, 0, bulletIterator);
             gv.render(bullet);
         }
     }
@@ -103,8 +113,6 @@ public class GameController {
                 if(bullet.collidesWith(enemy)){
                     enemy.takeDamage(bullet.getDmg());
                     bullet.hasHit();
-                    bullet.clearImage();
-                    gv.render(bullet);
                 }
             }
         }
@@ -128,7 +136,7 @@ public class GameController {
         }
     }
     
-    private void detectPowerUp() {
+    private void detectPlayerCollidesWithPowerUp() {
         if (!powerups.isEmpty()) {
             for (PowerUp p : powerups) {
                 if(p.collidesWith(gm.player)) {
@@ -138,26 +146,10 @@ public class GameController {
         }
     }
 
-    private void purge(){
-        Iterator<Enemy> enemyIterator = enemies.iterator();
-        if(enemies.size() == 0){
-            return;
-        }
-        if(enemies.size() == 1){
-            Enemy e = enemyIterator.next();
-            if(!e.isAlive()){
-                System.out.println("Removing enemy");
-                gv.clearLast(e);
-                enemyIterator.remove();
-            }
-        }
-        while(enemyIterator.hasNext()){
-            Enemy e = enemyIterator.next();
-            if(!e.isAlive()){
-                System.out.println("Removing enemy");
-                enemyIterator.remove();
-                e = null;
-            }
+    private void detectGameOver(){
+        if (!gm.player.isAlive()) {
+            gv.gameOver();
+            gameMainTimer.stop();
         }
     }
     
