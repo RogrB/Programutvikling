@@ -21,7 +21,7 @@ public class Enemy extends Entity {
 
     private int chanceToShoot;
     private int timerToShoot;
-    private int animCounter;
+    private int animationCounter;
 
     public Enemy(EnemyType enemyType, EnemyMovementPattern pattern, int x, int y){
         super(
@@ -89,31 +89,33 @@ public class Enemy extends Entity {
             
             @Override
             public void run() {
-                switch(animCounter) {
-                    case 5:
-                        newSprite(Sprite.ASTROID2);
-                        break;
-                    case 10:
-                        newSprite(Sprite.ASTROID3);
-                        break;
-                    case 15:
-                        newSprite(Sprite.ASTROID4);
-                        break;
-                    case 20:
-                        newSprite(Sprite.ASTROID5);
-                        break;
-                    case 25:
-                        newSprite(Sprite.ASTROID6);
-                        break;
-                    case 30:
-                        newSprite(Sprite.ASTROID7);
-                        break;      
-                    case 35:
-                        newSprite(Sprite.ASTROID8);
-                        animCounter = 0;
-                        break;                            
+                if(isAlive()) {
+                    switch (animationCounter) {
+                        case 5:
+                            newSprite(Sprite.ASTROID2);
+                            break;
+                        case 10:
+                            newSprite(Sprite.ASTROID3);
+                            break;
+                        case 15:
+                            newSprite(Sprite.ASTROID4);
+                            break;
+                        case 20:
+                            newSprite(Sprite.ASTROID5);
+                            break;
+                        case 25:
+                            newSprite(Sprite.ASTROID6);
+                            break;
+                        case 30:
+                            newSprite(Sprite.ASTROID7);
+                            break;
+                        case 35:
+                            newSprite(Sprite.ASTROID8);
+                            animationCounter = 0;
+                            break;
+                    }
+                    animationCounter++;
                 }
-                animCounter++;           
             }
         }, 0, 20);        
     }

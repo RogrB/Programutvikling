@@ -2,13 +2,11 @@ package model;
 
 import assets.java.Audio;
 import assets.java.Sprite;
-import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 import model.weapons.Weapon;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import javafx.scene.image.Image;
 
 public abstract class Entity extends Existance {
     protected int health;
