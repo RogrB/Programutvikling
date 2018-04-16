@@ -40,9 +40,6 @@ public class GameView {
     final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
     final GraphicsContext bulletLayer = bulletLayerCanvas.getGraphicsContext2D();
     final GraphicsContext enemyLayer = enemyLayerCanvas.getGraphicsContext2D();
-    
-    LevelLoader level2 = new LevelLoader(LevelData.LEVEL3);
-    ArrayList<Enemy> enemies = level2.getEnemies(); // trengs den her lenger?
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
@@ -95,10 +92,6 @@ public class GameView {
     
     public void clearLast(Existance object) {
         graphics.clearRect(object.getOldX()-10, object.getOldY()-10, object.getWidth()+30, object.getHeight()+30);
-    }
-
-    public ArrayList<Enemy> getEnemies(){ // trengs denne her?
-        return enemies;
     }
 
     public void gameOver() {

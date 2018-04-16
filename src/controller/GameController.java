@@ -4,6 +4,7 @@ import assets.java.Sprite;
 import javafx.animation.AnimationTimer;
 import model.GameModel;
 import model.enemy.*;
+import model.levels.LevelData;
 import model.levels.LevelLoader;
 import model.weapons.*;
 import view.GameView;
@@ -27,9 +28,9 @@ public class GameController {
     HUD hud;
 
     // Level data
-    public ArrayList<Enemy> enemies;
+    LevelLoader level2 = new LevelLoader(LevelData.LEVEL4);
     public ArrayList<PowerUp> powerups = new ArrayList();
-    LevelLoader level2;
+    ArrayList<Enemy> enemies = level2.getEnemies();
 
     AnimationTimer gameMainTimer;
 
@@ -41,10 +42,8 @@ public class GameController {
         gm = GameModel.getInstance();
         gv = GameView.getInstance();
         hud = HUD.getInstance();
-        enemies = gv.getEnemies();
-        powerups.add(new PowerUp(Sprite.WEAPON_POWERUP, 1220, 643)); // Spawner out of bounds, despawner med en gang
-        powerups.add(new PowerUp(Sprite.HEALTH_POWERUP, 1120, 557));
-        powerups.add(new PowerUp(Sprite.SHIELD_POWERUP, 800, 427));
+        enemies = level2.getEnemies();
+        powerups = level2.getPowerups();
     }
 
     public void start() {
