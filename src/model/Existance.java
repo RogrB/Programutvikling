@@ -4,6 +4,8 @@ import assets.java.Sprite;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.Iterator;
+
 import static view.GameView.GAME_WIDTH;
 
 public abstract class Existance {
@@ -131,6 +133,10 @@ public abstract class Existance {
 
     public void setReadyToPurge() {
         this.readyToPurge = true;
+    }
+
+    public void purge(Iterator iterator){
+        iterator.remove();
     }
 
 }

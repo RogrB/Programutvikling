@@ -27,7 +27,6 @@ public abstract class Entity extends Existance {
         this.bulletCount = 0;
     }
 
-    public abstract void update();
     public abstract void shoot();
 
     public int getHealth() {
@@ -77,6 +76,7 @@ public abstract class Entity extends Existance {
         dmg = Math.abs(dmg);
         health -= dmg;
         if(health <= 0) {
+            isDead();
             animateDeath();
         }
     }
@@ -93,7 +93,7 @@ public abstract class Entity extends Existance {
                 }
                 else {
                     newSprite("assets/image/damage/clear.png");
-                    isDead();
+                    isReadyToPurge();
                     this.cancel();
                 }
             }

@@ -25,8 +25,6 @@ public class Bullet extends Existance {
 
     public Bullet(int x, int y, Weapon weapon) {
         super(x,y);
-        //this.setX(x);
-        //this.setY(y);
         WEAPON = weapon;
         newSprite(weapon.SPRITE);
         setNewDimensions();
@@ -43,7 +41,7 @@ public class Bullet extends Existance {
         setX(getX() + x);
         setY(getY() + y);
         if(isReadyToPurge() || isOffScreen())
-            i.remove();
+            purge(i);
     }
 
     @Override

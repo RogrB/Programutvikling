@@ -46,7 +46,6 @@ public class Player extends Entity {
         weapon = Weapon.PLAYER_BASIC;
     }
 
-    @Override
     public void update(){
         if(!playerIsOutOfBounds()){
             setY(getY() + move.next());
