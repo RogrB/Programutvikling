@@ -6,6 +6,7 @@ import model.Existance;
 import model.GameModel;
 import view.GameView;
 
+import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -13,6 +14,7 @@ public class Bullet extends Existance {
 
     protected final Weapon WEAPON;
     private boolean isHit = false;
+    private boolean readyToPurge;
     
     GameModel gm = GameModel.getInstance();
 
@@ -31,6 +33,7 @@ public class Bullet extends Existance {
         WEAPON = weapon;
         newSprite(weapon.SPRITE);
         setNewDimensions();
+        readyToPurge = false;
     }
 
     public void clearImage() {
@@ -48,9 +51,6 @@ public class Bullet extends Existance {
     public void setX(int x){
         if(!isHit) {
             super.setX(x);
-        }
-        if(isOffScreen()) {
-            purgeThis();
         }
     }
 
@@ -84,7 +84,8 @@ public class Bullet extends Existance {
 
                         timer.cancel();
                         timer.purge();
-                        purgeThis();
+                        //purgeThis();
+                        setReadyToPurge();
                     } else if (animCounter >= (WEAPON.BULLET_HIT.length * 2) - 1) {
                         newSprite(Sprite.CLEAR);
                     } else {
@@ -97,10 +98,11 @@ public class Bullet extends Existance {
         }
     }
 
-    public void purgeThis(){
+    public void purgeThis(Iterator iterator){
         if (!gm.getEnemyBullets().isEmpty()) {
-            if(gm.getEnemyBullets().contains(this))
-                gm.getEnemyBullets().remove(this);
+            /*if(gm.getEnemyBullets().contains(this))
+                gm.getEnemyBullets().remove(this);*/
+            iterator.remove();
         }
         if (!gm.player.getBullets().isEmpty()) {
             if(gm.player.getBullets().contains(this))
@@ -117,5 +119,13 @@ public class Bullet extends Existance {
     public boolean outOfRange(){
         System.out.println(travelled);
         return travelled > range;
+    }
+
+    public boolean isReadyToPurge(){
+        return readyToPurge;
+    }
+
+    public void setReadyToPurge() {
+        this.readyToPurge = true;
     }
 }

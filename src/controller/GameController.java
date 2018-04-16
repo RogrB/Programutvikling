@@ -31,6 +31,8 @@ public class GameController {
     public ArrayList<PowerUp> powerups = new ArrayList();
     LevelLoader level2;
 
+    Iterator<Bullet> iterator;
+
     public void setup(){
         gm = GameModel.getInstance();
         gv = GameView.getInstance();
@@ -54,7 +56,6 @@ public class GameController {
                 }
                 for(Enemy e : enemies){
                     e.update();
-                    //gv.renderEnemies(e);
                     gv.render(e);
                     e.shoot();
                 }
@@ -85,16 +86,15 @@ public class GameController {
             gv.render(bullet);
         }
 
-        try {
-            Iterator<Bullet> bulletIterator = gm.getEnemyBullets().iterator();
-            while(bulletIterator.hasNext()){
-                Bullet bullet = bulletIterator.next();
-                bullet.setX(bullet.getX() - 12);
-                bullet.setY(bullet.getY());
-                gv.render(bullet);
+        iterator = gm.getEnemyBullets().iterator();
+        while(iterator.hasNext()){
+            Bullet bullet = iterator.next();
+            bullet.setX(bullet.getX() - 12);
+            bullet.setY(bullet.getY());
+            if(bullet.isOffScreen() || bullet.isReadyToPurge()) { // Skal flyttes til Bullet.purgeThis()
+                iterator.remove();
             }
-        } catch(Exception e) {
-            System.out.println("Shit happened: " + e);
+            gv.render(bullet);
         }
     }
 
