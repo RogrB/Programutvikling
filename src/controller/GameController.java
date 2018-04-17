@@ -136,7 +136,9 @@ public class GameController {
     private void detectPlayerCollidesWithEnemy(){
         for (Enemy enemy: enemies) {
             if(enemy.collidesWith(gm.player)){
-                gm.player.takeDamage();
+                if(enemy.isAlive()) {
+                    gm.player.takeDamage();
+                }
                 enemy.takeDamage();
             }
         }
