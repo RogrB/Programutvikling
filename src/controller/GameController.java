@@ -30,11 +30,11 @@ public class GameController {
     GameView gv;
     
     HUD hud;
+    LevelLoader levelLoader;
 
     // Level data
-    LevelLoader level2 = new LevelLoader(LevelData.LEVEL4);
     public ArrayList<PowerUp> powerups = new ArrayList();
-    ArrayList<Enemy> enemies = level2.getEnemies();
+    public static ArrayList<Enemy> enemies = new ArrayList();
 
     AnimationTimer gameMainTimer;
 
@@ -46,8 +46,8 @@ public class GameController {
         gm = GameModel.getInstance();
         gv = GameView.getInstance();
         hud = HUD.getInstance();
-        enemies = level2.getEnemies();
-        powerups = level2.getPowerups();
+        levelLoader = LevelLoader.getInstance();
+        levelLoader.setLevelData(LevelData.LEVEL4);
     }
 
     public void start() {
@@ -56,6 +56,8 @@ public class GameController {
         gameMainTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+
+                levelLoader.increment();
 
                 gm.player.update();
                 if(gm.player.hasShield())
@@ -203,5 +205,4 @@ public class GameController {
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
-    
 }

@@ -118,7 +118,7 @@ public abstract class Existance {
     }
 
     public boolean isOffScreenRight(){
-        if(x > GAME_WIDTH)
+        if(x > GAME_WIDTH + GAME_WIDTH/10)
             return true;
         return false;
     }
