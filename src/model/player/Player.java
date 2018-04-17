@@ -25,6 +25,7 @@ public class Player extends Entity {
     private int blinkCounter;
     private String weaponType = "Bullet";
     private boolean hasShield = false;
+    private boolean shooting= false;
     Shield shield = new Shield(getX(), getY(), hasShield());
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
@@ -53,8 +54,10 @@ public class Player extends Entity {
             getImageView().relocate(getX(), getY());
         }
         if(shield.isBroken() && hasShield()) {
-            System.out.println("Removing shield");
             removeShield();
+        }
+        if(shooting){
+            shoot();
         }
     }
 
@@ -170,7 +173,6 @@ public class Player extends Entity {
         }
         else {
             if (!shield.isImmune()) {
-                System.out.println("Shielddamage");
                 shield.takeDamage();
             }
         }
@@ -188,6 +190,14 @@ public class Player extends Entity {
             }
         }, getImmunityTime());
 
+    }
+
+    public void isShooting(){
+        shooting = true;
+    }
+
+    public void isNotShooting(){
+        shooting = false;
     }
 
     public boolean isImmune() {

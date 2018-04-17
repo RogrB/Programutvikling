@@ -20,7 +20,7 @@ public class UserInputs {
     public void setKeyListeners(Scene s){
         s.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.SPACE)
-                gm.player.shoot();
+                gm.player.isShooting();
             if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP)
                 gm.player.move("UP");
             if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN)
@@ -42,6 +42,8 @@ public class UserInputs {
         });
 
         s.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.SPACE)
+                gm.player.isNotShooting();
             if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP)
                 gm.player.move("STOP");
             if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN)

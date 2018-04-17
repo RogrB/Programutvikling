@@ -89,11 +89,6 @@ public class GameView {
         gc.drawImage(object.getImage(), object.getX(), object.getY());
     }
 
-    
-    public void clearLast(Existance object) { // Brukes den her lenger?
-        graphics.clearRect(object.getOldX()-10, object.getOldY()-10, object.getWidth()+30, object.getHeight()+30);
-    }
-
     public void gameOver() {
         // Is ded!
         graphics.drawImage(new Image("assets/image/gameover.png"), (GAME_WIDTH/2) - 368, (GAME_HEIGHT/2) - 51);
