@@ -1,21 +1,14 @@
 package view;
 
-import assets.java.Sprite;
 import javafx.scene.Parent;
 import javafx.scene.canvas.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import controller.GameController;
-import model.Entity;
 import model.Existance;
 import model.GameModel;
 import model.enemy.Enemy;
-import model.levels.LevelData;
-import model.levels.LevelLoader;
 import model.weapons.*;
-import model.PowerUp;
-
-import java.util.ArrayList;
 
 public class GameView {
 
