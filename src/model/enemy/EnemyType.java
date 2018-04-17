@@ -7,14 +7,14 @@ import model.weapons.Weapon;
 public enum EnemyType {
 
     //          Health      Sprite                  Shooting chance     Weapon
-    ASTEROID(    1,          Sprite.ASTEROID1,        0,                  null),
-    BLUE1(      2,          Sprite.ENEMY_BLUE01,    3000,               Weapon.ENEMY_BASIC),
-    BLUE2(      2,          Sprite.ENEMY_BLUE02,    3000,               Weapon.ENEMY_BASIC),
-    GREEN1(     2,          Sprite.ENEMY_GREEN01,   3000,               Weapon.ENEMY_BASIC),
-    ORANGE1(    2,          Sprite.ENEMY_ORANGE1,   3000,               Weapon.ENEMY_BASIC),
-    RED1(       2,          Sprite.ENEMY_RED1,      3000,               Weapon.ENEMY_BASIC),
-    RED2(       2,          Sprite.ENEMY_RED2,      3000,               Weapon.ENEMY_BASIC),
-    RED3(       2,          Sprite.ENEMY_RED3,      3000,               Weapon.ENEMY_BASIC),
+    ASTEROID(   1,          Sprite.ASTEROID1,       0,                  null),
+    BLUE1(      2,          Sprite.ENEMY_BLUE01,    36000,              Weapon.ENEMY_BASIC),
+    BLUE2(      2,          Sprite.ENEMY_BLUE02,    36000,              Weapon.ENEMY_BASIC),
+    GREEN1(     2,          Sprite.ENEMY_GREEN01,   36000,              Weapon.ENEMY_BASIC),
+    ORANGE1(    2,          Sprite.ENEMY_ORANGE1,   36000,              Weapon.ENEMY_BASIC),
+    RED1(       2,          Sprite.ENEMY_RED1,      36000,              Weapon.ENEMY_BASIC),
+    RED2(       2,          Sprite.ENEMY_RED2,      36000,              Weapon.ENEMY_BASIC),
+    RED3(       2,          Sprite.ENEMY_RED3,      36000,              Weapon.ENEMY_BASIC),
     REDBIG(     2,          Sprite.ENEMY_RED_BIG,   3000,               Weapon.ENEMY_BASIC),
     
     // UFO
