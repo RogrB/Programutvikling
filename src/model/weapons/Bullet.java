@@ -1,10 +1,10 @@
 package model.weapons;
 
 import assets.java.Sprite;
-import javafx.scene.image.Image;
 import model.Existance;
 import model.GameModel;
 
+import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,8 +12,6 @@ public class Bullet extends Existance {
 
     protected final Weapon WEAPON;
     private boolean isHit = false;
-    
-    GameModel gm = GameModel.getInstance();
 
     // Animation variables
     private final int ANIM_SPEED = 20;
@@ -22,15 +20,10 @@ public class Bullet extends Existance {
     private Timer timer = null;
 
     public Bullet(int x, int y, Weapon weapon) {
-        this.setX(x);
-        this.setY(y);
+        super(x,y);
         WEAPON = weapon;
-        sprite = WEAPON.SPRITE;
-        setNewDimensions(sprite);
-    }
-
-    public void clearImage() {
-        sprite = Sprite.CLEAR;
+        newSprite(weapon.SPRITE);
+        setNewDimensions();
     }
 
     public void hasHit() {
@@ -40,13 +33,17 @@ public class Bullet extends Existance {
         bulletDie();
     }
 
+    public void update(int x, int y, Iterator i){
+        setX(getX() + x);
+        setY(getY() + y);
+        if(getReadyToPurge() || isOffScreen())
+            purge(i);
+    }
+
     @Override
     public void setX(int x){
         if(!isHit) {
             super.setX(x);
-        }
-        if(isOffScreen()) {
-            purgeThis();
         }
     }
 
@@ -67,16 +64,6 @@ public class Bullet extends Existance {
         return WEAPON.FIRERATE;
     }
 
-    private void alterSprite(Sprite s){
-        sprite = s;
-        setNewDimensions(s);
-    }
-
-    private void setNewDimensions(Sprite s){
-        width = (int)s.getWidth();
-        height = (int)s.getHeight();
-    }
-
     private void bulletDie(){
         if(timer == null) {
             timer = new Timer();
@@ -85,37 +72,21 @@ public class Bullet extends Existance {
                 public void run() {
                     if (animCounter < WEAPON.BULLET_HIT.length) {
                         animIndex = animCounter;
-                        alterSprite(WEAPON.BULLET_HIT[animIndex]);
+                        newSprite(WEAPON.BULLET_HIT[animIndex]);
                     } else if (animCounter >= (WEAPON.BULLET_HIT.length * 2)) {
 
                         timer.cancel();
                         timer.purge();
-                        purgeThis();
+                        isReadyToPurge();
                     } else if (animCounter >= (WEAPON.BULLET_HIT.length * 2) - 1) {
-                        alterSprite(Sprite.CLEAR);
+                        newSprite(Sprite.CLEAR);
                     } else {
                         animIndex = WEAPON.BULLET_HIT.length - (animCounter - WEAPON.BULLET_HIT.length + 2);
-                        alterSprite(WEAPON.BULLET_HIT[animIndex]);
+                        newSprite(WEAPON.BULLET_HIT[animIndex]);
                     }
                     animCounter++;
                 }
             }, 0, ANIM_SPEED);
         }
-    }
-
-    public void purgeThis(){
-        if (!gm.getEnemyBullets().isEmpty()) {
-            if(gm.getEnemyBullets().contains(this))
-                gm.getEnemyBullets().remove(this);
-        }
-        if (!gm.player.getBullets().isEmpty()) {
-            if(gm.player.getBullets().contains(this))
-                gm.player.getBullets().remove(this);
-        }
-    }
-    
-    public void move() {
-        this.setX(getX() + 20);
-        this.setY(getY());
     }
 }

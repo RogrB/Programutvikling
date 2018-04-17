@@ -3,43 +3,59 @@ package model;
 
 import assets.java.Sprite;
 
+import java.util.Iterator;
+import java.util.Random;
+
+import static view.GameView.GAME_HEIGHT;
+import static view.GameView.GAME_WIDTH;
+
 public class PowerUp extends Existance {
     
     private boolean used = false;
     GameModel gm = GameModel.getInstance();
+
+    private String name;
     
     public PowerUp(Sprite sprite, int x, int y) {
-        this.sprite = sprite;
-        setX(x);
-        setY(y);
-        this.height = (int) sprite.getHeight();
-        this.width = (int) sprite.getWidth();        
+        super(x, y);
+        newSprite(sprite);
+        setNewDimensions();
+        name = sprite.name();
     }
-    
-    public void move() {
-        setX(getX() - 2);
-        setY(getY());
+
+    public void update(int x, int y, Iterator i){
+        setX(getX() + x);
+        setY(getY() + y);
+        if(isOffScreen() || getReadyToPurge())
+            purge(i);
     }
     
     public void powerUp() {
         if (!used) {
-            switch(this.sprite) {
-                case WEAPON_POWERUP:
+            switch(this.name) {
+                case "WEAPON_POWERUP":
                     gm.player.powerUp(); 
                     System.out.println("Weapon upgraded");
                     break;
-                case HEALTH_POWERUP:
+                case "HEALTH_POWERUP":
                     gm.player.setHealth(gm.player.getHealth() + 1);
                     System.out.println("Health up");
                     break;
-                case SHIELD_POWERUP:
+                case "SHIELD_POWERUP":
                     gm.player.setShield();
                     System.out.println("Shield!");
                     break;
             }
             used = true;
-            this.sprite = sprite.CLEAR; // Trenger en Purge funksjon
+            newSprite(Sprite.CLEAR);
+            isReadyToPurge();
         }
+    }
+
+    public PowerUp newPowerUp(){
+        Random random = new Random();
+        int ySpawn = random.nextInt(GAME_HEIGHT - getHeight()) + getHeight();
+        return new PowerUp(Sprite.WEAPON_POWERUP, GAME_WIDTH - 1, ySpawn);
     }
     
 }

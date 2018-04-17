@@ -4,6 +4,7 @@ import assets.java.Sprite;
 import javafx.animation.AnimationTimer;
 import model.GameModel;
 import model.enemy.*;
+import model.levels.LevelData;
 import model.levels.LevelLoader;
 import model.weapons.*;
 import view.GameView;
@@ -12,6 +13,10 @@ import model.PowerUp;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
+
+import static view.GameView.GAME_HEIGHT;
+import static view.GameView.GAME_WIDTH;
 
 public class GameController {
 
@@ -27,83 +32,85 @@ public class GameController {
     HUD hud;
 
     // Level data
-    public ArrayList<Enemy> enemies;
+    LevelLoader level2 = new LevelLoader(LevelData.LEVEL4);
     public ArrayList<PowerUp> powerups = new ArrayList();
-    LevelLoader level2;
+    ArrayList<Enemy> enemies = level2.getEnemies();
+
+    AnimationTimer gameMainTimer;
+
+    public Iterator<Bullet> bulletIterator;
+    public Iterator<Enemy> enemyIterator;
+    public Iterator<PowerUp> powerUpIterator;
 
     public void setup(){
         gm = GameModel.getInstance();
         gv = GameView.getInstance();
         hud = HUD.getInstance();
-        enemies = gv.getEnemies();
-        powerups.add(new PowerUp(Sprite.WEAPON_POWERUP, 1220, 643));
-        powerups.add(new PowerUp(Sprite.HEALTH_POWERUP, 1420, 557));
-        powerups.add(new PowerUp(Sprite.SHIELD_POWERUP, 800, 427));
+        enemies = level2.getEnemies();
+        powerups = level2.getPowerups();
     }
 
     public void start() {
 
         // ANIMATION TIMER, UPDATES VIEW
-        AnimationTimer timer = new AnimationTimer() {
+        gameMainTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                purge();
-                gm.player.update();
-                if(gm.player.hasShield()) {
-                    gv.renderShield();
-                }
-                for(Enemy e : enemies){
-                    e.update();
-                    gv.renderEnemies(e);
-                    e.shoot();
-                }
-                if (!powerups.isEmpty()) {
-                    for(PowerUp p : powerups) {
-                        p.move();
-                        gv.renderImage(p);
-                    }
-                }
 
+                gm.player.update();
+                if(gm.player.hasShield())
+                    gv.renderShield();
+
+                spawnPowerUps();
+
+                moveEnemies();
+                movePowerups();
                 moveAllBullets();
+
                 detectPlayerCollidesWithEnemy();
                 detectEnemyShotByPlayer();
                 detectPlayerShotByEnemy();
-                detectPowerUp();
+                detectPlayerCollidesWithPowerUp();
+
                 hud.renderHUD();
-                if (!gm.player.isAlive()) {
-                    gv.gameOver();
-                    this.stop();
-                }
+
+                detectGameOver();
             }
-        }; timer.start();
+        }; gameMainTimer.start();
     }
 
+    private void moveEnemies(){
+        enemyIterator = enemies.iterator();
+        while(enemyIterator.hasNext()){
+            Enemy enemy = enemyIterator.next();
+            enemy.update(enemyIterator);
+            gv.render(enemy);
+        }
+    }
+
+    private void movePowerups(){
+        powerUpIterator = powerups.iterator();
+        while (powerUpIterator.hasNext()){
+            PowerUp powerUp = powerUpIterator.next();
+            powerUp.update(-2, 0, powerUpIterator);
+            gv.render(powerUp);
+        }
+    }
 
     private void moveAllBullets(){
-        for (Bullet bullet : gm.player.getBullets()){
-            gv.renderBullets(bullet);
+        bulletIterator = gm.player.getBullets().iterator();
+        while(bulletIterator.hasNext()){
+            Bullet bullet = bulletIterator.next();
+            bullet.update(20, 0, bulletIterator);
+            gv.render(bullet);
         }
 
-        try {
-            Iterator<Bullet> bulletIterator = gm.getEnemyBullets().iterator();
-            while(bulletIterator.hasNext()){
-                Bullet bullet = bulletIterator.next();
-                bullet.setX(bullet.getX() - 12);
-                bullet.setY(bullet.getY());
-                gv.renderBullets(bullet);
-            }
-        } catch(Exception e) {
-            System.out.println("Shit happened: " + e);
+        bulletIterator = gm.getEnemyBullets().iterator();
+        while(bulletIterator.hasNext()){
+            Bullet bullet = bulletIterator.next();
+            bullet.update(-12, 0, bulletIterator);
+            gv.render(bullet);
         }
-
-        // Bytte ut med Iterator?
-        /*for(Bullet bullet : gm.getEnemyBullets()) {
-            if(bullet.isOffScreenLeft())
-                bullet.purgeThis(); // Gir null pointer exception
-            bullet.setX(bullet.getX() - 12);
-            bullet.setY(bullet.getY());
-            gv.renderImage(bullet);
-        }*/
     }
 
     private void detectEnemyShotByPlayer(){
@@ -112,8 +119,6 @@ public class GameController {
                 if(bullet.collidesWith(enemy)){
                     enemy.takeDamage(bullet.getDmg());
                     bullet.hasHit();
-                    bullet.clearImage();
-                    gv.renderBullets(bullet);
                 }
             }
         }
@@ -137,7 +142,7 @@ public class GameController {
         }
     }
     
-    private void detectPowerUp() {
+    private void detectPlayerCollidesWithPowerUp() {
         if (!powerups.isEmpty()) {
             for (PowerUp p : powerups) {
                 if(p.collidesWith(gm.player)) {
@@ -147,26 +152,51 @@ public class GameController {
         }
     }
 
-    private void purge(){
-        Iterator<Enemy> enemyIterator = enemies.iterator();
-        if(enemies.size() == 0){
-            return;
+    private void spawnPowerUps(){
+        Random random = new Random();
+        if(random.nextInt(1500) < 1) {
+            powerups.add(generateNewPowerUp());
         }
-        if(enemies.size() == 1){
-            Enemy e = enemyIterator.next();
-            if(!e.isAlive()){
-                System.out.println("Removing enemy");
-                gv.clearLast(e);
-                enemyIterator.remove();
-            }
+    }
+
+    private PowerUp generateNewPowerUp(){
+        Random rand = new Random();
+        int randNr = rand.nextInt(8);
+        Sprite sprite = null;
+        switch (randNr){
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                sprite = Sprite.SHIELD_POWERUP;
+                break;
+            case 4:
+            case 5:
+                sprite = Sprite.HEALTH_POWERUP;
+                break;
+            case 6:
+            case 7:
+                sprite = Sprite.WEAPON_POWERUP;
+                break;
+            /*case 8:
+                sprite = Sprite.DIE_POWERUP;
+                break;
+            case 9:
+                sprite = Sprite.IMMUNE_POWERUP;
+                break;*/
         }
-        while(enemyIterator.hasNext()){
-            Enemy e = enemyIterator.next();
-            if(!e.isAlive()){
-                System.out.println("Removing enemy");
-                enemyIterator.remove();
-                e = null;
-            }
+        PowerUp res = new PowerUp(
+                sprite,
+                GAME_WIDTH - 1,
+                rand.nextInt(GAME_HEIGHT - sprite.getHeight())
+                );
+        return res;
+    }
+
+    private void detectGameOver(){
+        if (!gm.player.isAlive()) {
+            gv.gameOver();
+            gameMainTimer.stop();
         }
     }
     

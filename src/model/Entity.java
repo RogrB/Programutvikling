@@ -2,13 +2,8 @@ package model;
 
 import assets.java.Audio;
 import assets.java.Sprite;
-import javafx.scene.image.ImageView;
 import javafx.scene.media.AudioClip;
 import model.weapons.Weapon;
-
-import java.util.Timer;
-import java.util.TimerTask;
-import javafx.scene.image.Image;
 
 public abstract class Entity extends Existance {
     protected int health;
@@ -21,17 +16,14 @@ public abstract class Entity extends Existance {
     private int deathAnimCounter;
 
     public Entity(Sprite sprite, int x, int y, int health){
-        this.sprite = sprite;
-        this.setX(x);
-        this.setY(y);
-        this.height = (int) sprite.getHeight();
-        this.width = (int) sprite.getWidth();
+        super(x, y);
+        newSprite(sprite);
+        setNewDimensions();
         this.health = health;
         this.alive = true;
         this.bulletCount = 0;
     }
 
-    public abstract void update();
     public abstract void shoot();
 
     public int getHealth() {
@@ -81,31 +73,20 @@ public abstract class Entity extends Existance {
         dmg = Math.abs(dmg);
         health -= dmg;
         if(health <= 0) {
-            animateDeath();
+            isDead();
         }
     }
-    
-    public void setSprite(Sprite sprite) {
-        this.sprite = sprite;
-    }
-    
+
     public void animateDeath() {
-        Timer deathTimer = new Timer();
-        deathTimer.schedule(new TimerTask() {
-            
-            @Override
-            public void run() {
-                if (deathAnimCounter < 9) {
-                    deathAnimCounter++;
-                    sprite.setImage(new Image("assets/image/playerDeath/playerDeath_00" + deathAnimCounter + ".png"));
-                }
-                else {
-                    sprite.setImage(new Image("assets/image/damage/clear.png"));
-                    isDead();
-                    this.cancel();
-                }
-            }
-        }, 0, 80);
+        deathAnimCounter++;
+        if (deathAnimCounter < 9) {
+            newSprite("assets/image/playerDeath/playerDeath_00" + deathAnimCounter + ".png");
+        } else {
+            newSprite(Sprite.CLEAR);
+        }
+        if (deathAnimCounter > 9 ){
+            isReadyToPurge();
+        }
     }
 
 }

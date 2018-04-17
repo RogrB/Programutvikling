@@ -40,9 +40,6 @@ public class GameView {
     final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
     final GraphicsContext bulletLayer = bulletLayerCanvas.getGraphicsContext2D();
     final GraphicsContext enemyLayer = enemyLayerCanvas.getGraphicsContext2D();
-    
-    LevelLoader level2 = new LevelLoader(LevelData.LEVEL2);
-    ArrayList<Enemy> enemies = level2.getEnemies(); // trengs den her lenger?
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
@@ -75,32 +72,26 @@ public class GameView {
         root.setPrefSize(GAME_WIDTH, GAME_HEIGHT);
         root.setBackground(getBackGroundImage());
 
-
-        root.getChildren().addAll(gm.player.getSprite().getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas);
+        root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas);
         return root;
     }
 
-    public void renderImage(Existance object) {
-        graphics.clearRect(object.getOldX(), object.getOldY(), object.getWidth(), object.getHeight());
-        graphics.drawImage(object.getSprite().getImage(), object.getX(), object.getY());
+    public void render(Existance object) {
+        GraphicsContext gc;
+        if(object instanceof Bullet)
+            gc = bulletLayer;
+        else if(object instanceof Enemy)
+            gc = enemyLayer;
+        else
+            gc = graphics;
+
+        gc.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
+        gc.drawImage(object.getImage(), object.getX(), object.getY());
     }
-    
-    public void renderBullets(Existance object) {
-        bulletLayer.clearRect(object.getOldX(), object.getOldY(), object.getWidth(), object.getHeight());
-        bulletLayer.drawImage(object.getSprite().getImage(), object.getX(), object.getY());        
-    }
-    
-    public void renderEnemies(Existance object) {
-        enemyLayer.clearRect(object.getOldX(), object.getOldY(), object.getWidth(), object.getHeight());
-        enemyLayer.drawImage(object.getSprite().getImage(), object.getX(), object.getY());        
-    }
+
     
     public void clearLast(Existance object) {
         graphics.clearRect(object.getOldX()-10, object.getOldY()-10, object.getWidth()+30, object.getHeight()+30);
-    }
-
-    public ArrayList<Enemy> getEnemies(){ // trengs denne her?
-        return enemies;
     }
 
     public void gameOver() {
@@ -110,7 +101,7 @@ public class GameView {
     
     public void renderShield() {
         graphics.clearRect(gm.player.getX(), gm.player.getY()-30, gm.player.getWidth()+5, gm.player.getHeight()+70);
-        graphics.drawImage(gm.player.getShieldSprite().getImage(), gm.player.getX(), gm.player.getY()-1);
+        graphics.drawImage(new Image(gm.player.getShieldSprite().getSrc()), gm.player.getX(), gm.player.getY()-1);
     }
     
     public void renderHUD(HUD h, boolean shield) {

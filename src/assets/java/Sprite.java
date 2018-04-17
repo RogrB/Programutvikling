@@ -6,14 +6,14 @@ import javafx.scene.image.ImageView;
 public enum Sprite {
 
     // Enemies
-    ASTROID1("assets/image/enemies/meteor/meteor001.png"),
-    ASTROID2("assets/image/enemies/meteor/meteor002.png"),
-    ASTROID3("assets/image/enemies/meteor/meteor003.png"),
-    ASTROID4("assets/image/enemies/meteor/meteor004.png"),
-    ASTROID5("assets/image/enemies/meteor/meteor005.png"),
-    ASTROID6("assets/image/enemies/meteor/meteor006.png"),
-    ASTROID7("assets/image/enemies/meteor/meteor007.png"),
-    ASTROID8("assets/image/enemies/meteor/meteor008.png"),
+    ASTEROID1("assets/image/enemies/meteor/meteor001.png"),
+    ASTEROID2("assets/image/enemies/meteor/meteor002.png"),
+    ASTEROID3("assets/image/enemies/meteor/meteor003.png"),
+    ASTEROID4("assets/image/enemies/meteor/meteor004.png"),
+    ASTEROID5("assets/image/enemies/meteor/meteor005.png"),
+    ASTEROID6("assets/image/enemies/meteor/meteor006.png"),
+    ASTEROID7("assets/image/enemies/meteor/meteor007.png"),
+    ASTEROID8("assets/image/enemies/meteor/meteor008.png"),
     
     ENEMY_BLUE01("assets/image/enemies/enemyBlue1.png"),
     ENEMY_BLUE02("assets/image/enemies/enemyBlue2.png"),
@@ -79,39 +79,22 @@ public enum Sprite {
     PLAYER_DEATH_7("assets/image/playerDeath/playerDeath_007.png"),
     PLAYER_DEATH_8("assets/image/playerDeath/playerDeath_008.png"),
     PLAYER_DEATH_9("assets/image/playerDeath/playerDeath_009.png");
-    
 
-    Image img;
-    ImageView view;
-
-    public final int HEIGHT, WIDTH;
+    public String src;
 
     Sprite(String src){
-        this.img =  new Image(src) ;
-        this.view = new ImageView(this.img);
-        HEIGHT = (int) img.getHeight();
-        WIDTH = (int) img.getWidth();
+        this.src = src;
+    }
+    
+    public String getSrc() {
+        return this.src;
     }
 
-    public double getHeight(){
-        return img.getHeight();
+    public int getHeight(){
+        return (int) new Image(src).getHeight();
     }
 
-    public double getWidth(){
-        return img.getWidth();
+    public int getWidth(){
+        return (int) new Image(src).getWidth();
     }
-
-    public ImageView getImageView(){
-        return view;
-    }
-
-    public Image getImage() {
-        return img;
-    }
-
-    public void setImage(Image img){
-        this.img = img;
-        view.setImage(img);
-    }
-
 }

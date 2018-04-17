@@ -3,9 +3,9 @@ package model.enemy;
 import assets.java.Sprite;
 import model.Entity;
 import model.GameModel;
-import view.GameView;
 import model.weapons.Bullet;
 
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,14 +14,13 @@ public class Enemy extends Entity {
 
     // MVC-access
     GameModel gm = GameModel.getInstance();
-    GameView gv = GameView.getInstance();
 
     private final EnemyType TYPE;
     private EnemyMovementPattern pattern;
 
     private int chanceToShoot;
     private int timerToShoot;
-    private int animCounter;
+    private int animationCounter;
 
     public Enemy(EnemyType enemyType, EnemyMovementPattern pattern, int x, int y){
         super(
@@ -35,9 +34,6 @@ public class Enemy extends Entity {
         this.pattern = pattern;
         pattern.setStartPosition(x, y);
 
-        height = (int) sprite.getHeight();
-        width = (int) sprite.getWidth();
-
         canShoot = TYPE.canShoot();
         weapon = TYPE.WEAPON;
         health = TYPE.MAX_HEALTH;
@@ -47,9 +43,8 @@ public class Enemy extends Entity {
         if(TYPE.SHOOTING_CHANCE == 0)
             canShoot = false;
 
-        sprite.getImageView().relocate(x, y);
-        if (this.TYPE == TYPE.ASTROID) {
-            animateAstroid();
+        if (this.TYPE == TYPE.ASTEROID) {
+            animateAsteroid();
         }
     }
 
@@ -66,15 +61,6 @@ public class Enemy extends Entity {
     }
 
     @Override
-    public void update(){
-        pattern.updatePosition();
-        setX(pattern.getX());
-        setY(pattern.getY());
-        // gv.renderImage(this); // Gir nullpointer .. setter i gamecontroller for now
-        // sprite.getImageView().relocate(getX(), getY());
-    }
-
-    @Override
     public void shoot() {
         Random random = new Random();
         if(canShoot()) {
@@ -88,38 +74,57 @@ public class Enemy extends Entity {
             }
         }
     }
+
+    public void update(Iterator i){
+        if(isAlive()) {
+            pattern.updatePosition();
+            setX(pattern.getX());
+            setY(pattern.getY());
+        } else {
+            setOldX(getX());
+            setOldY(getY());
+            animateDeath();
+        }
+
+        if(isOffScreen() || getReadyToPurge()){
+            purge(i);
+        } else
+            shoot();
+    }
     
-    private void animateAstroid() {
+    private void animateAsteroid() {
         Timer blinkTimer = new Timer();
         blinkTimer.schedule(new TimerTask() {
             
             @Override
             public void run() {
-                switch(animCounter) {
-                    case 5:
-                        getSprite().setImage(Sprite.ASTROID2.getImage());
-                        break;
-                    case 10:
-                        getSprite().setImage(Sprite.ASTROID3.getImage());
-                        break;
-                    case 15:
-                        getSprite().setImage(Sprite.ASTROID4.getImage());
-                        break;
-                    case 20:
-                        getSprite().setImage(Sprite.ASTROID5.getImage());
-                        break;
-                    case 25:
-                        getSprite().setImage(Sprite.ASTROID6.getImage());
-                        break;   
-                    case 30:
-                        getSprite().setImage(Sprite.ASTROID7.getImage());
-                        break;      
-                    case 35:
-                        getSprite().setImage(Sprite.ASTROID8.getImage());
-                        animCounter = 0;
-                        break;                            
+                if(isAlive()) {
+                    switch (animationCounter) {
+                        case 5:
+                            newSprite(Sprite.ASTEROID2);
+                            break;
+                        case 10:
+                            newSprite(Sprite.ASTEROID3);
+                            break;
+                        case 15:
+                            newSprite(Sprite.ASTEROID4);
+                            break;
+                        case 20:
+                            newSprite(Sprite.ASTEROID5);
+                            break;
+                        case 25:
+                            newSprite(Sprite.ASTEROID6);
+                            break;
+                        case 30:
+                            newSprite(Sprite.ASTEROID7);
+                            break;
+                        case 35:
+                            newSprite(Sprite.ASTEROID8);
+                            animationCounter = 0;
+                            break;
+                    }
+                    animationCounter++;
                 }
-                animCounter++;           
             }
         }, 0, 20);        
     }

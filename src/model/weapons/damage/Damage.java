@@ -9,20 +9,17 @@ public class Damage extends Existance {
     // Klasse for damage animasjon
     private int teller;
     boolean finished = false;
-    
+
     private Image sprite = new Image("assets/image/damage/laserBlue08.png");
     
     public Damage(int x, int y) {
+        super(x, y);
         setX(x);
         setY(y);
         width = (int)sprite.getWidth();
         height = (int)sprite.getHeight();
         this.display();
     }
-
-    /*public Image getSprite() {
-        return this.sprite;
-    }*/
 
     public void display() {
         // Viser damageAnimasjon på
@@ -60,11 +57,11 @@ public class Damage extends Existance {
             }
         }, 0, 10);
     }
-    
+
     public boolean getFinished() {
         return this.finished;
     }
-    
+
     public void clearImage() {
         this.sprite = new Image("assets/image/damage/clear.png");
     }
