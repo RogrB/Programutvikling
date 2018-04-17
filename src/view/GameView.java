@@ -111,6 +111,9 @@ public class GameView {
         hud.drawImage(h.getLifeCounter(), 70, 20);
         if(shield) {
             hud.drawImage(h.getShieldIcon(), 20, 50);
+            if (gm.player.shield().getCharges() == 2) {
+                hud.drawImage(h.getShieldIcon(), 45, 50);
+            }
         }
     }
 }

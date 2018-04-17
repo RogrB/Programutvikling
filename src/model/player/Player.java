@@ -18,16 +18,14 @@ public class Player extends Entity {
     // Singleton
     private static Player inst = new Player();
     public static Player getInst(){ return inst; }
-    
-    GameView gv = GameView.getInstance();
 
     // State
     private boolean immunity = false;
     private int immunityTime = 2000;
     private int blinkCounter;
     private String weaponType = "Bullet";
-    private boolean shieldCheck = true;
-    Shield shield;
+    private boolean hasShield = false;
+    Shield shield = new Shield(getX(), getY(), hasShield());
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private PlayerMovement move = new PlayerMovement();
@@ -44,7 +42,7 @@ public class Player extends Entity {
         shot = Audio.PLAYER_SHOT;
         getImageView().relocate(getX(), getY());
         weapon = Weapon.PLAYER_BASIC;
-        if (shieldCheck) {
+        if (hasShield) {
             setShield();
         }
     }
@@ -53,6 +51,10 @@ public class Player extends Entity {
         if(!playerIsOutOfBounds()){
             setY(getY() + move.next());
             getImageView().relocate(getX(), getY());
+        }
+        if(shield.isBroken() && hasShield()) {
+            System.out.println("Removing shield");
+            removeShield();
         }
     }
 
@@ -167,11 +169,9 @@ public class Player extends Entity {
             }
         }
         else {
-            if (shield.getCharges()> 1) {
-                shield.setCharges(shield.getCharges()-1);
-            }
-            else {
-                removeShield();
+            if (!shield.isImmune()) {
+                System.out.println("Shielddamage");
+                shield.takeDamage();
             }
         }
     }
@@ -199,7 +199,6 @@ public class Player extends Entity {
     }
 
     private void immunityBlinkAnimation() {
-        System.out.println("Immunity start");
         Timer blinkTimer = new Timer();
         blinkTimer.schedule(new TimerTask() {
             
@@ -222,7 +221,6 @@ public class Player extends Entity {
                         break;
                 }
                 if (!immunity) {
-                    System.out.println("immunity end");
                     this.cancel();
                     getImageView().setImage(new Image("assets/image/player/playerShip2_red.png"));
                 }
@@ -235,25 +233,33 @@ public class Player extends Entity {
     }
     
     public void setShield() {
-        this.width = (int) getWidth() + 10;
-        this.shieldCheck = true;
-        shield = new Shield(this.getX(), this.getY());
+        if (!hasShield()) {
+            this.width = (int) getWidth() + 10;
+        }
+        this.hasShield = true;
+        shield = new Shield(this.getX(), this.getY(), true);
     }
     
     public void removeShield() {
         this.width = (int) getWidth() - 10;
         shield.newSprite(Sprite.CLEAR);
-        gv.renderShield();
-        this.shieldCheck = false;
+        this.hasShield = false;
     }
     
     public boolean hasShield() {
-        return this.shieldCheck;
+        return this.hasShield;
     }
-    
     
     public Image getShieldSprite() {
         return shield.getImage();
+    }
+    
+    public int getShieldCharges() {
+        return shield.getCharges();
+    }
+    
+    public Shield shield() {
+        return this.shield;
     }
     
 }

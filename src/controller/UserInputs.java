@@ -27,6 +27,8 @@ public class UserInputs {
                 gm.player.move("DOWN");
             if (event.getCode() == KeyCode.E)
                 gm.player.powerUp();
+            if (event.getCode() == KeyCode.Q)
+                gm.player.setShield();
         });
 
         s.setOnMouseClicked(event ->{

@@ -58,8 +58,7 @@ public class GameController {
             public void handle(long now) {
 
                 gm.player.update();
-                if(gm.player.hasShield())
-                    gv.renderShield();
+                gv.renderShield();
 
                 spawnPowerUps();
 
