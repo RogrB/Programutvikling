@@ -21,7 +21,7 @@ public class LevelLoader {
 
     private String[][][] levelData;
     private int increment;
-    private final int COLUMN_WIDTH = 60;
+    private final int COLUMN_WIDTH = 70;
 
     private ArrayList<PowerUp> powerups = new ArrayList<>();
 
@@ -30,10 +30,12 @@ public class LevelLoader {
     }
 
     public void increment(){
-        increment++;
-        if(increment % COLUMN_WIDTH == 0) {
-            int column = (increment/ COLUMN_WIDTH);
-            loopThroughEnemyRows(getEnemyColumn(column));
+        if((increment < (levelData[1].length*COLUMN_WIDTH))) {
+            increment++;
+            if (increment % COLUMN_WIDTH == 0) {
+                int column = (increment / COLUMN_WIDTH);
+                loopThroughEnemyRows(getEnemyColumn(column));
+            }
         }
     }
 
@@ -45,23 +47,31 @@ public class LevelLoader {
 
     private void generateEnemy(String[] enemyData, int yLane){
         int xSpawn = GAME_WIDTH - 1;
-        //EnemyType enemyType = EnemyType.valueOf(enemyData[1]);
-        int ySpawn = ((GAME_HEIGHT+75)/7) * yLane + 1;
 
         switch(enemyData[0]){
-            case "0":
-                break;
             case "1":
-                enemies.add(new Enemy(EnemyType.valueOf(enemyData[1]), new EnemyMovementPattern(enemyData[2]),  xSpawn, ySpawn));
+                enemies.add(new Enemy(
+                                EnemyType.valueOf(enemyData[1]),
+                                new EnemyMovementPattern(enemyData[2]),
+                                xSpawn,
+                                ((GAME_HEIGHT-EnemyType.valueOf(enemyData[1]).SPRITE.getHeight())/6) * yLane + 1));
                 break;
             case "2":
-                enemies.add(new Enemy(EnemyType.ASTEROID, new EnemyMovementPattern(enemyData[1]), 1 + xSpawn, ySpawn));
+                enemies.add(new Enemy(
+                                EnemyType.ASTEROID,
+                                new EnemyMovementPattern(enemyData[1]),
+                                xSpawn,
+                                ((GAME_HEIGHT-Sprite.ASTEROID1.getHeight())/6) * yLane + 1));
                 break;
             case "3":
-                enemies.add(new Enemy(EnemyType.valueOf(enemyData[1]), new EnemyMovementPattern(enemyData[2]), xSpawn, ySpawn));
+                enemies.add(new Enemy(
+                                EnemyType.valueOf(enemyData[1]),
+                                new EnemyMovementPattern(enemyData[2]),
+                                xSpawn,
+                                ((GAME_HEIGHT-EnemyType.valueOf(enemyData[1]).SPRITE.getHeight())/6) * yLane + 1));
                 break;
             case "4":
-                powerups.add(new PowerUp(Sprite.valueOf(enemyData[1]), xSpawn, 1 + ySpawn));
+                //powerups.add(new PowerUp(Sprite.valueOf(enemyData[1]), xSpawn, 1 + ySpawn));
                 break;
         }
     }
