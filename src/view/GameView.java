@@ -90,7 +90,7 @@ public class GameView {
     }
 
     
-    public void clearLast(Existance object) {
+    public void clearLast(Existance object) { // Brukes den her lenger?
         graphics.clearRect(object.getOldX()-10, object.getOldY()-10, object.getWidth()+30, object.getHeight()+30);
     }
 
@@ -100,8 +100,8 @@ public class GameView {
     }
     
     public void renderShield() {
-        graphics.clearRect(gm.player.getX(), gm.player.getY()-30, gm.player.getWidth()+5, gm.player.getHeight()+70);
-        graphics.drawImage(new Image(gm.player.getShieldSprite().getSrc()), gm.player.getX(), gm.player.getY()-1);
+        graphics.clearRect(gm.player.getX(), gm.player.getY()-30, gm.player.getOldWidth()+15, gm.player.getOldHeight()+70);
+        graphics.drawImage(gm.player.getShieldSprite(), gm.player.getX(), gm.player.getY()-1);
     }
     
     public void renderHUD(HUD h, boolean shield) {

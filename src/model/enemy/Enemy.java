@@ -124,6 +124,9 @@ public class Enemy extends Entity {
                             break;
                     }
                     animationCounter++;
+                    if(!isAlive()) {
+                        this.cancel();
+                    }
                 }
             }
         }, 0, 20);        

@@ -5,6 +5,7 @@ import assets.java.Sprite;
 import model.Entity;
 import model.weapons.*;
 import view.GameView;
+import model.Shield;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -25,9 +26,8 @@ public class Player extends Entity {
     private int immunityTime = 2000;
     private int blinkCounter;
     private String weaponType = "Bullet";
-    private boolean shield = false;
-    private Sprite shieldSprite = Sprite.SHIELD1;
-    private int shieldHealth = 2;
+    private boolean shieldCheck = true;
+    Shield shield;
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private PlayerMovement move = new PlayerMovement();
@@ -44,6 +44,9 @@ public class Player extends Entity {
         shot = Audio.PLAYER_SHOT;
         getImageView().relocate(getX(), getY());
         weapon = Weapon.PLAYER_BASIC;
+        if (shieldCheck) {
+            setShield();
+        }
     }
 
     public void update(){
@@ -155,7 +158,7 @@ public class Player extends Entity {
 
     @Override
     public void takeDamage(){
-        if (!shield) {
+        if (!hasShield()) {
             if(!isImmune()){
                 super.takeDamage();
                 if (isAlive()) {
@@ -164,8 +167,8 @@ public class Player extends Entity {
             }
         }
         else {
-            if (getShieldHealth() > 1) {
-                setShieldHealth(getShieldHealth()-1);
+            if (shield.getCharges()> 1) {
+                shield.setCharges(shield.getCharges()-1);
             }
             else {
                 removeShield();
@@ -233,33 +236,24 @@ public class Player extends Entity {
     
     public void setShield() {
         this.width = (int) getWidth() + 10;
-        this.shield = true;
-        this.shieldSprite = Sprite.SHIELD1;
+        this.shieldCheck = true;
+        shield = new Shield(this.getX(), this.getY());
     }
     
     public void removeShield() {
-        this.width = (int) getWidth();
-        this.shield = false;
-        this.shieldSprite = Sprite.CLEAR;
-    }
-    
-    public Sprite getShieldSprite() {
-        return this.shieldSprite;
-    }
-    
-    public void setShieldSprite(Sprite sprite) {
-        this.shieldSprite = sprite;
+        this.width = (int) getWidth() - 10;
+        shield.newSprite(Sprite.CLEAR);
+        gv.renderShield();
+        this.shieldCheck = false;
     }
     
     public boolean hasShield() {
-        return this.shield;
+        return this.shieldCheck;
     }
     
-    public void setShieldHealth(int shield) {
-        this.shieldHealth = shield;
+    
+    public Image getShieldSprite() {
+        return shield.getImage();
     }
     
-    public int getShieldHealth() {
-        return this.shieldHealth;
-    }
 }
