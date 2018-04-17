@@ -7,8 +7,6 @@ import model.weapons.Bullet;
 
 import java.util.Iterator;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Enemy extends Entity {
 
@@ -43,9 +41,6 @@ public class Enemy extends Entity {
         if(TYPE.SHOOTING_CHANCE == 0)
             canShoot = false;
 
-        if (this.TYPE == TYPE.ASTEROID) {
-            animateAsteroid();
-        }
     }
 
     // GET-SET
@@ -92,43 +87,4 @@ public class Enemy extends Entity {
             shoot();
     }
     
-    private void animateAsteroid() {
-        Timer spinTimer = new Timer();
-        spinTimer.schedule(new TimerTask() {
-            
-            @Override
-            public void run() {
-                if(isAlive()) {
-                    switch (animationCounter) {
-                        case 5:
-                            newSprite(Sprite.ASTEROID2);
-                            break;
-                        case 10:
-                            newSprite(Sprite.ASTEROID3);
-                            break;
-                        case 15:
-                            newSprite(Sprite.ASTEROID4);
-                            break;
-                        case 20:
-                            newSprite(Sprite.ASTEROID5);
-                            break;
-                        case 25:
-                            newSprite(Sprite.ASTEROID6);
-                            break;
-                        case 30:
-                            newSprite(Sprite.ASTEROID7);
-                            break;
-                        case 35:
-                            newSprite(Sprite.ASTEROID8);
-                            animationCounter = 0;
-                            break;
-                    }
-                    animationCounter++;
-                    if(!isAlive()) {
-                        this.cancel();
-                    }
-                }
-            }
-        }, 0, 20);        
-    }
 }
