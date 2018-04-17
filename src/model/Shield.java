@@ -12,6 +12,7 @@ public class Shield extends Existance {
     private boolean immunity = false;
     private int immunitytime = 250;
     private boolean broken = false;
+    private int animCounter;
     
     public Shield(int x, int y, boolean active) {
         super(x, y);
@@ -61,7 +62,8 @@ public class Shield extends Existance {
     
     public void takeDamage() {
         setImmunity(true);
-        immunityTimer();        
+        immunityTimer();    
+        animate();
         setCharges(getCharges()-1);
     }
     
@@ -71,6 +73,34 @@ public class Shield extends Existance {
     
     public boolean isBroken() {
         return this.broken;
+    }
+    
+    public void animate() {
+        Timer shieldBlinkTimer = new Timer();
+        shieldBlinkTimer.schedule(new TimerTask() {
+            
+            @Override
+            public void run() {
+                    switch (animCounter) {
+                        case 2:
+                            newSprite(Sprite.SHIELD2);
+                            break;
+                        case 4:
+                            newSprite(Sprite.SHIELD3);
+                            break;
+                        case 6:
+                            newSprite(Sprite.SHIELD2);
+                            break;
+                        case 8:
+                            newSprite(Sprite.SHIELD1);
+                            animCounter = 0;
+                            this.cancel();
+                            break;
+                    }
+                    animCounter++;
+                }
+            
+        }, 0, 20);           
     }
     
 }

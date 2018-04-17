@@ -100,7 +100,7 @@ public class GameView {
     }
     
     public void renderShield() {
-        graphics.clearRect(gm.player.getX(), gm.player.getY()-30, gm.player.getOldWidth()+15, gm.player.getOldHeight()+70);
+        graphics.clearRect(gm.player.getX()-10, gm.player.getY()-30, gm.player.getOldWidth()+35, gm.player.getOldHeight()+70);
         graphics.drawImage(gm.player.getShieldSprite(), gm.player.getX(), gm.player.getY()-1);
     }
     

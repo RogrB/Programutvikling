@@ -93,8 +93,8 @@ public class Enemy extends Entity {
     }
     
     private void animateAsteroid() {
-        Timer blinkTimer = new Timer();
-        blinkTimer.schedule(new TimerTask() {
+        Timer spinTimer = new Timer();
+        spinTimer.schedule(new TimerTask() {
             
             @Override
             public void run() {
