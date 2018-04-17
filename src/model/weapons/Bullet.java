@@ -2,7 +2,6 @@ package model.weapons;
 
 import assets.java.Sprite;
 import model.Existance;
-import model.GameModel;
 
 import java.util.Iterator;
 import java.util.Timer;

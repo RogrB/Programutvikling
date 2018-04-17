@@ -5,6 +5,7 @@ import assets.java.Sprite;
 import model.Entity;
 import model.weapons.*;
 import view.GameView;
+import model.Shield;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -17,17 +18,15 @@ public class Player extends Entity {
     // Singleton
     private static Player inst = new Player();
     public static Player getInst(){ return inst; }
-    
-    GameView gv = GameView.getInstance();
 
     // State
     private boolean immunity = false;
     private int immunityTime = 2000;
     private int blinkCounter;
     private String weaponType = "Bullet";
-    private boolean shield = false;
-    private Sprite shieldSprite = Sprite.SHIELD1;
-    private int shieldHealth = 2;
+    private boolean hasShield = false;
+    private boolean shooting= false;
+    Shield shield = new Shield(getX(), getY(), hasShield());
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private PlayerMovement move = new PlayerMovement();
@@ -44,12 +43,21 @@ public class Player extends Entity {
         shot = Audio.PLAYER_SHOT;
         getImageView().relocate(getX(), getY());
         weapon = Weapon.PLAYER_BASIC;
+        if (hasShield) {
+            setShield();
+        }
     }
 
     public void update(){
         if(!playerIsOutOfBounds()){
             setY(getY() + move.next());
             getImageView().relocate(getX(), getY());
+        }
+        if(shield.isBroken() && hasShield()) {
+            removeShield();
+        }
+        if(shooting){
+            shoot();
         }
     }
 
@@ -155,7 +163,7 @@ public class Player extends Entity {
 
     @Override
     public void takeDamage(){
-        if (!shield) {
+        if (!hasShield()) {
             if(!isImmune()){
                 super.takeDamage();
                 if (isAlive()) {
@@ -164,11 +172,8 @@ public class Player extends Entity {
             }
         }
         else {
-            if (getShieldHealth() > 1) {
-                setShieldHealth(getShieldHealth()-1);
-            }
-            else {
-                removeShield();
+            if (!shield.isImmune()) {
+                shield.takeDamage();
             }
         }
     }
@@ -187,6 +192,14 @@ public class Player extends Entity {
 
     }
 
+    public void isShooting(){
+        shooting = true;
+    }
+
+    public void isNotShooting(){
+        shooting = false;
+    }
+
     public boolean isImmune() {
         return this.immunity;
     }
@@ -196,7 +209,6 @@ public class Player extends Entity {
     }
 
     private void immunityBlinkAnimation() {
-        System.out.println("Immunity start");
         Timer blinkTimer = new Timer();
         blinkTimer.schedule(new TimerTask() {
             
@@ -219,7 +231,6 @@ public class Player extends Entity {
                         break;
                 }
                 if (!immunity) {
-                    System.out.println("immunity end");
                     this.cancel();
                     getImageView().setImage(new Image("assets/image/player/playerShip2_red.png"));
                 }
@@ -232,34 +243,33 @@ public class Player extends Entity {
     }
     
     public void setShield() {
-        this.width = (int) getWidth() + 10;
-        this.shield = true;
-        this.shieldSprite = Sprite.SHIELD1;
+        if (!hasShield()) {
+            this.width = (int) getWidth() + 10;
+        }
+        this.hasShield = true;
+        shield = new Shield(this.getX(), this.getY(), true);
     }
     
     public void removeShield() {
-        this.width = (int) getWidth();
-        this.shield = false;
-        this.shieldSprite = Sprite.CLEAR;
-    }
-    
-    public Sprite getShieldSprite() {
-        return this.shieldSprite;
-    }
-    
-    public void setShieldSprite(Sprite sprite) {
-        this.shieldSprite = sprite;
+        this.width = (int) getWidth() - 10;
+        shield.newSprite(Sprite.CLEAR);
+        this.hasShield = false;
     }
     
     public boolean hasShield() {
+        return this.hasShield;
+    }
+    
+    public Image getShieldSprite() {
+        return shield.getImage();
+    }
+    
+    public int getShieldCharges() {
+        return shield.getCharges();
+    }
+    
+    public Shield shield() {
         return this.shield;
     }
     
-    public void setShieldHealth(int shield) {
-        this.shieldHealth = shield;
-    }
-    
-    public int getShieldHealth() {
-        return this.shieldHealth;
-    }
 }

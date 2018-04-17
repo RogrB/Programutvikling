@@ -1,21 +1,14 @@
 package view;
 
-import assets.java.Sprite;
 import javafx.scene.Parent;
 import javafx.scene.canvas.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import controller.GameController;
-import model.Entity;
 import model.Existance;
 import model.GameModel;
 import model.enemy.Enemy;
-import model.levels.LevelData;
-import model.levels.LevelLoader;
 import model.weapons.*;
-import model.PowerUp;
-
-import java.util.ArrayList;
 
 public class GameView {
 
@@ -89,19 +82,14 @@ public class GameView {
         gc.drawImage(object.getImage(), object.getX(), object.getY());
     }
 
-    
-    public void clearLast(Existance object) {
-        graphics.clearRect(object.getOldX()-10, object.getOldY()-10, object.getWidth()+30, object.getHeight()+30);
-    }
-
     public void gameOver() {
         // Is ded!
         graphics.drawImage(new Image("assets/image/gameover.png"), (GAME_WIDTH/2) - 368, (GAME_HEIGHT/2) - 51);
     }
     
     public void renderShield() {
-        graphics.clearRect(gm.player.getX(), gm.player.getY()-30, gm.player.getWidth()+5, gm.player.getHeight()+70);
-        graphics.drawImage(new Image(gm.player.getShieldSprite().getSrc()), gm.player.getX(), gm.player.getY()-1);
+        graphics.clearRect(gm.player.getX()-10, gm.player.getY()-30, gm.player.getOldWidth()+35, gm.player.getOldHeight()+70);
+        graphics.drawImage(gm.player.getShieldSprite(), gm.player.getX(), gm.player.getY()-1);
     }
     
     public void renderHUD(HUD h, boolean shield) {
@@ -111,6 +99,9 @@ public class GameView {
         hud.drawImage(h.getLifeCounter(), 70, 20);
         if(shield) {
             hud.drawImage(h.getShieldIcon(), 20, 50);
+            if (gm.player.shield().getCharges() == 2) {
+                hud.drawImage(h.getShieldIcon(), 45, 50);
+            }
         }
     }
 }

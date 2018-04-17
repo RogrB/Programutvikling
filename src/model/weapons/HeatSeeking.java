@@ -44,10 +44,12 @@ public class HeatSeeking extends Bullet {
         // Finner nærmeste enemy i X aksen og låser inn target
         int closestX = 2500;
         int targetIndex = 0;
-        for (Enemy enemy : enemies) {
-            if (enemy.getX() < closestX && enemy.getX() > 20) {
-                closestX = enemy.getX();
-                targetIndex++;
+        if(!enemies.isEmpty()) {
+            for (Enemy enemy : enemies) {
+                if (enemy.getX() < closestX && enemy.getX() > 20) {
+                    closestX = enemy.getX();
+                    targetIndex++;
+                }
             }
         }
         target = enemies.get(targetIndex-1);
