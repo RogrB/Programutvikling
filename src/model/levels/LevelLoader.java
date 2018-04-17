@@ -1,7 +1,6 @@
 package model.levels;
 
 import assets.java.Sprite;
-import controller.GameController;
 import model.PowerUp;
 import model.enemy.Enemy;
 import model.enemy.EnemyMovementPattern;
@@ -17,46 +16,17 @@ public class LevelLoader {
 
     // Singleton
     private static LevelLoader inst = new LevelLoader();
+    private LevelLoader(){}
     public static LevelLoader getInstance(){ return inst; }
-
-    // MVC-access
-    GameController gc;
 
     private String[][][] levelData;
     private int increment;
-    private final int COLUMN_WIDTH = 70;
+    private final int COLUMN_WIDTH = 60;
 
     private ArrayList<PowerUp> powerups = new ArrayList<>();
 
-    private LevelLoader(){
-
-
-    }
-
     public void setLevelData(String[][][] levelData){
         this.levelData = levelData;
-    }
-
-    private void initEnemies(String[][][] level){
-        for(int i = 0; i < level.length; i++){
-            for(int j = 0; j < level[i].length; j++){
-                switch(level[i][j][0]){
-                    case "0":
-                        break;
-                    case "1":
-                        enemies.add(new Enemy(EnemyType.valueOf(level[i][j][1]), new EnemyMovementPattern(level[i][j][2]),  1 + (j * 100), 1 + (i * 120)));
-                        break;
-                    case "2":
-                        enemies.add(new Enemy(EnemyType.ASTEROID, new EnemyMovementPattern(level[i][j][1]), 1 + (j * 100), 1 + (i * 120)));
-                        break;
-                    case "3":
-                        enemies.add(new Enemy(EnemyType.valueOf(level[i][j][1]), new EnemyMovementPattern(level[i][j][2]), 200 * j, 140 * i));
-                        break;
-                    case "4":
-                        powerups.add(new PowerUp(Sprite.valueOf(level[i][j][1]), 1 + (j * 100), 1 + (i * 120)));
-                }
-            }
-        }
     }
 
     public void increment(){
@@ -75,8 +45,8 @@ public class LevelLoader {
 
     private void generateEnemy(String[] enemyData, int yLane){
         int xSpawn = GAME_WIDTH - 1;
-        int ySpawn = (GAME_HEIGHT/7) * yLane;
-        //int ySpawn = (GAME_HEIGHT/2);
+        //EnemyType enemyType = EnemyType.valueOf(enemyData[1]);
+        int ySpawn = ((GAME_HEIGHT+75)/7) * yLane + 1;
 
         switch(enemyData[0]){
             case "0":
@@ -106,12 +76,5 @@ public class LevelLoader {
         }
         return res;
     }
-
-    public ArrayList getEnemies(){
-        return enemies;
-    }
-
-    public ArrayList getPowerups(){ return powerups;}
-
 
 }

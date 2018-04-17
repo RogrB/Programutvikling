@@ -131,5 +131,4 @@ public class Enemy extends Entity {
             }
         }, 0, 20);        
     }
-    
 }

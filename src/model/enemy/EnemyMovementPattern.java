@@ -35,8 +35,8 @@ public class EnemyMovementPattern {
         this.name = name;
 
         movementSpeed = 1;  // Hastigheten til fienden.
-        modDepth = 2;       // Modulasjonsdybden til oscillatoren
-        modSpeed = 2;       // Frekvensen til oscillatoren
+        modDepth = 1;       // Modulasjonsdybden til oscillatoren
+        modSpeed = 2.5;     // Frekvensen til oscillatoren
 
         if(name == "TRI")
             triState = true;
@@ -195,6 +195,7 @@ public class EnemyMovementPattern {
             framesAlive = 0;
             x--;
             bossCounter++;
+            modDepth = 2;
         } else
             bossInitializing = false;
     }
