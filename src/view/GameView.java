@@ -5,10 +5,13 @@ import javafx.scene.canvas.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import controller.GameController;
+import javafx.scene.paint.Color;
 import model.Existance;
 import model.GameModel;
 import model.enemy.Enemy;
 import model.weapons.*;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
 
 public class GameView {
 
@@ -28,6 +31,8 @@ public class GameView {
     final Canvas hudCanvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
     final Canvas bulletLayerCanvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
     final Canvas enemyLayerCanvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
+    
+    Text scoreText = new Text(GAME_WIDTH - 150, 30, "Score: " + Integer.toString(gm.player.getScore()));    
     
     final GraphicsContext graphics = canvas.getGraphicsContext2D();
     final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
@@ -61,11 +66,14 @@ public class GameView {
     }
 
     public Parent initGame() {
+        scoreText.setFill(Color.WHITE);
+        scoreText.setFont(Font.font ("Verdana", 20));          
+        
         Pane root = new Pane();
         root.setPrefSize(GAME_WIDTH, GAME_HEIGHT);
         root.setBackground(getBackGroundImage());
 
-        root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas);
+        root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText);
         return root;
     }
 
@@ -103,5 +111,6 @@ public class GameView {
                 hud.drawImage(h.getShieldIcon(), 45, 50);
             }
         }
+        scoreText.setText("Score: " + Integer.toString(gm.player.getScore()));
     }
 }

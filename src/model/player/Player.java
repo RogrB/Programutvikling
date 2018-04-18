@@ -27,6 +27,8 @@ public class Player extends Entity {
     private boolean hasShield = false;
     private boolean shooting= false;
     Shield shield = new Shield(getX(), getY(), hasShield());
+    private int score;
+    private int shotsFired;
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
     private PlayerMovement move = new PlayerMovement();
@@ -270,6 +272,14 @@ public class Player extends Entity {
     
     public Shield shield() {
         return this.shield;
+    }
+    
+    public int getScore() {
+        return this.score;
+    }
+    
+    public void setScore(int score) {
+        this.score = score;
     }
     
 }

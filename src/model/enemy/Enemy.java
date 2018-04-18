@@ -79,6 +79,7 @@ public class Enemy extends Entity {
             setOldX(getX());
             setOldY(getY());
             animateDeath();
+            gm.player.setScore(gm.player.getScore() + 100);
         }
 
         if(isOffScreen() || getReadyToPurge()){

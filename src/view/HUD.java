@@ -41,6 +41,6 @@ public class HUD {
     
     public Image getNumeralX() {
         return this.numeralX;
-    }
+    }   
     
 }

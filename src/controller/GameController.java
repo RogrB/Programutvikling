@@ -119,6 +119,7 @@ public class GameController {
             for(Enemy enemy : enemies){
                 if(bullet.collidesWith(enemy)){
                     enemy.takeDamage(bullet.getDmg());
+                    gm.player.setScore(gm.player.getScore() + 10);
                     bullet.hasHit();
                 }
             }
