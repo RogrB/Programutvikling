@@ -1,21 +1,18 @@
 package model.enemy;
 
-import controller.GameController;
 import assets.java.Sprite;
-import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Asteroid extends Enemy {
+public class SmallAsteroid extends Enemy {
     
     private int animationCounter;
-    GameController gc = GameController.getInstance();
     
-     public Asteroid(EnemyMovementPattern pattern, int x, int y){
-        super(EnemyType.ASTEROID, pattern, x, y);
-        animate();
-        }
-     
+    public SmallAsteroid(EnemyMovementPattern pattern, int x, int y) {
+        super(EnemyType.SMALL_ASTEROID, pattern, x, y);
+        animate();       
+    }
+    
     private void animate() {
         Timer spinTimer = new Timer();
         spinTimer.schedule(new TimerTask() {
@@ -25,25 +22,25 @@ public class Asteroid extends Enemy {
                 if(isAlive()) {
                     switch (animationCounter) {
                         case 5:
-                            newSprite(Sprite.ASTEROID2);
+                            newSprite(Sprite.SMALL_ASTEROID2);
                             break;
                         case 10:
-                            newSprite(Sprite.ASTEROID3);
+                            newSprite(Sprite.SMALL_ASTEROID3);
                             break;
                         case 15:
-                            newSprite(Sprite.ASTEROID4);
+                            newSprite(Sprite.SMALL_ASTEROID4);
                             break;
                         case 20:
-                            newSprite(Sprite.ASTEROID5);
+                            newSprite(Sprite.SMALL_ASTEROID5);
                             break;
                         case 25:
-                            newSprite(Sprite.ASTEROID6);
+                            newSprite(Sprite.SMALL_ASTEROID6);
                             break;
                         case 30:
-                            newSprite(Sprite.ASTEROID7);
+                            newSprite(Sprite.SMALL_ASTEROID7);
                             break;
                         case 35:
-                            newSprite(Sprite.ASTEROID8);
+                            newSprite(Sprite.SMALL_ASTEROID8);
                             animationCounter = 0;
                             break;
                     }
@@ -55,22 +52,4 @@ public class Asteroid extends Enemy {
             }
         }, 0, 20);        
     }     
-    
-    @Override
-    public void update(Iterator i){
-        if(isAlive()) {
-            getPattern().updatePosition();
-            setX(getPattern().getX());
-            setY(getPattern().getY());
-        } else {
-            setOldX(getX());
-            setOldY(getY());
-            animateDeath();
-        }
-
-        if(isOffScreen() || getReadyToPurge()){
-            purge(i);
-        }
-    }    
-    
 }

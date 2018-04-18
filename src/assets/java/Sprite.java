@@ -15,6 +15,15 @@ public enum Sprite {
     ASTEROID7("assets/image/enemies/meteor/meteor007.png"),
     ASTEROID8("assets/image/enemies/meteor/meteor008.png"),
     
+    SMALL_ASTEROID1("assets/image/enemies/meteor/small/small_meteor001.png"),
+    SMALL_ASTEROID2("assets/image/enemies/meteor/small/small_meteor002.png"),
+    SMALL_ASTEROID3("assets/image/enemies/meteor/small/small_meteor003.png"),
+    SMALL_ASTEROID4("assets/image/enemies/meteor/small/small_meteor004.png"),
+    SMALL_ASTEROID5("assets/image/enemies/meteor/small/small_meteor005.png"),
+    SMALL_ASTEROID6("assets/image/enemies/meteor/small/small_meteor006.png"),
+    SMALL_ASTEROID7("assets/image/enemies/meteor/small/small_meteor007.png"),
+    SMALL_ASTEROID8("assets/image/enemies/meteor/small/small_meteor008.png"),
+    
     ENEMY_BLUE01("assets/image/enemies/enemyBlue1.png"),
     ENEMY_BLUE02("assets/image/enemies/enemyBlue2.png"),
     ENEMY_GREEN01("assets/image/enemies/enemyGreen1.png"),

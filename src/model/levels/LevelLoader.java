@@ -5,6 +5,7 @@ import model.PowerUp;
 import model.enemy.Enemy;
 import model.enemy.EnemyMovementPattern;
 import model.enemy.EnemyType;
+import model.enemy.Asteroid;
 
 import java.util.ArrayList;
 
@@ -57,8 +58,7 @@ public class LevelLoader {
                                 ((GAME_HEIGHT-EnemyType.valueOf(enemyData[1]).SPRITE.getHeight())/6) * yLane + 1));
                 break;
             case "2":
-                enemies.add(new Enemy(
-                                EnemyType.ASTEROID,
+                enemies.add(new Asteroid(
                                 new EnemyMovementPattern(enemyData[1]),
                                 xSpawn,
                                 ((GAME_HEIGHT-Sprite.ASTEROID1.getHeight())/6) * yLane + 1));

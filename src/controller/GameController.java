@@ -121,6 +121,11 @@ public class GameController {
                     enemy.takeDamage(bullet.getDmg());
                     gm.player.setScore(gm.player.getScore() + 10);
                     bullet.hasHit();
+                    if (!enemy.isAlive() && enemy instanceof Asteroid) {
+                        System.out.println("Asteroid death");
+                        enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN"), enemy.getX(), enemy.getY() - 20));
+                        enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN_REVERSED"), enemy.getX(), enemy.getY() + 20));
+                    }
                 }
             }
         }
