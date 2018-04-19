@@ -9,7 +9,7 @@ import java.util.TimerTask;
 public class Asteroid extends Enemy {
     
     private int animationCounter;
-    private boolean spawn = false;
+    private boolean spawned = false;
     GameController gc = GameController.getInstance();
     
      public Asteroid(EnemyMovementPattern pattern, int x, int y){
@@ -74,12 +74,12 @@ public class Asteroid extends Enemy {
         }
     }    
     
-    public boolean getSpawn() {
-        return this.spawn;
+    public boolean getSpawned() {
+        return this.spawned;
     }
     
-    public void setSpawn(boolean spawn) {
-        this.spawn = spawn;
+    public void setSpawned(boolean spawn) {
+        this.spawned = spawn;
     }
     
 }
