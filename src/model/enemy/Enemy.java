@@ -19,6 +19,7 @@ public class Enemy extends Entity {
     private int chanceToShoot;
     private int timerToShoot;
     private int animationCounter;
+    private boolean scoreCount = false;
 
     public Enemy(EnemyType enemyType, EnemyMovementPattern pattern, int x, int y){
         super(
@@ -79,13 +80,20 @@ public class Enemy extends Entity {
             setOldX(getX());
             setOldY(getY());
             animateDeath();
-            gm.player.setScore(gm.player.getScore() + 100);
+            addScore();
         }
 
         if(isOffScreen() || getReadyToPurge()){
             purge(i);
         } else
             shoot();
+    }
+    
+    public void addScore() {
+        if (!this.scoreCount) {
+            gm.player.setScore(gm.player.getScore() + 100);
+            this.scoreCount = true;
+        }
     }
     
 }

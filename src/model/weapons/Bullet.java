@@ -31,6 +31,10 @@ public class Bullet extends Existance {
         setOldY(getY());
         bulletDie();
     }
+    
+    public boolean getHasHit() {
+        return this.isHit;
+    }
 
     public void update(int x, int y, Iterator i){
         setX(getX() + x);

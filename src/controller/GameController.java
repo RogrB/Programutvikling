@@ -119,7 +119,9 @@ public class GameController {
             for(Enemy enemy : enemies){
                 if(bullet.collidesWith(enemy)){
                     enemy.takeDamage(bullet.getDmg());
-                    gm.player.setScore(gm.player.getScore() + 10);
+                    if (!bullet.getHasHit()) {
+                        gm.player.setScore(gm.player.getScore() + 10);   
+                    }
                     bullet.hasHit();
                     if (!enemy.isAlive() && enemy instanceof Asteroid && !((Asteroid)enemy).getSpawned()) {                         
                         ((Asteroid)enemy).setSpawned(true);
