@@ -48,6 +48,7 @@ public class GameController {
         hud = HUD.getInstance();
         levelLoader = LevelLoader.getInstance();
         levelLoader.setLevelData(LevelData.LEVEL4);
+        gm.player.setImmunity(false);
     }
 
     public void start() {
@@ -213,6 +214,10 @@ public class GameController {
             gv.gameOver();
             gameMainTimer.stop();
         }
+    }
+    
+    private void gameWin() {
+        
     }
     
     public ArrayList<Enemy> getEnemies() {

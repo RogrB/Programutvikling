@@ -29,7 +29,7 @@ public class LevelLoader {
     public void setLevelData(String[][][] levelData){
         this.levelData = levelData;
     }
-
+    
     public void increment(){
         if((increment < (levelData[1].length*COLUMN_WIDTH))) {
             increment++;

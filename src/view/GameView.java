@@ -32,7 +32,8 @@ public class GameView {
     final Canvas bulletLayerCanvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
     final Canvas enemyLayerCanvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
     
-    Text scoreText = new Text(GAME_WIDTH - 150, 30, "Score: " + Integer.toString(gm.player.getScore()));    
+    Text scoreText = new Text(GAME_WIDTH - 150, 60, "Score: " + Integer.toString(gm.player.getScore()));    
+    Text levelText = new Text(GAME_WIDTH - 150, 30, "Level 1"); // Må hente riktig level fra leveldata
     
     final GraphicsContext graphics = canvas.getGraphicsContext2D();
     final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
@@ -67,13 +68,15 @@ public class GameView {
 
     public Parent initGame() {
         scoreText.setFill(Color.WHITE);
-        scoreText.setFont(Font.font ("Verdana", 20));          
+        scoreText.setFont(Font.font("Verdana", 20));  
+        levelText.setFill(Color.WHITE);
+        scoreText.setFont(Font.font("Verdana", 20));
         
         Pane root = new Pane();
         root.setPrefSize(GAME_WIDTH, GAME_HEIGHT);
         root.setBackground(getBackGroundImage());
 
-        root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText);
+        root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText);
         return root;
     }
 
@@ -112,5 +115,6 @@ public class GameView {
             }
         }
         scoreText.setText("Score: " + Integer.toString(gm.player.getScore()));
+        levelText.setText("Level 1"); // må hente riktig level fra leveldata
     }
 }

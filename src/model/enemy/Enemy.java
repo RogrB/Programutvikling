@@ -96,4 +96,8 @@ public class Enemy extends Entity {
         }
     }
     
+    public EnemyType getType() {
+        return this.TYPE;
+    }
+    
 }
