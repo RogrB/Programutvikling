@@ -125,12 +125,16 @@ public class GameController {
                     bullet.hasHit();
                     if (!enemy.isAlive() && enemy instanceof Asteroid && !((Asteroid)enemy).getSpawned()) {                         
                         ((Asteroid)enemy).setSpawned(true);
-                        enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN"), enemy.getX(), enemy.getY() - 20));
-                        enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN_REVERSED"), enemy.getX(), enemy.getY() + 20));                            
+                        spawnSmallAsteroids(enemy.getX(), enemy.getY());                           
                     }
                 }
             }
         }
+    }
+    
+    private void spawnSmallAsteroids(int x, int y) {
+        enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN"), x, y - 20));
+        enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN_REVERSED"), x, y + 20));         
     }
 
     private void detectPlayerShotByEnemy(){
