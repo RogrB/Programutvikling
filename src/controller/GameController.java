@@ -116,26 +116,33 @@ public class GameController {
     }
 
     private void detectEnemyShotByPlayer(){
+        ArrayList<Enemy> tempEnemies = new ArrayList<>();
         for(Bullet bullet : gm.player.getBullets()){
-            for(Enemy enemy : enemies){
+            for(enemyIterator = enemies.iterator(); enemyIterator.hasNext();){
+                Enemy enemy = enemyIterator.next();
                 if(bullet.collidesWith(enemy)){
                     enemy.takeDamage(bullet.getDmg());
                     if (!bullet.getHasHit()) {
-                        gm.player.setScore(gm.player.getScore() + 10);   
+                        gm.player.setScore(gm.player.getScore() + 10);
                     }
                     bullet.hasHit();
-                    if (!enemy.isAlive() && enemy instanceof Asteroid && !((Asteroid)enemy).getSpawned()) {                         
+                    if (!enemy.isAlive() && enemy instanceof Asteroid && !((Asteroid)enemy).getSpawned()) {
                         ((Asteroid)enemy).setSpawned(true);
-                        spawnSmallAsteroids(enemy.getX(), enemy.getY());                           
+                        tempEnemies.add(enemy);
+
+
                     }
                 }
             }
+        }
+        for(Enemy e : tempEnemies){
+            spawnSmallAsteroids(e.getX(), e.getY());
         }
     }
     
     private void spawnSmallAsteroids(int x, int y) {
         enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN"), x, y - 20));
-        enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN_REVERSED"), x, y + 20));         
+        enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN_REVERSED"), x, y + 20));
     }
 
     private void detectPlayerShotByEnemy(){
