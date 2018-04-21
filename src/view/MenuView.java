@@ -2,6 +2,7 @@ package view;
 
 import controller.UserInputs;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,7 +27,6 @@ public class MenuView{
     public static final int MENU_HEIGHT = 800;
     private static final String BG_IMG = "assets/image/background.jpg";
     public Pane root;
-    public Stage stage;
 
     public Background getBackGroundImage(){
         BackgroundImage bg = new BackgroundImage(
@@ -48,6 +48,7 @@ public class MenuView{
 
     public void createNewGame(KeyEvent event){
         if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE){
+            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             GameView.getInstance().setup();
             Scene scene = new Scene(GameView.getInstance().initGame());
             stage.setScene(scene);
@@ -74,8 +75,27 @@ public class MenuView{
         }
     }
 
-    public Parent initScene(Stage stage) throws Exception{
-        root = FXMLLoader.load(getClass().getClassLoader().getResource("assets/fxml/MenuView.fxml"));
+    public Parent initScene(){
+        /*
+        På et eller annet tidspunkt må vi legge inn en greie som sjekker om spilleren har spilt før, slik at man første gang
+        kun vil ha "NEW GAME". Etter at spilleren har spilt en gang bør dette bli til "LOAD GAME" og "NEW GAME". Tenker vi kan
+        ha tre forskjellige save-slots.
+         */
+        Pane root = new Pane();
+        VBox vbox = new VBox();
+        root.setPrefSize(MENU_WIDTH, MENU_HEIGHT);
+        root.setBackground(getBackGroundImage());
+        Button startButton = new Button("START");
+        startButton.setOnKeyPressed(event -> createNewGame(event));
+        Button selectLevelButton = new Button("LEVEL SELECT");
+        selectLevelButton.setOnKeyPressed(event -> showLevelSelect(event));
+        Button optionsButton = new Button("OPTIONS");
+        optionsButton.setOnKeyPressed(event -> showOptions(event));
+        Button exitButton = new Button("EXIT");
+        exitButton.setOnKeyPressed(event -> exitGame(event));
+        vbox.getChildren().addAll(startButton, selectLevelButton, optionsButton, exitButton);
+        root.getChildren().add(vbox);
         return root;
+
     }
 }
