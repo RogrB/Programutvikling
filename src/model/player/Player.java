@@ -12,6 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javafx.scene.image.Image;
+import view.ViewUtil;
 
 public class Player extends Entity {
 
@@ -37,7 +38,7 @@ public class Player extends Entity {
         super(
                 Sprite.PLAYER,
                 40,
-                GameView.GAME_HEIGHT / 2 - (int) new Image(Sprite.PLAYER.src).getHeight() / 2,
+                ViewUtil.VIEW_HEIGHT / 2 - (int) new Image(Sprite.PLAYER.src).getHeight() / 2,
                 5
         );
 
@@ -68,7 +69,7 @@ public class Player extends Entity {
             move.moveStop();
             return true;
         }
-        if(getY() + this.height + move.next() >= GameView.GAME_HEIGHT) {
+        if(getY() + this.height + move.next() >= ViewUtil.VIEW_HEIGHT) {
             move.moveStop();
             return true;
         }

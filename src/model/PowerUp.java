@@ -2,12 +2,10 @@
 package model;
 
 import assets.java.Sprite;
+import view.ViewUtil;
 
 import java.util.Iterator;
 import java.util.Random;
-
-import static view.GameView.GAME_HEIGHT;
-import static view.GameView.GAME_WIDTH;
 
 public class PowerUp extends Existance {
     
@@ -54,8 +52,8 @@ public class PowerUp extends Existance {
 
     public PowerUp newPowerUp(){
         Random random = new Random();
-        int ySpawn = random.nextInt(GAME_HEIGHT - getHeight()) + getHeight();
-        return new PowerUp(Sprite.WEAPON_POWERUP, GAME_WIDTH - 1, ySpawn);
+        int ySpawn = random.nextInt(ViewUtil.VIEW_HEIGHT - getHeight()) + getHeight();
+        return new PowerUp(Sprite.WEAPON_POWERUP, ViewUtil.VIEW_WIDTH - 1, ySpawn);
     }
     
 }
