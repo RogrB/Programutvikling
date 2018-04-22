@@ -66,6 +66,7 @@ public enum Sprite {
     PLAYER("assets/image/player/playerShip2_red.png"),
     PLAYER_BLINK1("assets/image/player/playerShip3_red.png"),
     PLAYER_BLINK2("assets/image/player/playerShip4_red.png"),
+    PLAYER2("assets/image/player/player2.png"),
     
     // Shield
     SHIELD1("assets/image/player/shield1.png"),

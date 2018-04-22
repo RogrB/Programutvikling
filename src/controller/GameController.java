@@ -10,6 +10,7 @@ import model.weapons.*;
 import view.GameView;
 import view.HUD;
 import model.PowerUp;
+import multiplayer.MultiplayerHandler;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,6 +29,7 @@ public class GameController {
     // MVC-access
     GameModel gm;
     GameView gv;
+    MultiplayerHandler mp;
     
     HUD hud;
     LevelLoader levelLoader;
@@ -77,6 +79,10 @@ public class GameController {
                 hud.renderHUD();
 
                 detectGameOver();
+                if(gm.getMultiplayerStatus()) {
+                    // gm.getMP().send("Update");
+                    // gv.render(gm.getMP().getProtocol().getPlayer2());
+                }
             }
         }; gameMainTimer.start();
     }

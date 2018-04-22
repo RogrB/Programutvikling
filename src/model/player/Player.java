@@ -28,10 +28,9 @@ public class Player extends Entity {
     private boolean shooting= false;
     Shield shield = new Shield(getX(), getY(), hasShield());
     private int score;
-    private int shotsFired;
 
     private ArrayList<Bullet> bullets = new ArrayList<>();
-    private PlayerMovement move = new PlayerMovement();
+    private PlayerBehaviour behave = new PlayerBehaviour();
 
     private Player(){
         super(
@@ -52,7 +51,7 @@ public class Player extends Entity {
 
     public void update(){
         if(!playerIsOutOfBounds()){
-            setY(getY() + move.next());
+            setY(getY() + behave.next());
             getImageView().relocate(getX(), getY());
         }
         if(shield.isBroken() && hasShield()) {
@@ -64,12 +63,12 @@ public class Player extends Entity {
     }
 
     private boolean playerIsOutOfBounds(){
-        if(getY() + move.next() < 0) {
-            move.moveStop();
+        if(getY() + behave.next() < 0) {
+            behave.moveStop();
             return true;
         }
-        if(getY() + this.height + move.next() >= GameView.GAME_HEIGHT) {
-            move.moveStop();
+        if(getY() + this.height + behave.next() >= GameView.GAME_HEIGHT) {
+            behave.moveStop();
             return true;
         }
         return false;
@@ -84,63 +83,26 @@ public class Player extends Entity {
     }
     
     public void powerUp() {
-        switch(getWeaponType()) {
-            case "Bullet":
-                setWeaponType("Upgrade1");
-                break;
-            case "Upgrade1":
-                setWeaponType("Upgrade2");
-                break;
-            case "Upgrade2":
-                setWeaponType("HeatSeeking");
-                break;
-            case "HeatSeeking":
-                setWeaponType("Doubles");
-                break;
-            case "Doubles":
-                setWeaponType("DoubleSwirl");
-                break;
-        }
+        this.weaponType = behave.powerUp(weaponType);
     }
     
     public void move(String dir){
         switch(dir){
             case "UP":
-                move.move(-1);
+                behave.move(-1);
                 break;
             case "DOWN":
-                move.move(1);
+                behave.move(1);
                 break;
             case "STOP":
-                move.move(0);
+                behave.move(0);
         }
     }
 
     @Override
     public void shoot() {
         if(canShoot()) {
-            switch(getWeaponType()) {
-                case "Bullet":
-                    bullets.add(new Bullet(getX() + this.width - 10, getY() + (this.height / 2) - 8, weapon));
-                    break;
-                case "Upgrade1":
-                    bullets.add(new Upgrade1(getX() + this.width - 10, getY() + (this.height / 2) - 8, weapon));
-                    break;
-                case "Upgrade2":
-                    bullets.add(new Upgrade2(getX() + this.width - 10, getY() + (this.height / 2) - 8, weapon));
-                    break;        
-                case "HeatSeeking":
-                    bullets.add(new HeatSeeking(getX() + this.width - 10, getY() + (this.height / 2) - 8, weapon));
-                    break;
-                case "Doubles":
-                    bullets.add(new Doubles(getX() + this.width - 10, getY() + (this.height / 2) - 25, weapon));
-                    bullets.add(new Doubles(getX() + this.width - 10, getY() + (this.height / 2) + 15, weapon));
-                    break;
-                case "DoubleSwirl":
-                    bullets.add(new DoubleSwirl(getX() + this.width, getY() + (this.height / 2) - 25, weapon, true));
-                    bullets.add(new DoubleSwirl(getX() + this.width - 10, getY() + (this.height / 2) + 15, weapon, false));
-                    break;
-            }
+            behave.shoot(this.weaponType, getX(), getY(), this.width, this.height, weapon);
             bulletCount++;
             getShot().setVolume(0.25);
             getShot().play();
