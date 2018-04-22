@@ -78,6 +78,10 @@ public class MenuView extends ViewUtil{
         System.out.println("Totally showed u some tight levels");
     }
 
+    public void createNewSave(KeyEvent event){
+        goToView(event, NewGameView.getInst().initScene());
+    }
+
     public void showOptions(KeyEvent event){
         goToView(event, OptionsView.getInst().initScene());
     }
@@ -90,8 +94,8 @@ public class MenuView extends ViewUtil{
         System.out.println("Clicked continue");
     }
 
-    public void loadGame(){
-        System.out.println("Clicked load");
+    public void loadGame(KeyEvent event){
+        goToView(event, LoadGameView.getInst().initScene());
     }
 
     public void loadMultiplayer(KeyEvent event){
@@ -99,18 +103,19 @@ public class MenuView extends ViewUtil{
     }
 
     public boolean gameFileFound(){
-        return false; //EDIT THIS TO EDIT MENU LAYOUT
+        return true; //EDIT THIS TO EDIT MENU LAYOUT
     }
 
     public void select(String buttonName, KeyEvent event){ //KeyEvent is only here so you can extract Stage from an event. Hacky, I know.
         if(buttonName == "NEW GAME"){
-            createNewGame(event);
+            createNewSave(event);
+            //createNewGame(event);
         }
         if(buttonName == "CONTINUE"){
             continueLastGame();
         }
         if(buttonName == "LOAD GAME"){
-            loadGame();
+            loadGame(event);
         }
         if(buttonName == "MULTIPLAYER"){
             loadMultiplayer(event);
