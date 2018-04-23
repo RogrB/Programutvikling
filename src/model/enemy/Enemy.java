@@ -66,7 +66,6 @@ public class Enemy extends Entity {
             else {
                 timerToShoot = chanceToShoot;
                 gm.getEnemyBullets().add(new Bullet(getX() + 10, getY() + (this.height / 2) - 8, weapon));
-                bulletCount++;
             }
         }
     }

@@ -38,6 +38,10 @@ public class MultiplayerHandler {
         sender.send(protocol.sendPrep(player));
     }
     
+    public void send(String action, int x, int y) {
+        sender.send(protocol.sendPrep(action, x, y));
+    }
+    
     public void recieveProtocol(DataInputStream input) {
         protocol.recieve(input);
     }

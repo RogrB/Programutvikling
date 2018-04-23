@@ -3,12 +3,19 @@ package multiplayer;
 import java.io.*;
 import model.player.Player;
 import model.player.Player2;
+import view.GameView;
 
 public class Protocol {
     
-    private Player2 player2 = new Player2();
+    private Player2 player2;
+    GameView gv = GameView.getInstance();
     
-    public ByteArrayOutputStream sendPrep(String input) {
+    
+    public Protocol() {
+        player2 = new Player2();
+    }
+    
+    protected synchronized ByteArrayOutputStream sendPrep(String input) {
         ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
         DataOutputStream stream = new DataOutputStream(bytestream);    
 
@@ -30,7 +37,7 @@ public class Protocol {
         return bytestream;
     }
     
-    public ByteArrayOutputStream sendPrep(Player player) {
+    protected synchronized ByteArrayOutputStream sendPrep(Player player) {
         ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
         DataOutputStream stream = new DataOutputStream(bytestream);    
 
@@ -58,9 +65,39 @@ public class Protocol {
         return bytestream;
     }   
     
+    protected synchronized ByteArrayOutputStream sendPrep(String action, int x, int y) {
+        ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
+        DataOutputStream stream = new DataOutputStream(bytestream);          
+        
+        switch(action) {
+            case "Update":
+                try {
+                    stream.writeChar('M');
+                    stream.writeInt(x);
+                    stream.writeChar('b');
+                    stream.writeInt(y);
+
+                    stream.flush();
+                    stream.close();
+                }
+                catch (IOException e) {
+                    System.err.println(e);
+                }
+                break;
+        }
+        return bytestream;
+    }
+    
     public void recieve(DataInputStream input) {
-        System.out.println("recieving");
+        // System.out.println("recieving");
         char breaker = 'b';
+        /*
+        try {
+        System.out.println(input.readLine());
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }*/
         try {
             // System.out.println(input);
             char action = input.readChar();
@@ -68,10 +105,8 @@ public class Protocol {
                 player2.setX(input.readInt());
                 breaker = input.readChar();
                 player2.setY(input.readInt());
-                System.out.println("Updating player2");
-            }
-            else {
-                System.out.println("neida");
+                System.out.println("Updating player2 to " + player2.getX() + " , " + player2.getY());
+                gv.render(player2);
             }
         }
         catch(IOException e) {

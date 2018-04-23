@@ -1,28 +1,17 @@
 package view;
 
+import controller.GameController;
 import controller.UserInputs;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import main.java.Main;
-
-import javax.swing.text.html.Option;
-import java.util.ArrayList;
 
 public class MenuView extends ViewUtil{
 
@@ -44,7 +33,7 @@ public class MenuView extends ViewUtil{
 
     public void createNewGame(InputEvent event){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        GameView.getInstance().setup();
+        GameController.getInstance().gameStart();
         Scene scene = new Scene(GameView.getInstance().initScene());
         stage.setScene(scene);
         UserInputs userInputs = new UserInputs(scene);
@@ -86,8 +75,8 @@ public class MenuView extends ViewUtil{
 
     public void select(String buttonName, KeyEvent event){ //KeyEvent is only here so you can extract Stage from an event. Hacky, I know.
         if(buttonName == "NEW GAME"){
-            createNewSave(event);
-            //createNewGame(event);
+            //createNewSave(event);
+            createNewGame(event);
         }
         if(buttonName == "CONTINUE"){
             continueLastGame();

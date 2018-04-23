@@ -21,19 +21,16 @@ public class Player2 extends Entity {
     private String weaponType = "Bullet";
     private PlayerBehaviour behave = new PlayerBehaviour();    
 
-    private ArrayList<Bullet> bullets;
-
     public Player2(){
         super(
                 Sprite.PLAYER2,
                 40,
-                ViewUtil.VIEW_HEIGHT / 2 - (int) new Image(Sprite.PLAYER.src).getHeight() / 2,
+                ViewUtil.VIEW_HEIGHT / 2 - (int) new Image(Sprite.PLAYER2.src).getHeight() / 2,
                 5
         );
 
         setCanShoot(true);
         shot = Audio.PLAYER_SHOT;
-        getImageView().relocate(getX(), getY());
         weapon = Weapon.PLAYER_BASIC;
     }    
     
@@ -44,7 +41,7 @@ public class Player2 extends Entity {
     
     public void update(){
         // input from multiplayer
-    }    
+    }
     
     public void setWeaponType(String weaponType) {
         this.weaponType = weaponType;

@@ -10,7 +10,6 @@ public abstract class Entity extends Existance {
     protected boolean alive;
     protected boolean canShoot;
     protected boolean canMove;
-    protected int bulletCount;
     protected Audio shot;
     protected Weapon weapon;
     private int deathAnimCounter;
@@ -21,7 +20,6 @@ public abstract class Entity extends Existance {
         setNewDimensions();
         this.health = health;
         this.alive = true;
-        this.bulletCount = 0;
     }
 
     public abstract void shoot();
@@ -47,10 +45,6 @@ public abstract class Entity extends Existance {
 
     public boolean canMove() {
         return canMove;
-    }
-
-    public int getBulletCount() {
-        return bulletCount;
     }
 
     public AudioClip getShot() {

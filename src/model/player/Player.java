@@ -4,7 +4,6 @@ import assets.java.Audio;
 import assets.java.Sprite;
 import model.Entity;
 import model.weapons.*;
-import view.GameView;
 import model.Shield;
 
 import java.util.ArrayList;
@@ -30,8 +29,7 @@ public class Player extends Entity {
     Shield shield = new Shield(getX(), getY(), hasShield());
     private int score;
 
-    private ArrayList<Bullet> bullets = new ArrayList<>();
-    private PlayerBehaviour behave = new PlayerBehaviour();
+    private PlayerBehaviour playerBehaviour = new PlayerBehaviour();
 
     private Player(){
         super(
@@ -51,8 +49,9 @@ public class Player extends Entity {
     }
 
     public void update(){
+        playerBehaviour.mvcSetup();
         if(!playerIsOutOfBounds()){
-            setY(getY() + behave.next());
+            setY(getY() + playerBehaviour.next());
             getImageView().relocate(getX(), getY());
         }
         if(shield.isBroken() && hasShield()) {
@@ -64,13 +63,13 @@ public class Player extends Entity {
     }
 
     private boolean playerIsOutOfBounds(){
-        if(getY() + behave.next() < 0) {
-            behave.moveStop();
+        if(getY() + playerBehaviour.next() < 0) {
+            playerBehaviour.moveStop();
             return true;
         }
 
-        if(getY() + this.height + behave.next() >= ViewUtil.VIEW_HEIGHT) {
-            behave.moveStop();
+        if(getY() + this.height + playerBehaviour.next() >= ViewUtil.VIEW_HEIGHT) {
+            playerBehaviour.moveStop();
             return true;
         }
         return false;
@@ -85,29 +84,26 @@ public class Player extends Entity {
     }
     
     public void powerUp() {
-        this.weaponType = behave.powerUp(weaponType);
+        this.weaponType = playerBehaviour.powerUp(weaponType);
     }
     
     public void move(String dir){
         switch(dir){
             case "UP":
-                behave.move(-1);
+                playerBehaviour.move(-1);
                 break;
             case "DOWN":
-                behave.move(1);
+                playerBehaviour.move(1);
                 break;
             case "STOP":
-                behave.move(0);
+                playerBehaviour.move(0);
         }
     }
 
     @Override
     public void shoot() {
         if(canShoot()) {
-            behave.shoot(this.weaponType, getX(), getY(), this.width, this.height, weapon);
-            bulletCount++;
-            getShot().setVolume(0.25);
-            getShot().play();
+            playerBehaviour.shoot(this.weaponType, getX(), getY(), this.width, this.height, weapon);
             setCanShoot(false);
             shotDelayTimer();
         }
@@ -121,9 +117,8 @@ public class Player extends Entity {
             public void run() {
                 setCanShoot(true);
                 this.cancel();
-                
             }
-        }, bullets.get(bullets.size()-1).getFireRate()); 
+        }, 300);
     }
 
 
@@ -204,20 +199,16 @@ public class Player extends Entity {
         }, 0, 20);
     }
 
-    public ArrayList<Bullet> getBullets() {
-        return bullets;
-    }
-    
     public void setShield() {
         if (!hasShield()) {
-            this.width = (int) getWidth() + 10;
+            this.width = getWidth() + 10;
         }
         this.hasShield = true;
         shield = new Shield(this.getX(), this.getY(), true);
     }
     
     public void removeShield() {
-        this.width = (int) getWidth() - 10;
+        this.width = getWidth() - 10;
         shield.newSprite(Sprite.CLEAR);
         this.hasShield = false;
     }

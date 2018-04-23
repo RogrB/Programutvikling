@@ -40,10 +40,9 @@ public class GameView extends ViewUtil{
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
-    public void setup(){
-        gm.setup();
-        gc.setup();
-        gc.start();
+    public void mvcSetup(){
+        gm.mvcSetup();
+        gc.mvcSetup();
     }
 
     public Parent initScene() {
@@ -73,6 +72,7 @@ public class GameView extends ViewUtil{
             gc = enemyLayer;
         else
             gc = graphics;
+        //System.out.println("Rendering object at: " + object.getX() + " , " + object.getY() + " using " + object.getImage());
 
         gc.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
         gc.drawImage(object.getImage(), object.getX(), object.getY());
