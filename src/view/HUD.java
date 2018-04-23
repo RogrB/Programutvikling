@@ -2,7 +2,13 @@ package view;
 
 import javafx.scene.image.Image;
 
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import model.GameModel;
+import model.enemy.EnemyType;
+
+import java.util.ArrayList;
 
 public class HUD {
     
@@ -15,7 +21,9 @@ public class HUD {
     private Image lifeCounter;
     
     private static HUD inst = new HUD();
-    private HUD() {}
+    private HUD(){
+
+    }
     public static HUD getInstance() { return inst; }
     
     public void renderHUD() {
@@ -41,6 +49,6 @@ public class HUD {
     
     public Image getNumeralX() {
         return this.numeralX;
-    }   
+    }
     
 }

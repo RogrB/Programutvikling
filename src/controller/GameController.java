@@ -132,8 +132,12 @@ public class GameController {
                     if (!enemy.isAlive() && enemy instanceof Asteroid && !((Asteroid)enemy).getSpawned()) {
                         ((Asteroid)enemy).setSpawned(true);
                         tempEnemies.add(enemy);
-
-
+                    }
+                    if(!enemy.isAlive() && enemy.getType().toString().equals("BOSS01")){
+                        gameWin();
+                    }
+                    if(enemy.getType().toString().equals("BOSS01")){
+                        gv.renderHealthBar();
                     }
                 }
             }
@@ -227,7 +231,10 @@ public class GameController {
     }
     
     private void gameWin() {
-        
+        System.out.println("U totally won the game my g");
+        gv.dialogBox.setOpacity(1);
+        gameMainTimer.stop();
+        gv.bossHealthBar.setOpacity(0);
     }
     
     public ArrayList<Enemy> getEnemies() {

@@ -3,16 +3,21 @@ package view;
 import javafx.scene.Parent;
 import javafx.scene.canvas.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import controller.GameController;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import model.Existance;
 import model.GameModel;
 import model.enemy.Enemy;
+import model.enemy.EnemyType;
 import model.weapons.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+
+import java.util.ArrayList;
 
 public class GameView extends ViewUtil{
 
@@ -38,6 +43,13 @@ public class GameView extends ViewUtil{
     final GraphicsContext bulletLayer = bulletLayerCanvas.getGraphicsContext2D();
     final GraphicsContext enemyLayer = enemyLayerCanvas.getGraphicsContext2D();
 
+    private ArrayList<Rectangle> bossHealthBarList = new ArrayList<>();
+    public HBox bossHealthBar = new HBox();
+    private int listCount;
+    private Rectangle dialogBackground;
+    private Text dialogText;
+    public StackPane dialogBox;
+
     private static final String BG_IMG = "assets/image/background.jpg";
 
     public void mvcSetup(){
@@ -50,12 +62,51 @@ public class GameView extends ViewUtil{
         scoreText.setFont(Font.font("Verdana", 20));  
         levelText.setFill(Color.WHITE);
         scoreText.setFont(Font.font("Verdana", 20));
+
+        dialogBackground = new Rectangle(600, 200);
+        dialogBackground.setFill(Color.BLACK);
+        dialogBackground.setStroke(Color.WHITE);
+        dialogBackground.setArcHeight(15);
+        dialogBackground.setArcWidth(15);
+
+        dialogText = new Text("Sup G. U totally nailed this level.\nTap enter or space to proceed to\nthe next level.\nTap Escape to go to main menu.");
+        dialogText.setFill(Color.WHITE);
+        dialogText.setFont(dialogText.getFont().font(30));
+        dialogText.setTranslateX(-60);
+        dialogText.setTranslateY(-10);
+
+        dialogBox = new StackPane();
+        dialogBox.setTranslateY(575);
+        dialogBox.setTranslateX(300);
+
+        dialogBox.getChildren().addAll(dialogBackground, dialogText);
+        dialogBox.setFocusTraversable(true);
+        dialogBox.requestFocus();
+        dialogBox.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.ESCAPE){
+                goToView(event, MenuView.getInstance().initScene());
+            }
+        });
+        dialogBox.setOpacity(0);
+        for(int i = 0; i < EnemyType.BOSS01.MAX_HEALTH; i++){
+            Rectangle rect = new Rectangle();
+            rect.setFill(Color.GREEN);
+            rect.setHeight(30);
+            rect.setWidth(30);
+            bossHealthBarList.add(rect);
+        }
+        for(Rectangle rectangle : bossHealthBarList){
+            bossHealthBar.getChildren().add(rectangle);
+        }
+        listCount = bossHealthBarList.size() -1;
+        bossHealthBar.setTranslateX(300);
+        bossHealthBar.setTranslateY(750);
         
         Pane root = new Pane();
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
 
-        root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText);
+        root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, bossHealthBar, dialogBox);
         return root;
     }
 
@@ -86,6 +137,11 @@ public class GameView extends ViewUtil{
     public void renderShield() {
         graphics.clearRect(gm.player.getX()-10, gm.player.getY()-30, gm.player.getOldWidth()+35, gm.player.getOldHeight()+70);
         graphics.drawImage(gm.player.getShieldSprite(), gm.player.getX(), gm.player.getY()-1);
+    }
+
+    public void renderHealthBar(){
+        bossHealthBarList.get(listCount).setFill(Color.RED);
+        listCount--;
     }
     
     public void renderHUD(HUD h, boolean shield) {
