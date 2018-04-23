@@ -68,8 +68,7 @@ public class GameView extends ViewUtil{
             gc = enemyLayer;
         else
             gc = graphics;
-        if(object instanceof Player2)
-            System.out.println("Rendering player2 at: " + object.getX() + " , " + object.getY());
+        //System.out.println("Rendering object at: " + object.getX() + " , " + object.getY() + " using " + object.getImage());
 
         gc.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
         gc.drawImage(object.getImage(), object.getX(), object.getY());

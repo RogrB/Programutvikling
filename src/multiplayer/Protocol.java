@@ -3,10 +3,17 @@ package multiplayer;
 import java.io.*;
 import model.player.Player;
 import model.player.Player2;
+import view.GameView;
 
 public class Protocol {
     
-    private Player2 player2 = new Player2();
+    private Player2 player2;
+    GameView gv = GameView.getInstance();
+    
+    
+    public Protocol() {
+        player2 = new Player2();
+    }
     
     protected synchronized ByteArrayOutputStream sendPrep(String input) {
         ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
@@ -99,15 +106,7 @@ public class Protocol {
                 breaker = input.readChar();
                 player2.setY(input.readInt());
                 System.out.println("Updating player2 to " + player2.getX() + " , " + player2.getY());
-            }
-            else {
-                System.out.println("neida");
-            }
-            if(action == 'O') {
-                System.out.println("O detected");
-                int number = input.readInt();
-                System.out.println("Recieved number " + number);
-                System.out.println("Recieved char " + input.readChar());
+                gv.render(player2);
             }
         }
         catch(IOException e) {
