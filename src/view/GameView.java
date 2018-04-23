@@ -12,6 +12,7 @@ import model.enemy.Enemy;
 import model.weapons.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+import model.player.Player2;
 
 public class GameView extends ViewUtil{
 
@@ -67,6 +68,8 @@ public class GameView extends ViewUtil{
             gc = enemyLayer;
         else
             gc = graphics;
+        if(object instanceof Player2)
+            System.out.println("Rendering player2 at: " + object.getX() + " , " + object.getY());
 
         gc.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
         gc.drawImage(object.getImage(), object.getX(), object.getY());

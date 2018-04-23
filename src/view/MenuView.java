@@ -108,8 +108,8 @@ public class MenuView extends ViewUtil{
 
     public void select(String buttonName, KeyEvent event){ //KeyEvent is only here so you can extract Stage from an event. Hacky, I know.
         if(buttonName == "NEW GAME"){
-            createNewSave(event);
-            //createNewGame(event);
+            //createNewSave(event);
+            createNewGame(event);
         }
         if(buttonName == "CONTINUE"){
             continueLastGame();

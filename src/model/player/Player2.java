@@ -27,13 +27,12 @@ public class Player2 extends Entity {
         super(
                 Sprite.PLAYER2,
                 40,
-                ViewUtil.VIEW_HEIGHT / 2 - (int) new Image(Sprite.PLAYER.src).getHeight() / 2,
+                ViewUtil.VIEW_HEIGHT / 2 - (int) new Image(Sprite.PLAYER2.src).getHeight() / 2,
                 5
         );
 
         setCanShoot(true);
         shot = Audio.PLAYER_SHOT;
-        getImageView().relocate(getX(), getY());
         weapon = Weapon.PLAYER_BASIC;
     }    
     

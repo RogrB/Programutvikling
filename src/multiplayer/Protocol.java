@@ -82,7 +82,7 @@ public class Protocol {
     }
     
     public void recieve(DataInputStream input) {
-        System.out.println("recieving");
+        // System.out.println("recieving");
         char breaker = 'b';
         /*
         try {
@@ -98,7 +98,7 @@ public class Protocol {
                 player2.setX(input.readInt());
                 breaker = input.readChar();
                 player2.setY(input.readInt());
-                System.out.println("Updating player2");
+                System.out.println("Updating player2 to " + player2.getX() + " , " + player2.getY());
             }
             else {
                 System.out.println("neida");
