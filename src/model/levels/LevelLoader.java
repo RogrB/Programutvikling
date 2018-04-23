@@ -6,11 +6,10 @@ import model.enemy.Enemy;
 import model.enemy.EnemyMovementPattern;
 import model.enemy.EnemyType;
 import model.enemy.Asteroid;
+import view.ViewUtil;
 
 import java.util.ArrayList;
 
-import static view.GameView.GAME_HEIGHT;
-import static view.GameView.GAME_WIDTH;
 import static controller.GameController.enemies;
 
 public class LevelLoader {
@@ -47,7 +46,7 @@ public class LevelLoader {
     }
 
     private void generateEnemy(String[] enemyData, int yLane){
-        int xSpawn = GAME_WIDTH - 1;
+        int xSpawn = ViewUtil.VIEW_WIDTH - 1;
 
         switch(enemyData[0]){
             case "1":
@@ -55,20 +54,20 @@ public class LevelLoader {
                                 EnemyType.valueOf(enemyData[1]),
                                 new EnemyMovementPattern(enemyData[2]),
                                 xSpawn,
-                                ((GAME_HEIGHT-EnemyType.valueOf(enemyData[1]).SPRITE.getHeight())/6) * yLane + 1));
+                                ((ViewUtil.VIEW_HEIGHT-EnemyType.valueOf(enemyData[1]).SPRITE.getHeight())/6) * yLane + 1));
                 break;
             case "2":
                 enemies.add(new Asteroid(
                                 new EnemyMovementPattern(enemyData[1]),
                                 xSpawn,
-                                ((GAME_HEIGHT-Sprite.ASTEROID1.getHeight())/6) * yLane + 1));
+                                ((ViewUtil.VIEW_HEIGHT-Sprite.ASTEROID1.getHeight())/6) * yLane + 1));
                 break;
             case "3":
                 enemies.add(new Enemy(
                                 EnemyType.valueOf(enemyData[1]),
                                 new EnemyMovementPattern(enemyData[2]),
                                 xSpawn,
-                                ((GAME_HEIGHT-EnemyType.valueOf(enemyData[1]).SPRITE.getHeight())/6) * yLane + 1));
+                                ((ViewUtil.VIEW_HEIGHT-EnemyType.valueOf(enemyData[1]).SPRITE.getHeight())/6) * yLane + 1));
                 break;
             case "4":
                 //powerups.add(new PowerUp(Sprite.valueOf(enemyData[1]), xSpawn, 1 + ySpawn));

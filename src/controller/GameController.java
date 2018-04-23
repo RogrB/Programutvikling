@@ -10,14 +10,12 @@ import model.weapons.*;
 import view.GameView;
 import view.HUD;
 import model.PowerUp;
+import view.ViewUtil;
 import multiplayer.MultiplayerHandler;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-
-import static view.GameView.GAME_HEIGHT;
-import static view.GameView.GAME_WIDTH;
 
 public class GameController {
 
@@ -217,8 +215,8 @@ public class GameController {
         }
         PowerUp res = new PowerUp(
                 sprite,
-                GAME_WIDTH - 1,
-                rand.nextInt(GAME_HEIGHT - sprite.getHeight())
+                ViewUtil.VIEW_WIDTH - 1,
+                rand.nextInt(ViewUtil.VIEW_HEIGHT - sprite.getHeight())
                 );
         return res;
     }

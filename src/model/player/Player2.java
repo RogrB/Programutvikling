@@ -9,7 +9,8 @@ import model.Shield;
 import model.weapons.Bullet;
 import model.weapons.Weapon;
 import view.GameView;
-    
+import view.ViewUtil;
+
 public class Player2 extends Entity {
 
     /*
@@ -26,7 +27,7 @@ public class Player2 extends Entity {
         super(
                 Sprite.PLAYER2,
                 40,
-                GameView.GAME_HEIGHT / 2 - (int) new Image(Sprite.PLAYER.src).getHeight() / 2,
+                ViewUtil.VIEW_HEIGHT / 2 - (int) new Image(Sprite.PLAYER.src).getHeight() / 2,
                 5
         );
 

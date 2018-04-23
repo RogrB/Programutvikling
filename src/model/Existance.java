@@ -3,10 +3,9 @@ package model;
 import assets.java.Sprite;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import view.ViewUtil;
 
 import java.util.Iterator;
-
-import static view.GameView.GAME_WIDTH;
 
 public abstract class Existance {
 
@@ -118,7 +117,7 @@ public abstract class Existance {
     }
 
     public boolean isOffScreenRight(){
-        if(x > GAME_WIDTH + GAME_WIDTH/10)
+        if(x > ViewUtil.VIEW_WIDTH + ViewUtil.VIEW_WIDTH/10)
             return true;
         return false;
     }

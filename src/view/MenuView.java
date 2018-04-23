@@ -8,6 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -18,59 +20,38 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.java.Main;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 
-public class MenuView{
+public class MenuView extends ViewUtil{
 
     public static MenuView inst = new MenuView();
     public static MenuView getInstance(){return inst; }
 
-    public static final int MENU_WIDTH = 1200;
-    public static final int MENU_HEIGHT = 800;
     private static final String BG_IMG = "assets/image/background.jpg";
-    public Pane root;
-    public MenuButton newGameButton;
-    public MenuButton loadGameButton;
-    public MenuButton continueButton;
-    public MenuButton multiplayerButton;
-    public MenuButton selectLevelButton;
-    public MenuButton optionsButton;
-    public MenuButton exitButton;
-    public MenuButton[] menuElements;
-    public int elementCounter = 0;
-    public Scene scene;
+    private MenuButton newGameButton;
+    private MenuButton loadGameButton;
+    private MenuButton continueButton;
+    private MenuButton multiplayerButton;
+    private MenuButton selectLevelButton;
+    private MenuButton optionsButton;
+    private MenuButton exitButton;
+    private MenuButton[] menuElements;
+    private int elementCounter = 0;
+    private VBox mainMenu;
     public MenuView(){
-    }
-
-    public Background getBackGroundImage(){
-        BackgroundImage bg = new BackgroundImage(
-                new Image(BG_IMG),
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT,
-                new BackgroundSize(
-                        BackgroundSize.AUTO,
-                        BackgroundSize.AUTO,
-                        false,
-                        false,
-                        true,
-                        false
-                )
-        );
-        return new Background(bg);
     }
 
     public void createNewGame(KeyEvent event){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         GameView.getInstance().setup();
-        scene = new Scene(GameView.getInstance().initGame());
+        Scene scene = new Scene(GameView.getInstance().initScene());
         stage.setScene(scene);
         UserInputs userInputs = new UserInputs(scene);
         System.out.println("Totally started a new game");
     }
 
     public void traverseMenu(KeyCode code){
-        //menuElements[elementCounter].focused();
         int oldElementCounter = elementCounter;
         if(code == KeyCode.DOWN){
             if(elementCounter == menuElements.length -1){
@@ -79,27 +60,30 @@ public class MenuView{
             else{
                 elementCounter++;
             }
-            //menuElements[elementCounter].setFocusTraversable(true);
         }
         if(code == KeyCode.UP){
-            if(elementCounter == menuElements.length - menuElements.length){
+            if(elementCounter == 0){
                 elementCounter = menuElements.length -1;
             }
             else{
                 elementCounter--;
             }
-            //menuElements[elementCounter].setFocusTraversable(true);
         }
         menuElements[oldElementCounter].lostFocus();
         menuElements[elementCounter].gainedFocus();
     }
 
-    public void showLevelSelect(){
+    public void showLevelSelect(KeyEvent event){
+        goToView(event, LevelSelectView.getInst().initScene());
         System.out.println("Totally showed u some tight levels");
     }
 
-    public void showOptions(){
-        System.out.println("Totally showed u sum looney options");
+    public void createNewSave(KeyEvent event){
+        goToView(event, NewGameView.getInst().initScene());
+    }
+
+    public void showOptions(KeyEvent event){
+        goToView(event, OptionsView.getInst().initScene());
     }
 
     public void exitGame(){
@@ -110,12 +94,12 @@ public class MenuView{
         System.out.println("Clicked continue");
     }
 
-    public void loadGame(){
-        System.out.println("Clicked load");
+    public void loadGame(KeyEvent event){
+        goToView(event, LoadGameView.getInst().initScene());
     }
 
-    public void loadMultiplayer(){
-        System.out.println("clicked multiplayer");
+    public void loadMultiplayer(KeyEvent event){
+        goToView(event, MultiplayerView.getInst().initScene());
     }
 
     public boolean gameFileFound(){
@@ -124,22 +108,23 @@ public class MenuView{
 
     public void select(String buttonName, KeyEvent event){ //KeyEvent is only here so you can extract Stage from an event. Hacky, I know.
         if(buttonName == "NEW GAME"){
-            createNewGame(event);
+            createNewSave(event);
+            //createNewGame(event);
         }
         if(buttonName == "CONTINUE"){
             continueLastGame();
         }
         if(buttonName == "LOAD GAME"){
-            loadGame();
+            loadGame(event);
         }
         if(buttonName == "MULTIPLAYER"){
-            loadMultiplayer();
+            loadMultiplayer(event);
         }
         if(buttonName == "LEVEL SELECT"){
-            showLevelSelect();
+            showLevelSelect(event);
         }
         if(buttonName == "OPTIONS"){
-            showOptions();
+            showOptions(event);
         }
         if(buttonName == "EXIT"){
             exitGame();
@@ -152,15 +137,15 @@ public class MenuView{
         kun vil ha "NEW GAME". Etter at spilleren har spilt en gang bør dette bli til "LOAD GAME" og "NEW GAME". Tenker vi kan
         ha tre forskjellige save-slots.
          */
-        Pane root = new Pane();
-        VBox mainMenu = new VBox();
+        root = new Pane();
+        mainMenu = new VBox();
         Text header = new Text("SPACE GAME");
         header.setX(300);
         header.setY(175);
         header.setFill(Color.WHITE);
         header.setFont(header.getFont().font(100));
-        root.setPrefSize(MENU_WIDTH, MENU_HEIGHT);
-        root.setBackground(getBackGroundImage());
+        root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
+        root.setBackground(getBackGroundImage(BG_IMG));
         newGameButton = new MenuButton("NEW GAME");
         continueButton = new MenuButton("CONTINUE");
         multiplayerButton = new MenuButton("MULTIPLAYER");
@@ -178,6 +163,7 @@ public class MenuView{
             }
             if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE){
                 select(menuElements[elementCounter].getText(), event);
+                elementCounter = 0;
             }
         });
         if(gameFileFound()){

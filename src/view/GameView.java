@@ -13,7 +13,7 @@ import model.weapons.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 
-public class GameView {
+public class GameView extends ViewUtil{
 
     // Singleton
     private static GameView inst = new GameView();
@@ -24,16 +24,13 @@ public class GameView {
     GameController gc = GameController.getInstance();
     GameModel gm = GameModel.getInstance();
 
-    public static final int GAME_WIDTH = 1200;
-    public static final int GAME_HEIGHT = 800;
-
-    final Canvas canvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
-    final Canvas hudCanvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
-    final Canvas bulletLayerCanvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
-    final Canvas enemyLayerCanvas = new Canvas(GAME_WIDTH, GAME_HEIGHT);
+    final Canvas canvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+    final Canvas hudCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+    final Canvas bulletLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+    final Canvas enemyLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
     
-    Text scoreText = new Text(GAME_WIDTH - 150, 60, "Score: " + Integer.toString(gm.player.getScore()));    
-    Text levelText = new Text(GAME_WIDTH - 150, 30, "Level 1"); // Må hente riktig level fra leveldata
+    Text scoreText = new Text(VIEW_WIDTH - 150, 60, "Score: " + Integer.toString(gm.player.getScore()));
+    Text levelText = new Text(VIEW_WIDTH - 150, 30, "Level 1"); // Må hente riktig level fra leveldata
     
     final GraphicsContext graphics = canvas.getGraphicsContext2D();
     final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
@@ -48,33 +45,15 @@ public class GameView {
         gc.start();
     }
 
-    public Background getBackGroundImage(){
-        BackgroundImage bg = new BackgroundImage(
-                new Image(BG_IMG),
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT,
-                new BackgroundSize(
-                        BackgroundSize.AUTO,
-                        BackgroundSize.AUTO,
-                        false,
-                        false,
-                        true,
-                        false
-                )
-        );
-        return new Background(bg);
-    }
-
-    public Parent initGame() {
+    public Parent initScene() {
         scoreText.setFill(Color.WHITE);
         scoreText.setFont(Font.font("Verdana", 20));  
         levelText.setFill(Color.WHITE);
         scoreText.setFont(Font.font("Verdana", 20));
         
         Pane root = new Pane();
-        root.setPrefSize(GAME_WIDTH, GAME_HEIGHT);
-        root.setBackground(getBackGroundImage());
+        root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
+        root.setBackground(getBackGroundImage(BG_IMG));
 
         root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText);
         return root;
@@ -95,7 +74,7 @@ public class GameView {
 
     public void gameOver() {
         // Is ded!
-        graphics.drawImage(new Image("assets/image/gameover.png"), (GAME_WIDTH/2) - 368, (GAME_HEIGHT/2) - 51);
+        graphics.drawImage(new Image("assets/image/gameover.png"), (VIEW_WIDTH/2) - 368, (VIEW_HEIGHT/2) - 51);
     }
     
     public void renderShield() {
