@@ -16,25 +16,26 @@ public class GameModel {
 
     // MVC-access
     GameView gv;
+
     MultiplayerHandler mp;
     private int playerNumber;
     private boolean multiplayer = false;
 
     public static final double SPEED_MODIFIER = 1;
 
-    public Player player = Player.getInst();
     private ArrayList<Bullet> enemyBullets = new ArrayList<>();
-    private ArrayList<Bullet> bullets = new ArrayList<>();
+    private ArrayList<Bullet> playerBullets = new ArrayList<>();
+    public Player player = Player.getInst();
 
     public ArrayList<Bullet> getEnemyBullets() {
         return enemyBullets;
     }
     
-    public ArrayList<Bullet> getBullets() {
-        return bullets;
+    public ArrayList<Bullet> getPlayerBullets() {
+        return playerBullets;
     }    
 
-    public void setup(){
+    public void mvcSetup(){
         gv = GameView.getInstance();
     }
     

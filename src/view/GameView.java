@@ -12,7 +12,6 @@ import model.enemy.Enemy;
 import model.weapons.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import model.player.Player2;
 
 public class GameView extends ViewUtil{
 
@@ -40,10 +39,9 @@ public class GameView extends ViewUtil{
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
-    public void setup(){
-        gm.setup();
-        gc.setup();
-        gc.start();
+    public void mvcSetup(){
+        gm.mvcSetup();
+        gc.mvcSetup();
     }
 
     public Parent initScene() {

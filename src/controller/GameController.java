@@ -27,10 +27,10 @@ public class GameController {
     // MVC-access
     GameModel gm;
     GameView gv;
-    MultiplayerHandler mp;
     
     HUD hud;
     LevelLoader levelLoader;
+    MultiplayerHandler mp;
 
     // Level data
     public ArrayList<PowerUp> powerups = new ArrayList();
@@ -42,16 +42,16 @@ public class GameController {
     public Iterator<Enemy> enemyIterator;
     public Iterator<PowerUp> powerUpIterator;
 
-    public void setup(){
+    public void mvcSetup(){
         gm = GameModel.getInstance();
         gv = GameView.getInstance();
+    }
+
+    public void gameStart() {
+
         hud = HUD.getInstance();
         levelLoader = LevelLoader.getInstance();
         levelLoader.setLevelData(LevelData.LEVEL4);
-        gm.player.setImmunity(false);
-    }
-
-    public void start() {
 
         // ANIMATION TIMER, UPDATES VIEW
         gameMainTimer = new AnimationTimer() {
@@ -78,10 +78,7 @@ public class GameController {
 
                 detectGameOver();
                 if(gm.getMultiplayerStatus()) {
-                    // gm.getMP().send("Update");
                     gm.getMP().send("Update", gm.player.getX(), gm.player.getY());
-                    //gv.render(gm.getMP().getProtocol().getPlayer2());
-                    // System.out.println("Calling render at " + gm.getMP().getProtocol().getPlayer2().getY());
                 }
             }
         }; gameMainTimer.start();
@@ -106,7 +103,7 @@ public class GameController {
     }
 
     private void moveAllBullets(){
-        bulletIterator = gm.player.getBullets().iterator();
+        bulletIterator = gm.getPlayerBullets().iterator();
         while(bulletIterator.hasNext()){
             Bullet bullet = bulletIterator.next();
             bullet.update(20, 0, bulletIterator);
@@ -123,7 +120,7 @@ public class GameController {
 
     private void detectEnemyShotByPlayer(){
         ArrayList<Enemy> tempEnemies = new ArrayList<>();
-        for(Bullet bullet : gm.player.getBullets()){
+        for(Bullet bullet : gm.getPlayerBullets()){
             for(enemyIterator = enemies.iterator(); enemyIterator.hasNext();){
                 Enemy enemy = enemyIterator.next();
                 if(bullet.collidesWith(enemy)){

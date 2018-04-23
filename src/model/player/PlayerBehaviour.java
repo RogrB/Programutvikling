@@ -7,11 +7,10 @@ import model.weapons.*;
 public class PlayerBehaviour {
     private final int MAX_SPEED = 20;
     private final int MOD_SPEED = 1;
-    
-    //GameModel gm = GameModel.getInstance();
-    
-    private String weaponType = "Bullet";   
-    private ArrayList<Bullet> bullets;
+    // MVC-access
+    GameModel gm;
+
+    private String weaponType = "Bullet";
 
     private int speed;
     private int dir;
@@ -20,6 +19,11 @@ public class PlayerBehaviour {
         speed = 0;
         dir = 0;
     }
+
+    public void mvcSetup() {
+        gm = GameModel.getInstance();
+    }
+
 
     public void move(int direction){
         if(this.dir != direction) {
@@ -52,26 +56,26 @@ public class PlayerBehaviour {
     public void shoot(String weapontype, int x, int y, int width, int height, Weapon weapon) {
             switch(weapontype) {
                 case "Bullet":
-                    bullets.add(new Bullet(x + width - 10, y + (height / 2) - 8, weapon));
+                    gm.getPlayerBullets().add(new Bullet(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
                 case "Upgrade1":
-                    bullets.add(new Upgrade1(x + width - 10, y + (height / 2) - 8, weapon));
+                    gm.getPlayerBullets().add(new Upgrade1(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
                 case "Upgrade2":
-                    bullets.add(new Upgrade2(x + width - 10, y + (height / 2) - 8, weapon));
+                    gm.getPlayerBullets().add(new Upgrade2(x + width - 10, y + (height / 2) - 8, weapon));
                     break;        
                 case "HeatSeeking":
-                    bullets.add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
+                    gm.getPlayerBullets().add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
                 case "Doubles":
-                    bullets.add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
-                    bullets.add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
+                    gm.getPlayerBullets().add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
+                    gm.getPlayerBullets().add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
                     break;
                 case "DoubleSwirl":
-                    bullets.add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));
-                    bullets.add(new DoubleSwirl(x + width - 10, y + (height / 2) + 15, weapon, false));
+                    gm.getPlayerBullets().add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));
+                    gm.getPlayerBullets().add(new DoubleSwirl(x + width - 10, y + (height / 2) + 15, weapon, false));
                     break;
-            }       
+            }
     }
     
     public String powerUp(String weaponType) {

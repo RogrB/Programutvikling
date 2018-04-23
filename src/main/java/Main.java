@@ -1,23 +1,21 @@
 package main.java;
 
-import controller.GameController;
 import controller.UserInputs;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.GameModel;
 import view.GameView;
 import view.MenuView;
 
 public class Main extends Application {
 
     public static GameView gv = GameView.getInstance();
-    public static MenuView gm = MenuView.getInstance();
+    public static MenuView mv = MenuView.getInstance();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //gv.setup();
+        gv.mvcSetup();
 
         primaryStage.setTitle("Working Title: Pippi");
         primaryStage.setResizable(false);
@@ -26,9 +24,7 @@ public class Main extends Application {
             Platform.exit();
             System.exit(0);});
         //Scene scene = new Scene(gv.initGame());
-        Scene scene = new Scene(gm.initScene());
-
-        UserInputs userInputs = new UserInputs(scene);
+        Scene scene = new Scene(mv.initScene());
 
         primaryStage.setScene(scene);
         primaryStage.show();
