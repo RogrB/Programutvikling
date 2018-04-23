@@ -17,8 +17,7 @@ public class GameModel {
     // MVC-access
     GameView gv;
 
-    MultiplayerHandler mp;
-    private int playerNumber;
+    MultiplayerHandler mp = MultiplayerHandler.getInstance();
     private boolean multiplayer = false;
 
     public static final double SPEED_MODIFIER = 1;
@@ -39,6 +38,7 @@ public class GameModel {
         gv = GameView.getInstance();
     }
     
+    /*
     public void setP1() {
         mp = new MultiplayerHandler("localhost", 7, 8);
         playerNumber = 1;
@@ -49,10 +49,11 @@ public class GameModel {
         mp = new MultiplayerHandler("localhost", 8, 7);
         playerNumber = 2;
         multiplayer = true;
-    }
+    } */
     
     public void testSend() {
-        mp.send("Player " + playerNumber + " sends a packet");
+        System.out.println("Sending packet");
+        mp.send("Player sends a packet");
     }
     
     public boolean getMultiplayerStatus() {

@@ -11,23 +11,18 @@ public class MultiplayerHandler {
     Sender sender;
     public Thread receiveActivity;
     
-    public MultiplayerHandler(String hostname, int remoteport, int localport) {
+    // Singleton
+    private static MultiplayerHandler inst = new MultiplayerHandler();
+    private MultiplayerHandler() { }
+    public static MultiplayerHandler getInstance() { return inst; }
+    
+    public void init(String hostname, int remoteport, int localport) {
         protocol = new Protocol();
         sender = new Sender(hostname, remoteport);
         receiver = new Receiver(localport);
 
         receiveActivity = new Thread(receiver);
-        receiveActivity.start();      
-        
-    }
-    
-    public MultiplayerHandler() {
-        protocol = new Protocol();
-        receiver = new Receiver();
-        sender = new Sender();
-        
-        receiveActivity = new Thread(receiver);
-        receiveActivity.start();              
+        receiveActivity.start();         
     }
     
     public void send(String toSend) {   
