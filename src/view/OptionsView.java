@@ -27,7 +27,7 @@ public class OptionsView extends ViewUtil{
     private static final String BG_IMG = "assets/image/background.jpg";
     public VBox optionsMenu;
 
-    public int difficultyValue = 2;
+    public int difficultyValue = 3;
     public int soundValue = 50;
     public int musicValue = 50;
 
@@ -44,25 +44,27 @@ public class OptionsView extends ViewUtil{
 
     public MenuButton backButton;
 
+    private Parent[] menuElements;
+
     public OptionsView(){
     }
 
     public String setDifficultyText(int difficultyValue){
         String text = "";
         switch(difficultyValue){
-            case 0:
+            case 1:
                 text = "EASY";
                 break;
-            case 1:
+            case 2:
                 text = "CASUAL";
                 break;
-            case 2:
+            case 3:
                 text = "NORMAL";
                 break;
-            case 3:
+            case 4:
                 text = "HARD";
                 break;
-            case 4:
+            case 5:
                 text = "INSANE";
                 break;
         }
@@ -110,7 +112,7 @@ public class OptionsView extends ViewUtil{
         }));
         musicTextLabel.setTranslateX(145);
         musicTextLabel.setTextFill(Color.WHITE);
-        difficultySlider = new Slider(0, 4, difficultyValue);
+        difficultySlider = new Slider(1, 5, difficultyValue);
         difficultySlider.setSnapToTicks(true);
         difficultySlider.setShowTickMarks(true);
         difficultySlider.setMajorTickUnit(1);

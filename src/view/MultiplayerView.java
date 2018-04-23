@@ -1,5 +1,7 @@
 package view;
 
+import controller.GameController;
+import controller.UserInputs;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
