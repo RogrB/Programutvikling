@@ -23,6 +23,8 @@ public class MenuButton extends StackPane{
 
         setAlignment(Pos.CENTER);
         getChildren().addAll(bg, text);
+        this.setOnMouseEntered(event -> gainedFocus());
+        this.setOnMouseExited(event -> lostFocus());
     }
 
     public String getText(){

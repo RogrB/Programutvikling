@@ -49,8 +49,11 @@ public class MultiplayerView extends ViewUtil{
         root.setBackground(getBackGroundImage(BG_IMG));
         multiplayerMenu = new VBox();
         hostname = new Label("HOSTNAME");
+        hostname.setTextFill(Color.WHITE);
         remotePort = new Label("REMOTE PORT");
+        remotePort.setTextFill(Color.WHITE);
         localPort = new Label("LOCAL PORT");
+        localPort.setTextFill(Color.WHITE);
 
         hostnameField = new TextField();
         remotePortField = new TextField();
@@ -58,6 +61,25 @@ public class MultiplayerView extends ViewUtil{
 
         connectButton = new MenuButton("CONNECT");
         backButton = new MenuButton("BACK");
+        connectButton.setOnMouseClicked( event -> {
+            System.out.println(hostnameField.getText());
+            if(hostnameField.getText() != null && hostnameField.getText() != null && localPortField.getText() != null){
+                // ROGER STUFF
+                System.out.println("hallo");
+            }
+            else{
+                if(hostnameField.getText() == ""){ // not sure if these work yet, cba to check
+                    System.out.println("Make sure to fill out the hostname field!");
+                }
+                else if(remotePortField.getText() == ""){
+                    System.out.println("Make sure to fill out the remote port field");
+                }
+                else if(localPortField.getText() == ""){
+                    System.out.println("Make sure to fill out the local port field!");
+                }
+            }
+        });
+        backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
         multiplayerMenu.getChildren().addAll(hostname, hostnameField, remotePort, remotePortField, localPort, localPortField, connectButton, backButton);
         multiplayerMenu.setSpacing(10);
         multiplayerMenu.setTranslateX(450);
@@ -67,7 +89,13 @@ public class MultiplayerView extends ViewUtil{
                 goToView(event, MenuView.getInstance().initScene());
             }
         });
+        backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
         root.getChildren().addAll(header, multiplayerMenu);
         return root;
+    }
+
+    @Override
+    public void select(String buttonName, KeyEvent event) {
+
     }
 }

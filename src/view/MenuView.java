@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
@@ -37,12 +38,11 @@ public class MenuView extends ViewUtil{
     private MenuButton optionsButton;
     private MenuButton exitButton;
     private MenuButton[] menuElements;
-    private int elementCounter = 0;
     private VBox mainMenu;
     public MenuView(){
     }
 
-    public void createNewGame(KeyEvent event){
+    public void createNewGame(InputEvent event){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         GameView.getInstance().setup();
         Scene scene = new Scene(GameView.getInstance().initScene());
@@ -51,38 +51,16 @@ public class MenuView extends ViewUtil{
         System.out.println("Totally started a new game");
     }
 
-    public void traverseMenu(KeyCode code){
-        int oldElementCounter = elementCounter;
-        if(code == KeyCode.DOWN){
-            if(elementCounter == menuElements.length -1){
-                elementCounter = 0;
-            }
-            else{
-                elementCounter++;
-            }
-        }
-        if(code == KeyCode.UP){
-            if(elementCounter == 0){
-                elementCounter = menuElements.length -1;
-            }
-            else{
-                elementCounter--;
-            }
-        }
-        menuElements[oldElementCounter].lostFocus();
-        menuElements[elementCounter].gainedFocus();
-    }
-
-    public void showLevelSelect(KeyEvent event){
+    public void showLevelSelect(InputEvent event){
         goToView(event, LevelSelectView.getInst().initScene());
         System.out.println("Totally showed u some tight levels");
     }
 
-    public void createNewSave(KeyEvent event){
+    public void createNewSave(InputEvent event){
         goToView(event, NewGameView.getInst().initScene());
     }
 
-    public void showOptions(KeyEvent event){
+    public void showOptions(InputEvent event){
         goToView(event, OptionsView.getInst().initScene());
     }
 
@@ -94,11 +72,11 @@ public class MenuView extends ViewUtil{
         System.out.println("Clicked continue");
     }
 
-    public void loadGame(KeyEvent event){
+    public void loadGame(InputEvent event){
         goToView(event, LoadGameView.getInst().initScene());
     }
 
-    public void loadMultiplayer(KeyEvent event){
+    public void loadMultiplayer(InputEvent event){
         goToView(event, MultiplayerView.getInst().initScene());
     }
 
@@ -153,13 +131,23 @@ public class MenuView extends ViewUtil{
         selectLevelButton = new MenuButton("LEVEL SELECT");
         optionsButton = new MenuButton("OPTIONS");
         exitButton = new MenuButton("EXIT");
+        newGameButton.setOnMouseClicked(event -> createNewGame(event));
+        continueButton.setOnMouseClicked(event -> continueLastGame());
+        multiplayerButton.setOnMouseClicked(event -> loadMultiplayer(event));
+        loadGameButton.setOnMouseClicked(event -> loadGame(event));
+        selectLevelButton.setOnMouseClicked(event -> showLevelSelect(event));
+        optionsButton.setOnMouseClicked(event -> showOptions(event));
+        exitButton.setOnMouseClicked(event -> System.exit(1));
+
         mainMenu.setFocusTraversable(true);
         mainMenu.setSpacing(10);
         mainMenu.setTranslateY(300);
         mainMenu.setTranslateX(450);
         mainMenu.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
-                traverseMenu(event.getCode());
+                menuElements[elementCounter].lostFocus();
+                traverseMenu(event.getCode(), menuElements);
+                menuElements[elementCounter].gainedFocus();
             }
             if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE){
                 select(menuElements[elementCounter].getText(), event);
@@ -179,4 +167,5 @@ public class MenuView extends ViewUtil{
         return root;
 
     }
+
 }

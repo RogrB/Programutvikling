@@ -3,6 +3,7 @@ package view;
 import javafx.scene.Parent;
 import javafx.scene.canvas.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import controller.GameController;
 import javafx.scene.paint.Color;
@@ -57,6 +58,11 @@ public class GameView extends ViewUtil{
 
         root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText);
         return root;
+    }
+
+    @Override
+    public void select(String buttonName, KeyEvent event) {
+
     }
 
     public void render(Existance object) {

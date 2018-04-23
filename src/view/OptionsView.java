@@ -4,6 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -70,7 +71,13 @@ public class OptionsView extends ViewUtil{
                 goToView(event, MenuView.getInstance().initScene());
             }
         });
+        backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
         root.getChildren().addAll(header, optionsMenu);
         return root;
+    }
+
+    @Override
+    public void select(String buttonName, KeyEvent event) {
+
     }
 }

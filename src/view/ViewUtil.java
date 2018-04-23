@@ -4,6 +4,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -15,14 +17,15 @@ public abstract class ViewUtil {
     public static final int VIEW_HEIGHT = 800;
     public Pane root;
     public Text header;
+    public int elementCounter = 0;
 
-    public void goToView(KeyEvent event, Parent node){
+    public void goToView(InputEvent event, Parent node){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Pane root = new Pane();
         root.getChildren().add(node);
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        System.out.println("Returned to Main Scene");
+        elementCounter = 0;
     }
 
     public Background getBackGroundImage(String BG_IMG){
@@ -43,7 +46,27 @@ public abstract class ViewUtil {
         return new Background(bg);
     }
 
+    public void traverseMenu(KeyCode code, Parent[] menuElements){
+        if(code == KeyCode.DOWN){
+            if(elementCounter == menuElements.length -1){
+                elementCounter = 0;
+            }
+            else{
+                elementCounter++;
+            }
+        }
+        if(code == KeyCode.UP){
+            if(elementCounter == 0){
+                elementCounter = menuElements.length -1;
+            }
+            else{
+                elementCounter--;
+            }
+        }
+    }
+
     public abstract Parent initScene();
+    public abstract void select(String buttonName, KeyEvent event);
 
 
 

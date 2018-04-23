@@ -2,6 +2,7 @@ package view;
 
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -25,6 +26,8 @@ public class NewGameView extends ViewUtil{
     private MenuButton save2;
     private MenuButton save3;
     private MenuButton backButton;
+
+    private MenuButton[] menuElements;
 
 
     @Override
@@ -52,6 +55,8 @@ public class NewGameView extends ViewUtil{
         save2 = new MenuButton("SAVE 2");
         save3 = new MenuButton("SAVE 3");
 
+        menuElements = new MenuButton[]{save1, save2, save3, backButton};
+
         saveFiles.getChildren().addAll(save1, save2, save3);
         saveFiles.setSpacing(10);
         containerVBox.getChildren().addAll(selectSaveText, saveFiles, backButton);
@@ -60,11 +65,29 @@ public class NewGameView extends ViewUtil{
             if(event.getCode() == KeyCode.ESCAPE){
                 goToView(event, MenuView.getInstance().initScene());
             }
+            if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
+                menuElements[elementCounter].lostFocus();
+                traverseMenu(event.getCode(), menuElements);
+                menuElements[elementCounter].gainedFocus();
+            }
+            if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE){
+                select(menuElements[elementCounter].getText(), event);
+            }
         });
+        menuElements[0].gainedFocus();
         containerVBox.setSpacing(40);
         containerVBox.setTranslateX(450);
         containerVBox.setTranslateY(250);
+        backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
         root.getChildren().addAll(header, containerVBox);
         return root;
+    }
+
+    @Override
+    public void select(String buttonName, KeyEvent event) {
+        if(buttonName == "BACK"){
+            goToView(event, MenuView.getInstance().initScene());
+        }
+
     }
 }

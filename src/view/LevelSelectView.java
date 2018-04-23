@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -101,8 +102,14 @@ public class LevelSelectView extends ViewUtil{
                 goToView(event, MenuView.getInstance().initScene());
             }
         });
+        backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
         root.getChildren().addAll(header, levelName, containerVBox);
 
         return root;
+    }
+
+    @Override
+    public void select(String buttonName, KeyEvent event) {
+
     }
 }
