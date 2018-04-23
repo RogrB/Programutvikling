@@ -106,7 +106,12 @@ public class Protocol {
                 breaker = input.readChar();
                 player2.setY(input.readInt());
                 System.out.println("Updating player2 to " + player2.getX() + " , " + player2.getY());
-                gv.render(player2);
+                try {
+                    gv.render(player2);
+                }
+                catch (Exception e) {
+                    System.err.println(e);
+                }
             }
         }
         catch(IOException e) {

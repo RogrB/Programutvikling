@@ -14,6 +14,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.GameModel;
+import multiplayer.MultiplayerHandler;
+import controller.UserInputs;
 
 public class MultiplayerView extends ViewUtil{
 
@@ -23,6 +26,9 @@ public class MultiplayerView extends ViewUtil{
     }
 
     public MultiplayerView(){}
+    
+    MultiplayerHandler mp = MultiplayerHandler.getInstance();
+    GameModel gm = GameModel.getInstance();
 
     private static final String BG_IMG = "assets/image/background.jpg";
     public VBox multiplayerMenu;
@@ -67,7 +73,13 @@ public class MultiplayerView extends ViewUtil{
             System.out.println(hostnameField.getText());
             if(hostnameField.getText() != null && hostnameField.getText() != null && localPortField.getText() != null){
                 // ROGER STUFF
-                System.out.println("hallo");
+                startMultiplayerGame();
+                Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                GameController.getInstance().gameStart();
+                Scene scene = new Scene(GameView.getInstance().initScene());
+                stage.setScene(scene);
+                UserInputs userInputs = new UserInputs(scene);
+                System.out.println("Totally started a new Multiplayer game");
             }
             else{
                 if(hostnameField.getText() == ""){ // not sure if these work yet, cba to check
@@ -99,5 +111,13 @@ public class MultiplayerView extends ViewUtil{
     @Override
     public void select(String buttonName, KeyEvent event) {
 
+    }
+    
+    public void startMultiplayerGame() {
+        String hostname = hostnameField.getText();
+        int remoteport = Integer.parseInt(remotePortField.getText());
+        int localport = Integer.parseInt(localPortField.getText());
+        mp.init(hostname, remoteport, localport);
+        gm.setMultiplayerStatus(true);
     }
 }
