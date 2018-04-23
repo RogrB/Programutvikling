@@ -81,7 +81,8 @@ public class GameController {
                 detectGameOver();
                 if(gm.getMultiplayerStatus()) {
                     // gm.getMP().send("Update");
-                    // gv.render(gm.getMP().getProtocol().getPlayer2());
+                    gm.getMP().send("Update", gm.player.getX(), gm.player.getY());
+                    gv.render(gm.getMP().getProtocol().getPlayer2());
                 }
             }
         }; gameMainTimer.start();

@@ -8,7 +8,7 @@ public class Protocol {
     
     private Player2 player2 = new Player2();
     
-    public ByteArrayOutputStream sendPrep(String input) {
+    protected synchronized ByteArrayOutputStream sendPrep(String input) {
         ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
         DataOutputStream stream = new DataOutputStream(bytestream);    
 
@@ -30,7 +30,7 @@ public class Protocol {
         return bytestream;
     }
     
-    public ByteArrayOutputStream sendPrep(Player player) {
+    protected synchronized ByteArrayOutputStream sendPrep(Player player) {
         ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
         DataOutputStream stream = new DataOutputStream(bytestream);    
 
@@ -58,9 +58,39 @@ public class Protocol {
         return bytestream;
     }   
     
+    protected synchronized ByteArrayOutputStream sendPrep(String action, int x, int y) {
+        ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
+        DataOutputStream stream = new DataOutputStream(bytestream);          
+        
+        switch(action) {
+            case "Update":
+                try {
+                    stream.writeChar('M');
+                    stream.writeInt(x);
+                    stream.writeChar('b');
+                    stream.writeInt(y);
+
+                    stream.flush();
+                    stream.close();
+                }
+                catch (IOException e) {
+                    System.err.println(e);
+                }
+                break;
+        }
+        return bytestream;
+    }
+    
     public void recieve(DataInputStream input) {
         System.out.println("recieving");
         char breaker = 'b';
+        /*
+        try {
+        System.out.println(input.readLine());
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }*/
         try {
             // System.out.println(input);
             char action = input.readChar();
@@ -72,6 +102,12 @@ public class Protocol {
             }
             else {
                 System.out.println("neida");
+            }
+            if(action == 'O') {
+                System.out.println("O detected");
+                int number = input.readInt();
+                System.out.println("Recieved number " + number);
+                System.out.println("Recieved char " + input.readChar());
             }
         }
         catch(IOException e) {

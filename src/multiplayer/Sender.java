@@ -61,17 +61,18 @@ public class Sender {
             ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
             DataOutputStream stream = new DataOutputStream(bytestream);
             
-            stream.writeBytes(toSend);
+            //stream.writeBytes(toSend); // String gir IOException
             /*
             if(toSend.equals("New Game") {
              // do new game things
             }*/
+            stream.writeChar('O');
             stream.writeInt(1);
             stream.writeChar('a');
 
-            send(bytestream);
             stream.flush();
             stream.close();
+            send(bytestream);
         } 
         catch(IOException e) {
             System.err.println(e);
