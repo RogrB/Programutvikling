@@ -1,6 +1,5 @@
 package model.player;
 
-import java.util.ArrayList;
 import model.GameModel;
 import model.weapons.*;
 
@@ -9,8 +8,6 @@ public class PlayerBehaviour {
     private final int MOD_SPEED = 1;
     // MVC-access
     GameModel gm;
-
-    private String weaponType = "Bullet";
 
     private int speed;
     private int dir;

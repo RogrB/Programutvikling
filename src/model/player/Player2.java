@@ -21,8 +21,6 @@ public class Player2 extends Entity {
     private String weaponType = "Bullet";
     private PlayerBehaviour behave = new PlayerBehaviour();    
 
-    private ArrayList<Bullet> bullets;
-
     public Player2(){
         super(
                 Sprite.PLAYER2,
@@ -43,7 +41,7 @@ public class Player2 extends Entity {
     
     public void update(){
         // input from multiplayer
-    }    
+    }
     
     public void setWeaponType(String weaponType) {
         this.weaponType = weaponType;
