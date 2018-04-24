@@ -3,6 +3,7 @@ package model.enemy;
 import assets.java.Sprite;
 import model.Entity;
 import model.GameModel;
+import model.IdGen;
 import model.weapons.Bullet;
 
 import java.util.Iterator;
@@ -20,7 +21,7 @@ public class Enemy extends Entity {
     private int timerToShoot;
     private int animationCounter;
     private boolean scoreCount = false;
-    private int enemyID;
+    private final int enemyID;
 
     public Enemy(EnemyType enemyType, EnemyMovementPattern pattern, int x, int y){
         super(
@@ -42,6 +43,8 @@ public class Enemy extends Entity {
 
         if(TYPE.SHOOTING_CHANCE == 0)
             canShoot = false;
+
+        enemyID = IdGen.getInstance().newId();
 
     }
 
@@ -99,11 +102,7 @@ public class Enemy extends Entity {
     public EnemyType getType() {
         return this.TYPE;
     }
-    
-    public void setID(int id) {
-        this.enemyID = id;
-    }
-    
+
     public int getID() {
         return this.enemyID;
     }
