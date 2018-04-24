@@ -56,9 +56,10 @@ public class MultiplayerHandler {
         System.out.println("trying to find enemyid to apply update");
         for(Enemy enemy: GameController.getInstance().getEnemies()) {        
             if (enemy.getID() == id) {
-                System.out.println("applying enemy update to enemy " + id);
+                // System.out.println("applying enemy update to enemy " + id);
                 if(health < enemy.getHealth()) {
                     enemy.setHealth(health);
+                    System.out.println("Setting health to " + health);
                 }
                 if(!alive && enemy.isAlive()) {
                     enemy.isDead();
