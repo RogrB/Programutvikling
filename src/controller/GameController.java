@@ -132,7 +132,9 @@ public class GameController {
                 Enemy enemy = enemyIterator.next();
                 if(bullet.collidesWith(enemy)){
                     enemy.takeDamage(bullet.getDmg());
-
+                    if(gm.getMultiplayerStatus()) {
+                        MultiplayerHandler.getInstance().send("EnemyUpdate", enemy.getID(), enemy.getHealth(), enemy.isAlive());
+                    }
                     if (!bullet.getHasHit()) {
                         gm.player.setScore(gm.player.getScore() + 10);
                     }

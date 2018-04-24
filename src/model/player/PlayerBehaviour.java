@@ -53,7 +53,6 @@ public class PlayerBehaviour {
     public void shoot(String weapontype, int x, int y, int width, int height, Weapon weapon) {
             switch(weapontype) {
                 case "Bullet":
-                    System.out.println("Trying to add bullet to arraylist");
                     gm.getPlayerBullets().add(new Bullet(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
                 case "Upgrade1":

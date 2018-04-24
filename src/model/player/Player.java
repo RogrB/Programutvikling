@@ -109,7 +109,6 @@ public class Player extends Entity {
             shotDelayTimer();
             if (GameModel.getInstance().getMultiplayerStatus()) {
                 GameModel.getInstance().getMP().send("Shoot", getX(), getY());
-                System.out.println("Player1 shooting");
             }
         }
     }
