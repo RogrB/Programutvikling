@@ -6,6 +6,7 @@ import view.GameView;
 import multiplayer.MultiplayerHandler;
 
 import java.util.ArrayList;
+import model.player.Player2;
 
 public class GameModel {
 
@@ -26,6 +27,7 @@ public class GameModel {
     private ArrayList<Bullet> playerBullets = new ArrayList<>();
     private ArrayList<Bullet> player2Bullets = new ArrayList<>();
     public Player player = Player.getInst();
+    public Player2 player2 = Player2.getInst();
 
     public ArrayList<Bullet> getEnemyBullets() {
         return enemyBullets;

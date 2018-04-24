@@ -13,11 +13,10 @@ import view.ViewUtil;
 
 public class Player2 extends Entity {
 
-    /*
     // Singleton
     private static Player2 inst = new Player2();
     public static Player2 getInst(){ return inst; }
-    */
+
     private String weaponType = "Bullet";
     private PlayerBehaviour behave = new PlayerBehaviour();    
 
@@ -30,6 +29,7 @@ public class Player2 extends Entity {
         );
 
         setCanShoot(true);
+        getImageView().relocate(getX(), getY());        
         shot = Audio.PLAYER_SHOT;
         weapon = Weapon.PLAYER_BASIC;
     }    
@@ -40,7 +40,7 @@ public class Player2 extends Entity {
     }
     
     public void update(){
-        // input from multiplayer
+        getImageView().relocate(getX(), getY());
     }
     
     public void setWeaponType(String weaponType) {

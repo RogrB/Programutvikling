@@ -7,13 +7,7 @@ import view.GameView;
 
 public class Protocol {
     
-    private Player2 player2;
-    GameView gv = GameView.getInstance();
-    
-    
-    public Protocol() {
-        player2 = new Player2();
-    }
+//    private Player2 player2;
     
     protected synchronized ByteArrayOutputStream sendPrep(String input) {
         ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
@@ -89,6 +83,7 @@ public class Protocol {
     }
     
     public void recieve(DataInputStream input) {
+        Player2 player2 = Player2.getInst();
         // System.out.println("recieving");
         char breaker = 'b';
         /*
@@ -106,21 +101,18 @@ public class Protocol {
                 breaker = input.readChar();
                 player2.setY(input.readInt());
                 System.out.println("Updating player2 to " + player2.getX() + " , " + player2.getY());
+                /*
                 try {
-                    gv.render(player2);
+                    GameView.getInstance().render(player2);
                 }
                 catch (Exception e) {
                     System.err.println(e);
-                }
+                }*/
             }
         }
         catch(IOException e) {
             System.err.println(e);
         }
-    }
-    
-    public Player2 getPlayer2() {
-        return this.player2;
     }
     
 }

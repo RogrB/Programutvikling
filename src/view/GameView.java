@@ -106,8 +106,12 @@ public class GameView extends ViewUtil{
         Pane root = new Pane();
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
-
-        root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, bossHealthBar, dialogBox);
+        if(gm.getMultiplayerStatus()) {
+            root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, bossHealthBar, dialogBox, gm.player2.getImageView());
+        }
+        else {
+            root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, bossHealthBar, dialogBox);            
+        }
         return root;
     }
 
