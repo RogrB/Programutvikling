@@ -20,8 +20,6 @@ import javafx.scene.text.Font;
 import java.util.ArrayList;
 
 import static model.GameModel.bossType;
-import static view.GameView.VIEW_WIDTH;
-import static view.GameView.VIEW_HEIGHT;
 
 public class GameView extends ViewUtil{
 
@@ -168,12 +166,22 @@ public class GameView extends ViewUtil{
             EnemyType boss = EnemyType.valueOf(bossType);
             for(Enemy enemy : gc.getEnemies()){
                 if(enemy.getType() == boss){
-                    /*hud.rect(
+                    hud.setFill(Color.RED);
+                    hud.fillRect(
                             VIEW_WIDTH/3,
                             40,
                             VIEW_WIDTH/3,
                             10
-                    );*/
+                    );
+
+                    hud.setFill(Color.GREEN);
+                    int dmgWidth = VIEW_WIDTH/3 / boss.MAX_HEALTH * (boss.MAX_HEALTH - enemy.getHealth());
+                    hud.fillRect(
+                            VIEW_WIDTH/3*2-dmgWidth,
+                            40,
+                            dmgWidth,
+                            10
+                    );
                 }
             }
         }

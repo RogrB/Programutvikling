@@ -10,8 +10,7 @@ public class Asteroid extends Enemy {
     
     private int animationCounter;
     private boolean spawned = false;
-    GameController gc = GameController.getInstance();
-    
+
      public Asteroid(EnemyMovementPattern pattern, int x, int y){
         super(EnemyType.ASTEROID, pattern, x, y);
         animate();

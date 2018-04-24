@@ -11,11 +11,10 @@ import view.GameView;
 import view.HUD;
 import model.PowerUp;
 import view.ViewUtil;
-import multiplayer.MultiplayerHandler;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
+
+import static model.GameModel.bossType;
 
 public class GameController {
 
@@ -76,6 +75,7 @@ public class GameController {
                 hud.renderHUD();
 
                 detectGameOver();
+                detectGameWin();
                 if(gm.getMultiplayerStatus()) {
                     gm.player2.update();
                     gm.getMP().send("Update", gm.player.getX(), gm.player.getY());
@@ -144,13 +144,13 @@ public class GameController {
                         tempEnemies.add(enemy);
                     }
 
-                    if(!enemy.isAlive() && enemy.getType().toString().equals("BOSS01")){
+                    /*if(!enemy.isAlive() && enemy.getType().toString().equals("BOSS01")){
                         gameWin();
                     }
 
                     if(enemy.getType().toString().equals("BOSS01")){
                         gv.renderHealthBar();
-                    }
+                    }*/
                 }
             }
         }
@@ -242,11 +242,25 @@ public class GameController {
         }
     }
     
-    private void gameWin() {
-        System.out.println("U totally won the game my g");
-        gv.dialogBox.setOpacity(1);
-        gameMainTimer.stop();
-        gv.bossHealthBar.setOpacity(0);
+    private void detectGameWin() {
+        if(bossType != null){
+            EnemyType boss = EnemyType.valueOf(bossType);
+            for(Enemy enemy : enemies){
+                if(enemy.getType() == boss && !enemy.isAlive()){
+                    startGameWinTimer();
+                }
+            }
+        }
+    }
+
+    private void startGameWinTimer(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Game Won!");
+            }
+        }, 3000);
     }
     
     public ArrayList<Enemy> getEnemies() {
