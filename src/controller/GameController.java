@@ -2,7 +2,9 @@ package controller;
 
 import assets.java.Sprite;
 import javafx.animation.AnimationTimer;
+import io.AutoSave;
 import model.GameModel;
+import model.GameState;
 import model.enemy.*;
 import model.levels.LevelData;
 import model.levels.LevelLoader;
@@ -15,7 +17,7 @@ import view.ViewUtil;
 
 import java.util.*;
 
-import static model.GameModel.bossType;
+import static model.GameState.bossType;
 
 public class GameController {
 
@@ -27,13 +29,10 @@ public class GameController {
     // MVC-access
     GameModel gm;
     GameView gv;
+    GameState gs;
     
     HUD hud;
     LevelLoader levelLoader;
-
-    // Level data
-    public ArrayList<PowerUp> powerups = new ArrayList();
-    public static ArrayList<Enemy> enemies = new ArrayList();
 
     AnimationTimer gameMainTimer;
 
@@ -44,22 +43,26 @@ public class GameController {
     public void mvcSetup(){
         gm = GameModel.getInstance();
         gv = GameView.getInstance();
+        gs = GameState.getInstance();
+
+        levelLoader = LevelLoader.getInstance();
+        hud = HUD.getInstance();
     }
 
-    public void gameStart() {
+    public void newGame(){
+        gs.newGameState(LevelData.LEVEL4);
+        gameStart();
+    }
 
-        hud = HUD.getInstance();
-        levelLoader = LevelLoader.getInstance();
-        levelLoader.setLevelData(LevelData.LEVEL4);
-
-        // ANIMATION TIMER, UPDATES VIEW
+    private void gameStart() {
+        AutoSave.getInstance().start();
         gameMainTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
 
-                levelLoader.increment();
+                gs.levelIncrement = levelLoader.increment(gs.levelIncrement);
 
-                gm.player.update();
+                gs.player.update();
                 gv.renderShield();
 
                 spawnPowerUps();
@@ -78,15 +81,20 @@ public class GameController {
                 detectGameOver();
                 detectGameWin();
                 if(gm.getMultiplayerStatus()) {
-                    gm.player2.update();
-                    gm.getMP().send("Update", gm.player.getX(), gm.player.getY());
+                    gs.player2.update();
+                    gm.getMP().send("Update", gs.player.getX(), gs.player.getY());
                 }
             }
         }; gameMainTimer.start();
     }
 
+    public void gamePause(){
+        AutoSave.getInstance().stop();
+        gameMainTimer.stop();
+    }
+
     private void moveEnemies(){
-        enemyIterator = enemies.iterator();
+        enemyIterator = gs.enemies.iterator();
         while(enemyIterator.hasNext()){
             Enemy enemy = enemyIterator.next();
             enemy.update(enemyIterator);
@@ -95,7 +103,7 @@ public class GameController {
     }
 
     private void movePowerups(){
-        powerUpIterator = powerups.iterator();
+        powerUpIterator = gs.powerups.iterator();
         while (powerUpIterator.hasNext()){
             PowerUp powerUp = powerUpIterator.next();
             powerUp.update(-2, 0, powerUpIterator);
@@ -104,21 +112,21 @@ public class GameController {
     }
 
     private void moveAllBullets(){
-        bulletIterator = gm.getPlayerBullets().iterator();
+        bulletIterator = gs.playerBullets.iterator();
         while(bulletIterator.hasNext()){
             Bullet bullet = bulletIterator.next();
             bullet.update(20, 0, bulletIterator);
             gv.render(bullet);
         }
 
-        bulletIterator = gm.getPlayer2Bullets().iterator();
+        bulletIterator = gs.player2Bullets.iterator();
         while(bulletIterator.hasNext()){
             Bullet bullet = bulletIterator.next();
             bullet.update(20, 0, bulletIterator);
             gv.render(bullet);
         }
 
-        bulletIterator = gm.getEnemyBullets().iterator();
+        bulletIterator = gs.enemyBullets.iterator();
         while(bulletIterator.hasNext()){
             Bullet bullet = bulletIterator.next();
             bullet.update(-12, 0, bulletIterator);
@@ -128,8 +136,8 @@ public class GameController {
 
     private void detectEnemyShotByPlayer(){
         ArrayList<Enemy> tempEnemies = new ArrayList<>();
-        for(Bullet bullet : gm.getPlayerBullets()){
-            for(enemyIterator = enemies.iterator(); enemyIterator.hasNext();){
+        for(Bullet bullet : gs.playerBullets){
+            for(enemyIterator = gs.enemies.iterator(); enemyIterator.hasNext();){
                 Enemy enemy = enemyIterator.next();
                 if(bullet.collidesWith(enemy)){
                     enemy.takeDamage(bullet.getDmg());
@@ -137,7 +145,7 @@ public class GameController {
                         MultiplayerHandler.getInstance().send("EnemyUpdate", enemy.getID(), enemy.getHealth(), enemy.isAlive());
                     }
                     if (!bullet.getHasHit()) {
-                        gm.player.setScore(gm.player.getScore() + 10);
+                        gs.player.setScore(gs.player.getScore() + 10);
                     }
 
                     bullet.hasHit();
@@ -150,8 +158,8 @@ public class GameController {
             }
         }
 
-        for(Bullet bullet : gm.getPlayer2Bullets()){
-            for(Enemy enemy : enemies){
+        for(Bullet bullet : gs.player2Bullets){
+            for(Enemy enemy : gs.enemies){
                 if(bullet.collidesWith(enemy))
                     bullet.hasHit();
             }
@@ -163,24 +171,24 @@ public class GameController {
     }
     
     private void spawnSmallAsteroids(int x, int y) {
-        enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN"), x, y - 20));
-        enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN_REVERSED"), x, y + 20));
+        gs.enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN"), x, y - 20));
+        gs.enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN_REVERSED"), x, y + 20));
     }
 
     private void detectPlayerShotByEnemy(){
-        for(Bullet bullet : gm.getEnemyBullets()){
-            if(bullet.collidesWith(gm.player)){
-                gm.player.takeDamage();
+        for(Bullet bullet : gs.enemyBullets){
+            if(bullet.collidesWith(gs.player)){
+                gs.player.takeDamage();
                 bullet.hasHit();
             }
         }
     }
 
     private void detectPlayerCollidesWithEnemy(){
-        for (Enemy enemy: enemies) {
-            if(enemy.collidesWith(gm.player)){
+        for (Enemy enemy: gs.enemies) {
+            if(enemy.collidesWith(gs.player)){
                 if(enemy.isAlive()) {
-                    gm.player.takeDamage();
+                    gs.player.takeDamage();
                 }
                 enemy.takeDamage();
             }
@@ -188,10 +196,11 @@ public class GameController {
     }
     
     private void detectPlayerCollidesWithPowerUp() {
-        if (!powerups.isEmpty()) {
-            for (PowerUp p : powerups) {
-                if(p.collidesWith(gm.player)) {
-                    p.powerUp();
+        if (!gs.powerups.isEmpty()) {
+            for (PowerUp powerUp : gs.powerups) {
+                if(powerUp.collidesWith(gs.player) && !powerUp.isPickedUp()) {
+                    powerUp.setPickedUp();
+                    gs.player.powerUp(powerUp);
                 }
             }
         }
@@ -200,7 +209,7 @@ public class GameController {
     private void spawnPowerUps(){
         Random random = new Random();
         if(random.nextInt(1500) < 1) {
-            powerups.add(generateNewPowerUp());
+            gs.powerups.add(generateNewPowerUp());
         }
     }
 
@@ -239,7 +248,7 @@ public class GameController {
     }
 
     private void detectGameOver(){
-        if (!gm.player.isAlive()) {
+        if (!gs.player.isAlive()) {
             gv.gameOver();
             gameMainTimer.stop();
         }
@@ -248,7 +257,7 @@ public class GameController {
     private void detectGameWin() {
         if(bossType != null){
             EnemyType boss = EnemyType.valueOf(bossType);
-            for(Enemy enemy : enemies){
+            for(Enemy enemy : gs.enemies){
                 if(enemy.getType() == boss && !enemy.isAlive()){
                     startGameWinTimer();
                 }
@@ -264,9 +273,5 @@ public class GameController {
                 System.out.println("Game Won!");
             }
         }, 3000);
-    }
-    
-    public ArrayList<Enemy> getEnemies() {
-        return enemies;
     }
 }

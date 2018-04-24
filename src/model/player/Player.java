@@ -3,10 +3,10 @@ package model.player;
 import assets.java.Audio;
 import assets.java.Sprite;
 import model.Entity;
+import model.PowerUp;
 import model.weapons.*;
 import model.Shield;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -76,13 +76,22 @@ public class Player extends Entity {
         }
         return false;
     }
-    
-    public String getWeaponType() {
-        return this.weaponType;
-    }
-    
-    public void setWeaponType(String weaponType) {
-        this.weaponType = weaponType;
+
+    public void powerUp(PowerUp powerUp) {
+        switch(powerUp.getName()) {
+            case "WEAPON_POWERUP":
+                powerUp();
+                System.out.println("Weapon upgraded");
+                break;
+            case "HEALTH_POWERUP":
+                setHealth(getHealth() + 1);
+                System.out.println("Health up");
+                break;
+            case "SHIELD_POWERUP":
+                setShield();
+                System.out.println("Shield!");
+                break;
+        }
     }
     
     public void powerUp() {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javafx.scene.image.Image;
 import model.Entity;
 import model.GameModel;
+import model.GameState;
 import model.Shield;
 import model.weapons.Bullet;
 import model.weapons.DoubleSwirl;
@@ -48,24 +49,24 @@ public class Player2 extends Entity {
     public void shoot(int x, int y) {
         switch(weaponType) {
             case "Bullet":
-                GameModel.getInstance().getPlayer2Bullets().add(new Bullet(x + width - 10, y + (height / 2) - 8, weapon));
+                GameState.getInstance().player2Bullets.add(new Bullet(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "Upgrade1":
-                GameModel.getInstance().getPlayer2Bullets().add(new Upgrade1(x + width - 10, y + (height / 2) - 8, weapon));
+                GameState.getInstance().player2Bullets.add(new Upgrade1(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "Upgrade2":
-                GameModel.getInstance().getPlayer2Bullets().add(new Upgrade2(x + width - 10, y + (height / 2) - 8, weapon));
+                GameState.getInstance().player2Bullets.add(new Upgrade2(x + width - 10, y + (height / 2) - 8, weapon));
                 break;        
             case "HeatSeeking":
-                GameModel.getInstance().getPlayer2Bullets().add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
+                GameState.getInstance().player2Bullets.add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "Doubles":
-                GameModel.getInstance().getPlayer2Bullets().add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
-                GameModel.getInstance().getPlayer2Bullets().add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
+                GameState.getInstance().player2Bullets.add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
+                GameState.getInstance().player2Bullets.add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
                 break;
             case "DoubleSwirl":
-                GameModel.getInstance().getPlayer2Bullets().add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));
-                GameModel.getInstance().getPlayer2Bullets().add(new DoubleSwirl(x + width - 10, y + (height / 2) + 15, weapon, false));
+                GameState.getInstance().player2Bullets.add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));
+                GameState.getInstance().player2Bullets.add(new DoubleSwirl(x + width - 10, y + (height / 2) + 15, weapon, false));
                 break;
             }        
     }

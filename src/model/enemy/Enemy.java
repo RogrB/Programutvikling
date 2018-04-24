@@ -3,6 +3,7 @@ package model.enemy;
 import assets.java.Sprite;
 import model.Entity;
 import model.GameModel;
+import model.GameState;
 import model.IdGen;
 import model.weapons.Bullet;
 import view.OptionsView;
@@ -13,7 +14,7 @@ import java.util.Random;
 public class Enemy extends Entity {
 
     // MVC-access
-    GameModel gm = GameModel.getInstance();
+    GameState gs = GameState.getInstance();
 
     private final EnemyType TYPE;
     private EnemyMovementPattern pattern;
@@ -65,7 +66,7 @@ public class Enemy extends Entity {
         if(canShoot()) {
             double shotMod = (double) OptionsView.difficultyValue/3;
             if(random.nextDouble() > 1 - (chanceToShoot * shotMod))
-                gm.getEnemyBullets().add(new Bullet(getX() + 10, getY() + (this.height / 2) - 8, weapon));
+                gs.enemyBullets.add(new Bullet(getX() + 10, getY() + (this.height / 2) - 8, weapon));
         }
     }
 
@@ -89,7 +90,7 @@ public class Enemy extends Entity {
     
     public void addScore() {
         if (!this.scoreCount) {
-            gm.player.setScore(gm.player.getScore() + 100);
+            gs.player.setScore(gs.player.getScore() + 100);
             this.scoreCount = true;
         }
     }

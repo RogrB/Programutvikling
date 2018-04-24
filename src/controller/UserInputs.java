@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import model.GameModel;
+import model.GameState;
 
 public class UserInputs {
 
@@ -15,49 +16,29 @@ public class UserInputs {
     }
 
     // MVC-access
-    GameModel gm = GameModel.getInstance();
+    GameState gs = GameState.getInstance();
 
     public void setKeyListeners(Scene s){
         s.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.SPACE)
-                gm.player.isShooting();
+                gs.player.isShooting();
             if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP)
-                gm.player.move("UP");
+                gs.player.move("UP");
             if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN)
-                gm.player.move("DOWN");
+                gs.player.move("DOWN");
             if (event.getCode() == KeyCode.E)
-                gm.player.powerUp();
+                gs.player.powerUp();
             if (event.getCode() == KeyCode.Q)
-                gm.player.setShield();
-            if (event.getCode() == KeyCode.T)
-                gm.testSend();
-            /*if (event.getCode() == KeyCode.DIGIT1) {
-                System.out.println("setting p1");
-                gm.setP1();
-            }
-            if (event.getCode() == KeyCode.DIGIT2) {
-                System.out.println("setting p2");
-                gm.setP2();
-            }*/
-        });
-
-        s.setOnMouseClicked(event ->{
-           if(event.getButton() == MouseButton.PRIMARY){
-               String msg =
-                       "(x: "       + event.getX()      + ", y: "       + event.getY()       + ") -- " +
-                               "(sceneX: "  + event.getSceneX() + ", sceneY: "  + event.getSceneY()  + ") -- " +
-                               "(screenX: " + event.getScreenX()+ ", screenY: " + event.getScreenY() + ")";
-               System.out.println(msg);
-           }
+                gs.player.setShield();
         });
 
         s.setOnKeyReleased(event -> {
             if (event.getCode() == KeyCode.SPACE)
-                gm.player.isNotShooting();
+                gs.player.isNotShooting();
             if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP)
-                gm.player.move("STOP");
+                gs.player.move("STOP");
             if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN)
-                gm.player.move("STOP");
+                gs.player.move("STOP");
         });
     }
 }

@@ -53,7 +53,7 @@ public class Asteroid extends Enemy {
                     }
                 }
             }
-        }, 0, 20);        
+        }, 0, 20);
     }     
     
     @Override

@@ -1,17 +1,14 @@
-
 package model.weapons;
-
-import controller.GameController;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import model.GameState;
 import model.enemy.Enemy;
 
 public class HeatSeeking extends Bullet {
     
-    GameController gc = GameController.getInstance();
-    ArrayList<Enemy> enemies = gc.getEnemies();
+    ArrayList<Enemy> enemies = GameState.getInstance().enemies;
     private boolean locked = false;
     Enemy target;
 

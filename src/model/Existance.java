@@ -7,7 +7,7 @@ import view.ViewUtil;
 
 import java.util.Iterator;
 
-public abstract class Existance {
+public abstract class Existance implements java.io.Serializable {
 
     private int x, y;
     private int oldX, oldY;
@@ -15,8 +15,8 @@ public abstract class Existance {
     protected int oldHeight, oldWidth;
     private boolean readyToPurge;
 
-    protected Image image;
-    protected ImageView imageView;
+    protected transient Image image;
+    protected transient ImageView imageView;
 
     public Existance(int x, int y){
         this.x = x;

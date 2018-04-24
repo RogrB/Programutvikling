@@ -6,6 +6,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.GameModel;
+import model.GameState;
 import model.enemy.EnemyType;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class HUD {
     
     GameView gv = GameView.getInstance();
     GameModel gm = GameModel.getInstance();
+    GameState gs = GameState.getInstance();
     
     private Image playerIcon = new Image("assets/image/hud/playerIcon.png");
     private Image shieldIcon = new Image("assets/image/hud/shieldIcon.png");
@@ -27,8 +29,8 @@ public class HUD {
     public static HUD getInstance() { return inst; }
     
     public void renderHUD() {
-        setlifeCounter(gm.player.getHealth());
-        gv.renderHUD(this, gm.player.hasShield());
+        setlifeCounter(gs.player.getHealth());
+        gv.renderHUD(this, gs.player.hasShield());
     }
     
     public Image getPlayerIcon() {

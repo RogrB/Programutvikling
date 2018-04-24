@@ -33,11 +33,15 @@ public class MenuView extends ViewUtil{
 
     public void createNewGame(InputEvent event){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        GameController.getInstance().gameStart();
+        GameController.getInstance().newGame();
         Scene scene = new Scene(GameView.getInstance().initScene());
         stage.setScene(scene);
         UserInputs userInputs = new UserInputs(scene);
         System.out.println("Totally started a new game");
+    }
+
+    public void continueGame(){
+
     }
 
     public void showLevelSelect(InputEvent event){
@@ -113,6 +117,7 @@ public class MenuView extends ViewUtil{
         header.setFont(header.getFont().font(100));
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
+
         newGameButton = new MenuButton("NEW GAME");
         continueButton = new MenuButton("CONTINUE");
         multiplayerButton = new MenuButton("MULTIPLAYER");
@@ -120,6 +125,7 @@ public class MenuView extends ViewUtil{
         selectLevelButton = new MenuButton("LEVEL SELECT");
         optionsButton = new MenuButton("OPTIONS");
         exitButton = new MenuButton("EXIT");
+
         newGameButton.setOnMouseClicked(event -> createNewGame(event));
         continueButton.setOnMouseClicked(event -> continueLastGame());
         multiplayerButton.setOnMouseClicked(event -> loadMultiplayer(event));
@@ -132,6 +138,7 @@ public class MenuView extends ViewUtil{
         mainMenu.setSpacing(10);
         mainMenu.setTranslateY(300);
         mainMenu.setTranslateX(450);
+
         mainMenu.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
                 menuElements[elementCounter].lostFocus();
@@ -143,6 +150,7 @@ public class MenuView extends ViewUtil{
                 elementCounter = 0;
             }
         });
+
         if(gameFileFound()){
             mainMenu.getChildren().addAll(continueButton, loadGameButton, newGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton);
             menuElements = new MenuButton[]{continueButton, loadGameButton, newGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton};

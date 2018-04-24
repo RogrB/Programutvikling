@@ -75,7 +75,7 @@ public class MultiplayerView extends ViewUtil{
                 // ROGER STUFF
                 startMultiplayerGame();
                 Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-                GameController.getInstance().gameStart();
+                GameController.getInstance().newGame();
                 Scene scene = new Scene(GameView.getInstance().initScene());
                 stage.setScene(scene);
                 UserInputs userInputs = new UserInputs(scene);

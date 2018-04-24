@@ -11,13 +11,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.Existance;
 import model.GameModel;
+import model.GameState;
 import model.enemy.Enemy;
 import model.enemy.EnemyType;
 import model.weapons.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 
-import static model.GameModel.bossType;
+import static model.GameState.bossType;
 
 public class GameView extends ViewUtil{
 
@@ -29,13 +30,14 @@ public class GameView extends ViewUtil{
     // MVC-access
     GameController gc = GameController.getInstance();
     GameModel gm = GameModel.getInstance();
+    GameState gs = GameState.getInstance();
 
     final Canvas canvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
     final Canvas hudCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
     final Canvas bulletLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
     final Canvas enemyLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
     
-    Text scoreText = new Text(VIEW_WIDTH - 150, 60, "Score: " + Integer.toString(gm.player.getScore()));
+    Text scoreText = new Text(VIEW_WIDTH - 150, 60, "Score: " + Integer.toString(gs.player.getScore()));
     Text levelText = new Text(VIEW_WIDTH - 150, 30, "Level 1"); // Må hente riktig level fra leveldata
     
     final GraphicsContext graphics = canvas.getGraphicsContext2D();
@@ -82,6 +84,7 @@ public class GameView extends ViewUtil{
         dialogBox.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ESCAPE){
                 goToView(event, MenuView.getInstance().initScene());
+                gc.gamePause();
             }
         });
         dialogBox.setOpacity(0);
@@ -96,10 +99,10 @@ public class GameView extends ViewUtil{
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
         if(gm.getMultiplayerStatus()) {
-            root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, dialogBox, gm.player2.getImageView());
+            root.getChildren().addAll(gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, dialogBox, gs.player2.getImageView());
         }
         else {
-            root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, dialogBox);
+            root.getChildren().addAll(gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, dialogBox);
         }
         return root;
     }
@@ -117,7 +120,6 @@ public class GameView extends ViewUtil{
             gc = enemyLayer;
         else
             gc = graphics;
-        //System.out.println("Rendering object at: " + object.getX() + " , " + object.getY() + " using " + object.getImage());
 
         gc.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
         gc.drawImage(object.getImage(), object.getX(), object.getY());
@@ -129,8 +131,8 @@ public class GameView extends ViewUtil{
     }
     
     public void renderShield() {
-        graphics.clearRect(gm.player.getX()-10, gm.player.getY()-30, gm.player.getOldWidth()+35, gm.player.getOldHeight()+70);
-        graphics.drawImage(gm.player.getShieldSprite(), gm.player.getX(), gm.player.getY()-1);
+        graphics.clearRect(gs.player.getX()-10, gs.player.getY()-30, gs.player.getOldWidth()+35, gs.player.getOldHeight()+70);
+        graphics.drawImage(gs.player.getShieldSprite(), gs.player.getX(), gs.player.getY()-1);
     }
     
     public void renderHUD(HUD h, boolean shield) {
@@ -140,13 +142,13 @@ public class GameView extends ViewUtil{
         hud.drawImage(h.getLifeCounter(), 70, 20);
         if(shield) {
             hud.drawImage(h.getShieldIcon(), 20, 50);
-            if (gm.player.shield().getCharges() == 2) {
+            if (gs.player.shield().getCharges() == 2) {
                 hud.drawImage(h.getShieldIcon(), 45, 50);
             }
         }
         if(bossType != null){
             EnemyType boss = EnemyType.valueOf(bossType);
-            for(Enemy enemy : gc.getEnemies()){
+            for(Enemy enemy : gs.enemies){
                 if(enemy.getType() == boss){
                     hud.setFill(Color.RED);
                     hud.fillRect(
@@ -168,7 +170,7 @@ public class GameView extends ViewUtil{
             }
         }
 
-        scoreText.setText("Score: " + Integer.toString(gm.player.getScore()));
+        scoreText.setText("Score: " + Integer.toString(gs.player.getScore()));
         levelText.setText("Level 1"); // må hente riktig level fra leveldata
     }
 }

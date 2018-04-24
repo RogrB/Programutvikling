@@ -1,6 +1,8 @@
 package multiplayer;
 
 import java.io.*;
+
+import model.GameState;
 import model.player.Player;
 import model.player.Player2;
 import model.enemy.Enemy;
@@ -15,7 +17,7 @@ public class Protocol {
         switch(action) {
             case "EnemyUpdate":
                 try {
-                    for(Enemy enemy: GameController.getInstance().getEnemies()) {
+                    for(Enemy enemy: GameState.getInstance().enemies) {
                         if (enemy.getID() == id) {
                             stream.writeChar('E');
                             stream.writeInt(id);
