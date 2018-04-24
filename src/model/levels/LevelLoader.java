@@ -1,16 +1,14 @@
 package model.levels;
 
 import assets.java.Sprite;
-import model.PowerUp;
 import model.enemy.Enemy;
 import model.enemy.EnemyMovementPattern;
 import model.enemy.EnemyType;
 import model.enemy.Asteroid;
 import view.ViewUtil;
 
-import java.util.ArrayList;
-
 import static controller.GameController.enemies;
+import static model.GameModel.bossType;
 
 public class LevelLoader {
 
@@ -23,9 +21,8 @@ public class LevelLoader {
     private int increment;
     private final int COLUMN_WIDTH = 70;
 
-    private ArrayList<PowerUp> powerups = new ArrayList<>();
-
     public void setLevelData(String[][][] levelData){
+        bossType = null;
         this.levelData = levelData;
     }
     
@@ -63,14 +60,12 @@ public class LevelLoader {
                                 ((ViewUtil.VIEW_HEIGHT-Sprite.ASTEROID1.getHeight())/6) * yLane + 1));
                 break;
             case "3":
+                bossType = EnemyType.valueOf(enemyData[1]).name();
                 enemies.add(new Enemy(
                                 EnemyType.valueOf(enemyData[1]),
                                 new EnemyMovementPattern(enemyData[2]),
                                 xSpawn,
                                 ((ViewUtil.VIEW_HEIGHT-EnemyType.valueOf(enemyData[1]).SPRITE.getHeight())/6) * yLane + 1));
-                break;
-            case "4":
-                //powerups.add(new PowerUp(Sprite.valueOf(enemyData[1]), xSpawn, 1 + ySpawn));
                 break;
         }
     }

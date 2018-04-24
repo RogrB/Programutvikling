@@ -42,6 +42,8 @@ public class GameModel {
     public void mvcSetup(){
         gv = GameView.getInstance();
     }
+
+    public static String bossType;
     
     /*
     public void setP1() {

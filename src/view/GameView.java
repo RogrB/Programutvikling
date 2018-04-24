@@ -19,6 +19,8 @@ import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 
+import static model.GameModel.bossType;
+
 public class GameView extends ViewUtil{
 
     // Singleton
@@ -160,6 +162,15 @@ public class GameView extends ViewUtil{
                 hud.drawImage(h.getShieldIcon(), 45, 50);
             }
         }
+        if(bossType != null){
+            EnemyType boss = EnemyType.valueOf(bossType);
+            for(Enemy enemy : gc.getEnemies()){
+                if(enemy.getType() == boss){
+                    //hud.rect();
+                }
+            }
+        }
+
         scoreText.setText("Score: " + Integer.toString(gm.player.getScore()));
         levelText.setText("Level 1"); // må hente riktig level fra leveldata
     }
