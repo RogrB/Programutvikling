@@ -30,7 +30,6 @@ public class GameController {
     
     HUD hud;
     LevelLoader levelLoader;
-    MultiplayerHandler mp;
 
     // Level data
     public ArrayList<PowerUp> powerups = new ArrayList();

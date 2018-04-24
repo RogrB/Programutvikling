@@ -36,7 +36,11 @@ public class Player2 extends Entity {
     
     @Override
     public void shoot() {
-        behave.shoot(weaponType, getX(), getY(), width, height, weapon);
+        
+    }
+    
+    public void shoot(int x, int y) {
+        behave.shoot(weaponType, x, y, width, height, weapon);
     }
     
     public void update(){

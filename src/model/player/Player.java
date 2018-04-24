@@ -11,6 +11,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javafx.scene.image.Image;
+import model.GameModel;
 import view.ViewUtil;
 
 public class Player extends Entity {
@@ -106,6 +107,10 @@ public class Player extends Entity {
             playerBehaviour.shoot(this.weaponType, getX(), getY(), this.width, this.height, weapon);
             setCanShoot(false);
             shotDelayTimer();
+            if (GameModel.getInstance().getMultiplayerStatus()) {
+                GameModel.getInstance().getMP().send("Shoot", getX(), getY());
+                System.out.println("Player1 shooting");
+            }
         }
     }
     
