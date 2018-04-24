@@ -5,6 +5,7 @@ import assets.java.Sprite;
 import java.util.ArrayList;
 import javafx.scene.image.Image;
 import model.Entity;
+import model.GameModel;
 import model.Shield;
 import model.weapons.Bullet;
 import model.weapons.Weapon;
@@ -40,7 +41,8 @@ public class Player2 extends Entity {
     }
     
     public void shoot(int x, int y) {
-        behave.shoot(weaponType, x, y, width, height, weapon);
+        //behave.shoot(weaponType, x, y, width, height, weapon);
+        GameModel.getInstance().getPlayer2Bullets().add(new Bullet(x + width - 10, y + (height / 2) - 8, weapon));
     }
     
     public void update(){

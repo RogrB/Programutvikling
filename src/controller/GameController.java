@@ -113,7 +113,7 @@ public class GameController {
         bulletIterator = gm.getPlayer2Bullets().iterator();
         while(bulletIterator.hasNext()){
             Bullet bullet = bulletIterator.next();
-            bullet.update(-12, 0, bulletIterator);
+            bullet.update(20, 0, bulletIterator);
             gv.render(bullet);
         }
 
