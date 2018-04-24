@@ -88,6 +88,16 @@ public class GameController {
         }; gameMainTimer.start();
     }
 
+    public void resumeGame(){
+            try {
+                gameMainTimer.start();
+            } catch (Exception e) {
+                gameStart();
+            }
+
+
+    }
+
     public void gamePause(){
         AutoSave.getInstance().stop();
         gameMainTimer.stop();

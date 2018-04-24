@@ -2,6 +2,7 @@ package view;
 
 import controller.GameController;
 import controller.UserInputs;
+import io.IOGameState;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -40,8 +41,14 @@ public class MenuView extends ViewUtil{
         System.out.println("Totally started a new game");
     }
 
-    public void continueGame(){
-
+    public void continueGame(InputEvent event){
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        //IOGameState.getInstance().loadGameState();
+        GameController.getInstance().resumeGame();
+        Scene scene = new Scene(GameView.getInstance().initScene());
+        stage.setScene(scene);
+        UserInputs userInputs = new UserInputs(scene);
+        System.out.println("Totally kept playing");
     }
 
     public void showLevelSelect(InputEvent event){
@@ -61,8 +68,9 @@ public class MenuView extends ViewUtil{
         System.exit(0);
     }
 
-    public void continueLastGame(){
-        System.out.println("Clicked continue");
+    public void continueLastGame(InputEvent event){
+        System.out.println("Dust");
+        goToView(event, NewGameView.getInst().initScene());
     }
 
     public void loadGame(InputEvent event){
@@ -78,12 +86,12 @@ public class MenuView extends ViewUtil{
     }
 
     public void select(String buttonName, KeyEvent event){ //KeyEvent is only here so you can extract Stage from an event. Hacky, I know.
-        if(buttonName == "NEW GAME"){
+        /*if(buttonName == "NEW GAME"){
             //createNewSave(event);
             createNewGame(event);
         }
         if(buttonName == "CONTINUE"){
-            continueLastGame();
+            continueGame(event);
         }
         if(buttonName == "LOAD GAME"){
             loadGame(event);
@@ -99,7 +107,7 @@ public class MenuView extends ViewUtil{
         }
         if(buttonName == "EXIT"){
             exitGame();
-        }
+        }*/
     }
 
     public Parent initScene(){
@@ -127,7 +135,7 @@ public class MenuView extends ViewUtil{
         exitButton = new MenuButton("EXIT");
 
         newGameButton.setOnMouseClicked(event -> createNewGame(event));
-        continueButton.setOnMouseClicked(event -> continueLastGame());
+        continueButton.setOnMouseClicked(event -> continueGame(event));
         multiplayerButton.setOnMouseClicked(event -> loadMultiplayer(event));
         loadGameButton.setOnMouseClicked(event -> loadGame(event));
         selectLevelButton.setOnMouseClicked(event -> showLevelSelect(event));

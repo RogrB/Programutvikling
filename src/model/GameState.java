@@ -39,7 +39,11 @@ public class GameState implements java.io.Serializable {
         playerBullets = new ArrayList<>();
         player2Bullets = new ArrayList<>();
         initLevel(levelData);
+        
+    }
 
+    protected Object readResolve() {
+        return getInstance();
     }
 
     public void initLevel(String[][][] levelData){
