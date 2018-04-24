@@ -24,15 +24,18 @@ public class GameModel {
 
     private ArrayList<Bullet> enemyBullets = new ArrayList<>();
     private ArrayList<Bullet> playerBullets = new ArrayList<>();
+    private ArrayList<Bullet> player2Bullets = new ArrayList<>();
     public Player player = Player.getInst();
 
     public ArrayList<Bullet> getEnemyBullets() {
         return enemyBullets;
     }
-    
     public ArrayList<Bullet> getPlayerBullets() {
         return playerBullets;
-    }    
+    }
+    public ArrayList<Bullet> getPlayer2Bullets() {
+        return player2Bullets;
+    }
 
     public void mvcSetup(){
         gv = GameView.getInstance();

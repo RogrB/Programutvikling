@@ -46,6 +46,7 @@ public class GameView extends ViewUtil{
     private ArrayList<Rectangle> bossHealthBarList = new ArrayList<>();
     public HBox bossHealthBar = new HBox();
     private int listCount;
+
     private Rectangle dialogBackground;
     private Text dialogText;
     public StackPane dialogBox;

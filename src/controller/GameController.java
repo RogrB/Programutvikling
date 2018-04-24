@@ -110,6 +110,13 @@ public class GameController {
             gv.render(bullet);
         }
 
+        bulletIterator = gm.getPlayer2Bullets().iterator();
+        while(bulletIterator.hasNext()){
+            Bullet bullet = bulletIterator.next();
+            bullet.update(-12, 0, bulletIterator);
+            gv.render(bullet);
+        }
+
         bulletIterator = gm.getEnemyBullets().iterator();
         while(bulletIterator.hasNext()){
             Bullet bullet = bulletIterator.next();
@@ -125,17 +132,22 @@ public class GameController {
                 Enemy enemy = enemyIterator.next();
                 if(bullet.collidesWith(enemy)){
                     enemy.takeDamage(bullet.getDmg());
+
                     if (!bullet.getHasHit()) {
                         gm.player.setScore(gm.player.getScore() + 10);
                     }
+
                     bullet.hasHit();
+
                     if (!enemy.isAlive() && enemy instanceof Asteroid && !((Asteroid)enemy).getSpawned()) {
                         ((Asteroid)enemy).setSpawned(true);
                         tempEnemies.add(enemy);
                     }
+
                     if(!enemy.isAlive() && enemy.getType().toString().equals("BOSS01")){
                         gameWin();
                     }
+
                     if(enemy.getType().toString().equals("BOSS01")){
                         gv.renderHealthBar();
                     }
