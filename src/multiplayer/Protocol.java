@@ -91,6 +91,13 @@ public class Protocol {
                     System.err.println(e);
                 }
                 break;
+            case "EnemyUpdate":
+                try {
+                    stream.writeChar('E');
+                }
+                catch (IOException e) {
+                    
+                }
         }
         return bytestream;
     }
