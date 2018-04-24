@@ -54,31 +54,6 @@ public class Sender {
         }
     }       
     
-
-    protected synchronized void sendPrep(String toSend) {
-    
-        try {
-            ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
-            DataOutputStream stream = new DataOutputStream(bytestream);
-            
-            //stream.writeBytes(toSend); // String gir IOException
-            /*
-            if(toSend.equals("New Game") {
-             // do new game things
-            }*/
-            stream.writeChar('O');
-            stream.writeInt(1);
-            stream.writeChar('a');
-
-            stream.flush();
-            stream.close();
-            send(bytestream);
-        } 
-        catch(IOException e) {
-            System.err.println(e);
-        } 
-    } 
-    
     protected synchronized void send(ByteArrayOutputStream stream) {
         try {
             byte[]data = stream.toByteArray();

@@ -27,11 +27,7 @@ public class MultiplayerHandler {
         receiveActivity = new Thread(receiver);
         receiveActivity.start();         
     }
-    
-    public void send(String toSend) {   
-        sender.sendPrep(toSend);
-    }
-    
+
     public void send(String action, int x, int y) {
         sender.send(protocol.sendPrep(action, x, y));
     }
