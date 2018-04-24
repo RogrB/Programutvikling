@@ -5,6 +5,7 @@ import model.Entity;
 import model.GameModel;
 import model.IdGen;
 import model.weapons.Bullet;
+import view.OptionsView;
 
 import java.util.Iterator;
 import java.util.Random;
@@ -19,7 +20,6 @@ public class Enemy extends Entity {
 
     private int chanceToShoot;
     private int timerToShoot;
-    private int animationCounter;
     private boolean scoreCount = false;
     private final int enemyID;
 
