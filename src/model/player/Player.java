@@ -12,6 +12,7 @@ import java.util.TimerTask;
 
 import javafx.scene.image.Image;
 import model.GameModel;
+import multiplayer.MultiplayerHandler;
 import view.ViewUtil;
 
 public class Player extends Entity {
@@ -86,6 +87,9 @@ public class Player extends Entity {
     
     public void powerUp() {
         this.weaponType = playerBehaviour.powerUp(weaponType);
+        if(GameModel.getInstance().getMultiplayerStatus()) {
+            MultiplayerHandler.getInstance().send("PowerUp", 0, 0);
+        }
     }
     
     public void move(String dir){

@@ -8,6 +8,11 @@ import model.Entity;
 import model.GameModel;
 import model.Shield;
 import model.weapons.Bullet;
+import model.weapons.DoubleSwirl;
+import model.weapons.Doubles;
+import model.weapons.HeatSeeking;
+import model.weapons.Upgrade1;
+import model.weapons.Upgrade2;
 import model.weapons.Weapon;
 import view.GameView;
 import view.ViewUtil;
@@ -41,8 +46,28 @@ public class Player2 extends Entity {
     }
     
     public void shoot(int x, int y) {
-        //behave.shoot(weaponType, x, y, width, height, weapon);
-        GameModel.getInstance().getPlayer2Bullets().add(new Bullet(x + width - 10, y + (height / 2) - 8, weapon));
+        switch(weaponType) {
+            case "Bullet":
+                GameModel.getInstance().getPlayer2Bullets().add(new Bullet(x + width - 10, y + (height / 2) - 8, weapon));
+                break;
+            case "Upgrade1":
+                GameModel.getInstance().getPlayer2Bullets().add(new Upgrade1(x + width - 10, y + (height / 2) - 8, weapon));
+                break;
+            case "Upgrade2":
+                GameModel.getInstance().getPlayer2Bullets().add(new Upgrade2(x + width - 10, y + (height / 2) - 8, weapon));
+                break;        
+            case "HeatSeeking":
+                GameModel.getInstance().getPlayer2Bullets().add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
+                break;
+            case "Doubles":
+                GameModel.getInstance().getPlayer2Bullets().add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
+                GameModel.getInstance().getPlayer2Bullets().add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
+                break;
+            case "DoubleSwirl":
+                GameModel.getInstance().getPlayer2Bullets().add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));
+                GameModel.getInstance().getPlayer2Bullets().add(new DoubleSwirl(x + width - 10, y + (height / 2) + 15, weapon, false));
+                break;
+            }        
     }
     
     public void update(){
@@ -51,6 +76,10 @@ public class Player2 extends Entity {
     
     public void setWeaponType(String weaponType) {
         this.weaponType = weaponType;
+    } 
+    
+    public void powerUp() {
+        this.weaponType = behave.powerUp(weaponType);
     }    
     
 }
