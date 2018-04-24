@@ -20,6 +20,7 @@ public class Enemy extends Entity {
     private int timerToShoot;
     private int animationCounter;
     private boolean scoreCount = false;
+    private int enemyID;
 
     public Enemy(EnemyType enemyType, EnemyMovementPattern pattern, int x, int y){
         super(
@@ -97,6 +98,14 @@ public class Enemy extends Entity {
     
     public EnemyType getType() {
         return this.TYPE;
+    }
+    
+    public void setID(int id) {
+        this.enemyID = id;
+    }
+    
+    public int getID() {
+        return this.enemyID;
     }
     
 }
