@@ -1,11 +1,9 @@
 package multiplayer;
 
-import controller.GameController;
 import java.io.DataInputStream;
-import model.GameModel;
 import model.GameState;
 import model.enemy.Enemy;
-import model.player.Player;
+import view.MultiplayerView;
 
 public class MultiplayerHandler {
     
@@ -13,6 +11,7 @@ public class MultiplayerHandler {
     Receiver receiver;
     Sender sender;
     public Thread receiveActivity;
+    private boolean connected = false;
     
     // Singleton
     private static MultiplayerHandler inst = new MultiplayerHandler();
@@ -57,6 +56,37 @@ public class MultiplayerHandler {
                 }
             }
         }
+    }
+    
+    Thread thread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            while(!connected) {
+                sender.send(protocol.sendPrep("Connect", 0, 0));
+            }           
+        } 
+    });
+    
+    public void startConnection() {
+        thread.start();
+    }
+    
+    public void establishConnection() {
+        setConnected(true);
+        thread.stop();
+        MultiplayerView.getInst().initMultiplayerGame();        
+    }
+    
+    public void replyConnection() {
+        sender.send(protocol.sendPrep("Reply", 0, 0));
+    }
+    
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
+    
+    public boolean getConnected() {
+        return this.connected;
     }
     
 }
