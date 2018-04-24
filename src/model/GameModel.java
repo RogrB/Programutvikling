@@ -58,11 +58,6 @@ public class GameModel {
         multiplayer = true;
     } */
     
-    public void testSend() {
-        System.out.println("Sending packet");
-        mp.send("Player sends a packet");
-    }
-    
     public boolean getMultiplayerStatus() {
         return this.multiplayer;
     }

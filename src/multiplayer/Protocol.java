@@ -99,7 +99,7 @@ public class Protocol {
                         MultiplayerHandler.getInstance().updateEnemies(id, health, alive);
                         break;
                     case 'P':
-                        
+                        player2.powerUp();
                 }
             }
         }

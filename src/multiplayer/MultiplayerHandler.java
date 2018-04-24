@@ -27,15 +27,6 @@ public class MultiplayerHandler {
         receiveActivity.start();         
     }
     
-    public void send(String toSend) {   
-        sender.sendPrep(toSend);
-    }
-    
-    /*
-    public void send(Player player) {
-        sender.send(protocol.sendPrep(player));
-    }*/
-    
     public void send(String action, int x, int y) {
         sender.send(protocol.sendPrep(action, x, y));
     }
@@ -53,10 +44,10 @@ public class MultiplayerHandler {
     }
     
     protected void updateEnemies(int id, int health, boolean alive) {
-        System.out.println("trying to find enemyid to apply update");
+        // System.out.println("trying to find enemyid " + id + " to apply update");
         for(Enemy enemy: GameController.getInstance().getEnemies()) {        
             if (enemy.getID() == id) {
-                // System.out.println("applying enemy update to enemy " + id);
+                System.out.println("applying enemy update to enemy " + id);
                 if(health < enemy.getHealth()) {
                     enemy.setHealth(health);
                     System.out.println("Setting health to " + health);

@@ -29,16 +29,6 @@ public class UserInputs {
                 gm.player.powerUp();
             if (event.getCode() == KeyCode.Q)
                 gm.player.setShield();
-            if (event.getCode() == KeyCode.T)
-                gm.testSend();
-            /*if (event.getCode() == KeyCode.DIGIT1) {
-                System.out.println("setting p1");
-                gm.setP1();
-            }
-            if (event.getCode() == KeyCode.DIGIT2) {
-                System.out.println("setting p2");
-                gm.setP2();
-            }*/
         });
 
         s.setOnMouseClicked(event ->{

@@ -10,7 +10,6 @@ public class Receiver extends Thread {
     private DatagramSocket socket;
     private boolean looping = false;
     private final static int MAX_PACKET_SIZE = 8192;
-    // private MultiplayerHandler mp = new MultiplayerHandler();
     private Protocol protocol = new Protocol();
 
     
@@ -51,16 +50,13 @@ public class Receiver extends Thread {
 
     @Override
     public void run() {
-        // System.out.println("running");
         byte[] buffer = new byte[MAX_PACKET_SIZE];
         while(looping) {
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             try {
                 socket.receive(packet);
-                // System.out.println("recieved packet");
                 InputStream in = new ByteArrayInputStream(packet.getData(), packet.getOffset(), packet.getLength());
                 try (DataInputStream stream = new DataInputStream(in)) {
-                    //System.out.println("Recieved" + stream);
                     protocol.recieve(stream);
                 }
             } 
