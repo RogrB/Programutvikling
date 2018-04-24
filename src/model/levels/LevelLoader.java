@@ -19,8 +19,7 @@ public class LevelLoader {
 
     private String[][][] levelData;
     private int increment;
-    //private final int COLUMN_WIDTH = 70;
-    private final int COLUMN_WIDTH = 20;
+    private final int COLUMN_WIDTH = 70;
 
     public void setLevelData(String[][][] levelData){
         bossType = null;

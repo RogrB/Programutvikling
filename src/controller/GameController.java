@@ -7,6 +7,7 @@ import model.enemy.*;
 import model.levels.LevelData;
 import model.levels.LevelLoader;
 import model.weapons.*;
+import multiplayer.MultiplayerHandler;
 import view.GameView;
 import view.HUD;
 import model.PowerUp;
@@ -145,17 +146,17 @@ public class GameController {
                         ((Asteroid)enemy).setSpawned(true);
                         tempEnemies.add(enemy);
                     }
-
-                    /*if(!enemy.isAlive() && enemy.getType().toString().equals("BOSS01")){
-                        gameWin();
-                    }
-
-                    if(enemy.getType().toString().equals("BOSS01")){
-                        gv.renderHealthBar();
-                    }*/
                 }
             }
         }
+
+        for(Bullet bullet : gm.getPlayer2Bullets()){
+            for(Enemy enemy : enemies){
+                if(bullet.collidesWith(enemy))
+                    bullet.hasHit();
+            }
+        }
+
         for(Enemy e : tempEnemies){
             spawnSmallAsteroids(e.getX(), e.getY());
         }

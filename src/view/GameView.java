@@ -17,8 +17,6 @@ import model.weapons.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 
-import java.util.ArrayList;
-
 import static model.GameModel.bossType;
 
 public class GameView extends ViewUtil{
@@ -44,10 +42,6 @@ public class GameView extends ViewUtil{
     final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
     final GraphicsContext bulletLayer = bulletLayerCanvas.getGraphicsContext2D();
     final GraphicsContext enemyLayer = enemyLayerCanvas.getGraphicsContext2D();
-
-    private ArrayList<Rectangle> bossHealthBarList = new ArrayList<>();
-    public HBox bossHealthBar = new HBox();
-    private int listCount;
 
     private Rectangle dialogBackground;
     private Text dialogText;
@@ -96,23 +90,16 @@ public class GameView extends ViewUtil{
             rect.setFill(Color.GREEN);
             rect.setHeight(30);
             rect.setWidth(30);
-            bossHealthBarList.add(rect);
         }
-        for(Rectangle rectangle : bossHealthBarList){
-            bossHealthBar.getChildren().add(rectangle);
-        }
-        listCount = bossHealthBarList.size() -1;
-        bossHealthBar.setTranslateX(300);
-        bossHealthBar.setTranslateY(750);
         
         Pane root = new Pane();
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
         if(gm.getMultiplayerStatus()) {
-            root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, bossHealthBar, dialogBox, gm.player2.getImageView());
+            root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, dialogBox, gm.player2.getImageView());
         }
         else {
-            root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, bossHealthBar, dialogBox);            
+            root.getChildren().addAll(gm.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, dialogBox);
         }
         return root;
     }
@@ -144,11 +131,6 @@ public class GameView extends ViewUtil{
     public void renderShield() {
         graphics.clearRect(gm.player.getX()-10, gm.player.getY()-30, gm.player.getOldWidth()+35, gm.player.getOldHeight()+70);
         graphics.drawImage(gm.player.getShieldSprite(), gm.player.getX(), gm.player.getY()-1);
-    }
-
-    public void renderHealthBar(){
-        bossHealthBarList.get(listCount).setFill(Color.RED);
-        listCount--;
     }
     
     public void renderHUD(HUD h, boolean shield) {
