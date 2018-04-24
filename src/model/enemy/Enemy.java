@@ -18,8 +18,8 @@ public class Enemy extends Entity {
     private final EnemyType TYPE;
     private EnemyMovementPattern pattern;
 
-    private int chanceToShoot;
-    private int timerToShoot;
+    private double chanceToShoot;
+    private double timerToShoot;
     private boolean scoreCount = false;
     private final int enemyID;
 
@@ -39,7 +39,6 @@ public class Enemy extends Entity {
         weapon = TYPE.WEAPON;
         health = TYPE.MAX_HEALTH;
         chanceToShoot = TYPE.SHOOTING_CHANCE;
-        timerToShoot = chanceToShoot;
 
         if(TYPE.SHOOTING_CHANCE == 0)
             canShoot = false;
@@ -64,13 +63,9 @@ public class Enemy extends Entity {
     public void shoot() {
         Random random = new Random();
         if(canShoot()) {
-            if(random.nextInt(chanceToShoot) < timerToShoot) {
-                timerToShoot--;
-            }
-            else {
-                timerToShoot = chanceToShoot;
+            double shotMod = (double) OptionsView.difficultyValue/3;
+            if(random.nextDouble() > 1 - (chanceToShoot * shotMod))
                 gm.getEnemyBullets().add(new Bullet(getX() + 10, getY() + (this.height / 2) - 8, weapon));
-            }
         }
     }
 
