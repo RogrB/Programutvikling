@@ -29,9 +29,10 @@ public class MultiplayerHandler {
         sender.sendPrep(toSend);
     }
     
+    /*
     public void send(Player player) {
         sender.send(protocol.sendPrep(player));
-    }
+    }*/
     
     public void send(String action, int x, int y) {
         sender.send(protocol.sendPrep(action, x, y));
