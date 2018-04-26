@@ -6,6 +6,8 @@ import javafx.scene.input.MouseButton;
 import model.GameModel;
 import model.GameState;
 
+import static controller.GameController.gs;
+
 public class UserInputs {
 
     private Scene s;
@@ -16,7 +18,6 @@ public class UserInputs {
     }
 
     // MVC-access
-    GameState gs = GameState.getInstance();
 
     public void setKeyListeners(Scene s){
         s.setOnKeyPressed(event -> {

@@ -11,9 +11,11 @@ import java.util.ArrayList;
 
 public class GameState implements java.io.Serializable {
 
-    private static GameState inst = new GameState();
+    /*private static GameState inst = new GameState();
     private GameState(){}
-    public static GameState getInstance(){ return inst; }
+    public static GameState getInstance(){ return inst; }*/
+
+    public GameState(){}
 
     private static final long serialVersionUID = -1406462588808010429L;
 
@@ -45,9 +47,9 @@ public class GameState implements java.io.Serializable {
 
     }
 
-    protected Object readResolve() throws ObjectStreamException {
+    /*protected Object readResolve() throws ObjectStreamException {
         return inst;
-    }
+    }*/
 
     public void initLevel(String[][][] levelData){
         this.levelData = levelData;

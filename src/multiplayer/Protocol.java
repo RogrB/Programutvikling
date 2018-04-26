@@ -7,6 +7,8 @@ import model.player.Player2;
 import model.enemy.Enemy;
 import view.MultiplayerView;
 
+import static controller.GameController.gs;
+
 public class Protocol {
     
     protected synchronized ByteArrayOutputStream sendPrep(String action, int id, int health, boolean alive) {
@@ -16,7 +18,7 @@ public class Protocol {
         switch(action) {
             case "EnemyUpdate":
                 try {
-                    for(Enemy enemy: GameState.getInstance().enemies) {
+                    for(Enemy enemy: gs.enemies) {
                         if (enemy.getID() == id) {
                             stream.writeChar('E');
                             stream.writeInt(id);

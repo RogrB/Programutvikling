@@ -19,6 +19,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 
 import static model.GameState.bossType;
+import static controller.GameController.gs;
 
 public class GameView extends ViewUtil{
 
@@ -30,15 +31,14 @@ public class GameView extends ViewUtil{
     // MVC-access
     GameController gc = GameController.getInstance();
     GameModel gm = GameModel.getInstance();
-    GameState gs = GameState.getInstance();
 
     final Canvas canvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
     final Canvas hudCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
     final Canvas bulletLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
     final Canvas enemyLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
     
-    Text scoreText = new Text(VIEW_WIDTH - 150, 60, "Score: " + Integer.toString(gs.player.getScore()));
-    Text levelText = new Text(VIEW_WIDTH - 150, 30, "Level 1"); // Må hente riktig level fra leveldata
+    Text scoreText;
+    Text levelText;
     
     final GraphicsContext graphics = canvas.getGraphicsContext2D();
     final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
@@ -57,6 +57,10 @@ public class GameView extends ViewUtil{
     }
 
     public Parent initScene() {
+
+        scoreText = new Text(VIEW_WIDTH - 150, 60, "Score: " + Integer.toString(gs.player.getScore()));
+        levelText = new Text(VIEW_WIDTH - 150, 30, "Level 1"); // Må hente riktig level fra leveldata
+
         scoreText.setFill(Color.WHITE);
         scoreText.setFont(Font.font("Verdana", 20));  
         levelText.setFill(Color.WHITE);

@@ -2,6 +2,7 @@ package model.player;
 
 import assets.java.Audio;
 import assets.java.Sprite;
+import javafx.scene.image.ImageView;
 import model.Entity;
 import model.PowerUp;
 import model.weapons.*;
@@ -51,7 +52,6 @@ public class Player extends Entity {
     }
 
     public void update(){
-        playerBehaviour.mvcSetup();
         if(!playerIsOutOfBounds()){
             setY(getY() + playerBehaviour.next());
             getImageView().relocate(getX(), getY());

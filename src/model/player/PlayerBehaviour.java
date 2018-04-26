@@ -4,11 +4,15 @@ import model.GameModel;
 import model.GameState;
 import model.weapons.*;
 
+import static controller.GameController.gs;
+
 public class PlayerBehaviour implements java.io.Serializable {
+
+    private static final long serialVersionUID = 185835451720483588L;
+
     private final int MAX_SPEED = 20;
     private final int MOD_SPEED = 1;
     // MVC-access
-    GameState gs;
 
     private int speed;
     private int dir;
@@ -16,10 +20,6 @@ public class PlayerBehaviour implements java.io.Serializable {
     public PlayerBehaviour() {
         speed = 0;
         dir = 0;
-    }
-
-    public void mvcSetup() {
-        gs = GameState.getInstance();
     }
 
 

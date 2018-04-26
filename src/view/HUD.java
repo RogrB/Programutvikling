@@ -10,13 +10,13 @@ import model.GameState;
 import model.enemy.EnemyType;
 
 import java.util.ArrayList;
+import static controller.GameController.gs;
 
 public class HUD {
     
     GameView gv = GameView.getInstance();
     GameModel gm = GameModel.getInstance();
-    GameState gs = GameState.getInstance();
-    
+
     private Image playerIcon = new Image("assets/image/hud/playerIcon.png");
     private Image shieldIcon = new Image("assets/image/hud/shieldIcon.png");
     private Image numeralX = new Image("assets/image/hud/numeralX.png");

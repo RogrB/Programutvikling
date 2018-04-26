@@ -29,7 +29,7 @@ public class GameController {
     // MVC-access
     GameModel gm;
     GameView gv;
-    GameState gs;
+    public static GameState gs;
     
     HUD hud;
     LevelLoader levelLoader;
@@ -43,7 +43,7 @@ public class GameController {
     public void mvcSetup(){
         gm = GameModel.getInstance();
         gv = GameView.getInstance();
-        gs = GameState.getInstance();
+        gs = new GameState();
 
         levelLoader = LevelLoader.getInstance();
         hud = HUD.getInstance();

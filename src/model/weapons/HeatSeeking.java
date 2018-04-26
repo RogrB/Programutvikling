@@ -6,9 +6,11 @@ import java.util.Iterator;
 import model.GameState;
 import model.enemy.Enemy;
 
+import static controller.GameController.gs;
+
 public class HeatSeeking extends Bullet {
     
-    ArrayList<Enemy> enemies = GameState.getInstance().enemies;
+    ArrayList<Enemy> enemies = gs.enemies;
     private boolean locked = false;
     Enemy target;
 

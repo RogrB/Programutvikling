@@ -2,7 +2,9 @@ package io;
 
 import model.GameState;
 
+import javax.swing.plaf.synth.SynthEditorPaneUI;
 import java.io.*;
+import static controller.GameController.gs;
 
 public class IOGameState {
 
@@ -14,7 +16,7 @@ public class IOGameState {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream("tmp/GameState.ser");
             ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutputStream);
-            objectOutput.writeObject(GameState.getInstance());
+            objectOutput.writeObject(gs);
             objectOutput.close();
             fileOutputStream.close();
         } catch (IOException e) {
@@ -24,10 +26,7 @@ public class IOGameState {
 
     public void loadGameState(){
 
-        System.out.println(GameState.getInstance().levelIncrement);
-        GameState.getInstance().levelIncrement = 0;
-        System.out.println(GameState.getInstance().levelIncrement);
-        GameState gs = null;
+        //GameState gs = null;
 
         try {
             FileInputStream fileInputStream = new FileInputStream("tmp/GameState.ser");
@@ -41,7 +40,7 @@ public class IOGameState {
         } catch (ClassNotFoundException c) {
             System.err.println("GameState class not found");
         }
-
         System.out.println(gs.levelIncrement);
+
     }
 }

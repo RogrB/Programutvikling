@@ -11,10 +11,11 @@ import view.OptionsView;
 import java.util.Iterator;
 import java.util.Random;
 
+import static controller.GameController.gs;
+
 public class Enemy extends Entity {
 
     // MVC-access
-    GameState gs = GameState.getInstance();
 
     private final EnemyType TYPE;
     private EnemyMovementPattern pattern;

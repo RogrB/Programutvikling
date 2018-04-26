@@ -18,6 +18,8 @@ import model.weapons.Weapon;
 import view.GameView;
 import view.ViewUtil;
 
+import static controller.GameController.gs;
+
 public class Player2 extends Entity {
 
     // Singleton
@@ -49,24 +51,24 @@ public class Player2 extends Entity {
     public void shoot(int x, int y) {
         switch(weaponType) {
             case "Bullet":
-                GameState.getInstance().player2Bullets.add(new Bullet(x + width - 10, y + (height / 2) - 8, weapon));
+                gs.player2Bullets.add(new Bullet(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "Upgrade1":
-                GameState.getInstance().player2Bullets.add(new Upgrade1(x + width - 10, y + (height / 2) - 8, weapon));
+                gs.player2Bullets.add(new Upgrade1(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "Upgrade2":
-                GameState.getInstance().player2Bullets.add(new Upgrade2(x + width - 10, y + (height / 2) - 8, weapon));
+                gs.player2Bullets.add(new Upgrade2(x + width - 10, y + (height / 2) - 8, weapon));
                 break;        
             case "HeatSeeking":
-                GameState.getInstance().player2Bullets.add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
+                gs.player2Bullets.add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "Doubles":
-                GameState.getInstance().player2Bullets.add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
-                GameState.getInstance().player2Bullets.add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
+                gs.player2Bullets.add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
+                gs.player2Bullets.add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
                 break;
             case "DoubleSwirl":
-                GameState.getInstance().player2Bullets.add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));
-                GameState.getInstance().player2Bullets.add(new DoubleSwirl(x + width - 10, y + (height / 2) + 15, weapon, false));
+                gs.player2Bullets.add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));
+                gs.player2Bullets.add(new DoubleSwirl(x + width - 10, y + (height / 2) + 15, weapon, false));
                 break;
             }        
     }

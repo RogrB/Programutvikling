@@ -5,6 +5,8 @@ import model.GameState;
 import model.enemy.Enemy;
 import view.MultiplayerView;
 
+import static controller.GameController.gs;
+
 public class MultiplayerHandler {
     
     Protocol protocol;
@@ -45,7 +47,7 @@ public class MultiplayerHandler {
     
     protected void updateEnemies(int id, int health, boolean alive) {
         System.out.println("trying to find enemyid to apply update");
-        for(Enemy enemy: GameState.getInstance().enemies) {
+        for(Enemy enemy: gs.enemies) {
             if (enemy.getID() == id) {
                 if(health < enemy.getHealth()) {
                     enemy.setHealth(health);
