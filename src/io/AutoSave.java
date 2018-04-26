@@ -20,6 +20,7 @@ public class AutoSave {
             @Override
             public void run() {
                 io.saveGameState();
+                System.out.println("Saved GameState");
             }
         }, 0, 3000);
     }

@@ -6,6 +6,7 @@ import model.player.Player;
 import model.player.Player2;
 import model.weapons.Bullet;
 
+import java.io.ObjectStreamException;
 import java.util.ArrayList;
 
 public class GameState implements java.io.Serializable {
@@ -13,6 +14,8 @@ public class GameState implements java.io.Serializable {
     private static GameState inst = new GameState();
     private GameState(){}
     public static GameState getInstance(){ return inst; }
+
+    private static final long serialVersionUID = -1406462588808010429L;
 
     public ArrayList<PowerUp> powerups = new ArrayList();
     public static ArrayList<Enemy> enemies = new ArrayList();
@@ -39,11 +42,11 @@ public class GameState implements java.io.Serializable {
         playerBullets = new ArrayList<>();
         player2Bullets = new ArrayList<>();
         initLevel(levelData);
-        
+
     }
 
-    protected Object readResolve() {
-        return getInstance();
+    protected Object readResolve() throws ObjectStreamException {
+        return inst;
     }
 
     public void initLevel(String[][][] levelData){
@@ -52,6 +55,10 @@ public class GameState implements java.io.Serializable {
         LevelLoader.getInstance().setLevelData(levelData);
         bossType = null;
     }
+
+    /*public void resumeLevel(){
+        LevelLoader.getInstance().setLevelData(levelData);
+    }*/
 
 
 

@@ -89,13 +89,12 @@ public class GameController {
     }
 
     public void resumeGame(){
-            try {
-                gameMainTimer.start();
-            } catch (Exception e) {
-                gameStart();
-            }
-
-
+        //gs.resumeLevel();
+        try {
+            gameMainTimer.start();
+        } catch (Exception e) {
+            gameStart();
+        }
     }
 
     public void gamePause(){

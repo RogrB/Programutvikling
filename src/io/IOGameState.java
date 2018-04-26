@@ -23,18 +23,25 @@ public class IOGameState {
     }
 
     public void loadGameState(){
-        GameState gs = GameState.getInstance();
+
+        System.out.println(GameState.getInstance().levelIncrement);
+        GameState.getInstance().levelIncrement = 0;
+        System.out.println(GameState.getInstance().levelIncrement);
+        GameState gs = null;
+
         try {
-            FileInputStream fileInputStream = new FileInputStream("tmp/employee.ser");
+            FileInputStream fileInputStream = new FileInputStream("tmp/GameState.ser");
             ObjectInputStream objectInput = new ObjectInputStream(fileInputStream);
             gs = (GameState) objectInput.readObject();
             objectInput.close();
             fileInputStream.close();
         } catch (IOException i) {
             System.err.println("Could not load GameState");
+            i.printStackTrace();
         } catch (ClassNotFoundException c) {
             System.err.println("GameState class not found");
         }
-    }
 
+        System.out.println(gs.levelIncrement);
+    }
 }
