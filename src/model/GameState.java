@@ -1,5 +1,6 @@
 package model;
 
+import assets.java.Sprite;
 import model.enemy.Enemy;
 import model.levels.LevelLoader;
 import model.player.Player;
@@ -58,9 +59,12 @@ public class GameState implements java.io.Serializable {
         bossType = null;
     }
 
-    /*public void resumeLevel(){
+    public void resumeLevel(){
         LevelLoader.getInstance().setLevelData(levelData);
-    }*/
+        player.newSprite(Sprite.PLAYER);
+        player2.newSprite(Sprite.PLAYER2);
+        System.out.println("Enemies:"+enemies.size());
+    }
 
 
 

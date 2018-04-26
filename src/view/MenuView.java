@@ -45,11 +45,11 @@ public class MenuView extends ViewUtil{
         System.out.println("Loading");
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         IOGameState.getInstance().loadGameState();
-        /*GameController.getInstance().resumeGame();
+        GameController.getInstance().resumeGame();
         Scene scene = new Scene(GameView.getInstance().initScene());
         stage.setScene(scene);
         UserInputs userInputs = new UserInputs(scene);
-        System.out.println("Totally kept playing");*/
+        System.out.println("Totally kept playing");
     }
 
     public void showLevelSelect(InputEvent event){

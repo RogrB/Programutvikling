@@ -52,10 +52,10 @@ public class GameController {
     public void newGame(){
         gs.newGameState(LevelData.LEVEL4);
         gameStart();
+        AutoSave.getInstance().start();
     }
 
     private void gameStart() {
-        AutoSave.getInstance().start();
         gameMainTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -89,12 +89,13 @@ public class GameController {
     }
 
     public void resumeGame(){
-        //gs.resumeLevel();
+        gs.resumeLevel();
         try {
             gameMainTimer.start();
         } catch (Exception e) {
             gameStart();
         }
+        AutoSave.getInstance().start();
     }
 
     public void gamePause(){

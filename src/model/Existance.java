@@ -17,6 +17,7 @@ public abstract class Existance implements java.io.Serializable {
 
     protected transient Image image;
     protected transient ImageView imageView;
+    public Sprite sprite;
 
     public Existance(int x, int y){
         this.x = x;
@@ -86,6 +87,7 @@ public abstract class Existance implements java.io.Serializable {
 
     public void newSprite(Sprite sprite){
         newSprite(sprite.src);
+        this.sprite = sprite;
     }
 
     public void newSprite(String src){
