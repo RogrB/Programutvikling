@@ -52,6 +52,7 @@ public class GameController {
     public void newGame(){
         gv.clearAllGraphics();
         gs.newGameState(LevelData.LEVEL4);
+        gs.player.init();
         gameStart();
         AutoSave.getInstance().start();
     }

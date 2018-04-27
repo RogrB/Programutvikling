@@ -79,6 +79,9 @@ public class PlayerBehaviour implements java.io.Serializable {
     public String powerUp(String weaponType) {
         String returnString = "";
         switch(weaponType) {
+            case "Reset":
+                returnString = "Bullet";
+                break;
             case "Bullet":
                 returnString = "Upgrade1";
                 break;

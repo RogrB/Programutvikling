@@ -50,6 +50,16 @@ public class Player extends Entity {
             setShield();
         }
     }
+    
+    public void init() {
+        inst = new Player();
+        hasShield = false;
+        setHealth(5);
+        immunity = false;
+        shooting = false;
+        score = 0;
+        this.weaponType = playerBehaviour.powerUp("Reset");
+    }
 
     public void update(){
         if(!playerIsOutOfBounds()){
