@@ -66,6 +66,7 @@ public class GameState implements java.io.Serializable {
         for(Bullet bullet : enemyBullets){ bullet.newSprite(bullet.sprite); }
         for(Bullet bullet : playerBullets){ bullet.newSprite(bullet.sprite); }
         player.canShoot = true;
+        player.move("STOP");
         for(PowerUp powerUp : powerups){ powerUp.newSprite(powerUp.sprite); }
     }
 
