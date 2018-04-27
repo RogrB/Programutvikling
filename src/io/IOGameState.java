@@ -102,4 +102,21 @@ public class IOGameState {
         return enemies;
     }
 
+    public boolean saveStateExists(){
+        if(!fileExists("tmp/GameState.ser") ||
+                !fileExists("tmp/ArrayEnemies.ser") ||
+                !fileExists("tmp/ArrayEnemyBullets.ser") ||
+                !fileExists("tmp/ArrayPlayerBullets.ser") ||
+                !fileExists("tmp/ArrayPowerups.ser"))
+            return false;
+        return true;
+    }
+
+    private boolean fileExists(String src){
+        File file = new File(src);
+        if(file.exists() && !file.isDirectory())
+            return true;
+        return false;
+    }
+
 }

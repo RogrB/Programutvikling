@@ -83,7 +83,7 @@ public class MenuView extends ViewUtil{
     }
 
     public boolean gameFileFound(){
-        return true; //EDIT THIS TO EDIT MENU LAYOUT
+        return IOGameState.getInstance().saveStateExists();
     }
 
     public void select(String buttonName, KeyEvent event){ //KeyEvent is only here so you can extract Stage from an event. Hacky, I know.
