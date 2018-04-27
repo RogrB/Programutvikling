@@ -138,6 +138,13 @@ public class GameView extends ViewUtil{
         graphics.clearRect(gs.player.getX()-10, gs.player.getY()-30, gs.player.getOldWidth()+35, gs.player.getOldHeight()+70);
         graphics.drawImage(gs.player.getShieldSprite(), gs.player.getX(), gs.player.getY()-1);
     }
+
+    public void clearAllGraphics(){
+        graphics.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+        hud.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+        bulletLayer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+        enemyLayer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+    }
     
     public void renderHUD(HUD h, boolean shield) {
         hud.clearRect(15, 15, 120, 50);

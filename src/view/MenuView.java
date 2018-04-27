@@ -45,7 +45,7 @@ public class MenuView extends ViewUtil{
         System.out.println("Loading");
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         IOGameState.getInstance().loadGameState();
-        GameController.getInstance().resumeGame();
+        GameController.getInstance().loadGame();
         Scene scene = new Scene(GameView.getInstance().initScene());
         stage.setScene(scene);
         UserInputs userInputs = new UserInputs(scene);

@@ -16,7 +16,7 @@ public class Bullet extends Existance {
     private final int ANIM_SPEED = 20;
     private int animCounter = 0;
     private int animIndex = 0;
-    private Timer timer = null;
+    private transient Timer timer = null;
 
     public Bullet(int x, int y, Weapon weapon) {
         super(x,y);

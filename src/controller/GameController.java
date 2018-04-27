@@ -50,6 +50,7 @@ public class GameController {
     }
 
     public void newGame(){
+        gv.clearAllGraphics();
         gs.newGameState(LevelData.LEVEL4);
         gameStart();
         AutoSave.getInstance().start();
@@ -88,8 +89,9 @@ public class GameController {
         }; gameMainTimer.start();
     }
 
-    public void resumeGame(){
-        gs.resumeLevel();
+    public void loadGame(){
+        gv.clearAllGraphics();
+        gs.loadGameData();
         try {
             gameMainTimer.start();
         } catch (Exception e) {

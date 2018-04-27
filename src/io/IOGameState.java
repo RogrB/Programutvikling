@@ -4,7 +4,6 @@ import model.GameState;
 import model.enemy.Enemy;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,49 +16,53 @@ public class IOGameState {
     public static IOGameState getInstance(){ return inst; }
 
     public void saveGameState(){
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+
         try {
-            OutputStream fileOut = new FileOutputStream("tmp/GameState.ser");
-            ObjectOutput output = new ObjectOutputStream(fileOut);
+            fos = new FileOutputStream("tmp/GameState.ser");
+            oos = new ObjectOutputStream(fos);
 
-            output.writeObject(gs);
+            oos.writeObject(gs);
 
-            output.flush();
-            fileOut.flush();
-
-            output.close();
-            fileOut.close();
+            oos.flush();
+            fos.flush();
+            oos.close();
+            fos.close();
 
         } catch (IOException e) {
             System.err.println("Could not save GameState");
         }
 
         saveArrayList(gs.enemies, "tmp/ArrayEnemies.ser");
+        saveArrayList(gs.enemyBullets, "tmp/ArrayEnemyBullets.ser");
+        saveArrayList(gs.playerBullets, "tmp/ArrayPlayerBullets.ser");
+        saveArrayList(gs.powerups, "tmp/ArrayPowerups.ser");
     }
 
     public void loadGameState(){
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
 
         try {
-            InputStream fileIn = new FileInputStream("tmp/GameState.ser");
-            ObjectInput input = new ObjectInputStream(fileIn);
+            fis = new FileInputStream("tmp/GameState.ser");
+            ois = new ObjectInputStream(fis);
 
-            //gs = (GameState) input.readObject();
-            gs = (GameState) input.readObject();
+            gs = (GameState) ois.readObject();
 
-
-            input.close();
-            fileIn.close();
+            ois.close();
+            fis.close();
 
         } catch (IOException i) {
             System.err.println("Could not load GameState");
-            i.printStackTrace();
         } catch (ClassNotFoundException c) {
             System.err.println("GameState class not found");
         }
 
-        System.out.println("Enemy count: "+gs.enemies.size());
-        System.out.println("Level increment: "+gs.levelIncrement);
-
         gs.enemies = (ArrayList) loadList("tmp/ArrayEnemies.ser");
+        gs.enemyBullets = (ArrayList) loadList("tmp/ArrayEnemyBullets.ser");
+        gs.playerBullets = (ArrayList) loadList("tmp/ArrayPlayerBullets.ser");
+        gs.powerups = (ArrayList) loadList("tmp/ArrayPowerups.ser");
     }
 
     private void saveArrayList(ArrayList list, String src){
@@ -89,7 +92,6 @@ public class IOGameState {
             fis = new FileInputStream(src);
             ois = new ObjectInputStream(fis);
             enemies = (ArrayList<Enemy>) ois.readObject();
-            //gs.enemies = (ArrayList) enemies;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -97,7 +99,6 @@ public class IOGameState {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println("Enemies loaded: "+enemies.size());
         return enemies;
     }
 

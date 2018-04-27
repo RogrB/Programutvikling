@@ -12,12 +12,6 @@ import java.util.ArrayList;
 
 public class GameState implements java.io.Serializable {
 
-    /*private static GameState inst = new GameState();
-    private GameState(){}
-    public static GameState getInstance(){ return inst; }*/
-
-    //private static final long serialVersionUID = -1406462588808010429L;
-
     public ArrayList<PowerUp> powerups;
     public static ArrayList<Enemy> enemies;
 
@@ -54,10 +48,6 @@ public class GameState implements java.io.Serializable {
 
     }
 
-    /*protected Object readResolve() throws ObjectStreamException {
-        return inst;
-    }*/
-
     public void initLevel(String[][][] levelData){
         this.levelData = levelData;
         levelIncrement = 0;
@@ -65,17 +55,18 @@ public class GameState implements java.io.Serializable {
         bossType = null;
     }
 
-    public void resumeLevel(){
+    public void loadGameData(){
         LevelLoader.getInstance().setLevelData(levelData);
         player.newSprite(Sprite.PLAYER);
+        player.imageView.relocate(player.getX(), player.getY());
         player2.newSprite(Sprite.PLAYER2);
-        for(Enemy enemy : enemies) {
-            enemy.newSprite(enemy.sprite);
-        }
+        player2.imageView.relocate(player2.getX(), player2.getY());
+
+        for(Enemy enemy : enemies) { enemy.newSprite(enemy.sprite); }
+        for(Bullet bullet : enemyBullets){ bullet.newSprite(bullet.sprite); }
+        for(Bullet bullet : playerBullets){ bullet.newSprite(bullet.sprite); }
+        player.canShoot = true;
+        for(PowerUp powerUp : powerups){ powerUp.newSprite(powerUp.sprite); }
     }
-
-
-
-
 
 }
