@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import model.GameModel;
 import multiplayer.MultiplayerHandler;
 import view.ViewUtil;
+import view.HUD;
 
 public class Player extends Entity {
 
@@ -91,15 +92,15 @@ public class Player extends Entity {
         switch(powerUp.getName()) {
             case "WEAPON_POWERUP":
                 powerUp();
-                System.out.println("Weapon upgraded");
+                HUD.getInstance().initRenderPowerUpText("Weapon Upgraded!");
                 break;
             case "HEALTH_POWERUP":
                 setHealth(getHealth() + 1);
-                System.out.println("Health up");
+                HUD.getInstance().initRenderPowerUpText("Health up!");
                 break;
             case "SHIELD_POWERUP":
                 setShield();
-                System.out.println("Shield!");
+                HUD.getInstance().initRenderPowerUpText("Shield!");
                 break;
         }
     }

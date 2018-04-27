@@ -287,4 +287,8 @@ public class GameController {
             }
         }, 3000);
     }
+    
+    public HUD getHUD() {
+        return this.hud;
+    }
 }

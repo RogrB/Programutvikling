@@ -41,6 +41,8 @@ public class GameView extends ViewUtil{
     Text levelText;
     Text weaponType;
     
+    private final static Font powerUpFont = new Font("SansSerif", 12);
+    
     final GraphicsContext graphics = canvas.getGraphicsContext2D();
     final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
     final GraphicsContext bulletLayer = bulletLayerCanvas.getGraphicsContext2D();
@@ -190,5 +192,16 @@ public class GameView extends ViewUtil{
         scoreText.setText("Score: " + Integer.toString(gs.player.getScore()));
         levelText.setText("Level 1"); // må hente riktig level fra leveldata
         weaponType.setText(h.weaponType());
+    }
+    
+    public void renderPowerUpText(String powerUp, int x, int y, float opacity) {
+        hud.clearRect(x-10, y-10, 300, 100);
+        hud.setFill(new Color(1, 1, 1, opacity));
+        hud.setFont(powerUpFont);
+        hud.fillText(powerUp, x, y);
+    }
+    
+    public void clearPowerUpText(int x, int y) {
+        hud.clearRect(x-10, y-50, 300, 300);
     }
 }

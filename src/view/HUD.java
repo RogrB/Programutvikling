@@ -13,6 +13,8 @@ import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import static controller.GameController.gs;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HUD {
     
@@ -25,6 +27,11 @@ public class HUD {
     private Image weaponTypeImg = new Image("assets/image/hud/weaponType.png");
     private Image lifeCounter;
     
+    private int powerUpX;
+    private int powerUpY;
+    private int fadeCounter;
+    private float opacity = 1;
+    
     Text weaponText;
     
     private static HUD inst = new HUD();
@@ -36,6 +43,30 @@ public class HUD {
     public void renderHUD() {
         setlifeCounter(gs.player.getHealth());
         gv.renderHUD(this, gs.player.hasShield());
+    }
+    
+    public void initRenderPowerUpText(String powerUp) {
+        powerUpX = gs.player.getX()+35;
+        powerUpY = gs.player.getY();
+        
+        Timer textFadeTimer = new Timer();
+        textFadeTimer.schedule(new TimerTask() {
+            
+            @Override
+            public void run() {
+                powerUpY -= 1;
+                opacity -= 0.01;
+                fadeCounter++;
+                gv.renderPowerUpText(powerUp, powerUpX, powerUpY, opacity);
+                if (fadeCounter > 35) {
+                    this.cancel();
+                    fadeCounter = 0;
+                    opacity = 1;
+                    gv.clearPowerUpText(powerUpX, powerUpY);
+                }
+            }
+            
+        }, 0, 30);  
     }
     
     public Image getPlayerIcon() {
