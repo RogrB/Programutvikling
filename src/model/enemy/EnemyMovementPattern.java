@@ -2,7 +2,7 @@ package model.enemy;
 
 import static java.lang.Math.*;
 
-public class EnemyMovementPattern {
+public class EnemyMovementPattern implements java.io.Serializable {
 
     /*
     * LEFT,       LEFT_PULSATING,

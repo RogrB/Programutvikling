@@ -22,7 +22,7 @@ public class AutoSave {
                 io.saveGameState();
                 System.out.println("Saved GameState");
             }
-        }, 0, 700);
+        }, 5000, 700);
     }
 
     public void stop(){

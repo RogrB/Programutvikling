@@ -16,16 +16,14 @@ public class GameState implements java.io.Serializable {
     private GameState(){}
     public static GameState getInstance(){ return inst; }*/
 
-    public GameState(){}
+    //private static final long serialVersionUID = -1406462588808010429L;
 
-    private static final long serialVersionUID = -1406462588808010429L;
+    public ArrayList<PowerUp> powerups;
+    public static ArrayList<Enemy> enemies;
 
-    public ArrayList<PowerUp> powerups = new ArrayList();
-    public static ArrayList<Enemy> enemies = new ArrayList();
-
-    public ArrayList<Bullet> enemyBullets = new ArrayList<>();
-    public ArrayList<Bullet> playerBullets = new ArrayList<>();
-    public ArrayList<Bullet> player2Bullets = new ArrayList<>();
+    public ArrayList<Bullet> enemyBullets;
+    public ArrayList<Bullet> playerBullets;
+    public ArrayList<Bullet> player2Bullets;
 
     public Player player = Player.getInst();
     public Player2 player2 = Player2.getInst();
@@ -36,8 +34,16 @@ public class GameState implements java.io.Serializable {
     public String[][][] levelData;
     public int levelIncrement;
 
-    public void newGameState(String[][][] levelData){
+    public GameState(){
+        powerups = new ArrayList();
+        enemies = new ArrayList();
 
+        enemyBullets = new ArrayList<>();
+        playerBullets = new ArrayList<>();
+        player2Bullets = new ArrayList<>();
+    }
+
+    public void newGameState(String[][][] levelData){
         powerups = new ArrayList();
         enemies = new ArrayList();
 
@@ -63,7 +69,9 @@ public class GameState implements java.io.Serializable {
         LevelLoader.getInstance().setLevelData(levelData);
         player.newSprite(Sprite.PLAYER);
         player2.newSprite(Sprite.PLAYER2);
-        System.out.println("Enemies:"+enemies.size());
+        for(Enemy enemy : enemies) {
+            enemy.newSprite(enemy.sprite);
+        }
     }
 
 
