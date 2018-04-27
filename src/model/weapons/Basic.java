@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Bullet extends Existance {
+public class Basic extends Existance {
 
     protected final Weapon WEAPON;
     private boolean isHit = false;
@@ -18,7 +18,7 @@ public class Bullet extends Existance {
     private int animIndex = 0;
     private transient Timer timer = null;
 
-    public Bullet(int x, int y, Weapon weapon) {
+    public Basic(int x, int y, Weapon weapon) {
         super(x,y);
         WEAPON = weapon;
         newSprite(weapon.SPRITE);

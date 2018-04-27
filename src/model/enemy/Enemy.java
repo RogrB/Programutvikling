@@ -5,7 +5,7 @@ import model.Entity;
 import model.GameModel;
 import model.GameState;
 import model.IdGen;
-import model.weapons.Bullet;
+import model.weapons.Basic;
 import view.OptionsView;
 
 import java.util.Iterator;
@@ -67,7 +67,7 @@ public class Enemy extends Entity {
         if(canShoot()) {
             double shotMod = (double) OptionsView.difficultyValue/3;
             if(random.nextDouble() > 1 - (chanceToShoot * shotMod))
-                gs.enemyBullets.add(new Bullet(getX() + 10, getY() + (this.height / 2) - 8, weapon));
+                gs.enemyBullets.add(new Basic(getX() + 10, getY() + (this.height / 2) - 8, weapon));
         }
     }
 

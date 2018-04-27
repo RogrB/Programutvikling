@@ -8,7 +8,7 @@ import model.enemy.Enemy;
 
 import static controller.GameController.gs;
 
-public class HeatSeeking extends Bullet {
+public class HeatSeeking extends Basic {
     
     ArrayList<Enemy> enemies = gs.enemies;
     private boolean locked = false;

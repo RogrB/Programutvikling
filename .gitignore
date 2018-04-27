@@ -1442,3 +1442,4 @@ dist/run195686206/web-files/javafx-loading-100x100.gif
 dist/*
 build/*
 *.ser
+*.ser

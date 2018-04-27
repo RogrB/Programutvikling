@@ -1,7 +1,7 @@
 package model;
 
 import model.player.Player;
-import model.weapons.Bullet;
+import model.weapons.Basic;
 import view.GameView;
 import multiplayer.MultiplayerHandler;
 

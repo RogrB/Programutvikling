@@ -264,4 +264,8 @@ public class Player extends Entity {
         this.score = score;
     }
     
+    public String getWeaponType() {
+        return this.weaponType;
+    }
+    
 }

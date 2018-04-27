@@ -8,6 +8,8 @@ import javafx.scene.shape.Rectangle;
 import model.GameModel;
 import model.GameState;
 import model.enemy.EnemyType;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import static controller.GameController.gs;
@@ -20,7 +22,10 @@ public class HUD {
     private Image playerIcon = new Image("assets/image/hud/playerIcon.png");
     private Image shieldIcon = new Image("assets/image/hud/shieldIcon.png");
     private Image numeralX = new Image("assets/image/hud/numeralX.png");
+    private Image weaponTypeImg = new Image("assets/image/hud/weaponType.png");
     private Image lifeCounter;
+    
+    Text weaponText;
     
     private static HUD inst = new HUD();
     private HUD(){
@@ -51,6 +56,15 @@ public class HUD {
     
     public Image getNumeralX() {
         return this.numeralX;
+    }
+    
+    public String weaponType() {
+        String weapon = gs.player.getWeaponType();
+        return weapon;
+    }
+    
+    public Image getWeaponTypeImg() {
+        return this.weaponTypeImg;
     }
     
 }
