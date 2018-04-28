@@ -43,7 +43,7 @@ public class HeatSeeking extends Basic {
         int targetIndex = 0;
         if(!enemies.isEmpty()) {
             for (Enemy enemy : enemies) {
-                if (enemy.getX() < closestX && enemy.getX() > 20) {
+                if (enemy.getX() < closestX && enemy.getX() > gs.player.getX()) {
                     closestX = enemy.getX();
                     targetIndex++;
                 }
@@ -54,6 +54,7 @@ public class HeatSeeking extends Basic {
     }
     
     public void moveMissile() {
+        // Flytter bullet mot target
         if (target != null && target.isAlive()) {
             if (Math.abs(target.getX() - getX()) < 7) {
                 setX((getX() < target.getX()) ? getX()+1 : getX()-1);
