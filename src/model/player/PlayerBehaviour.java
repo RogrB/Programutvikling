@@ -73,6 +73,11 @@ public class PlayerBehaviour implements java.io.Serializable {
                     gs.playerBullets.add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));
                     gs.playerBullets.add(new DoubleSwirl(x + width - 10, y + (height / 2) + 15, weapon, false));
                     break;
+                case "TripleBurst":
+                    gs.playerBullets.add(new TripleBurst(x + width - 10, y + (height / 2) - 25, weapon, 1));
+                    gs.playerBullets.add(new TripleBurst(x + width - 10, y + (height / 2), weapon, 2));
+                    gs.playerBullets.add(new TripleBurst(x + width - 10, y + (height / 2) + 15, weapon, 3));
+                    break;                    
             }
     }
     
@@ -98,8 +103,11 @@ public class PlayerBehaviour implements java.io.Serializable {
                 returnString = "DoubleSwirl";
                 break;
             case "DoubleSwirl":
-                returnString = "DoubleSwirl";
+                returnString = "TripleBurst";
                 break;
+            case "TripleBurst":
+                returnString = "TripleBurst";
+                break;                
         }
         return returnString;
     }
