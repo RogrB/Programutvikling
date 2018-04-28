@@ -45,7 +45,7 @@ public class HUD {
         gv.renderHUD(this, gs.player.hasShield());
     }
     
-    public void initRenderPowerUpText(String powerUp) {
+    public void renderPowerUpText(String powerUp) {
         powerUpX = gs.player.getX()+35;
         powerUpY = gs.player.getY();
         

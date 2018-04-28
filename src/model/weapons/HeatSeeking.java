@@ -3,7 +3,6 @@ package model.weapons;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import model.GameState;
 import model.enemy.Enemy;
 
 import static controller.GameController.gs;
@@ -28,7 +27,6 @@ public class HeatSeeking extends Basic {
         setOldY(getY());
 
         if (enemies.isEmpty()) {
-            //x += 15;
             setX(getX() + 15);
         }
         else {
@@ -56,14 +54,22 @@ public class HeatSeeking extends Basic {
     }
     
     public void moveMissile() {
-        if (target != null) {
-            setX((getX() < target.getX()) ? getX()+7 : getX()-7);
+        if (target != null && target.isAlive()) {
+            if (Math.abs(target.getX() - getX()) < 7) {
+                setX((getX() < target.getX()) ? getX()+1 : getX()-1);
+            }
+            else {
+                setX((getX() < target.getX()) ? getX()+7 : getX()-7);
+            }
             if (Math.abs(target.getY() - getY()) < 7) {
                 setY((getY() < target.getY()) ? getY()+1 : getY()-1);
             }
             else {
                 setY((getY() < target.getY()) ? getY()+7 : getY()-7);
             }
+        }
+        else {
+            setX(getX()+7);
         }
     }
 }

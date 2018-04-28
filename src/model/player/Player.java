@@ -92,15 +92,15 @@ public class Player extends Entity {
         switch(powerUp.getName()) {
             case "WEAPON_POWERUP":
                 powerUp();
-                HUD.getInstance().initRenderPowerUpText("Weapon Upgraded!");
+                HUD.getInstance().renderPowerUpText("Weapon Upgraded!");
                 break;
             case "HEALTH_POWERUP":
                 setHealth(getHealth() + 1);
-                HUD.getInstance().initRenderPowerUpText("Health up!");
+                HUD.getInstance().renderPowerUpText("Health up!");
                 break;
             case "SHIELD_POWERUP":
                 setShield();
-                HUD.getInstance().initRenderPowerUpText("Shield!");
+                HUD.getInstance().renderPowerUpText("Shield!");
                 break;
         }
     }

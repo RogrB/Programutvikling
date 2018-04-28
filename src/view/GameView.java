@@ -169,7 +169,7 @@ public class GameView extends ViewUtil{
             EnemyType boss = EnemyType.valueOf(bossType);
             for(Enemy enemy : gs.enemies){
                 if(enemy.getType() == boss){
-                    hud.setFill(Color.RED);
+                    hud.setFill(Color.GREEN);
                     hud.fillRect(
                             VIEW_WIDTH/3,
                             40,
@@ -177,7 +177,7 @@ public class GameView extends ViewUtil{
                             10
                     );
 
-                    hud.setFill(Color.GREEN);
+                    hud.setFill(Color.RED);
                     int dmgWidth = VIEW_WIDTH/3 / boss.MAX_HEALTH * (boss.MAX_HEALTH - enemy.getHealth());
                     hud.fillRect(
                             VIEW_WIDTH/3*2-dmgWidth,
