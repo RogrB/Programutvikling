@@ -24,6 +24,7 @@ public class GameState implements java.io.Serializable {
 
     public static String bossType;
     private boolean multiplayer = false;
+    public boolean gameOver;
 
     public String[][][] levelData;
     public int levelIncrement;
@@ -45,7 +46,7 @@ public class GameState implements java.io.Serializable {
         playerBullets = new ArrayList<>();
         player2Bullets = new ArrayList<>();
         initLevel(levelData);
-
+        gameOver = false;
     }
 
     public void initLevel(String[][][] levelData){

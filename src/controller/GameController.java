@@ -271,8 +271,10 @@ public class GameController {
         if(bossType != null){
             EnemyType boss = EnemyType.valueOf(bossType);
             for(Enemy enemy : gs.enemies){
-                if(enemy.getType() == boss && !enemy.isAlive()){
+                if(enemy.getType() == boss && !enemy.isAlive() && !gs.gameOver){
+                    gs.gameOver = true;
                     startGameWinTimer();
+                    AutoSave.getInstance().stop();
                 }
             }
         }
@@ -285,7 +287,7 @@ public class GameController {
             public void run() {
                 System.out.println("Game Won!");
             }
-        }, 3000);
+        }, 2000);
     }
     
     public HUD getHUD() {
