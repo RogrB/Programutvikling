@@ -1,13 +1,8 @@
 package model.player;
 
-import assets.java.Audio;
 import assets.java.Sprite;
-import java.util.ArrayList;
 import javafx.scene.image.Image;
 import model.Entity;
-import model.GameModel;
-import model.GameState;
-import model.Shield;
 import model.weapons.Basic;
 import model.weapons.DoubleSwirl;
 import model.weapons.Doubles;
@@ -15,7 +10,6 @@ import model.weapons.HeatSeeking;
 import model.weapons.SpeedBullets;
 import model.weapons.DamageBullets;
 import model.weapons.Weapon;
-import view.GameView;
 import view.ViewUtil;
 
 import static controller.GameController.gs;
@@ -38,8 +32,7 @@ public class Player2 extends Entity {
         );
 
         setCanShoot(true);
-        getImageView().relocate(getX(), getY());        
-        shot = Audio.PLAYER_SHOT;
+        getImageView().relocate(getX(), getY());
         weapon = Weapon.PLAYER_BASIC;
     }    
     

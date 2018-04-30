@@ -1,5 +1,6 @@
 package controller;
 
+import assets.java.AudioManager;
 import assets.java.Sprite;
 import javafx.animation.AnimationTimer;
 import io.AutoSave;
@@ -53,11 +54,11 @@ public class GameController {
         gv.clearAllGraphics();
         gs.newGameState(LevelData.LEVEL4);
         gs.player.init();
-        gameStart();
+        gameTimerInit();
         AutoSave.getInstance().start();
     }
 
-    private void gameStart() {
+    private void gameTimerInit() {
         gameMainTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -90,15 +91,16 @@ public class GameController {
         }; gameMainTimer.start();
     }
 
-    public void loadGame(){
+    public void gameStart(){
         gv.clearAllGraphics();
         gs.loadGameData();
         try {
             gameMainTimer.start();
         } catch (Exception e) {
-            gameStart();
+            gameTimerInit();
         }
         AutoSave.getInstance().start();
+        AudioManager.getInstance().setMusic("BATTLE");
     }
 
     public void gamePause(){
@@ -159,6 +161,7 @@ public class GameController {
                     }
                     if (!bullet.getHasHit()) {
                         gs.player.setScore(gs.player.getScore() + 10);
+                        AudioManager.getInstance().impactBullets();
                     }
 
                     bullet.hasHit();
@@ -190,7 +193,7 @@ public class GameController {
 
     private void detectPlayerShotByEnemy(){
         for(Basic bullet : gs.enemyBullets){
-            if(bullet.collidesWith(gs.player)){
+            if(bullet.collidesWith(gs.player) && !bullet.getHasHit()){
                 gs.player.takeDamage();
                 bullet.hasHit();
             }

@@ -1,5 +1,6 @@
 package view;
 
+import assets.java.AudioManager;
 import controller.GameController;
 import controller.UserInputs;
 import exceptions.FileIOException;
@@ -14,8 +15,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.util.logging.Logger;
 
 public class MenuView extends ViewUtil{
 
@@ -32,8 +31,6 @@ public class MenuView extends ViewUtil{
     private MenuButton exitButton;
     private MenuButton[] menuElements;
     private VBox mainMenu;
-
-    Logger logger;
 
     private MenuView(){
 
@@ -53,7 +50,7 @@ public class MenuView extends ViewUtil{
 
         try {
             IOGameState.getInstance().loadGameState();
-            GameController.getInstance().loadGame();
+            GameController.getInstance().gameStart();
             Scene scene = new Scene(GameView.getInstance().initScene());
             stage.setScene(scene);
             UserInputs userInputs = new UserInputs(scene);
@@ -81,7 +78,6 @@ public class MenuView extends ViewUtil{
     }
 
     public void continueLastGame(InputEvent event){
-        System.out.println("Dust");
         goToView(event, NewGameView.getInst().initScene());
     }
 
@@ -106,7 +102,7 @@ public class MenuView extends ViewUtil{
             continueGame(event);
         }
         if(buttonName == "LOAD GAME"){
-            loadGame(event);
+            gameStart(event);
         }
         if(buttonName == "MULTIPLAYER"){
             loadMultiplayer(event);
@@ -123,6 +119,9 @@ public class MenuView extends ViewUtil{
     }
 
     public Parent initScene(){
+
+        AudioManager.getInstance().setMusic("MENU");
+
         /*
         På et eller annet tidspunkt må vi legge inn en greie som sjekker om spilleren har spilt før, slik at man første gang
         kun vil ha "NEW GAME". Etter at spilleren har spilt en gang bør dette bli til "LOAD GAME" og "NEW GAME". Tenker vi kan
@@ -164,10 +163,12 @@ public class MenuView extends ViewUtil{
                 menuElements[elementCounter].lostFocus();
                 traverseMenu(event.getCode(), menuElements);
                 menuElements[elementCounter].gainedFocus();
+                AudioManager.getInstance().nav();
             }
             if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE){
                 select(menuElements[elementCounter].getText(), event);
                 elementCounter = 0;
+                AudioManager.getInstance().navSelect();
             }
         });
 

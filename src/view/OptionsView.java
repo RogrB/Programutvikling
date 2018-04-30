@@ -28,8 +28,8 @@ public class OptionsView extends ViewUtil{
     public VBox optionsMenu;
 
     public static int difficultyValue = 3;
-    public int soundValue = 50;
-    public int musicValue = 50;
+    public static int soundValue = 50;
+    public static int musicValue = 50;
 
     public Label soundLabel;
     private Label soundTextLabel;

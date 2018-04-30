@@ -1,5 +1,6 @@
 package view;
 
+import assets.java.AudioManager;
 import javafx.scene.Parent;
 import javafx.scene.canvas.*;
 import javafx.scene.image.Image;
@@ -11,7 +12,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.Existance;
 import model.GameModel;
-import model.GameState;
 import model.enemy.Enemy;
 import model.enemy.EnemyType;
 import model.weapons.*;
@@ -52,14 +52,19 @@ public class GameView extends ViewUtil{
     private Text dialogText;
     public StackPane dialogBox;
 
+    public AudioManager am;
+
     private static final String BG_IMG = "assets/image/background.jpg";
 
     public void mvcSetup(){
         gm.mvcSetup();
         gc.mvcSetup();
+        am = AudioManager.getInstance();
     }
 
     public Parent initScene() {
+
+        AudioManager.getInstance().setMusic("BATTLE");
 
         scoreText = new Text(VIEW_WIDTH - 150, 60, "Score: " + Integer.toString(gs.player.getScore()));
         levelText = new Text(VIEW_WIDTH - 150, 30, "Level 1"); // Må hente riktig level fra leveldata
@@ -105,7 +110,7 @@ public class GameView extends ViewUtil{
             rect.setHeight(30);
             rect.setWidth(30);
         }
-        
+
         Pane root = new Pane();
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));

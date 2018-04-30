@@ -1,7 +1,6 @@
 package model.enemy;
 
 import assets.java.Sprite;
-import javafx.scene.image.Image;
 import model.weapons.Weapon;
 
 public enum EnemyType {
@@ -32,12 +31,17 @@ public enum EnemyType {
     public final Sprite SPRITE;
     public final double SHOOTING_CHANCE;
     public final Weapon WEAPON;
+    public final boolean IS_BOSS;
 
     EnemyType(int MAX_HEALTH, Sprite sprite, double shootingChance, Weapon weapon) {
         this.MAX_HEALTH = MAX_HEALTH;
         this.SPRITE = sprite;
         this.SHOOTING_CHANCE = shootingChance;
         this.WEAPON = weapon;
+        if(this.name() == "BOSS01" || this.name() == "BOSS02")
+            IS_BOSS = true;
+        else
+            IS_BOSS = false;
     }
 
     public boolean canShoot(){
