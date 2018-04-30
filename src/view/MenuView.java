@@ -94,15 +94,15 @@ public class MenuView extends ViewUtil{
     }
 
     public void select(String buttonName, KeyEvent event){ //KeyEvent is only here so you can extract Stage from an event. Hacky, I know.
-        /*if(buttonName == "NEW GAME"){
-            //createNewSave(event);
+        AudioManager.getInstance().navSelect();
+        if(buttonName == "NEW GAME"){
             createNewGame(event);
         }
         if(buttonName == "CONTINUE"){
             continueGame(event);
         }
         if(buttonName == "LOAD GAME"){
-            gameStart(event);
+            loadGame(event);
         }
         if(buttonName == "MULTIPLAYER"){
             loadMultiplayer(event);
@@ -115,7 +115,7 @@ public class MenuView extends ViewUtil{
         }
         if(buttonName == "EXIT"){
             exitGame();
-        }*/
+        }
     }
 
     public Parent initScene(){
@@ -163,12 +163,10 @@ public class MenuView extends ViewUtil{
                 menuElements[elementCounter].lostFocus();
                 traverseMenu(event.getCode(), menuElements);
                 menuElements[elementCounter].gainedFocus();
-                AudioManager.getInstance().nav();
             }
             if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE){
                 select(menuElements[elementCounter].getText(), event);
                 elementCounter = 0;
-                AudioManager.getInstance().navSelect();
             }
         });
 
