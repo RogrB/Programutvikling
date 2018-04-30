@@ -2,7 +2,7 @@ package view;
 
 import controller.GameController;
 import controller.UserInputs;
-import exceptions.LoadFileException;
+import exceptions.FileIOException;
 import io.IOGameState;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -36,7 +36,7 @@ public class MenuView extends ViewUtil{
     Logger logger;
 
     private MenuView(){
-        
+
     }
 
     public void createNewGame(InputEvent event){
@@ -58,7 +58,7 @@ public class MenuView extends ViewUtil{
             stage.setScene(scene);
             UserInputs userInputs = new UserInputs(scene);
 
-        } catch (LoadFileException e) {
+        } catch (FileIOException e) {
             System.err.println(e.getMessage());
         }
     }

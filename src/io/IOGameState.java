@@ -1,6 +1,6 @@
 package io;
 
-import exceptions.LoadFileException;
+import exceptions.FileIOException;
 import model.GameState;
 import model.enemy.Enemy;
 
@@ -16,7 +16,7 @@ public class IOGameState {
     private IOGameState(){}
     public static IOGameState getInstance(){ return inst; }
 
-    public void saveGameState(){
+    public void saveGameState() throws FileIOException {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
 
@@ -31,17 +31,19 @@ public class IOGameState {
             oos.close();
             fos.close();
 
-        } catch (IOException e) {
-            System.err.println("Could not save GameState");
-        }
+            saveArrayList(gs.enemies, "tmp/ArrayEnemies.ser");
+            saveArrayList(gs.enemyBullets, "tmp/ArrayEnemyBullets.ser");
+            saveArrayList(gs.playerBullets, "tmp/ArrayPlayerBullets.ser");
+            saveArrayList(gs.powerups, "tmp/ArrayPowerups.ser");
 
-        saveArrayList(gs.enemies, "tmp/ArrayEnemies.ser");
-        saveArrayList(gs.enemyBullets, "tmp/ArrayEnemyBullets.ser");
-        saveArrayList(gs.playerBullets, "tmp/ArrayPlayerBullets.ser");
-        saveArrayList(gs.powerups, "tmp/ArrayPowerups.ser");
+        } catch (IOException e) {
+            throw new FileIOException("Save game - Could not save to file tmp/GameState.ser");
+        } catch (FileIOException f) {
+            throw new FileIOException("Save game - "+f.getMessage());
+        }
     }
 
-    public void loadGameState() throws LoadFileException {
+    public void loadGameState() throws FileIOException {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
 
@@ -60,15 +62,15 @@ public class IOGameState {
             gs.powerups = (ArrayList) loadList("tmp/ArrayPowerups.ser");
 
         } catch (IOException i) {
-            throw new LoadFileException("Can't locate file: tmp/GameState.ser");
+            throw new FileIOException("Load game - Can't locate file: tmp/GameState.ser");
         } catch (ClassNotFoundException c) {
-            throw new LoadFileException("Corrupt class or file in: tmp/GameState.ser");
-        } catch (LoadFileException l) {
-            throw new LoadFileException(l.getMessage());
+            throw new FileIOException("Load game - Corrupt class or file in: tmp/GameState.ser");
+        } catch (FileIOException f) {
+            throw new FileIOException("Load game - "+f.getMessage());
         }
     }
 
-    private void saveArrayList(ArrayList list, String src){
+    private void saveArrayList(ArrayList list, String src) throws FileIOException {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
 
@@ -79,13 +81,13 @@ public class IOGameState {
             oos.flush();
             oos.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new FileIOException("Cant't locate file: "+src);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new FileIOException("Error writing to file: "+src);
         }
     }
 
-    private List loadList(String src) throws LoadFileException {
+    private List loadList(String src) throws FileIOException {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
 
@@ -100,11 +102,11 @@ public class IOGameState {
             fis.close();
             ois.close();
         } catch (FileNotFoundException e) {
-            throw new LoadFileException("Can't locate file: "+src);
+            throw new FileIOException("Can't locate file: "+src);
         } catch (IOException e) {
-            throw new LoadFileException("Error loading file: "+src);
+            throw new FileIOException("Corrupt save file: "+src);
         } catch (ClassNotFoundException e) {
-            throw new LoadFileException("Corrupt class or file in: "+src);
+            throw new FileIOException("Corrupt class state in: "+src);
         }
         return res;
     }

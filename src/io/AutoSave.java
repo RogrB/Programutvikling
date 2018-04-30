@@ -1,5 +1,7 @@
 package io;
 
+import exceptions.FileIOException;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,7 +21,11 @@ public class AutoSave {
 
             @Override
             public void run() {
-                io.saveGameState();
+                try {
+                    io.saveGameState();
+                } catch (FileIOException e) {
+                    System.err.println(e.getMessage());
+                }
             }
         }, 700, 700);
     }
