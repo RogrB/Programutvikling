@@ -1,5 +1,6 @@
 package io;
 
+import exceptions.LoadFileException;
 import model.GameState;
 import model.enemy.Enemy;
 
@@ -40,7 +41,7 @@ public class IOGameState {
         saveArrayList(gs.powerups, "tmp/ArrayPowerups.ser");
     }
 
-    public void loadGameState(){
+    public void loadGameState() throws LoadFileException {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
 
@@ -53,16 +54,18 @@ public class IOGameState {
             ois.close();
             fis.close();
 
-        } catch (IOException i) {
-            System.err.println("Could not load GameState");
-        } catch (ClassNotFoundException c) {
-            System.err.println("GameState class not found");
-        }
+            gs.enemies = (ArrayList) loadList("tmp/ArrayEnemies.ser");
+            gs.enemyBullets = (ArrayList) loadList("tmp/ArrayEnemyBullets.ser");
+            gs.playerBullets = (ArrayList) loadList("tmp/ArrayPlayerBullets.ser");
+            gs.powerups = (ArrayList) loadList("tmp/ArrayPowerups.ser");
 
-        gs.enemies = (ArrayList) loadList("tmp/ArrayEnemies.ser");
-        gs.enemyBullets = (ArrayList) loadList("tmp/ArrayEnemyBullets.ser");
-        gs.playerBullets = (ArrayList) loadList("tmp/ArrayPlayerBullets.ser");
-        gs.powerups = (ArrayList) loadList("tmp/ArrayPowerups.ser");
+        } catch (IOException i) {
+            throw new LoadFileException("Can't locate file: tmp/GameState.ser");
+        } catch (ClassNotFoundException c) {
+            throw new LoadFileException("Corrupt class or file in: tmp/GameState.ser");
+        } catch (LoadFileException l) {
+            throw new LoadFileException(l.getMessage());
+        }
     }
 
     private void saveArrayList(ArrayList list, String src){
@@ -82,24 +85,28 @@ public class IOGameState {
         }
     }
 
-    private List loadList(String src){
+    private List loadList(String src) throws LoadFileException {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
 
-        List<Enemy> enemies = null;
+        List<Enemy> res = null;
 
         try {
             fis = new FileInputStream(src);
             ois = new ObjectInputStream(fis);
-            enemies = (ArrayList<Enemy>) ois.readObject();
+
+            res = (ArrayList<Enemy>) ois.readObject();
+
+            fis.close();
+            ois.close();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new LoadFileException("Can't locate file: "+src);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new LoadFileException("Error loading file: "+src);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new LoadFileException("Corrupt class or file in: "+src);
         }
-        return enemies;
+        return res;
     }
 
     public boolean saveStateExists(){

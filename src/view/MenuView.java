@@ -2,6 +2,7 @@ package view;
 
 import controller.GameController;
 import controller.UserInputs;
+import exceptions.LoadFileException;
 import io.IOGameState;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -13,6 +14,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.util.logging.Logger;
 
 public class MenuView extends ViewUtil{
 
@@ -29,7 +32,11 @@ public class MenuView extends ViewUtil{
     private MenuButton exitButton;
     private MenuButton[] menuElements;
     private VBox mainMenu;
-    public MenuView(){
+
+    Logger logger;
+
+    private MenuView(){
+        
     }
 
     public void createNewGame(InputEvent event){
@@ -42,14 +49,18 @@ public class MenuView extends ViewUtil{
     }
 
     public void continueGame(InputEvent event){
-        System.out.println("Loading");
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        IOGameState.getInstance().loadGameState();
-        GameController.getInstance().loadGame();
-        Scene scene = new Scene(GameView.getInstance().initScene());
-        stage.setScene(scene);
-        UserInputs userInputs = new UserInputs(scene);
-        System.out.println("Totally kept playing");
+
+        try {
+            IOGameState.getInstance().loadGameState();
+            GameController.getInstance().loadGame();
+            Scene scene = new Scene(GameView.getInstance().initScene());
+            stage.setScene(scene);
+            UserInputs userInputs = new UserInputs(scene);
+
+        } catch (LoadFileException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     public void showLevelSelect(InputEvent event){

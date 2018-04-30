@@ -7,7 +7,7 @@ public class SpeedBullets extends Basic {
         x,
         y,
         weapon.PLAYER_UPGRADED);
-    }    
+    }
     
     
 }
