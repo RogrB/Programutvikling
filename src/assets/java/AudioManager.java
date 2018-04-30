@@ -95,7 +95,7 @@ public class AudioManager {
 
                 track = new Media(MUSIC_BATTLE.toURI().toString());
                 musicPlayer = new MediaPlayer(track);
-                musicPlayer.setVolume((float) musicValue / 100 * .3);
+                musicPlayer.setVolume((float) musicValue / 100);
                 musicPlayer.play();
                 musicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
                 break;
@@ -162,7 +162,7 @@ public class AudioManager {
     private void play(File file, Float volume){
         Media sound = new Media(file.toURI().toString());
         MediaPlayer sfxPlayer = new MediaPlayer(sound);
-        sfxPlayer.setVolume(volume * ((float) soundValue / 100 * .3));
+        sfxPlayer.setVolume(volume * ((float) soundValue / 100));
         sfxPlayer.play();
     }
 }
