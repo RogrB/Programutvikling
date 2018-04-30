@@ -1,0 +1,22 @@
+Ting som må gjøres før 11. mai:
+- Loade ny level når man er ferdig med en
+- Filbehandling (HVis filen er korrupt eller ikke finnes skal det gis beskjed om det)
+- Støtte av filbehandling gjennom menyene
+- Starte nytt multiplayer game fra multiplayer menuview
+- Sarte ny level i multiplayer når man er ferdig med en (må synces)
+- Hente levelnummer fra leveldata til HUD
+- Finne ut hvordan vi skal gjøre multiplayer pause
+- Asteroid death i multiplayer
+- Scrollable bakgrunn
+- Ny bakgrunn for nye levels
+- Player shield on newgame
+
+Ting som må gjøres før 16. mai:
+- Optimalisering
+- Hva kan gjøres i threads i stedenfor?
+- Javadocs dokumentering for alle klasser
+- Skrive grupperapport (det må komme tydelig frem i besvarelsen hvordan bruk av tråder har forbedret ytelsen og i hvor stor grad ytelsen har blitt forbedret)
+- Skrive individuell rapport
+
+
+
