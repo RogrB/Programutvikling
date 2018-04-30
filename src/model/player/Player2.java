@@ -8,12 +8,12 @@ import model.Entity;
 import model.GameModel;
 import model.GameState;
 import model.Shield;
-import model.weapons.Bullet;
+import model.weapons.Basic;
 import model.weapons.DoubleSwirl;
 import model.weapons.Doubles;
 import model.weapons.HeatSeeking;
-import model.weapons.Upgrade1;
-import model.weapons.Upgrade2;
+import model.weapons.SpeedBullets;
+import model.weapons.DamageBullets;
 import model.weapons.Weapon;
 import view.GameView;
 import view.ViewUtil;
@@ -51,13 +51,13 @@ public class Player2 extends Entity {
     public void shoot(int x, int y) {
         switch(weaponType) {
             case "Bullet":
-                gs.player2Bullets.add(new Bullet(x + width - 10, y + (height / 2) - 8, weapon));
+                gs.player2Bullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "Upgrade1":
-                gs.player2Bullets.add(new Upgrade1(x + width - 10, y + (height / 2) - 8, weapon));
+                gs.player2Bullets.add(new SpeedBullets(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "Upgrade2":
-                gs.player2Bullets.add(new Upgrade2(x + width - 10, y + (height / 2) - 8, weapon));
+                gs.player2Bullets.add(new DamageBullets(x + width - 10, y + (height / 2) - 8, weapon));
                 break;        
             case "HeatSeeking":
                 gs.player2Bullets.add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));

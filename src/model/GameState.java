@@ -5,7 +5,7 @@ import model.enemy.Enemy;
 import model.levels.LevelLoader;
 import model.player.Player;
 import model.player.Player2;
-import model.weapons.Bullet;
+import model.weapons.Basic;
 
 import java.io.ObjectStreamException;
 import java.util.ArrayList;
@@ -15,9 +15,9 @@ public class GameState implements java.io.Serializable {
     public ArrayList<PowerUp> powerups;
     public static ArrayList<Enemy> enemies;
 
-    public ArrayList<Bullet> enemyBullets;
-    public ArrayList<Bullet> playerBullets;
-    public ArrayList<Bullet> player2Bullets;
+    public ArrayList<Basic> enemyBullets;
+    public ArrayList<Basic> playerBullets;
+    public ArrayList<Basic> player2Bullets;
 
     public Player player = Player.getInst();
     public Player2 player2 = Player2.getInst();
@@ -63,8 +63,8 @@ public class GameState implements java.io.Serializable {
         player2.imageView.relocate(player2.getX(), player2.getY());
 
         for(Enemy enemy : enemies) { enemy.newSprite(enemy.sprite); }
-        for(Bullet bullet : enemyBullets){ bullet.newSprite(bullet.sprite); }
-        for(Bullet bullet : playerBullets){ bullet.newSprite(bullet.sprite); }
+        for(Basic bullet : enemyBullets){ bullet.newSprite(bullet.sprite); }
+        for(Basic bullet : playerBullets){ bullet.newSprite(bullet.sprite); }
         player.canShoot = true;
         player.move("STOP");
         for(PowerUp powerUp : powerups){ powerUp.newSprite(powerUp.sprite); }

@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import model.GameModel;
 import multiplayer.MultiplayerHandler;
 import view.ViewUtil;
+import view.HUD;
 
 public class Player extends Entity {
 
@@ -50,6 +51,16 @@ public class Player extends Entity {
             setShield();
         }
     }
+    
+    public void init() {
+        inst = new Player();
+        hasShield = false;
+        setHealth(5);
+        immunity = false;
+        shooting = false;
+        score = 0;
+        this.weaponType = playerBehaviour.powerUp("Reset");
+    }
 
     public void update(){
         if(!playerIsOutOfBounds()){
@@ -81,15 +92,15 @@ public class Player extends Entity {
         switch(powerUp.getName()) {
             case "WEAPON_POWERUP":
                 powerUp();
-                System.out.println("Weapon upgraded");
+                HUD.getInstance().renderPowerUpText("Weapon Upgraded!");
                 break;
             case "HEALTH_POWERUP":
                 setHealth(getHealth() + 1);
-                System.out.println("Health up");
+                HUD.getInstance().renderPowerUpText("Health up!");
                 break;
             case "SHIELD_POWERUP":
                 setShield();
-                System.out.println("Shield!");
+                HUD.getInstance().renderPowerUpText("Shield!");
                 break;
         }
     }
@@ -252,6 +263,10 @@ public class Player extends Entity {
     
     public void setScore(int score) {
         this.score = score;
+    }
+    
+    public String getWeaponType() {
+        return this.weaponType;
     }
     
 }

@@ -53,14 +53,14 @@ public class PlayerBehaviour implements java.io.Serializable {
     
     public void shoot(String weapontype, int x, int y, int width, int height, Weapon weapon) {
             switch(weapontype) {
-                case "Bullet":
-                    gs.playerBullets.add(new Bullet(x + width - 10, y + (height / 2) - 8, weapon));
+                case "Basic":
+                    gs.playerBullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
-                case "Upgrade1":
-                    gs.playerBullets.add(new Upgrade1(x + width - 10, y + (height / 2) - 8, weapon));
+                case "SpeedBullets":
+                    gs.playerBullets.add(new SpeedBullets(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
-                case "Upgrade2":
-                    gs.playerBullets.add(new Upgrade2(x + width - 10, y + (height / 2) - 8, weapon));
+                case "DamageBullets":
+                    gs.playerBullets.add(new DamageBullets(x + width - 10, y + (height / 2) - 8, weapon));
                     break;        
                 case "HeatSeeking":
                     gs.playerBullets.add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
@@ -73,19 +73,27 @@ public class PlayerBehaviour implements java.io.Serializable {
                     gs.playerBullets.add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));
                     gs.playerBullets.add(new DoubleSwirl(x + width - 10, y + (height / 2) + 15, weapon, false));
                     break;
+                case "TripleBurst":
+                    gs.playerBullets.add(new TripleBurst(x + width - 10, y + (height / 2) - 25, weapon, 1));
+                    gs.playerBullets.add(new TripleBurst(x + width - 10, y + (height / 2), weapon, 2));
+                    gs.playerBullets.add(new TripleBurst(x + width - 10, y + (height / 2) + 15, weapon, 3));
+                    break;                    
             }
     }
     
     public String powerUp(String weaponType) {
         String returnString = "";
         switch(weaponType) {
-            case "Bullet":
-                returnString = "Upgrade1";
+            case "Reset":
+                returnString = "Basic";
                 break;
-            case "Upgrade1":
-                returnString = "Upgrade2";
+            case "Basic":
+                returnString = "SpeedBullets";
                 break;
-            case "Upgrade2":
+            case "SpeedBullets":
+                returnString = "DamageBullets";
+                break;
+            case "DamageBullets":
                 returnString = "HeatSeeking";
                 break;
             case "HeatSeeking":
@@ -95,8 +103,11 @@ public class PlayerBehaviour implements java.io.Serializable {
                 returnString = "DoubleSwirl";
                 break;
             case "DoubleSwirl":
-                returnString = "DoubleSwirl";
+                returnString = "TripleBurst";
                 break;
+            case "TripleBurst":
+                returnString = "TripleBurst";
+                break;                
         }
         return returnString;
     }

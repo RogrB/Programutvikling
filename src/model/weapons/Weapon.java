@@ -11,6 +11,7 @@ public enum Weapon {
     PLAYER_HEATSEEKING( Sprite.WEAPON_PLAYER_LASERCIRCLE3,  1,      300,        BulletHit.PLAYER_BASIC),
     PLAYER_DOUBLES(     Sprite.WEAPON_PLAYER_LASERCIRCLE,   1,      300,        BulletHit.PLAYER_BASIC),
     PLAYER_DOUBLESWIRL( Sprite.WEAPON_PLAYER_LASERCIRCLE2,  1,      300,        BulletHit.PLAYER_BASIC),
+    PLAYER_TRIPLEBURST( Sprite.WEAPON_PLAYER_LASERCIRCLE5,  1,      300,        BulletHit.PLAYER_BASIC),
     ENEMY_BASIC(        Sprite.WEAPON_ENEMY_BASIC,          1,      300,        BulletHit.ENEMY_BASIC),
     ENEMY_CIRCLE(       Sprite.WEAPON_PLAYER_LASERCIRCLE4,  1,      300,        BulletHit.ENEMY_BASIC);
 

@@ -36,7 +36,7 @@ public class GameController {
 
     AnimationTimer gameMainTimer;
 
-    public Iterator<Bullet> bulletIterator;
+    public Iterator<Basic> bulletIterator;
     public Iterator<Enemy> enemyIterator;
     public Iterator<PowerUp> powerUpIterator;
 
@@ -52,6 +52,7 @@ public class GameController {
     public void newGame(){
         gv.clearAllGraphics();
         gs.newGameState(LevelData.LEVEL4);
+        gs.player.init();
         gameStart();
         AutoSave.getInstance().start();
     }
@@ -126,21 +127,21 @@ public class GameController {
     private void moveAllBullets(){
         bulletIterator = gs.playerBullets.iterator();
         while(bulletIterator.hasNext()){
-            Bullet bullet = bulletIterator.next();
+            Basic bullet = bulletIterator.next();
             bullet.update(20, 0, bulletIterator);
             gv.render(bullet);
         }
 
         bulletIterator = gs.player2Bullets.iterator();
         while(bulletIterator.hasNext()){
-            Bullet bullet = bulletIterator.next();
+            Basic bullet = bulletIterator.next();
             bullet.update(20, 0, bulletIterator);
             gv.render(bullet);
         }
 
         bulletIterator = gs.enemyBullets.iterator();
         while(bulletIterator.hasNext()){
-            Bullet bullet = bulletIterator.next();
+            Basic bullet = bulletIterator.next();
             bullet.update(-12, 0, bulletIterator);
             gv.render(bullet);
         }
@@ -148,7 +149,7 @@ public class GameController {
 
     private void detectEnemyShotByPlayer(){
         ArrayList<Enemy> tempEnemies = new ArrayList<>();
-        for(Bullet bullet : gs.playerBullets){
+        for(Basic bullet : gs.playerBullets){
             for(enemyIterator = gs.enemies.iterator(); enemyIterator.hasNext();){
                 Enemy enemy = enemyIterator.next();
                 if(bullet.collidesWith(enemy)){
@@ -170,7 +171,7 @@ public class GameController {
             }
         }
 
-        for(Bullet bullet : gs.player2Bullets){
+        for(Basic bullet : gs.player2Bullets){
             for(Enemy enemy : gs.enemies){
                 if(bullet.collidesWith(enemy))
                     bullet.hasHit();
@@ -188,7 +189,7 @@ public class GameController {
     }
 
     private void detectPlayerShotByEnemy(){
-        for(Bullet bullet : gs.enemyBullets){
+        for(Basic bullet : gs.enemyBullets){
             if(bullet.collidesWith(gs.player)){
                 gs.player.takeDamage();
                 bullet.hasHit();
@@ -285,5 +286,9 @@ public class GameController {
                 System.out.println("Game Won!");
             }
         }, 3000);
+    }
+    
+    public HUD getHUD() {
+        return this.hud;
     }
 }

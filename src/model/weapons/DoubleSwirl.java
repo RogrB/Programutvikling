@@ -4,7 +4,7 @@ package model.weapons;
 
 import java.util.Iterator;
 
-public class DoubleSwirl extends Bullet {
+public class DoubleSwirl extends Basic {
     
     private boolean top;
     private boolean goingUp;

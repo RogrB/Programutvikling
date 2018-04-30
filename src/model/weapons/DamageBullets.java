@@ -1,9 +1,9 @@
 
 package model.weapons;
 
-public class Upgrade2 extends Bullet {
+public class DamageBullets extends Basic {
     
-    public Upgrade2(int x, int y, Weapon weapon) {
+    public DamageBullets(int x, int y, Weapon weapon) {
         super(
         x,
         y,

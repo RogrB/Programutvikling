@@ -39,6 +39,9 @@ public class GameView extends ViewUtil{
     
     Text scoreText;
     Text levelText;
+    Text weaponType;
+    
+    private final static Font powerUpFont = new Font("SansSerif", 12);
     
     final GraphicsContext graphics = canvas.getGraphicsContext2D();
     final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
@@ -65,6 +68,10 @@ public class GameView extends ViewUtil{
         scoreText.setFont(Font.font("Verdana", 20));  
         levelText.setFill(Color.WHITE);
         scoreText.setFont(Font.font("Verdana", 20));
+        
+        weaponType = new Text(110, 30, "WeaponType: ");
+        weaponType.setFill(Color.WHITE);
+        weaponType.setFont(Font.font("Verdana", 14));
 
         dialogBackground = new Rectangle(600, 200);
         dialogBackground.setFill(Color.BLACK);
@@ -103,10 +110,10 @@ public class GameView extends ViewUtil{
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
         if(gm.getMultiplayerStatus()) {
-            root.getChildren().addAll(gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, dialogBox, gs.player2.getImageView());
+            root.getChildren().addAll(gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox, gs.player2.getImageView());
         }
         else {
-            root.getChildren().addAll(gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, dialogBox);
+            root.getChildren().addAll(gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox);
         }
         return root;
     }
@@ -118,7 +125,7 @@ public class GameView extends ViewUtil{
 
     public void render(Existance object) {
         GraphicsContext gc;
-        if(object instanceof Bullet)
+        if(object instanceof Basic)
             gc = bulletLayer;
         else if(object instanceof Enemy)
             gc = enemyLayer;
@@ -151,6 +158,7 @@ public class GameView extends ViewUtil{
         hud.drawImage(h.getPlayerIcon(), 20, 20);
         hud.drawImage(h.getNumeralX(), 50, 20);
         hud.drawImage(h.getLifeCounter(), 70, 20);
+        hud.drawImage(h.getWeaponTypeImg(), 100, 15);
         if(shield) {
             hud.drawImage(h.getShieldIcon(), 20, 50);
             if (gs.player.shield().getCharges() == 2) {
@@ -161,7 +169,7 @@ public class GameView extends ViewUtil{
             EnemyType boss = EnemyType.valueOf(bossType);
             for(Enemy enemy : gs.enemies){
                 if(enemy.getType() == boss){
-                    hud.setFill(Color.RED);
+                    hud.setFill(Color.GREEN);
                     hud.fillRect(
                             VIEW_WIDTH/3,
                             40,
@@ -169,7 +177,7 @@ public class GameView extends ViewUtil{
                             10
                     );
 
-                    hud.setFill(Color.GREEN);
+                    hud.setFill(Color.RED);
                     int dmgWidth = VIEW_WIDTH/3 / boss.MAX_HEALTH * (boss.MAX_HEALTH - enemy.getHealth());
                     hud.fillRect(
                             VIEW_WIDTH/3*2-dmgWidth,
@@ -183,5 +191,17 @@ public class GameView extends ViewUtil{
 
         scoreText.setText("Score: " + Integer.toString(gs.player.getScore()));
         levelText.setText("Level 1"); // må hente riktig level fra leveldata
+        weaponType.setText(h.weaponType());
+    }
+    
+    public void renderPowerUpText(String powerUp, int x, int y, float opacity) {
+        hud.clearRect(x-10, y-10, 300, 100);
+        hud.setFill(new Color(1, 1, 1, opacity));
+        hud.setFont(powerUpFont);
+        hud.fillText(powerUp, x, y);
+    }
+    
+    public void clearPowerUpText(int x, int y) {
+        hud.clearRect(x-10, y-50, 300, 300);
     }
 }

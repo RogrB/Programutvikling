@@ -31,6 +31,8 @@ public class UserInputs {
                 gs.player.powerUp();
             if (event.getCode() == KeyCode.Q)
                 gs.player.setShield();
+            if (event.getCode() == KeyCode.T)
+                GameController.getInstance().getHUD().renderPowerUpText("Test");
         });
 
         s.setOnKeyReleased(event -> {
