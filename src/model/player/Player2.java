@@ -21,7 +21,7 @@ public class Player2 extends Entity {
     private static Player2 inst = new Player2();
     public static Player2 getInst(){ return inst; }
 
-    private String weaponType = "Bullet";
+    private String weaponType = "Basic";
     private PlayerBehaviour behave = new PlayerBehaviour();    
 
     public Player2(){
@@ -44,13 +44,13 @@ public class Player2 extends Entity {
     
     public void shoot(int x, int y) {
         switch(weaponType) {
-            case "Bullet":
+            case "Basic":
                 gs.player2Bullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
-            case "Upgrade1":
+            case "SpeedBullets":
                 gs.player2Bullets.add(new SpeedBullets(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
-            case "Upgrade2":
+            case "DamageBullets":
                 gs.player2Bullets.add(new DamageBullets(x + width - 10, y + (height / 2) - 8, weapon));
                 break;        
             case "HeatSeeking":
@@ -82,6 +82,7 @@ public class Player2 extends Entity {
     
     public void powerUp() {
         this.weaponType = behave.powerUp(weaponType);
+        System.out.println("weapontype is now " + weaponType);
     }    
     
 }
