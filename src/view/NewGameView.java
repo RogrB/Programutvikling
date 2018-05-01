@@ -68,7 +68,7 @@ public class NewGameView extends ViewUtil{
         });
         menuElements[0].gainedFocus();
         containerVBox.setSpacing(40);
-        containerVBox.setTranslateX(450);
+        containerVBox.setTranslateX(400);
         containerVBox.setTranslateY(250);
         backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
         root.getChildren().addAll(header, containerVBox);
@@ -77,19 +77,12 @@ public class NewGameView extends ViewUtil{
 
     @Override
     public void select(String buttonName, KeyEvent event) {
-        switch(elementCounter){
-            case 0:
-
-                break;
-            case 1:
-
-                break;
-            case 2:
-
-                break;
-            case 3:
-                goToView(event, MenuView.getInstance().initScene());
+        if(elementCounter >= 0 && elementCounter < 3){
+            //Åsmund bruk elementCounter sin int. 0-2 er savefiles.
+            goToView(event, NewSaveView.getInst().initScene());
         }
-
+        else if(elementCounter == 3){
+            goToView(event, MenuView.getInstance().initScene());
+        }
     }
 }
