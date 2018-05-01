@@ -51,7 +51,7 @@ public class MultiplayerHandler {
             if (enemy.getID() == id) {
                 if(health < enemy.getHealth()) {
                     enemy.setHealth(health);
-                    System.out.println("Setting health to " + health);
+                    // System.out.println("Setting health to " + health);
                 }
                 if(!alive && enemy.isAlive()) {
                     enemy.isDead();
