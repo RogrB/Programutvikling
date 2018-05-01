@@ -1,6 +1,7 @@
 package model.player;
 
 import assets.java.Sprite;
+import static controller.GameController.gs;
 import javafx.scene.image.Image;
 import model.Entity;
 import model.weapons.Basic;
@@ -9,10 +10,10 @@ import model.weapons.Doubles;
 import model.weapons.HeatSeeking;
 import model.weapons.SpeedBullets;
 import model.weapons.DamageBullets;
+import model.weapons.TripleBurst;
 import model.weapons.Weapon;
 import view.ViewUtil;
 
-import static controller.GameController.gs;
 
 public class Player2 extends Entity {
 
@@ -63,6 +64,11 @@ public class Player2 extends Entity {
                 gs.player2Bullets.add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));
                 gs.player2Bullets.add(new DoubleSwirl(x + width - 10, y + (height / 2) + 15, weapon, false));
                 break;
+            case "TripleBurst":
+                gs.playerBullets.add(new TripleBurst(x + width - 10, y + (height / 2) - 25, weapon, 1));
+                gs.playerBullets.add(new TripleBurst(x + width - 10, y + (height / 2), weapon, 2));
+                gs.playerBullets.add(new TripleBurst(x + width - 10, y + (height / 2) + 15, weapon, 3));
+                break;  
             }        
     }
     

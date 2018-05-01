@@ -46,7 +46,7 @@ public class MultiplayerHandler {
     }
     
     protected void updateEnemies(int id, int health, boolean alive) {
-        System.out.println("trying to find enemyid to apply update");
+        // System.out.println("trying to find enemyid to apply update");
         for(Enemy enemy: gs.enemies) {
             if (enemy.getID() == id) {
                 if(health < enemy.getHealth()) {
