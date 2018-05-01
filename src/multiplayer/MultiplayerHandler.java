@@ -7,6 +7,7 @@ import view.MultiplayerView;
 import javafx.stage.Stage;
 
 import static controller.GameController.gs;
+import model.GameModel;
 import static view.MultiplayerView.stage;
 public class MultiplayerHandler {
     
@@ -94,6 +95,12 @@ public class MultiplayerHandler {
     
     public boolean getConnected() {
         return this.connected;
+    }
+    
+    public void disconnect() {
+        setConnected(false);
+        GameModel.getInstance().setMultiplayerStatus(false);
+        sender.closeSocket();
     }
     
 }

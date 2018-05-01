@@ -45,19 +45,21 @@ public class Player extends Entity {
         setCanShoot(true);
         getImageView().relocate(getX(), getY());
         weapon = Weapon.PLAYER_BASIC;
-        if (hasShield) {
-            setShield();
-        }
     }
     
     public void init() {
         inst = new Player();
         hasShield = false;
-        setHealth(1);
+        if (hasShield) {
+            removeShield();
+        }
+        setHealth(5);
         immunity = false;
         shooting = false;
         score = 0;
         this.weaponType = playerBehaviour.powerUp("Reset");
+        System.out.println("shield = " + hasShield);
+        System.out.println("width = " + getWidth());        
     }
 
     public void update(){

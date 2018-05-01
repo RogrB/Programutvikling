@@ -96,6 +96,14 @@ public class Protocol {
                     System.err.println(e);
                 }
                 break;
+            case "Disconnect":
+                try {
+                    stream.writeChar('D');
+                }
+                catch (IOException e) {
+                    System.err.println(e);
+                }
+                break;
         }
         return bytestream;
     }
@@ -130,6 +138,9 @@ public class Protocol {
                         break;
                     case 'R':
                         MultiplayerHandler.getInstance().establishConnection();
+                        break;
+                    case 'D':
+                        MultiplayerHandler.getInstance().disconnect();
                         break;
                 }
             }
