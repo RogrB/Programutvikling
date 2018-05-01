@@ -59,6 +59,17 @@ public class NewSaveView extends ViewUtil{
 
         saveNameTextField = new TextField();
 
+        saveNameTextField.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE && !Objects.equals(saveNameTextField.getText(), "")){
+                Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                GameController.getInstance().newGame();
+                Scene scene = new Scene(GameView.getInstance().initScene());
+                stage.setScene(scene);
+                UserInputs userInputs = new UserInputs(scene);
+                System.out.println("Totally started a new game");
+            }
+        });
+
         startGameButton = new MenuButton("START");
         startGameButton.setOnMouseClicked(event -> {
             if(!Objects.equals(saveNameTextField.getText(), "")){

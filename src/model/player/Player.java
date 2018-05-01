@@ -53,7 +53,7 @@ public class Player extends Entity {
     public void init() {
         inst = new Player();
         hasShield = false;
-        setHealth(5);
+        setHealth(1);
         immunity = false;
         shooting = false;
         score = 0;
