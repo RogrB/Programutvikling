@@ -20,6 +20,7 @@ import javafx.scene.text.Font;
 
 import static model.GameState.bossType;
 import static controller.GameController.gs;
+import multiplayer.MultiplayerHandler;
 
 public class GameView extends ViewUtil{
 
@@ -101,6 +102,11 @@ public class GameView extends ViewUtil{
             if(event.getCode() == KeyCode.ESCAPE){
                 goToView(event, MenuView.getInstance().initScene());
                 gc.gamePause();
+                if(gm.getMultiplayerStatus()) {
+                    MultiplayerHandler.getInstance().disconnect();
+                    System.out.println("Game paused, disconnected from multiplayer");
+                    MultiplayerHandler.getInstance().send("Disconnect", 0, 0);
+                }
             }
         });
         dialogBox.setOpacity(0);
