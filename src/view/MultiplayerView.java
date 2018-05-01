@@ -73,12 +73,12 @@ public class MultiplayerView extends ViewUtil{
             System.out.println(hostnameField.getText());
             if(hostnameField.getText() != null && hostnameField.getText() != null && localPortField.getText() != null){
                 // ROGER STUFF
-                mp.startConnection();
+                //mp.startConnection();
+                initMultiplayerGame();
                 
-                /*
                 Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
                 startMultiplayerGame(stage); // Trenger å kalle denne fra initMultiplayerGame()
-                */
+                
             }
             else{
                 if(hostnameField.getText() == ""){ // not sure if these work yet, cba to check

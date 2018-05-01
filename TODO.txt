@@ -10,6 +10,8 @@ Ting som må gjøres før 11. mai:
 - Scrollable bakgrunn
 - Ny bakgrunn for nye levels
 - Player shield on newgame
+- Scorescreen
+- Feilmelding output i meny (spesielt multiplayer)
 
 Ting som må gjøres før 16. mai:
 - Optimalisering
