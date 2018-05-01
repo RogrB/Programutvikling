@@ -34,7 +34,6 @@ public class LoadGameView extends ViewUtil{
         root = new Pane();
         saveFiles = new VBox();
         containerVBox = new VBox();
-        header = new Text("SPACE GAME");
         header.setX(300);
         header.setY(175);
         header.setFill(Color.WHITE);

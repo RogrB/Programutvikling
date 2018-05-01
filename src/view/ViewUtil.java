@@ -17,7 +17,7 @@ public abstract class ViewUtil {
     public static final int VIEW_WIDTH = 1200;
     public static final int VIEW_HEIGHT = 800;
     public Pane root;
-    public Text header;
+    public Text header = new Text("SPACE GAME");
     public int elementCounter = 0;
 
     public void goToView(InputEvent event, Parent node){
