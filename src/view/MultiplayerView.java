@@ -47,11 +47,8 @@ public class MultiplayerView extends ViewUtil{
     
     public static Stage stage;
 
-    public Text header;
-
     public Parent initScene(){
         root = new Pane();
-        header = new Text("SPACE GAME");
         header.setX(300);
         header.setY(175);
         header.setFill(Color.WHITE);
@@ -59,7 +56,7 @@ public class MultiplayerView extends ViewUtil{
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
         multiplayerMenu = new VBox();
-        hostname = new Label("HOSTNAME");
+        hostname = new Label("OTHER PLAYERS IP");
         hostname.setTextFill(Color.WHITE);
         remotePort = new Label("REMOTE PORT");
         remotePort.setTextFill(Color.WHITE);

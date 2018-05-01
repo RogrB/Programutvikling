@@ -17,31 +17,20 @@ public class NewGameView extends ViewUtil{
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
-    private Text selectSaveText;
-
-    private VBox saveFiles;
-    private VBox containerVBox;
-
-    private MenuButton save1;
-    private MenuButton save2;
-    private MenuButton save3;
-    private MenuButton backButton;
-
     private MenuButton[] menuElements;
 
 
     @Override
     public Parent initScene() {
         root = new Pane();
-        saveFiles = new VBox();
-        containerVBox = new VBox();
-        header = new Text("SPACE GAME");
+        VBox saveFiles = new VBox();
+        VBox containerVBox = new VBox();
         header.setX(300);
         header.setY(175);
         header.setFill(Color.WHITE);
         header.setFont(header.getFont().font(100));
 
-        selectSaveText = new Text("SELECT SAVE FILE");
+        Text selectSaveText = new Text("SELECT SAVE FILE");
         selectSaveText.setX(500);
         selectSaveText.setY(275);
         selectSaveText.setFill(Color.WHITE);
@@ -50,10 +39,13 @@ public class NewGameView extends ViewUtil{
         root.setPrefSize(ViewUtil.VIEW_WIDTH, ViewUtil.VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
 
-        backButton = new MenuButton("BACK");
-        save1 = new MenuButton("SAVE 1");
-        save2 = new MenuButton("SAVE 2");
-        save3 = new MenuButton("SAVE 3");
+        MenuButton backButton = new MenuButton("BACK");
+        MenuButton save1 = new MenuButton("SAVE 1");
+        save1.setOnMouseClicked(event -> goToView(event, NewSaveView.getInst().initScene()));
+        MenuButton save2 = new MenuButton("SAVE 2");
+        save2.setOnMouseClicked(event -> goToView(event, NewSaveView.getInst().initScene()));
+        MenuButton save3 = new MenuButton("SAVE 3");
+        save3.setOnMouseClicked(event -> goToView(event, NewSaveView.getInst().initScene()));
 
         menuElements = new MenuButton[]{save1, save2, save3, backButton};
 
@@ -76,7 +68,7 @@ public class NewGameView extends ViewUtil{
         });
         menuElements[0].gainedFocus();
         containerVBox.setSpacing(40);
-        containerVBox.setTranslateX(450);
+        containerVBox.setTranslateX(400);
         containerVBox.setTranslateY(250);
         backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
         root.getChildren().addAll(header, containerVBox);
@@ -85,9 +77,12 @@ public class NewGameView extends ViewUtil{
 
     @Override
     public void select(String buttonName, KeyEvent event) {
-        if(buttonName == "BACK"){
+        if(elementCounter >= 0 && elementCounter < 3){
+            //Åsmund bruk elementCounter sin int. 0-2 er savefiles.
+            goToView(event, NewSaveView.getInst().initScene());
+        }
+        else if(elementCounter == 3){
             goToView(event, MenuView.getInstance().initScene());
         }
-
     }
 }

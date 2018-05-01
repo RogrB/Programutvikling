@@ -1,5 +1,6 @@
 package view;
 
+import assets.java.AudioManager;
 import javafx.geometry.Pos;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.StackPane;
@@ -23,7 +24,10 @@ public class MenuButton extends StackPane{
 
         setAlignment(Pos.CENTER);
         getChildren().addAll(bg, text);
-        this.setOnMouseEntered(event -> gainedFocus());
+        this.setOnMouseEntered(event -> {
+            gainedFocus();
+            AudioManager.getInstance().nav();
+        });
         this.setOnMouseExited(event -> lostFocus());
     }
 

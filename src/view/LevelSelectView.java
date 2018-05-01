@@ -40,7 +40,6 @@ public class LevelSelectView extends ViewUtil{
 
     public Parent initScene(){
         root = new Pane();
-        header = new Text("SPACE GAME");
 
         header.setX(300);
         header.setY(175);
