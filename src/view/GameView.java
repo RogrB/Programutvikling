@@ -194,7 +194,7 @@ public class GameView extends ViewUtil{
             }
         }
 
-        scoreText.setText("Score: " + Integer.toString(gs.player.getScore()));
+        //scoreText.setText("Score: " + Integer.toString(gs.player.getScore()));
         levelText.setText("Level 1"); // må hente riktig level fra leveldata
         weaponType.setText(h.weaponType());
     }

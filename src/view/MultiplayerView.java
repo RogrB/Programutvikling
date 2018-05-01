@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import model.GameModel;
 import multiplayer.MultiplayerHandler;
 import controller.UserInputs;
+import javafx.application.Platform;
 
 public class MultiplayerView extends ViewUtil{
 
@@ -43,6 +44,8 @@ public class MultiplayerView extends ViewUtil{
 
     public MenuButton connectButton;
     public MenuButton backButton;
+    
+    public static Stage stage;
 
     public Text header;
 
@@ -73,11 +76,10 @@ public class MultiplayerView extends ViewUtil{
             System.out.println(hostnameField.getText());
             if(hostnameField.getText() != null && hostnameField.getText() != null && localPortField.getText() != null){
                 // ROGER STUFF
-                //mp.startConnection();
-                initMultiplayerGame();
                 
-                Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-                startMultiplayerGame(stage); // Trenger å kalle denne fra initMultiplayerGame()
+                initMultiplayerGame();
+                stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                mp.startConnection();                
                 
             }
             else{
@@ -121,10 +123,16 @@ public class MultiplayerView extends ViewUtil{
     }
     
     public void startMultiplayerGame(Stage stage) {
-        GameController.getInstance().newGame();
-        Scene scene = new Scene(GameView.getInstance().initScene());
-        stage.setScene(scene);
-        UserInputs userInputs = new UserInputs(scene);
-        System.out.println("Totally started a new Multiplayer game");        
+        
+	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                GameController.getInstance().newGame();
+                Scene scene = new Scene(GameView.getInstance().initScene());
+                stage.setScene(scene);
+                UserInputs userInputs = new UserInputs(scene);
+                System.out.println("Totally started a new Multiplayer game");                      
+            }
+	});              
     }
 }
