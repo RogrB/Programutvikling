@@ -2,7 +2,7 @@
 package model.weapons;
 
 
-public class Doubles extends Bullet {
+public class Doubles extends Basic {
     
     public Doubles(int x, int y, Weapon weapon) {
         super(

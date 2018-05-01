@@ -1,7 +1,10 @@
 package view;
 
+import assets.java.AudioManager;
 import controller.GameController;
 import controller.UserInputs;
+import exceptions.FileIOException;
+import io.IOGameState;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,16 +31,33 @@ public class MenuView extends ViewUtil{
     private MenuButton exitButton;
     private MenuButton[] menuElements;
     private VBox mainMenu;
-    public MenuView(){
+
+    private MenuView(){
+
     }
 
     public void createNewGame(InputEvent event){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        GameController.getInstance().gameStart();
+        GameController.getInstance().newGame();
         Scene scene = new Scene(GameView.getInstance().initScene());
         stage.setScene(scene);
         UserInputs userInputs = new UserInputs(scene);
         System.out.println("Totally started a new game");
+    }
+
+    public void continueGame(InputEvent event){
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+        try {
+            IOGameState.getInstance().loadGameState();
+            GameController.getInstance().gameStart();
+            Scene scene = new Scene(GameView.getInstance().initScene());
+            stage.setScene(scene);
+            UserInputs userInputs = new UserInputs(scene);
+
+        } catch (FileIOException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     public void showLevelSelect(InputEvent event){
@@ -57,8 +77,8 @@ public class MenuView extends ViewUtil{
         System.exit(0);
     }
 
-    public void continueLastGame(){
-        System.out.println("Clicked continue");
+    public void continueLastGame(InputEvent event){
+        goToView(event, NewGameView.getInst().initScene());
     }
 
     public void loadGame(InputEvent event){
@@ -70,16 +90,16 @@ public class MenuView extends ViewUtil{
     }
 
     public boolean gameFileFound(){
-        return true; //EDIT THIS TO EDIT MENU LAYOUT
+        return IOGameState.getInstance().saveStateExists();
     }
 
     public void select(String buttonName, KeyEvent event){ //KeyEvent is only here so you can extract Stage from an event. Hacky, I know.
+        AudioManager.getInstance().navSelect();
         if(buttonName == "NEW GAME"){
-            //createNewSave(event);
             createNewGame(event);
         }
         if(buttonName == "CONTINUE"){
-            continueLastGame();
+            continueGame(event);
         }
         if(buttonName == "LOAD GAME"){
             loadGame(event);
@@ -99,6 +119,9 @@ public class MenuView extends ViewUtil{
     }
 
     public Parent initScene(){
+
+        AudioManager.getInstance().setMusic("MENU");
+
         /*
         På et eller annet tidspunkt må vi legge inn en greie som sjekker om spilleren har spilt før, slik at man første gang
         kun vil ha "NEW GAME". Etter at spilleren har spilt en gang bør dette bli til "LOAD GAME" og "NEW GAME". Tenker vi kan
@@ -113,6 +136,7 @@ public class MenuView extends ViewUtil{
         header.setFont(header.getFont().font(100));
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
+
         newGameButton = new MenuButton("NEW GAME");
         continueButton = new MenuButton("CONTINUE");
         multiplayerButton = new MenuButton("MULTIPLAYER");
@@ -120,8 +144,9 @@ public class MenuView extends ViewUtil{
         selectLevelButton = new MenuButton("LEVEL SELECT");
         optionsButton = new MenuButton("OPTIONS");
         exitButton = new MenuButton("EXIT");
+
         newGameButton.setOnMouseClicked(event -> createNewGame(event));
-        continueButton.setOnMouseClicked(event -> continueLastGame());
+        continueButton.setOnMouseClicked(event -> continueGame(event));
         multiplayerButton.setOnMouseClicked(event -> loadMultiplayer(event));
         loadGameButton.setOnMouseClicked(event -> loadGame(event));
         selectLevelButton.setOnMouseClicked(event -> showLevelSelect(event));
@@ -132,6 +157,7 @@ public class MenuView extends ViewUtil{
         mainMenu.setSpacing(10);
         mainMenu.setTranslateY(300);
         mainMenu.setTranslateX(450);
+
         mainMenu.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
                 menuElements[elementCounter].lostFocus();
@@ -143,6 +169,7 @@ public class MenuView extends ViewUtil{
                 elementCounter = 0;
             }
         });
+
         if(gameFileFound()){
             mainMenu.getChildren().addAll(continueButton, loadGameButton, newGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton);
             menuElements = new MenuButton[]{continueButton, loadGameButton, newGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton};

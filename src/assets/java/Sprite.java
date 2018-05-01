@@ -55,6 +55,7 @@ public enum Sprite {
     WEAPON_PLAYER_LASERCIRCLE2("assets/image/laserCircle02.png"),
     WEAPON_PLAYER_LASERCIRCLE3("assets/image/laserCircle03.png"),
     WEAPON_PLAYER_LASERCIRCLE4("assets/image/laserCircle04.png"),
+    WEAPON_PLAYER_LASERCIRCLE5("assets/image/laserCircle05.png"),
 
     WEAPON_ENEMY_BASIC("assets/image/laserRed.png"),
     WEAPON_ENEMY_BASIC_DMG_1("assets/image/damage/laserRed08.png"),

@@ -1,19 +1,20 @@
 package model.player;
 
-import assets.java.Audio;
 import assets.java.Sprite;
 import model.Entity;
+import model.PowerUp;
 import model.weapons.*;
 import model.Shield;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javafx.scene.image.Image;
 import model.GameModel;
 import multiplayer.MultiplayerHandler;
+import assets.java.AudioManager;
 import view.ViewUtil;
+import view.HUD;
 
 public class Player extends Entity {
 
@@ -42,16 +43,24 @@ public class Player extends Entity {
         );
 
         setCanShoot(true);
-        shot = Audio.PLAYER_SHOT;
         getImageView().relocate(getX(), getY());
         weapon = Weapon.PLAYER_BASIC;
         if (hasShield) {
             setShield();
         }
     }
+    
+    public void init() {
+        inst = new Player();
+        hasShield = false;
+        setHealth(5);
+        immunity = false;
+        shooting = false;
+        score = 0;
+        this.weaponType = playerBehaviour.powerUp("Reset");
+    }
 
     public void update(){
-        playerBehaviour.mvcSetup();
         if(!playerIsOutOfBounds()){
             setY(getY() + playerBehaviour.next());
             getImageView().relocate(getX(), getY());
@@ -76,13 +85,25 @@ public class Player extends Entity {
         }
         return false;
     }
-    
-    public String getWeaponType() {
-        return this.weaponType;
-    }
-    
-    public void setWeaponType(String weaponType) {
-        this.weaponType = weaponType;
+
+    public void powerUp(PowerUp powerUp) {
+        switch(powerUp.getName()) {
+            case "WEAPON_POWERUP":
+                powerUp();
+                HUD.getInstance().renderPowerUpText("Weapon Upgraded!");
+                AudioManager.getInstance().upgradeWeapon();
+                break;
+            case "HEALTH_POWERUP":
+                setHealth(getHealth() + 1);
+                HUD.getInstance().renderPowerUpText("Health up!");
+                AudioManager.getInstance().upgradeHealth();
+                break;
+            case "SHIELD_POWERUP":
+                setShield();
+                HUD.getInstance().renderPowerUpText("Shield!");
+                AudioManager.getInstance().upgradeShield();
+                break;
+        }
     }
     
     public void powerUp() {
@@ -108,6 +129,7 @@ public class Player extends Entity {
     @Override
     public void shoot() {
         if(canShoot()) {
+            AudioManager.getInstance().shotPlayer();
             playerBehaviour.shoot(this.weaponType, getX(), getY(), this.width, this.height, weapon);
             setCanShoot(false);
             shotDelayTimer();
@@ -134,6 +156,7 @@ public class Player extends Entity {
     public void takeDamage(){
         if (!hasShield()) {
             if(!isImmune()){
+                AudioManager.getInstance().impactPlayer();
                 super.takeDamage();
                 if (isAlive()) {
                     initImmunity();
@@ -143,6 +166,7 @@ public class Player extends Entity {
         else {
             if (!shield.isImmune()) {
                 shield.takeDamage();
+                AudioManager.getInstance().impactShield();
             }
         }
     }
@@ -243,6 +267,10 @@ public class Player extends Entity {
     
     public void setScore(int score) {
         this.score = score;
+    }
+    
+    public String getWeaponType() {
+        return this.weaponType;
     }
     
 }

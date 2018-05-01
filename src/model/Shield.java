@@ -1,10 +1,8 @@
 package model;
 
-import javafx.scene.image.Image;
 import assets.java.Sprite;
 import java.util.Timer;
 import java.util.TimerTask;
-import model.player.Player;
 
 public class Shield extends Existance {
     
@@ -66,11 +64,7 @@ public class Shield extends Existance {
         animate();
         setCharges(getCharges()-1);
     }
-    
-    public void setImmunityTime(int time) {
-        this.immunitytime = time;
-    }
-    
+
     public boolean isBroken() {
         return this.broken;
     }

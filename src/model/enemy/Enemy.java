@@ -1,25 +1,24 @@
 package model.enemy;
 
-import assets.java.Sprite;
 import model.Entity;
-import model.GameModel;
 import model.IdGen;
-import model.weapons.Bullet;
+import model.weapons.Basic;
+import assets.java.AudioManager;
 import view.OptionsView;
 
 import java.util.Iterator;
 import java.util.Random;
 
+import static controller.GameController.gs;
+
 public class Enemy extends Entity {
 
     // MVC-access
-    GameModel gm = GameModel.getInstance();
 
     private final EnemyType TYPE;
     private EnemyMovementPattern pattern;
 
     private double chanceToShoot;
-    private double timerToShoot;
     private boolean scoreCount = false;
     private final int enemyID;
 
@@ -64,8 +63,18 @@ public class Enemy extends Entity {
         Random random = new Random();
         if(canShoot()) {
             double shotMod = (double) OptionsView.difficultyValue/3;
-            if(random.nextDouble() > 1 - (chanceToShoot * shotMod))
-                gm.getEnemyBullets().add(new Bullet(getX() + 10, getY() + (this.height / 2) - 8, weapon));
+            if(random.nextDouble() > 1 - (chanceToShoot * shotMod)) {
+                playShotAudio();
+                gs.enemyBullets.add(new Basic(getX() + 10, getY() + (this.height / 2) - 8, weapon));
+            }
+        }
+    }
+
+    private void playShotAudio(){
+        if(!TYPE.IS_BOSS){
+            AudioManager.getInstance().shotEnemy();
+        } else {
+            AudioManager.getInstance().shotBoss();
         }
     }
 
@@ -74,6 +83,11 @@ public class Enemy extends Entity {
             pattern.updatePosition();
             setX(pattern.getX());
             setY(pattern.getY());
+
+            if(TYPE.IS_BOSS){
+                AudioManager.getInstance().bossTalk();
+            }
+
         } else {
             setOldX(getX());
             setOldY(getY());
@@ -89,7 +103,7 @@ public class Enemy extends Entity {
     
     public void addScore() {
         if (!this.scoreCount) {
-            gm.player.setScore(gm.player.getScore() + 100);
+            gs.player.setScore(gs.player.getScore() + 100);
             this.scoreCount = true;
         }
     }

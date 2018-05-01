@@ -1,8 +1,10 @@
 package model.enemy;
 
+import assets.java.AudioManager;
+
 import static java.lang.Math.*;
 
-public class EnemyMovementPattern {
+public class EnemyMovementPattern implements java.io.Serializable {
 
     /*
     * LEFT,       LEFT_PULSATING,
@@ -173,31 +175,32 @@ public class EnemyMovementPattern {
     public void pushX(int x){
         this.x += x;
     }
-
     public void pushY(int y){
         this.y += y;
     }
-
     public void setModDepth(double modDepth) {
         this.modDepth = modDepth;
     }
-
     public void setModSpeed(double modSpeed) {
         this.modSpeed = modSpeed;
     }
-
     public void setMovementSpeed(double movementSpeed) {
         this.movementSpeed = movementSpeed;
     }
 
     private void bossInit(){
         if(bossCounter < BOSS_INIT_TIME) {
+
+            if(bossCounter == 0)
+                AudioManager.getInstance().bossWobble();
+
             framesAlive = 0;
             x--;
             bossCounter++;
             modDepth = 2;
-        } else
+        } else {
             bossInitializing = false;
+        }
     }
 
     private double rads(double i){

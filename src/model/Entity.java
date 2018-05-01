@@ -1,8 +1,9 @@
 package model;
 
-import assets.java.Audio;
+import assets.java.AudioManager;
 import assets.java.Sprite;
-import javafx.scene.media.AudioClip;
+import com.sun.deploy.security.ValidationState;
+import model.enemy.Enemy;
 import model.weapons.Weapon;
 
 public abstract class Entity extends Existance {
@@ -10,7 +11,6 @@ public abstract class Entity extends Existance {
     protected boolean alive;
     protected boolean canShoot;
     protected boolean canMove;
-    protected Audio shot;
     protected Weapon weapon;
     private int deathAnimCounter;
 
@@ -33,6 +33,13 @@ public abstract class Entity extends Existance {
     }
 
     public void isDead(){
+        if(alive)
+            AudioManager.getInstance().entityDead();
+
+        if(this.getClass() == Enemy.class && alive)
+            if(((Enemy)this).getType().IS_BOSS)
+                AudioManager.getInstance().bossDies();
+
         alive = false;
         setCanShoot(false);
     }
@@ -45,14 +52,6 @@ public abstract class Entity extends Existance {
 
     public boolean canMove() {
         return canMove;
-    }
-
-    public AudioClip getShot() {
-        return shot.getAudio();
-    }
-
-    public void setShot(Audio audio){
-        shot = audio;
     }
 
     public void setHealth(int health) {

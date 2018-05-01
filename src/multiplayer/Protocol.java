@@ -1,10 +1,13 @@
 package multiplayer;
 
 import java.io.*;
-import model.player.Player;
+
+import model.GameState;
 import model.player.Player2;
 import model.enemy.Enemy;
-import controller.GameController;
+import view.MultiplayerView;
+
+import static controller.GameController.gs;
 
 public class Protocol {
     
@@ -15,7 +18,7 @@ public class Protocol {
         switch(action) {
             case "EnemyUpdate":
                 try {
-                    for(Enemy enemy: GameController.getInstance().getEnemies()) {
+                    for(Enemy enemy: gs.enemies) {
                         if (enemy.getID() == id) {
                             stream.writeChar('E');
                             stream.writeInt(id);
@@ -29,7 +32,8 @@ public class Protocol {
                 }
                 catch (IOException e) {
                     System.err.println(e);
-                }            
+                }   
+                break;
         }
         
         return bytestream;
@@ -40,6 +44,24 @@ public class Protocol {
         DataOutputStream stream = new DataOutputStream(bytestream);          
         
         switch(action) {
+            case "Connect":
+                try {
+                    stream.writeChar('C');
+                    stream.flush();
+                    stream.close();
+                }
+                catch (IOException e) {
+                    System.err.println(e);
+                }
+                break;
+            case "Reply":
+                try {
+                    stream.writeChar('R');
+                }
+                catch (IOException e) {
+                    System.err.println(e);
+                }
+                break;
             case "Update":
                 try {
                     stream.writeChar('M');
@@ -71,8 +93,9 @@ public class Protocol {
                     stream.writeChar('P');
                 }
                 catch (IOException e) {
-                    
+                    System.err.println(e);
                 }
+                break;
         }
         return bytestream;
     }
@@ -92,6 +115,7 @@ public class Protocol {
                         int x = input.readInt();
                         int y = input.readInt();
                         player2.shoot(x, y);
+                        break;
                     case 'E':
                         int id = input.readInt();
                         int health = input.readInt();
@@ -99,7 +123,14 @@ public class Protocol {
                         MultiplayerHandler.getInstance().updateEnemies(id, health, alive);
                         break;
                     case 'P':
-                        
+                        player2.powerUp();
+                        break;
+                    case 'C':
+                        MultiplayerHandler.getInstance().replyConnection();
+                        break;
+                    case 'R':
+                        MultiplayerHandler.getInstance().establishConnection();
+                        break;
                 }
             }
         }

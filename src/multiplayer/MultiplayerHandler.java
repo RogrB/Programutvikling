@@ -1,10 +1,11 @@
 package multiplayer;
 
-import controller.GameController;
 import java.io.DataInputStream;
-import model.GameModel;
+import model.GameState;
 import model.enemy.Enemy;
-import model.player.Player;
+import view.MultiplayerView;
+
+import static controller.GameController.gs;
 
 public class MultiplayerHandler {
     
@@ -12,6 +13,7 @@ public class MultiplayerHandler {
     Receiver receiver;
     Sender sender;
     public Thread receiveActivity;
+    private boolean connected = false;
     
     // Singleton
     private static MultiplayerHandler inst = new MultiplayerHandler();
@@ -26,16 +28,7 @@ public class MultiplayerHandler {
         receiveActivity = new Thread(receiver);
         receiveActivity.start();         
     }
-    
-    public void send(String toSend) {   
-        sender.sendPrep(toSend);
-    }
-    
-    /*
-    public void send(Player player) {
-        sender.send(protocol.sendPrep(player));
-    }*/
-    
+
     public void send(String action, int x, int y) {
         sender.send(protocol.sendPrep(action, x, y));
     }
@@ -54,9 +47,8 @@ public class MultiplayerHandler {
     
     protected void updateEnemies(int id, int health, boolean alive) {
         System.out.println("trying to find enemyid to apply update");
-        for(Enemy enemy: GameController.getInstance().getEnemies()) {        
+        for(Enemy enemy: gs.enemies) {
             if (enemy.getID() == id) {
-                // System.out.println("applying enemy update to enemy " + id);
                 if(health < enemy.getHealth()) {
                     enemy.setHealth(health);
                     System.out.println("Setting health to " + health);
@@ -66,6 +58,37 @@ public class MultiplayerHandler {
                 }
             }
         }
+    }
+    
+    Thread thread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            while(!connected) {
+                sender.send(protocol.sendPrep("Connect", 0, 0));
+            }           
+        } 
+    });
+    
+    public void startConnection() {
+        thread.start();
+    }
+    
+    public void establishConnection() {
+        setConnected(true);
+        thread.stop();
+        MultiplayerView.getInst().initMultiplayerGame();        
+    }
+    
+    public void replyConnection() {
+        sender.send(protocol.sendPrep("Reply", 0, 0));
+    }
+    
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
+    
+    public boolean getConnected() {
+        return this.connected;
     }
     
 }

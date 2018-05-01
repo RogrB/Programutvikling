@@ -7,8 +7,8 @@ import model.enemy.EnemyType;
 import model.enemy.Asteroid;
 import view.ViewUtil;
 
-import static controller.GameController.enemies;
-import static model.GameModel.bossType;
+import static model.GameState.enemies;
+import static model.GameState.bossType;
 
 public class LevelLoader {
 
@@ -18,7 +18,6 @@ public class LevelLoader {
     public static LevelLoader getInstance(){ return inst; }
 
     private String[][][] levelData;
-    private int increment;
     private final int COLUMN_WIDTH = 70;
 
     public void setLevelData(String[][][] levelData){
@@ -26,14 +25,14 @@ public class LevelLoader {
         this.levelData = levelData;
     }
     
-    public void increment(){
+    public int increment(int increment){
         if((increment < (levelData[1].length*COLUMN_WIDTH))) {
-            increment++;
             if (increment % COLUMN_WIDTH == 0) {
                 int column = (increment / COLUMN_WIDTH);
                 loopThroughEnemyRows(getEnemyColumn(column));
             }
         }
+        return ++increment;
     }
 
     private void loopThroughEnemyRows(String[][] enemies){
@@ -76,7 +75,7 @@ public class LevelLoader {
         String[][] res = new String[rows][3];
 
         for(int i = 0; i < rows; i++){
-            res[i] = levelData[i][column-1];
+            res[i] = levelData[i][column];
         }
         return res;
     }

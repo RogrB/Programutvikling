@@ -1,17 +1,15 @@
-
 package model.weapons;
-
-import controller.GameController;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import model.enemy.Enemy;
 
-public class HeatSeeking extends Bullet {
+import static controller.GameController.gs;
+
+public class HeatSeeking extends Basic {
     
-    GameController gc = GameController.getInstance();
-    ArrayList<Enemy> enemies = gc.getEnemies();
+    ArrayList<Enemy> enemies = gs.enemies;
     private boolean locked = false;
     Enemy target;
 
@@ -29,7 +27,6 @@ public class HeatSeeking extends Bullet {
         setOldY(getY());
 
         if (enemies.isEmpty()) {
-            //x += 15;
             setX(getX() + 15);
         }
         else {
@@ -46,7 +43,7 @@ public class HeatSeeking extends Bullet {
         int targetIndex = 0;
         if(!enemies.isEmpty()) {
             for (Enemy enemy : enemies) {
-                if (enemy.getX() < closestX && enemy.getX() > 20) {
+                if (enemy.getX() < closestX && enemy.getX() > gs.player.getX()) {
                     closestX = enemy.getX();
                     targetIndex++;
                 }
@@ -57,14 +54,23 @@ public class HeatSeeking extends Bullet {
     }
     
     public void moveMissile() {
-        if (target != null) {
-            setX((getX() < target.getX()) ? getX()+7 : getX()-7);
+        // Flytter bullet mot target
+        if (target != null && target.isAlive()) {
+            if (Math.abs(target.getX() - getX()) < 7) {
+                setX((getX() < target.getX()) ? getX()+1 : getX()-1);
+            }
+            else {
+                setX((getX() < target.getX()) ? getX()+7 : getX()-7);
+            }
             if (Math.abs(target.getY() - getY()) < 7) {
                 setY((getY() < target.getY()) ? getY()+1 : getY()-1);
             }
             else {
                 setY((getY() < target.getY()) ? getY()+7 : getY()-7);
             }
+        }
+        else {
+            setX(getX()+7);
         }
     }
 }

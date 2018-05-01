@@ -2,16 +2,12 @@
 package model;
 
 import assets.java.Sprite;
-import view.ViewUtil;
 
 import java.util.Iterator;
-import java.util.Random;
 
 public class PowerUp extends Existance {
     
-    private boolean used = false;
-    GameModel gm = GameModel.getInstance();
-
+    private boolean pickedUp = false;
     private String name;
     
     public PowerUp(Sprite sprite, int x, int y) {
@@ -27,33 +23,19 @@ public class PowerUp extends Existance {
         if(isOffScreen() || getReadyToPurge())
             purge(i);
     }
-    
-    public void powerUp() {
-        if (!used) {
-            switch(this.name) {
-                case "WEAPON_POWERUP":
-                    gm.player.powerUp(); 
-                    System.out.println("Weapon upgraded");
-                    break;
-                case "HEALTH_POWERUP":
-                    gm.player.setHealth(gm.player.getHealth() + 1);
-                    System.out.println("Health up");
-                    break;
-                case "SHIELD_POWERUP":
-                    gm.player.setShield();
-                    System.out.println("Shield!");
-                    break;
-            }
-            used = true;
-            newSprite(Sprite.CLEAR);
-            isReadyToPurge();
-        }
+
+    public void setPickedUp(){
+        pickedUp = true;
+        newSprite(Sprite.CLEAR);
+        isReadyToPurge();
     }
 
-    public PowerUp newPowerUp(){
-        Random random = new Random();
-        int ySpawn = random.nextInt(ViewUtil.VIEW_HEIGHT - getHeight()) + getHeight();
-        return new PowerUp(Sprite.WEAPON_POWERUP, ViewUtil.VIEW_WIDTH - 1, ySpawn);
+    public boolean isPickedUp(){
+        return pickedUp;
+    }
+
+    public String getName(){
+        return name;
     }
     
 }

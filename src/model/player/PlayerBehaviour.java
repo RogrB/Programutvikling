@@ -1,13 +1,18 @@
 package model.player;
 
 import model.GameModel;
+import model.GameState;
 import model.weapons.*;
 
-public class PlayerBehaviour {
+import static controller.GameController.gs;
+
+public class PlayerBehaviour implements java.io.Serializable {
+
+    private static final long serialVersionUID = 185835451720483588L;
+
     private final int MAX_SPEED = 20;
     private final int MOD_SPEED = 1;
     // MVC-access
-    GameModel gm;
 
     private int speed;
     private int dir;
@@ -15,10 +20,6 @@ public class PlayerBehaviour {
     public PlayerBehaviour() {
         speed = 0;
         dir = 0;
-    }
-
-    public void mvcSetup() {
-        gm = GameModel.getInstance();
     }
 
 
@@ -52,39 +53,47 @@ public class PlayerBehaviour {
     
     public void shoot(String weapontype, int x, int y, int width, int height, Weapon weapon) {
             switch(weapontype) {
-                case "Bullet":
-                    gm.getPlayerBullets().add(new Bullet(x + width - 10, y + (height / 2) - 8, weapon));
+                case "Basic":
+                    gs.playerBullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
-                case "Upgrade1":
-                    gm.getPlayerBullets().add(new Upgrade1(x + width - 10, y + (height / 2) - 8, weapon));
+                case "SpeedBullets":
+                    gs.playerBullets.add(new SpeedBullets(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
-                case "Upgrade2":
-                    gm.getPlayerBullets().add(new Upgrade2(x + width - 10, y + (height / 2) - 8, weapon));
+                case "DamageBullets":
+                    gs.playerBullets.add(new DamageBullets(x + width - 10, y + (height / 2) - 8, weapon));
                     break;        
                 case "HeatSeeking":
-                    gm.getPlayerBullets().add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
+                    gs.playerBullets.add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
                 case "Doubles":
-                    gm.getPlayerBullets().add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
-                    gm.getPlayerBullets().add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
+                    gs.playerBullets.add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
+                    gs.playerBullets.add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
                     break;
                 case "DoubleSwirl":
-                    gm.getPlayerBullets().add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));
-                    gm.getPlayerBullets().add(new DoubleSwirl(x + width - 10, y + (height / 2) + 15, weapon, false));
+                    gs.playerBullets.add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));
+                    gs.playerBullets.add(new DoubleSwirl(x + width - 10, y + (height / 2) + 15, weapon, false));
                     break;
+                case "TripleBurst":
+                    gs.playerBullets.add(new TripleBurst(x + width - 10, y + (height / 2) - 25, weapon, 1));
+                    gs.playerBullets.add(new TripleBurst(x + width - 10, y + (height / 2), weapon, 2));
+                    gs.playerBullets.add(new TripleBurst(x + width - 10, y + (height / 2) + 15, weapon, 3));
+                    break;                    
             }
     }
     
     public String powerUp(String weaponType) {
         String returnString = "";
         switch(weaponType) {
-            case "Bullet":
-                returnString = "Upgrade1";
+            case "Reset":
+                returnString = "Basic";
                 break;
-            case "Upgrade1":
-                returnString = "Upgrade2";
+            case "Basic":
+                returnString = "SpeedBullets";
                 break;
-            case "Upgrade2":
+            case "SpeedBullets":
+                returnString = "DamageBullets";
+                break;
+            case "DamageBullets":
                 returnString = "HeatSeeking";
                 break;
             case "HeatSeeking":
@@ -94,8 +103,11 @@ public class PlayerBehaviour {
                 returnString = "DoubleSwirl";
                 break;
             case "DoubleSwirl":
-                returnString = "DoubleSwirl";
+                returnString = "TripleBurst";
                 break;
+            case "TripleBurst":
+                returnString = "TripleBurst";
+                break;                
         }
         return returnString;
     }

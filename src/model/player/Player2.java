@@ -1,21 +1,18 @@
 package model.player;
 
-import assets.java.Audio;
 import assets.java.Sprite;
-import java.util.ArrayList;
 import javafx.scene.image.Image;
 import model.Entity;
-import model.GameModel;
-import model.Shield;
-import model.weapons.Bullet;
+import model.weapons.Basic;
 import model.weapons.DoubleSwirl;
 import model.weapons.Doubles;
 import model.weapons.HeatSeeking;
-import model.weapons.Upgrade1;
-import model.weapons.Upgrade2;
+import model.weapons.SpeedBullets;
+import model.weapons.DamageBullets;
 import model.weapons.Weapon;
-import view.GameView;
 import view.ViewUtil;
+
+import static controller.GameController.gs;
 
 public class Player2 extends Entity {
 
@@ -35,8 +32,7 @@ public class Player2 extends Entity {
         );
 
         setCanShoot(true);
-        getImageView().relocate(getX(), getY());        
-        shot = Audio.PLAYER_SHOT;
+        getImageView().relocate(getX(), getY());
         weapon = Weapon.PLAYER_BASIC;
     }    
     
@@ -48,24 +44,24 @@ public class Player2 extends Entity {
     public void shoot(int x, int y) {
         switch(weaponType) {
             case "Bullet":
-                GameModel.getInstance().getPlayer2Bullets().add(new Bullet(x + width - 10, y + (height / 2) - 8, weapon));
+                gs.player2Bullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "Upgrade1":
-                GameModel.getInstance().getPlayer2Bullets().add(new Upgrade1(x + width - 10, y + (height / 2) - 8, weapon));
+                gs.player2Bullets.add(new SpeedBullets(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "Upgrade2":
-                GameModel.getInstance().getPlayer2Bullets().add(new Upgrade2(x + width - 10, y + (height / 2) - 8, weapon));
+                gs.player2Bullets.add(new DamageBullets(x + width - 10, y + (height / 2) - 8, weapon));
                 break;        
             case "HeatSeeking":
-                GameModel.getInstance().getPlayer2Bullets().add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
+                gs.player2Bullets.add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "Doubles":
-                GameModel.getInstance().getPlayer2Bullets().add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
-                GameModel.getInstance().getPlayer2Bullets().add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
+                gs.player2Bullets.add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
+                gs.player2Bullets.add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
                 break;
             case "DoubleSwirl":
-                GameModel.getInstance().getPlayer2Bullets().add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));
-                GameModel.getInstance().getPlayer2Bullets().add(new DoubleSwirl(x + width - 10, y + (height / 2) + 15, weapon, false));
+                gs.player2Bullets.add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));
+                gs.player2Bullets.add(new DoubleSwirl(x + width - 10, y + (height / 2) + 15, weapon, false));
                 break;
             }        
     }
