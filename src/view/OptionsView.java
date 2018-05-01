@@ -74,7 +74,6 @@ public class OptionsView extends ViewUtil{
     public Parent initScene(){
         root = new Pane();
         optionsMenu = new VBox();
-        header = new Text("SPACE GAME");
         header.setX(300);
         header.setY(175);
         header.setFill(Color.WHITE);
