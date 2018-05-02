@@ -49,7 +49,6 @@ public class Player extends Entity {
     
     public void init() {
         inst = new Player();
-        hasShield = false;
         if (hasShield) {
             removeShield();
         }
