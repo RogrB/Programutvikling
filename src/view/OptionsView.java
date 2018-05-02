@@ -23,6 +23,8 @@ public class OptionsView extends ViewUtil{
     public static int soundValue = 50;
     public static int musicValue = 50;
 
+
+
     public Label soundLabel;
     private Label soundTextLabel;
     private Label musicTextLabel;
@@ -124,7 +126,10 @@ public class OptionsView extends ViewUtil{
                 goToView(event, MenuView.getInstance().initScene());
             }
         });
-        backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
+        backButton.setOnMouseClicked(event -> {
+            //Save to file
+            goToView(event, MenuView.getInstance().initScene());
+        });
         root.getChildren().addAll(header, optionsMenu);
         return root;
     }
