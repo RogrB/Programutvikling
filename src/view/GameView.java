@@ -107,12 +107,12 @@ public class GameView extends ViewUtil{
         dialogBox.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ESCAPE){
                 goToView(event, MenuView.getInstance().initScene());
-                gc.gamePause();
                 if(gm.getMultiplayerStatus()) {
+                    MultiplayerHandler.getInstance().send("Disconnect", 0, 0);
                     MultiplayerHandler.getInstance().disconnect();
                     System.out.println("Game paused, disconnected from multiplayer");
-                    MultiplayerHandler.getInstance().send("Disconnect", 0, 0);
-                }
+                }                
+                gc.gamePause();
             }
         });
         dialogBox.setOpacity(0);

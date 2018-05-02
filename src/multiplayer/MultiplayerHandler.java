@@ -100,6 +100,7 @@ public class MultiplayerHandler {
     public void disconnect() {
         setConnected(false);
         GameModel.getInstance().setMultiplayerStatus(false);
+        gs.player2.unsetSprite();
         sender.closeSocket();
     }
     

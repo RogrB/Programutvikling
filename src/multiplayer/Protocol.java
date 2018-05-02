@@ -141,6 +141,7 @@ public class Protocol {
                         break;
                     case 'D':
                         MultiplayerHandler.getInstance().disconnect();
+                        System.out.println("Player 2 disconnected");
                         break;
                 }
             }
