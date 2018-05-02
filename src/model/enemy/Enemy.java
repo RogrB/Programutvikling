@@ -1,6 +1,7 @@
 package model.enemy;
 
 import model.Entity;
+import model.GameModel;
 import model.IdGen;
 import model.weapons.Basic;
 import assets.java.AudioManager;
@@ -10,6 +11,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import static controller.GameController.gs;
+import static model.GameModel.gameSettings;
 
 public class Enemy extends Entity {
 
@@ -62,7 +64,7 @@ public class Enemy extends Entity {
     public void shoot() {
         Random random = new Random();
         if(canShoot()) {
-            double shotMod = (double) OptionsView.difficultyValue/3;
+            double shotMod = (double) gameSettings.getDifficultyValue()/3;
             if(random.nextDouble() > 1 - (chanceToShoot * shotMod)) {
                 playShotAudio();
                 gs.enemyBullets.add(new Basic(getX() + 10, getY() + (this.height / 2) - 8, weapon));

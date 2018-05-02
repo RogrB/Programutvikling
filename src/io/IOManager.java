@@ -150,7 +150,7 @@ public class IOManager {
             ois.close();
             fis.close();
 
-            System.out.println("Saved game settings");
+            System.out.println("Loaded game settings");
 
         } catch (IOException i) {
             throw new FileIOException("Load settings - Can't locate file: "+src);
@@ -178,7 +178,7 @@ public class IOManager {
             oos.close();
             fos.close();
 
-            System.out.println("Loaded game settings");
+            System.out.println("Saved game settings");
 
         } catch (IOException e) {
             throw new FileIOException("Save settings - Could not write to file "+src);

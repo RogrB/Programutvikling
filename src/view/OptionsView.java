@@ -20,9 +20,9 @@ public class OptionsView extends ViewUtil{
     private static final String BG_IMG = "assets/image/background.jpg";
     public VBox optionsMenu;
 
-    public static int difficultyValue = 3;
-    public static int soundValue = 50;
-    public static int musicValue = 50;
+    private int difficultyValue = 3;
+    private int soundValue = 50;
+    private int musicValue = 50;
 
 
 

@@ -53,6 +53,15 @@ public class GameSettings implements Serializable {
         }
     }
 
+    public int getMusicValue() {
+        return musicvalue;
+    }
 
+    public int getSoundValue() {
+        return soundValue;
+    }
 
+    public int getDifficultyValue() {
+        return difficultyValue;
+    }
 }
