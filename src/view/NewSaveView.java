@@ -1,5 +1,6 @@
 package view;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import controller.GameController;
 import controller.UserInputs;
 import javafx.scene.Node;
@@ -48,7 +49,7 @@ public class NewSaveView extends ViewUtil{
 
         root.setBackground(getBackGroundImage(BG_IMG));
         writeSaveNameText = new Text("NEW GAME");
-        writeSaveNameText.setX(500);
+        writeSaveNameText.setX(475);
         writeSaveNameText.setY(275);
         writeSaveNameText.setFill(Color.WHITE);
         writeSaveNameText.setFont(header.getFont().font(50));
@@ -57,6 +58,17 @@ public class NewSaveView extends ViewUtil{
         saveNameLabel.setTextFill(Color.WHITE);
 
         saveNameTextField = new TextField();
+
+        saveNameTextField.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE && !Objects.equals(saveNameTextField.getText(), "")){
+                Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                GameController.getInstance().newGame();
+                Scene scene = new Scene(GameView.getInstance().initScene());
+                stage.setScene(scene);
+                UserInputs userInputs = new UserInputs(scene);
+                System.out.println("Totally started a new game");
+            }
+        });
 
         startGameButton = new MenuButton("START");
         startGameButton.setOnMouseClicked(event -> {
@@ -70,19 +82,19 @@ public class NewSaveView extends ViewUtil{
             }
         });
         backButton = new MenuButton("BACK");
-        backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
+        backButton.setOnMouseClicked(event -> goToView(event, NewGameView.getInst().initScene()));
 
         menuElements = new Parent[]{saveNameTextField, startGameButton, backButton};
-        containerVBox.getChildren().addAll(writeSaveNameText, saveNameLabel, saveNameTextField, startGameButton, backButton);
+        containerVBox.getChildren().addAll(saveNameLabel, saveNameTextField, startGameButton, backButton);
         containerVBox.setSpacing(10);
         containerVBox.setTranslateX(450);
-        containerVBox.setTranslateY(250);
+        containerVBox.setTranslateY(325);
         containerVBox.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ESCAPE){
-                goToView(event, MenuView.getInstance().initScene());
+                goToView(event, NewGameView.getInst().initScene());
             }
         });
-        root.getChildren().addAll(header, containerVBox);
+        root.getChildren().addAll(header, writeSaveNameText, containerVBox);
 
         return root;
     }

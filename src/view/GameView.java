@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.Existance;
 import model.GameModel;
+import model.GameState;
 import model.enemy.Enemy;
 import model.enemy.EnemyType;
 import model.weapons.*;
@@ -20,6 +21,7 @@ import javafx.scene.text.Font;
 
 import static model.GameState.bossType;
 import static controller.GameController.gs;
+import multiplayer.MultiplayerHandler;
 
 public class GameView extends ViewUtil{
 
@@ -29,30 +31,35 @@ public class GameView extends ViewUtil{
     public static GameView getInstance(){ return inst; }
 
     // MVC-access
-    GameController gc = GameController.getInstance();
-    GameModel gm = GameModel.getInstance();
+    private GameController gc = GameController.getInstance();
+    private GameModel gm = GameModel.getInstance();
 
-    final Canvas canvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
-    final Canvas hudCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
-    final Canvas bulletLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
-    final Canvas enemyLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
-    
-    Text scoreText;
-    Text levelText;
-    Text weaponType;
+    private final Canvas canvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+    private final Canvas hudCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+    private final Canvas bulletLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+    private final Canvas enemyLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+
+    private Text scoreText;
+    private Text levelText;
+    private Text weaponType;
     
     private final static Font powerUpFont = new Font("SansSerif", 12);
     
-    final GraphicsContext graphics = canvas.getGraphicsContext2D();
-    final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
-    final GraphicsContext bulletLayer = bulletLayerCanvas.getGraphicsContext2D();
-    final GraphicsContext enemyLayer = enemyLayerCanvas.getGraphicsContext2D();
+    private final GraphicsContext graphics = canvas.getGraphicsContext2D();
+    private final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
+    private final GraphicsContext bulletLayer = bulletLayerCanvas.getGraphicsContext2D();
+    private final GraphicsContext enemyLayer = enemyLayerCanvas.getGraphicsContext2D();
 
     private Rectangle dialogBackground;
     private Text dialogText;
     public StackPane dialogBox;
 
-    public AudioManager am;
+    private MenuButton retryButton;
+    private MenuButton exitToMenuButton;
+    private VBox buttonContainer;
+
+    private MenuButton[] menuElements;
+    private AudioManager am;
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
@@ -101,6 +108,11 @@ public class GameView extends ViewUtil{
             if(event.getCode() == KeyCode.ESCAPE){
                 goToView(event, MenuView.getInstance().initScene());
                 gc.gamePause();
+                if(gm.getMultiplayerStatus()) {
+                    MultiplayerHandler.getInstance().disconnect();
+                    System.out.println("Game paused, disconnected from multiplayer");
+                    MultiplayerHandler.getInstance().send("Disconnect", 0, 0);
+                }
             }
         });
         dialogBox.setOpacity(0);
@@ -111,6 +123,27 @@ public class GameView extends ViewUtil{
             rect.setWidth(30);
         }
 
+        retryButton = new MenuButton("RETRY");
+        exitToMenuButton = new MenuButton("MAIN MENU");
+        menuElements = new MenuButton[]{retryButton, exitToMenuButton};
+        buttonContainer = new VBox();
+        buttonContainer.getChildren().addAll(retryButton, exitToMenuButton);
+        buttonContainer.setTranslateX(450);
+        buttonContainer.setTranslateY(550);
+        buttonContainer.setOpacity(0);
+        buttonContainer.setOnKeyPressed(event -> {
+            System.out.println(event.getCode());
+            if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
+                menuElements[elementCounter].lostFocus();
+                traverseMenu(event.getCode(), menuElements);
+                menuElements[elementCounter].gainedFocus();
+                System.out.println(elementCounter);
+            }
+            else if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE){
+                select(menuElements[elementCounter].getText(), event);
+            }
+        });
+
         Pane root = new Pane();
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
@@ -118,14 +151,19 @@ public class GameView extends ViewUtil{
             root.getChildren().addAll(gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox, gs.player2.getImageView());
         }
         else {
-            root.getChildren().addAll(gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox);
+            root.getChildren().addAll(buttonContainer, gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox);
         }
         return root;
     }
 
     @Override
     public void select(String buttonName, KeyEvent event) {
-
+        if(buttonName.equals("Retry")){
+            goToView(event, initScene());
+        }
+        else if(buttonName.equals("MAIN MENU")){
+            goToView(event, MenuView.getInstance().initScene());
+        }
     }
 
     public void render(Existance object) {
@@ -143,6 +181,10 @@ public class GameView extends ViewUtil{
 
     public void gameOver() {
         // Is ded!
+        menuElements[0].gainedFocus();
+        buttonContainer.setOpacity(1);
+        buttonContainer.setFocusTraversable(true);
+        buttonContainer.requestFocus();
         graphics.drawImage(new Image("assets/image/gameover.png"), (VIEW_WIDTH/2) - 368, (VIEW_HEIGHT/2) - 51);
     }
     
@@ -158,7 +200,7 @@ public class GameView extends ViewUtil{
         enemyLayer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
     }
     
-    public void renderHUD(HUD h, boolean shield) {
+    void renderHUD(HUD h, boolean shield) {
         hud.clearRect(15, 15, 120, 50);
         hud.drawImage(h.getPlayerIcon(), 20, 20);
         hud.drawImage(h.getNumeralX(), 50, 20);
@@ -172,7 +214,7 @@ public class GameView extends ViewUtil{
         }
         if(bossType != null){
             EnemyType boss = EnemyType.valueOf(bossType);
-            for(Enemy enemy : gs.enemies){
+            for(Enemy enemy : GameState.enemies){
                 if(enemy.getType() == boss){
                     hud.setFill(Color.GREEN);
                     hud.fillRect(
@@ -199,14 +241,14 @@ public class GameView extends ViewUtil{
         weaponType.setText(h.weaponType());
     }
     
-    public void renderPowerUpText(String powerUp, int x, int y, float opacity) {
+    void renderPowerUpText(String powerUp, int x, int y, float opacity) {
         hud.clearRect(x-10, y-10, 300, 100);
         hud.setFill(new Color(1, 1, 1, opacity));
         hud.setFont(powerUpFont);
         hud.fillText(powerUp, x, y);
     }
     
-    public void clearPowerUpText(int x, int y) {
+    void clearPowerUpText(int x, int y) {
         hud.clearRect(x-10, y-50, 300, 300);
     }
 }

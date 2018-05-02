@@ -4,9 +4,11 @@ import java.io.DataInputStream;
 import model.GameState;
 import model.enemy.Enemy;
 import view.MultiplayerView;
+import javafx.stage.Stage;
 
 import static controller.GameController.gs;
-
+import model.GameModel;
+import static view.MultiplayerView.stage;
 public class MultiplayerHandler {
     
     Protocol protocol;
@@ -14,6 +16,7 @@ public class MultiplayerHandler {
     Sender sender;
     public Thread receiveActivity;
     private boolean connected = false;
+    private boolean gameStarted = false;
     
     // Singleton
     private static MultiplayerHandler inst = new MultiplayerHandler();
@@ -75,8 +78,11 @@ public class MultiplayerHandler {
     
     public void establishConnection() {
         setConnected(true);
-        thread.stop();
-        MultiplayerView.getInst().initMultiplayerGame();        
+        thread.interrupt();
+        if (!gameStarted) {
+            gameStarted = true;
+            MultiplayerView.getInst().startMultiplayerGame(stage);
+        }
     }
     
     public void replyConnection() {
@@ -89,6 +95,12 @@ public class MultiplayerHandler {
     
     public boolean getConnected() {
         return this.connected;
+    }
+    
+    public void disconnect() {
+        setConnected(false);
+        GameModel.getInstance().setMultiplayerStatus(false);
+        sender.closeSocket();
     }
     
 }
