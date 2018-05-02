@@ -1,6 +1,7 @@
 package io;
 
 import exceptions.FileIOException;
+import model.GameSettings;
 import model.GameState;
 import model.enemy.Enemy;
 
@@ -10,18 +11,20 @@ import java.util.List;
 
 import static controller.GameController.gs;
 
-public class IOGameState {
+public class IOManager {
 
-    private static IOGameState inst = new IOGameState();
-    private IOGameState(){}
-    public static IOGameState getInstance(){ return inst; }
+    private static IOManager inst = new IOManager();
+    private IOManager(){}
+    public static IOManager getInstance(){ return inst; }
 
     public void saveGameState() throws FileIOException {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
 
+        String src = "tmp/GameState.ser";
+
         try {
-            fos = new FileOutputStream("tmp/GameState.ser");
+            fos = new FileOutputStream(src);
             oos = new ObjectOutputStream(fos);
 
             oos.writeObject(gs);
@@ -37,7 +40,7 @@ public class IOGameState {
             saveArrayList(gs.powerups, "tmp/ArrayPowerups.ser");
 
         } catch (IOException e) {
-            throw new FileIOException("Save game - Could not save to file tmp/GameState.ser");
+            throw new FileIOException("Save game - Could not save to file "+src);
         } catch (FileIOException f) {
             throw new FileIOException("Save game - "+f.getMessage());
         }
@@ -47,8 +50,10 @@ public class IOGameState {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
 
+        String src = "tmp/GameState.ser";
+
         try {
-            fis = new FileInputStream("tmp/GameState.ser");
+            fis = new FileInputStream(src);
             ois = new ObjectInputStream(fis);
 
             gs = (GameState) ois.readObject();
@@ -62,9 +67,9 @@ public class IOGameState {
             gs.powerups = (ArrayList) loadList("tmp/ArrayPowerups.ser");
 
         } catch (IOException i) {
-            throw new FileIOException("Load game - Can't locate file: tmp/GameState.ser");
+            throw new FileIOException("Load game - Can't locate file: "+src);
         } catch (ClassNotFoundException c) {
-            throw new FileIOException("Load game - Corrupt class or file in: tmp/GameState.ser");
+            throw new FileIOException("Load game - Corrupt class or file in: "+src);
         } catch (FileIOException f) {
             throw new FileIOException("Load game - "+f.getMessage());
         }
@@ -121,11 +126,63 @@ public class IOGameState {
         return true;
     }
 
-    private boolean fileExists(String src){
+    public boolean fileExists(String src){
         File file = new File(src);
         if(file.exists() && !file.isDirectory())
             return true;
         return false;
+    }
+
+    public GameSettings loadGameSettings() throws FileIOException {
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+
+        String src = "tmp/GameSettings.ser";
+
+        GameSettings res = null;
+
+        try {
+            fis = new FileInputStream(src);
+            ois = new ObjectInputStream(fis);
+
+            res = (GameSettings) ois.readObject();
+
+            ois.close();
+            fis.close();
+
+            System.out.println("Saved game settings");
+
+        } catch (IOException i) {
+            throw new FileIOException("Load settings - Can't locate file: "+src);
+        } catch (ClassNotFoundException c) {
+            throw new FileIOException("Load settings - Corrupt class or file in: "+src);
+        }
+
+        return res;
+    }
+
+    public void saveGameSettings(GameSettings gameSettings) throws FileIOException {
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+
+        String src = "tmp/GameSettings.ser";
+
+        try {
+            fos = new FileOutputStream(src);
+            oos = new ObjectOutputStream(fos);
+
+            oos.writeObject(gameSettings);
+
+            oos.flush();
+            fos.flush();
+            oos.close();
+            fos.close();
+
+            System.out.println("Loaded game settings");
+
+        } catch (IOException e) {
+            throw new FileIOException("Save settings - Could not write to file "+src);
+        }
     }
 
 }

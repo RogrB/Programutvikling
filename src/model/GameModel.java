@@ -12,15 +12,18 @@ public class GameModel {
 
     // Singleton
     private static GameModel inst = new GameModel();
-    private GameModel(){}
     public static GameModel getInstance(){ return inst; }
 
     // MVC-access
     GameView gv;
 
     private boolean multiplayer = false;
-
     MultiplayerHandler mp = MultiplayerHandler.getInstance();
+    public static GameSettings gameSettings;
+
+    private GameModel(){
+        gameSettings = new GameSettings();
+    }
 
     public void mvcSetup(){
         gv = GameView.getInstance();

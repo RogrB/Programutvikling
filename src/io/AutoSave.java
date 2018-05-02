@@ -11,7 +11,7 @@ public class AutoSave {
     private AutoSave(){}
     public static AutoSave getInstance(){ return inst; }
 
-    IOGameState io = IOGameState.getInstance();
+    IOManager io = IOManager.getInstance();
 
     private Timer timer;
 

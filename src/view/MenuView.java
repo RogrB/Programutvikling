@@ -4,7 +4,7 @@ import assets.java.AudioManager;
 import controller.GameController;
 import controller.UserInputs;
 import exceptions.FileIOException;
-import io.IOGameState;
+import io.IOManager;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,7 +13,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class MenuView extends ViewUtil{
@@ -31,7 +30,7 @@ public class MenuView extends ViewUtil{
     private void continueGame(InputEvent event){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         try {
-            IOGameState.getInstance().loadGameState();
+            IOManager.getInstance().loadGameState();
             GameController.getInstance().gameStart();
             Scene scene = new Scene(GameView.getInstance().initScene());
             stage.setScene(scene);
@@ -68,7 +67,7 @@ public class MenuView extends ViewUtil{
     }
 
     private boolean gameFileFound(){
-        return IOGameState.getInstance().saveStateExists();
+        return IOManager.getInstance().saveStateExists();
     }
 
     public void select(String buttonName, KeyEvent event){ //KeyEvent is only here so you can extract Stage from an event. Hacky, I know.

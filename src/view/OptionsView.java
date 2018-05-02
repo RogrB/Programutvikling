@@ -7,7 +7,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
+
+import static model.GameModel.gameSettings;
 
 public class OptionsView extends ViewUtil{
 
@@ -123,11 +124,12 @@ public class OptionsView extends ViewUtil{
         optionsMenu.setTranslateY(250);
         optionsMenu.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ESCAPE){
+                gameSettings.saveSettings(difficultyValue, soundValue, musicValue);
                 goToView(event, MenuView.getInstance().initScene());
             }
         });
         backButton.setOnMouseClicked(event -> {
-            //Save to file
+            gameSettings.saveSettings(difficultyValue, soundValue, musicValue);
             goToView(event, MenuView.getInstance().initScene());
         });
         root.getChildren().addAll(header, optionsMenu);
