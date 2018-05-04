@@ -33,6 +33,7 @@ public class Player extends Entity {
     private int score;
     private int enemiesKilled;
     private int bulletsHit;
+    private int bulletCount;
 
     private PlayerBehaviour playerBehaviour = new PlayerBehaviour();
 
@@ -136,6 +137,7 @@ public class Player extends Entity {
             playerBehaviour.shoot(this.weaponType, getX(), getY(), this.width, this.height, weapon);
             setCanShoot(false);
             shotDelayTimer();
+            bulletCount++;
             if (GameModel.getInstance().getMultiplayerStatus()) {
                 GameModel.getInstance().getMP().send("Shoot", getX(), getY());
             }
@@ -290,6 +292,10 @@ public class Player extends Entity {
     
     public void setBulletsHit(int hit) {
         this.bulletsHit = hit;
+    }
+    
+    public int getBulletCount() {
+        return this.bulletCount;
     }
     
 }

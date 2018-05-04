@@ -8,6 +8,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import controller.GameController;
+import static controller.GameController.gs;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.Existance;
@@ -20,8 +21,10 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 
 import static model.GameState.bossType;
-import static controller.GameController.gs;
+import javafx.application.Platform;
 import multiplayer.MultiplayerHandler;
+import static view.ViewUtil.VIEW_HEIGHT;
+import static view.ViewUtil.VIEW_WIDTH;
 
 public class GameView extends ViewUtil{
 
@@ -61,7 +64,7 @@ public class GameView extends ViewUtil{
     private MenuButton[] menuElements;
     private AudioManager am;
     
-    Pane root = new Pane();
+    Pane root;
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
@@ -145,6 +148,8 @@ public class GameView extends ViewUtil{
                 select(menuElements[elementCounter].getText(), event);
             }
         });
+        
+        root = new Pane();
 
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
@@ -202,30 +207,38 @@ public class GameView extends ViewUtil{
     }
     
     public void renderScoreScreen() {
-        // scoreText = new Text(VIEW_WIDTH - 150, 60, "Score: " + Integer.toString(gs.player.getScore()));
-        Text levelComplete = new Text((VIEW_WIDTH/2) - 140, (VIEW_HEIGHT/2) - 180, "Level 1 Cleared!");
-        Text scoreT = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 90, "Score:   " + Integer.toString(gs.player.getScore()));
-        Text shotsFired = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 40, "Shots fired:   ");
-        Text enemiesHit = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 10, "Enemies hit:   " + Integer.toString(gs.player.getBulletsHit()));
-        Text enemiesKilled = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 60, "Enemies killed:   " + Integer.toString(gs.player.getEnemiesKilled()));
-        Text hitPercent = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 110, "Accuracy:   ");
         
-        levelComplete.setFill(Color.WHITE);
-        levelComplete.setFont(Font.font("Verdana", 32));  
-        scoreT.setFill(Color.WHITE);
-        scoreT.setFont(Font.font("Verdana", 30));        
-        shotsFired.setFill(Color.WHITE);
-        shotsFired.setFont(Font.font("Verdana", 30));
-        enemiesHit.setFill(Color.WHITE);
-        enemiesHit.setFont(Font.font("Verdana", 30));
-        enemiesKilled.setFill(Color.WHITE);
-        enemiesKilled.setFont(Font.font("Verdana", 30));
-        hitPercent.setFill(Color.WHITE);
-        hitPercent.setFont(Font.font("Verdana", 30));
-        
-        root.getChildren().addAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent);
-        
-        graphics.drawImage(new Image("assets/image/scorescreen.png"), (VIEW_WIDTH/2) - 360, (VIEW_HEIGHT/2) - 225);
+	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Text levelComplete = new Text((VIEW_WIDTH/2) - 140, (VIEW_HEIGHT/2) - 180, "Level 1 Cleared!"); // Trenger å hente levelnr fra leveldata
+                Text scoreT = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 90, "Score:   " + Integer.toString(gs.player.getScore()));
+                Text shotsFired = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 40, "Shots fired:   " + Integer.toString(gs.player.getBulletCount()));
+                Text enemiesHit = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 10, "Enemies hit:   " + Integer.toString(gs.player.getBulletsHit()));
+                Text enemiesKilled = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 60, "Enemies killed:   " + Integer.toString(gs.player.getEnemiesKilled()));
+                double accuracy = ((gs.player.getBulletsHit() / gs.player.getBulletCount()) * 100); // I DON'T KNOW HOW TO MATH! Y U NO WORK!?
+                System.out.println((gs.player.getBulletsHit() / gs.player.getBulletCount()));
+                System.out.println(accuracy);
+                Text hitPercent = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 110, "Accuracy:   " + Double.toString(accuracy) + "%");
+
+                levelComplete.setFill(Color.WHITE);
+                levelComplete.setFont(Font.font("Verdana", 32));  
+                scoreT.setFill(Color.WHITE);
+                scoreT.setFont(Font.font("Verdana", 30));        
+                shotsFired.setFill(Color.WHITE);
+                shotsFired.setFont(Font.font("Verdana", 30));
+                enemiesHit.setFill(Color.WHITE);
+                enemiesHit.setFont(Font.font("Verdana", 30));
+                enemiesKilled.setFill(Color.WHITE);
+                enemiesKilled.setFont(Font.font("Verdana", 30));
+                hitPercent.setFill(Color.WHITE);
+                hitPercent.setFont(Font.font("Verdana", 30));
+
+                root.getChildren().addAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent);
+
+                hud.drawImage(new Image("assets/image/scorescreen.png"), (VIEW_WIDTH/2) - 360, (VIEW_HEIGHT/2) - 225);                
+            }
+	});              
     }
     
     void renderHUD(HUD h, boolean shield) {

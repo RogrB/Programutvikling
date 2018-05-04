@@ -31,7 +31,6 @@ public class Basic extends Existance {
         setOldX(getX());
         setOldY(getY());
         bulletDie();
-        gs.player.setBulletsHit(gs.player.getBulletsHit() + 1);
     }
     
     public boolean getHasHit() {
@@ -71,6 +70,7 @@ public class Basic extends Existance {
 
     private void bulletDie(){
         if(timer == null) {
+            gs.player.setBulletsHit(gs.player.getBulletsHit() + 1);
             timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
