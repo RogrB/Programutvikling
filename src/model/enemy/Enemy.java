@@ -106,6 +106,7 @@ public class Enemy extends Entity {
     public void addScore() {
         if (!this.scoreCount) {
             gs.player.setScore(gs.player.getScore() + 100);
+            gs.player.setEnemiesKilled(gs.player.getEnemiesKilled() + 1);
             this.scoreCount = true;
         }
     }

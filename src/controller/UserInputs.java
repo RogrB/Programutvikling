@@ -7,6 +7,7 @@ import model.GameModel;
 import model.GameState;
 
 import static controller.GameController.gs;
+import view.GameView;
 
 public class UserInputs {
 
@@ -33,6 +34,8 @@ public class UserInputs {
                 gs.player.setShield();
             if (event.getCode() == KeyCode.T)
                 GameController.getInstance().getHUD().renderPowerUpText("Test");
+            if (event.getCode() == KeyCode.R)
+                GameView.getInstance().renderScoreScreen();
         });
 
         s.setOnKeyReleased(event -> {

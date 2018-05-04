@@ -6,6 +6,7 @@ import model.Existance;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
+import static controller.GameController.gs;
 
 public class Basic extends Existance {
 
@@ -30,6 +31,7 @@ public class Basic extends Existance {
         setOldX(getX());
         setOldY(getY());
         bulletDie();
+        gs.player.setBulletsHit(gs.player.getBulletsHit() + 1);
     }
     
     public boolean getHasHit() {

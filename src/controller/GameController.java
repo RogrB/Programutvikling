@@ -289,6 +289,7 @@ public class GameController {
             @Override
             public void run() {
                 System.out.println("Game Won!");
+                gv.renderScoreScreen();
             }
         }, 2000);
     }
