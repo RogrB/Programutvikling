@@ -19,6 +19,7 @@ import model.enemy.EnemyType;
 import model.weapons.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+import java.text.DecimalFormat;
 
 import static model.GameState.bossType;
 import javafx.application.Platform;
@@ -211,15 +212,18 @@ public class GameView extends ViewUtil{
 	Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                float bullets = gs.player.getBulletCount();
+                float hits = gs.player.getBulletsHit();
+                float accuracy = (hits / bullets) * 100;
+                DecimalFormat accuracyFormat = new DecimalFormat("#.00");
+                
                 Text levelComplete = new Text((VIEW_WIDTH/2) - 140, (VIEW_HEIGHT/2) - 180, "Level 1 Cleared!"); // Trenger å hente levelnr fra leveldata
                 Text scoreT = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 90, "Score:   " + Integer.toString(gs.player.getScore()));
-                Text shotsFired = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 40, "Shots fired:   " + Integer.toString(gs.player.getBulletCount()));
-                Text enemiesHit = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 10, "Enemies hit:   " + Integer.toString(gs.player.getBulletsHit()));
+                Text shotsFired = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 40, "Shots fired:   " + Float.toString(bullets));
+                Text enemiesHit = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 10, "Enemies hit:   " + Float.toString(hits));
                 Text enemiesKilled = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 60, "Enemies killed:   " + Integer.toString(gs.player.getEnemiesKilled()));
-                double accuracy = ((gs.player.getBulletsHit() / gs.player.getBulletCount()) * 100); // I DON'T KNOW HOW TO MATH! Y U NO WORK!?
-                System.out.println((gs.player.getBulletsHit() / gs.player.getBulletCount()));
-                System.out.println(accuracy);
-                Text hitPercent = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 110, "Accuracy:   " + Double.toString(accuracy) + "%");
+
+                Text hitPercent = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 110, "Accuracy:   " + accuracyFormat.format(accuracy) + "%");
 
                 levelComplete.setFill(Color.WHITE);
                 levelComplete.setFont(Font.font("Verdana", 32));  
