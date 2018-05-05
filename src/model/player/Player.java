@@ -53,7 +53,7 @@ public class Player extends Entity {
         if (hasShield) {
             removeShield();
         }
-        setHealth(5);
+        setHealth(1);
         immunity = false;
         shooting = false;
         score = 0;

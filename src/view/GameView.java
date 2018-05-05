@@ -1,7 +1,10 @@
 package view;
 
 import assets.java.AudioManager;
+import controller.UserInputs;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -10,6 +13,7 @@ import javafx.scene.layout.*;
 import controller.GameController;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import model.Existance;
 import model.GameModel;
 import model.GameState;
@@ -56,7 +60,10 @@ public class GameView extends ViewUtil{
 
     private MenuButton retryButton;
     private MenuButton exitToMenuButton;
-    private VBox buttonContainer;
+    private VBox lostButtonContainer;
+    private VBox wonButtonContainer;
+    private MenuButton continueButton;
+    private MenuButton exitToMenuButton2;
 
     private MenuButton[] menuElements;
     private AudioManager am;
@@ -123,15 +130,19 @@ public class GameView extends ViewUtil{
             rect.setWidth(30);
         }
 
+        continueButton = new MenuButton("CONTINUE");
+        exitToMenuButton2 = new MenuButton("MAIN MENU");
+        wonButtonContainer = new VBox();
+
         retryButton = new MenuButton("RETRY");
         exitToMenuButton = new MenuButton("MAIN MENU");
         menuElements = new MenuButton[]{retryButton, exitToMenuButton};
-        buttonContainer = new VBox();
-        buttonContainer.getChildren().addAll(retryButton, exitToMenuButton);
-        buttonContainer.setTranslateX(450);
-        buttonContainer.setTranslateY(550);
-        buttonContainer.setOpacity(0);
-        buttonContainer.setOnKeyPressed(event -> {
+        lostButtonContainer = new VBox();
+        lostButtonContainer.getChildren().addAll(retryButton, exitToMenuButton);
+        lostButtonContainer.setTranslateX(450);
+        lostButtonContainer.setTranslateY(550);
+        lostButtonContainer.setOpacity(0);
+        lostButtonContainer.setOnKeyPressed(event -> {
             System.out.println(event.getCode());
             if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
                 menuElements[elementCounter].lostFocus();
@@ -151,15 +162,15 @@ public class GameView extends ViewUtil{
             root.getChildren().addAll(gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox, gs.player2.getImageView());
         }
         else {
-            root.getChildren().addAll(buttonContainer, gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox);
+            root.getChildren().addAll(lostButtonContainer, gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox);
         }
         return root;
     }
 
     @Override
     public void select(String buttonName, KeyEvent event) {
-        if(buttonName.equals("Retry")){
-            goToView(event, initScene());
+        if(buttonName.equals("RETRY")){
+            System.out.println("Totally started a new game");
         }
         else if(buttonName.equals("MAIN MENU")){
             goToView(event, MenuView.getInstance().initScene());
@@ -182,9 +193,9 @@ public class GameView extends ViewUtil{
     public void gameOver() {
         // Is ded!
         menuElements[0].gainedFocus();
-        buttonContainer.setOpacity(1);
-        buttonContainer.setFocusTraversable(true);
-        buttonContainer.requestFocus();
+        lostButtonContainer.setOpacity(1);
+        lostButtonContainer.setFocusTraversable(true);
+        lostButtonContainer.requestFocus();
         graphics.drawImage(new Image("assets/image/gameover.png"), (VIEW_WIDTH/2) - 368, (VIEW_HEIGHT/2) - 51);
     }
     

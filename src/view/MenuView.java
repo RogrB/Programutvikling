@@ -96,6 +96,10 @@ public class MenuView extends ViewUtil{
         }
     }
 
+    public WarningField getField(){
+        return testField;
+    }
+
     public Parent initScene(){
 
         AudioManager.getInstance().setMusic("MENU");
@@ -116,6 +120,14 @@ public class MenuView extends ViewUtil{
         MenuButton selectLevelButton = new MenuButton("LEVEL SELECT");
         MenuButton optionsButton = new MenuButton("OPTIONS");
         MenuButton exitButton = new MenuButton("EXIT");
+        testField = new WarningField();
+        testField.setTranslateX(475);
+        testField.setTranslateY(250);
+
+        MenuButton randomButton = new MenuButton("TEST");
+        randomButton.setOnMouseClicked(event -> {
+            testField.changeText("TEST");
+        });
 
         newGameButton.setOnMouseClicked(this::createNewSave);
         continueButton.setOnMouseClicked(this::continueGame);
@@ -143,7 +155,7 @@ public class MenuView extends ViewUtil{
         });
 
         if(gameFileFound()){
-            mainMenu.getChildren().addAll(continueButton, loadGameButton, newGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton);
+            mainMenu.getChildren().addAll(continueButton, loadGameButton, newGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton, randomButton);
             menuElements = new MenuButton[]{continueButton, loadGameButton, newGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton};
         }
         else{
@@ -151,7 +163,7 @@ public class MenuView extends ViewUtil{
             menuElements = new MenuButton[]{newGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton};
         }
         menuElements[0].gainedFocus();
-        root.getChildren().addAll(header, mainMenu);
+        root.getChildren().addAll(header, testField, mainMenu);
         return root;
 
     }

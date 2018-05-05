@@ -265,9 +265,22 @@ public class GameController {
 
     private void detectGameOver(){
         if (!gs.player.isAlive()) {
+            gs.gameOver = true;
+            startLossTimer();
             gv.gameOver();
             gameMainTimer.stop();
+            AutoSave.getInstance().stop();
         }
+    }
+
+    void startLossTimer(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Game lost!");
+            }
+        }, 2000);
     }
     
     private void detectGameWin() {
