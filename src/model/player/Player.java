@@ -60,6 +60,9 @@ public class Player extends Entity {
         shooting = false;
         score = 0;
         this.weaponType = playerBehaviour.powerUp("Reset");
+        enemiesKilled = 0;
+        bulletsHit = 0;
+        bulletCount = 0;
         // System.out.println("shield = " + hasShield);
         // System.out.println("width = " + getWidth());        
     }
