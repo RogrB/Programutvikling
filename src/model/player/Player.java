@@ -31,6 +31,9 @@ public class Player extends Entity {
     private boolean shooting= false;
     Shield shield = new Shield(getX(), getY(), hasShield());
     private int score;
+    private int enemiesKilled;
+    private int bulletsHit;
+    private int bulletCount;
 
     private PlayerBehaviour playerBehaviour = new PlayerBehaviour();
 
@@ -49,7 +52,6 @@ public class Player extends Entity {
     
     public void init() {
         inst = new Player();
-        hasShield = false;
         if (hasShield) {
             removeShield();
         }
@@ -58,8 +60,11 @@ public class Player extends Entity {
         shooting = false;
         score = 0;
         this.weaponType = playerBehaviour.powerUp("Reset");
-        System.out.println("shield = " + hasShield);
-        System.out.println("width = " + getWidth());        
+        enemiesKilled = 0;
+        bulletsHit = 0;
+        bulletCount = 0;
+        // System.out.println("shield = " + hasShield);
+        // System.out.println("width = " + getWidth());        
     }
 
     public void update(){
@@ -135,6 +140,7 @@ public class Player extends Entity {
             playerBehaviour.shoot(this.weaponType, getX(), getY(), this.width, this.height, weapon);
             setCanShoot(false);
             shotDelayTimer();
+            bulletCount++;
             if (GameModel.getInstance().getMultiplayerStatus()) {
                 GameModel.getInstance().getMP().send("Shoot", getX(), getY());
             }
@@ -273,6 +279,26 @@ public class Player extends Entity {
     
     public String getWeaponType() {
         return this.weaponType;
+    }
+    
+    public int getEnemiesKilled() {
+        return this.enemiesKilled;
+    }
+    
+    public void setEnemiesKilled(int e) {
+        this.enemiesKilled = e;
+    }
+    
+    public int getBulletsHit() {
+        return this.bulletsHit;
+    }
+    
+    public void setBulletsHit(int hit) {
+        this.bulletsHit = hit;
+    }
+    
+    public int getBulletCount() {
+        return this.bulletCount;
     }
     
 }

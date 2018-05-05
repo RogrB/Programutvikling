@@ -2,7 +2,6 @@ package model;
 
 import assets.java.AudioManager;
 import assets.java.Sprite;
-import com.sun.deploy.security.ValidationState;
 import model.enemy.Enemy;
 import model.weapons.Weapon;
 

@@ -76,6 +76,10 @@ public class Player2 extends Entity {
         getImageView().relocate(getX(), getY());
     }
     
+    public void unsetSprite() {
+        getImageView().setImage(new Image("assets/image/damage/clear.png"));
+    }
+    
     public void setWeaponType(String weaponType) {
         this.weaponType = weaponType;
     } 

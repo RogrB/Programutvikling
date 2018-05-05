@@ -1,21 +1,14 @@
 package view;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
+
+import static model.GameModel.gameSettings;
 
 public class OptionsView extends ViewUtil{
 
@@ -27,9 +20,11 @@ public class OptionsView extends ViewUtil{
     private static final String BG_IMG = "assets/image/background.jpg";
     public VBox optionsMenu;
 
-    public static int difficultyValue = 3;
-    public static int soundValue = 50;
-    public static int musicValue = 50;
+    private int difficultyValue = 3;
+    private int soundValue = 50;
+    private int musicValue = 50;
+
+
 
     public Label soundLabel;
     private Label soundTextLabel;
@@ -129,10 +124,14 @@ public class OptionsView extends ViewUtil{
         optionsMenu.setTranslateY(250);
         optionsMenu.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ESCAPE){
+                gameSettings.saveSettings(difficultyValue, soundValue, musicValue);
                 goToView(event, MenuView.getInstance().initScene());
             }
         });
-        backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
+        backButton.setOnMouseClicked(event -> {
+            gameSettings.saveSettings(difficultyValue, soundValue, musicValue);
+            goToView(event, MenuView.getInstance().initScene());
+        });
         root.getChildren().addAll(header, optionsMenu);
         return root;
     }
