@@ -257,22 +257,27 @@ public class GameView extends ViewUtil{
             EnemyType boss = EnemyType.valueOf(bossType);
             for(Enemy enemy : GameState.enemies){
                 if(enemy.getType() == boss){
-                    hud.setFill(Color.GREEN);
-                    hud.fillRect(
-                            VIEW_WIDTH/3,
-                            40,
-                            VIEW_WIDTH/3,
-                            10
-                    );
-
-                    hud.setFill(Color.RED);
-                    int dmgWidth = VIEW_WIDTH/3 / boss.MAX_HEALTH * (boss.MAX_HEALTH - enemy.getHealth());
+                    hud.clearRect(VIEW_WIDTH/3, 40, 328, 105);
+                    if (enemy.getHealth() > 19) {
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Bar_Full.png"), VIEW_WIDTH/3, 40);
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
+                    }
+                    else if (enemy.getHealth() == 19) {
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Bar.png"), VIEW_WIDTH/3, 40);
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
+                    }
+                    else {
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Bar.png"), VIEW_WIDTH/3, 40, 326 - ((boss.MAX_HEALTH - enemy.getHealth()) * 12.5), 103);
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
+                    }
+                    
+                    /*int dmgWidth = VIEW_WIDTH/3 / boss.MAX_HEALTH * (boss.MAX_HEALTH - enemy.getHealth());
                     hud.fillRect(
                             VIEW_WIDTH/3*2-dmgWidth,
                             40,
                             dmgWidth,
                             10
-                    );
+                    );*/
                 }
             }
         }
