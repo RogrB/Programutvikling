@@ -186,7 +186,7 @@ public class GameController {
         }
     }
     
-    private void spawnSmallAsteroids(int x, int y) {
+    public void spawnSmallAsteroids(int x, int y) {
         gs.enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN"), x, y - 20));
         gs.enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN_REVERSED"), x, y + 20));
     }

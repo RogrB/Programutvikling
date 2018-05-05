@@ -1,8 +1,10 @@
 package multiplayer;
 
+import controller.GameController;
 import java.io.DataInputStream;
 import model.GameState;
 import model.enemy.Enemy;
+import model.enemy.Asteroid;
 import view.MultiplayerView;
 import javafx.stage.Stage;
 
@@ -58,6 +60,9 @@ public class MultiplayerHandler {
                 }
                 if(!alive && enemy.isAlive()) {
                     enemy.isDead();
+                    if (enemy instanceof Asteroid) {
+                        GameController.getInstance().spawnSmallAsteroids(enemy.getX(), enemy.getY());
+                    }
                 }
             }
         }
