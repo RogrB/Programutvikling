@@ -267,11 +267,14 @@ public class GameView extends ViewUtil{
                         hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
                     }
                     else if (enemy.getHealth() == 19) {
-                        hud.drawImage(new Image("assets/image/hud/bossHealth_Bar.png"), VIEW_WIDTH/3, 40);
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Bar.png"), (VIEW_WIDTH/3) + 70, 73);
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
+                    }
+                    else if (enemy.getHealth() <= 0) {
                         hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
                     }
                     else {
-                        hud.drawImage(new Image("assets/image/hud/bossHealth_Bar.png"), VIEW_WIDTH/3, 40, 326 - ((boss.MAX_HEALTH - enemy.getHealth()) * 12.5), 103);
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Bar.png"), (VIEW_WIDTH/3) + 70, 73, 230 - ((boss.MAX_HEALTH - enemy.getHealth()) * 11.7), 30);
                         hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
                     }
                     
