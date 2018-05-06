@@ -178,6 +178,12 @@ public class GameView extends ViewUtil{
     public void select(String buttonName, KeyEvent event) {
         if(buttonName.equals("RETRY")){
             System.out.println("Totally started a new game");
+            System.out.println(gs.player.getY());
+            gc.newGame();
+            gs.player.init();
+            gc.gameStart();
+            System.out.println(gs.player.getY());
+            lostButtonContainer.setOpacity(0);
         }
         else if(buttonName.equals("MAIN MENU")){
             goToView(event, MenuView.getInstance().initScene());

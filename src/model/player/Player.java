@@ -56,6 +56,9 @@ public class Player extends Entity {
             removeShield();
         }
         setHealth(1);
+        setY(ViewUtil.VIEW_HEIGHT / 2 - (int) new Image(Sprite.PLAYER.src).getHeight() / 2);
+        getImageView().relocate(getX(), getY());
+        setAlive(true);
         immunity = false;
         shooting = false;
         score = 0;
