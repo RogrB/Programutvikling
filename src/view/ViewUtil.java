@@ -4,6 +4,7 @@ import assets.java.AudioManager;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
@@ -19,7 +20,7 @@ public abstract class ViewUtil {
     public Pane root;
     public Text header = new Text("SPACE GAME");
     public int elementCounter = 0;
-    WarningField testField;
+    WarningField errorField;
 
     public void goToView(InputEvent event, Parent node){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();

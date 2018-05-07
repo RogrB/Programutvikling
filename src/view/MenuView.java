@@ -97,7 +97,7 @@ public class MenuView extends ViewUtil{
     }
 
     public WarningField getField(){
-        return testField;
+        return errorField;
     }
 
     public Parent initScene(){
@@ -120,13 +120,13 @@ public class MenuView extends ViewUtil{
         MenuButton selectLevelButton = new MenuButton("LEVEL SELECT");
         MenuButton optionsButton = new MenuButton("OPTIONS");
         MenuButton exitButton = new MenuButton("EXIT");
-        testField = new WarningField();
-        testField.setTranslateX(475);
-        testField.setTranslateY(250);
+        errorField = new WarningField();
+        errorField.setTranslateX(475);
+        errorField.setTranslateY(250);
 
         MenuButton randomButton = new MenuButton("TEST");
         randomButton.setOnMouseClicked(event -> {
-            testField.changeText("TEST");
+            errorField.changeText("TEST");
         });
 
         newGameButton.setOnMouseClicked(this::createNewSave);
@@ -163,7 +163,7 @@ public class MenuView extends ViewUtil{
             menuElements = new MenuButton[]{newGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton};
         }
         menuElements[0].gainedFocus();
-        root.getChildren().addAll(header, testField, mainMenu);
+        root.getChildren().addAll(header, errorField, mainMenu);
         return root;
 
     }

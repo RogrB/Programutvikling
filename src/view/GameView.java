@@ -140,6 +140,10 @@ public class GameView extends ViewUtil{
         exitToMenuButton2 = new MenuButton("MAIN MENU");
         wonButtonContainer = new VBox();
 
+        errorField = new WarningField();
+        errorField.setTranslateX(475);
+        errorField.setTranslateY(250);
+
         retryButton = new MenuButton("RETRY");
         exitToMenuButton = new MenuButton("MAIN MENU");
         menuElements = new MenuButton[]{exitToMenuButton}; // ÅSMUND
@@ -169,10 +173,10 @@ public class GameView extends ViewUtil{
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
         if(gm.getMultiplayerStatus()) {
-            root.getChildren().addAll(gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox, gs.player2.getImageView());
+            root.getChildren().addAll(errorField, gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox, gs.player2.getImageView());
         }
         else {
-            root.getChildren().addAll(lostButtonContainer, gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox);
+            root.getChildren().addAll(errorField, lostButtonContainer, gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox);
         }
         return root;
     }
@@ -322,6 +326,10 @@ public class GameView extends ViewUtil{
     
     void clearPowerUpText(int x, int y) {
         hud.clearRect(x-10, y-50, 300, 300);
+    }
+
+    public WarningField getField(){
+        return errorField;
     }
 
     public MenuButton[] getMenuElements(){return menuElements;}

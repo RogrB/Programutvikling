@@ -54,6 +54,9 @@ public class NewSaveView extends ViewUtil{
         writeSaveNameText.setY(275);
         writeSaveNameText.setFill(Color.WHITE);
         writeSaveNameText.setFont(header.getFont().font(50));
+        errorField = new WarningField();
+        errorField.setTranslateX(475);
+        errorField.setTranslateY(250);
 
         saveNameLabel = new Label("SAVE NAME");
         saveNameLabel.setTextFill(Color.WHITE);
@@ -97,7 +100,7 @@ public class NewSaveView extends ViewUtil{
                 goToView(event, NewGameView.getInst().initScene());
             }
         });
-        root.getChildren().addAll(header, writeSaveNameText, containerVBox);
+        root.getChildren().addAll(header, writeSaveNameText, errorField, containerVBox);
 
         return root;
     }
