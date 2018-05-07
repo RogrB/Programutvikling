@@ -1,6 +1,7 @@
 package view;
 
 import assets.java.AudioManager;
+import assets.java.SoundManager;
 import controller.GameController;
 import controller.UserInputs;
 import exceptions.FileIOException;
@@ -72,7 +73,8 @@ public class MenuView extends ViewUtil{
     }
 
     public void select(String buttonName, KeyEvent event){ //KeyEvent is only here so you can extract Stage from an event. Hacky, I know.
-        AudioManager.getInstance().navSelect();
+        //AudioManager.getInstance().navSelect();
+        SoundManager.getInst().navSelect();
         if(buttonName.equals("NEW GAME")){
             createNewSave(event);
         }
@@ -102,7 +104,8 @@ public class MenuView extends ViewUtil{
 
     public Parent initScene(){
 
-        AudioManager.getInstance().setMusic("MENU");
+        //AudioManager.getInstance().setMusic("MENU");
+        SoundManager.getInst().playMusic("music_menu");
 
         root = new Pane();
         VBox mainMenu = new VBox();

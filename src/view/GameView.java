@@ -1,6 +1,7 @@
 package view;
 
 import assets.java.AudioManager;
+import assets.java.SoundManager;
 import controller.UserInputs;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -72,6 +73,7 @@ public class GameView extends ViewUtil{
 
     private MenuButton[] menuElements;
     private AudioManager am;
+    private SoundManager sm;
     
     Pane root;
 
@@ -81,11 +83,13 @@ public class GameView extends ViewUtil{
         gm.mvcSetup();
         gc.mvcSetup();
         am = AudioManager.getInstance();
+        sm = SoundManager.getInst();
     }
 
     public Parent initScene() {
 
-        AudioManager.getInstance().setMusic("BATTLE");
+        //AudioManager.getInstance().setMusic("BATTLE");
+        SoundManager.getInst().playMusic("music_battle");
 
         scoreText = new Text(VIEW_WIDTH - 150, 60, "Score: " + Integer.toString(gs.player.getScore()));
         levelText = new Text(VIEW_WIDTH - 150, 30, "Level 1"); // Må hente riktig level fra leveldata

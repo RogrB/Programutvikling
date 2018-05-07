@@ -1,5 +1,6 @@
 package model.enemy;
 
+import assets.java.SoundManager;
 import model.Entity;
 import model.GameModel;
 import model.IdGen;
@@ -74,9 +75,11 @@ public class Enemy extends Entity {
 
     private void playShotAudio(){
         if(!TYPE.IS_BOSS){
-            AudioManager.getInstance().shotEnemy();
+            //AudioManager.getInstance().shotEnemy();
+            SoundManager.getInst().shotEnemy();
         } else {
-            AudioManager.getInstance().shotBoss();
+            //AudioManager.getInstance().shotBoss();
+            SoundManager.getInst().shotBoss();
         }
     }
 
@@ -87,7 +90,8 @@ public class Enemy extends Entity {
             setY(pattern.getY());
 
             if(TYPE.IS_BOSS){
-                AudioManager.getInstance().bossTalk();
+                //AudioManager.getInstance().bossTalk();
+                SoundManager.getInst().bossTalk();
             }
 
         } else {

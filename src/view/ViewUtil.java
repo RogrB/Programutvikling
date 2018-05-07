@@ -51,8 +51,8 @@ public abstract class ViewUtil {
     }
 
     public void traverseMenu(KeyCode code, Parent[] menuElements){
-        //SoundManager.getInst().playSound("nav");
-        AudioManager.getInstance().nav();
+        SoundManager.getInst().nav();
+        //AudioManager.getInstance().nav();
         if(code == KeyCode.DOWN){
             if(elementCounter == menuElements.length -1){
                 elementCounter = 0;

@@ -1,5 +1,6 @@
 package model.player;
 
+import assets.java.SoundManager;
 import assets.java.Sprite;
 import model.Entity;
 import model.PowerUp;
@@ -102,17 +103,20 @@ public class Player extends Entity {
             case "WEAPON_POWERUP":
                 powerUp();
                 HUD.getInstance().renderPowerUpText("Weapon Upgraded!");
-                AudioManager.getInstance().upgradeWeapon();
+                //AudioManager.getInstance().upgradeWeapon();
+                SoundManager.getInst().upgradeWeapon();
                 break;
             case "HEALTH_POWERUP":
                 setHealth(getHealth() + 1);
                 HUD.getInstance().renderPowerUpText("Health up!");
-                AudioManager.getInstance().upgradeHealth();
+                //AudioManager.getInstance().upgradeHealth();
+                SoundManager.getInst().upgradeHealth();
                 break;
             case "SHIELD_POWERUP":
                 setShield();
                 HUD.getInstance().renderPowerUpText("Shield!");
-                AudioManager.getInstance().upgradeShield();
+                //AudioManager.getInstance().upgradeShield();
+                SoundManager.getInst().upgradeShield();
                 break;
         }
     }
@@ -140,7 +144,8 @@ public class Player extends Entity {
     @Override
     public void shoot() {
         if(canShoot()) {
-            AudioManager.getInstance().shotPlayer();
+            //AudioManager.getInstance().shotPlayer();
+            SoundManager.getInst().shotPlayer();
             playerBehaviour.shoot(this.weaponType, getX(), getY(), this.width, this.height, weapon);
             setCanShoot(false);
             shotDelayTimer();
@@ -168,7 +173,8 @@ public class Player extends Entity {
     public void takeDamage(){
         if (!hasShield()) {
             if(!isImmune()){
-                AudioManager.getInstance().impactPlayer();
+                //AudioManager.getInstance().impactPlayer();
+                SoundManager.getInst().impactPlayer();
                 super.takeDamage();
                 if (isAlive()) {
                     initImmunity();
@@ -178,7 +184,8 @@ public class Player extends Entity {
         else {
             if (!shield.isImmune()) {
                 shield.takeDamage();
-                AudioManager.getInstance().impactShield();
+                //AudioManager.getInstance().impactShield();
+                SoundManager.getInst().impactShield();
             }
         }
     }

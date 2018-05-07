@@ -1,6 +1,7 @@
 package controller;
 
 import assets.java.AudioManager;
+import assets.java.SoundManager;
 import assets.java.Sprite;
 import javafx.animation.AnimationTimer;
 import io.AutoSave;
@@ -109,7 +110,8 @@ public class GameController {
             gameTimerInit();
         }
         AutoSave.getInstance().start();
-        AudioManager.getInstance().setMusic("BATTLE");
+        //AudioManager.getInstance().setMusic("BATTLE");
+        SoundManager.getInst().playMusic("music_battle");
     }
 
     public void gamePause(){
@@ -170,7 +172,8 @@ public class GameController {
                     }
                     if (!bullet.getHasHit()) {
                         gs.player.setScore(gs.player.getScore() + 10);
-                        AudioManager.getInstance().impactBullets();
+                        //AudioManager.getInstance().impactBullets();
+                        SoundManager.getInst().impactBullets();
                     }
 
                     bullet.hasHit();
