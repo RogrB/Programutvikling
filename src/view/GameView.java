@@ -11,7 +11,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import controller.GameController;
-import static controller.GameController.gs;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -20,14 +19,16 @@ import model.GameModel;
 import model.GameState;
 import model.enemy.Enemy;
 import model.enemy.EnemyType;
+import model.levels.LevelData;
 import model.weapons.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import java.text.DecimalFormat;
-
-import static model.GameState.bossType;
 import javafx.application.Platform;
 import multiplayer.MultiplayerHandler;
+
+import static model.GameState.bossType;
+import static controller.GameController.gs;
 import static view.ViewUtil.VIEW_HEIGHT;
 import static view.ViewUtil.VIEW_WIDTH;
 
@@ -300,20 +301,13 @@ public class GameView extends ViewUtil{
                         hud.drawImage(new Image("assets/image/hud/bossHealth_Bar.png"), (VIEW_WIDTH/3) + 70, 73, 230 - ((boss.MAX_HEALTH - enemy.getHealth()) * 11.7), 30);
                         hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
                     }
-                    
-                    /*int dmgWidth = VIEW_WIDTH/3 / boss.MAX_HEALTH * (boss.MAX_HEALTH - enemy.getHealth());
-                    hud.fillRect(
-                            VIEW_WIDTH/3*2-dmgWidth,
-                            40,
-                            dmgWidth,
-                            10
-                    );*/
+
                 }
             }
         }
 
         scoreText.setText("Score: " + Integer.toString(gs.player.getScore()));
-        levelText.setText("Level 1"); // må hente riktig level fra leveldata
+        levelText.setText(getLevelName()); // må hente riktig level fra leveldata
         weaponType.setText(h.weaponType());
     }
     
@@ -333,4 +327,14 @@ public class GameView extends ViewUtil{
     }
 
     public MenuButton[] getMenuElements(){return menuElements;}
+
+    private String getLevelName(){
+        if(gs.levelData.equals(LevelData.LEVEL1)){
+            return "Level 1";
+        } else if (gs.levelData.equals(LevelData.LEVEL2)){
+            return "Level 2";
+        } else {
+            return "Custom Level";
+        }
+    }
 }

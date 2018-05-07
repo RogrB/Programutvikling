@@ -1,7 +1,6 @@
 package model.levels;
 
 public class LevelData {
-
     /*
     INFO ABOUT SPAWNING STUFF IN
     NUMBER TYPE_SPRITE_MOVEMENT PATTERN
