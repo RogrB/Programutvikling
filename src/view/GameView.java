@@ -148,18 +148,19 @@ public class GameView extends ViewUtil{
         lostButtonContainer.setTranslateX(450);
         lostButtonContainer.setTranslateY(550);
         lostButtonContainer.setOpacity(0);
-        lostButtonContainer.setOnKeyPressed(event -> {
-            System.out.println(event.getCode());
-            if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
-                menuElements[elementCounter].lostFocus();
-                traverseMenu(event.getCode(), menuElements);
-                menuElements[elementCounter].gainedFocus();
-                System.out.println(elementCounter);
-            }
-            else if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE){
-                select(menuElements[elementCounter].getText(), event);
-            }
-        });
+//        lostButtonContainer.setOnKeyPressed(event -> {
+//            System.out.println(event.getCode());
+//            if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
+//                menuElements[elementCounter].lostFocus();
+//                traverseMenu(event.getCode(), menuElements);
+//                menuElements[elementCounter].gainedFocus();
+//                System.out.println(elementCounter);
+//            }
+//            else if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE){
+//                select(menuElements[elementCounter].getText(), event);
+//                System.out.println(((Node)event.getSource()).getScene().getFocusOwner());
+//            }
+//        });
         
         root = new Pane();
 
@@ -178,12 +179,11 @@ public class GameView extends ViewUtil{
     public void select(String buttonName, KeyEvent event) {
         if(buttonName.equals("RETRY")){
             System.out.println("Totally started a new game");
-            System.out.println(gs.player.getY());
             gc.newGame();
             gs.player.init();
             gc.gameStart();
-            System.out.println(gs.player.getY());
             lostButtonContainer.setOpacity(0);
+            System.out.println(gs.player.isAlive());
         }
         else if(buttonName.equals("MAIN MENU")){
             goToView(event, MenuView.getInstance().initScene());
@@ -207,8 +207,8 @@ public class GameView extends ViewUtil{
         // Is ded!
         menuElements[0].gainedFocus();
         lostButtonContainer.setOpacity(1);
-        lostButtonContainer.setFocusTraversable(true);
-        lostButtonContainer.requestFocus();
+//        lostButtonContainer.setFocusTraversable(true);
+//        lostButtonContainer.requestFocus();
         graphics.drawImage(new Image("assets/image/gameover.png"), (VIEW_WIDTH/2) - 368, (VIEW_HEIGHT/2) - 51);
     }
     
@@ -321,4 +321,6 @@ public class GameView extends ViewUtil{
     void clearPowerUpText(int x, int y) {
         hud.clearRect(x-10, y-50, 300, 300);
     }
+
+    public MenuButton[] getMenuElements(){return menuElements;}
 }

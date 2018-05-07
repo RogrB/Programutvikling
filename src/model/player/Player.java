@@ -72,6 +72,7 @@ public class Player extends Entity {
 
     public void update(){
         if(!playerIsOutOfBounds()){
+            int i = getY() + playerBehaviour.next();
             setY(getY() + playerBehaviour.next());
             getImageView().relocate(getX(), getY());
         }

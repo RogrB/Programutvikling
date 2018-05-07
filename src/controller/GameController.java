@@ -4,6 +4,7 @@ import assets.java.AudioManager;
 import assets.java.Sprite;
 import javafx.animation.AnimationTimer;
 import io.AutoSave;
+import javafx.stage.Window;
 import model.GameModel;
 import model.GameState;
 import model.enemy.*;

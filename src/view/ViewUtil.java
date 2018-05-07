@@ -71,6 +71,10 @@ public abstract class ViewUtil {
     public abstract Parent initScene();
     public abstract void select(String buttonName, KeyEvent event);
 
+    public int getElementCounter(){
+        return elementCounter;
+    }
+
 
 
 }
