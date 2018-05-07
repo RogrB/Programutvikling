@@ -1,15 +1,20 @@
 package view;
 
 import assets.java.AudioManager;
+import controller.UserInputs;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import controller.GameController;
+import static controller.GameController.gs;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 import model.Existance;
 import model.GameModel;
 import model.GameState;
@@ -18,10 +23,13 @@ import model.enemy.EnemyType;
 import model.weapons.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+import java.text.DecimalFormat;
 
 import static model.GameState.bossType;
-import static controller.GameController.gs;
+import javafx.application.Platform;
 import multiplayer.MultiplayerHandler;
+import static view.ViewUtil.VIEW_HEIGHT;
+import static view.ViewUtil.VIEW_WIDTH;
 
 public class GameView extends ViewUtil{
 
@@ -56,10 +64,15 @@ public class GameView extends ViewUtil{
 
     private MenuButton retryButton;
     private MenuButton exitToMenuButton;
-    private VBox buttonContainer;
+    private VBox lostButtonContainer;
+    private VBox wonButtonContainer;
+    private MenuButton continueButton;
+    private MenuButton exitToMenuButton2;
 
     private MenuButton[] menuElements;
     private AudioManager am;
+    
+    Pane root;
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
@@ -107,12 +120,12 @@ public class GameView extends ViewUtil{
         dialogBox.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ESCAPE){
                 goToView(event, MenuView.getInstance().initScene());
-                gc.gamePause();
                 if(gm.getMultiplayerStatus()) {
+                    MultiplayerHandler.getInstance().send("Disconnect", 0, 0);
                     MultiplayerHandler.getInstance().disconnect();
                     System.out.println("Game paused, disconnected from multiplayer");
-                    MultiplayerHandler.getInstance().send("Disconnect", 0, 0);
-                }
+                }                
+                gc.gamePause();
             }
         });
         dialogBox.setOpacity(0);
@@ -123,15 +136,21 @@ public class GameView extends ViewUtil{
             rect.setWidth(30);
         }
 
+        continueButton = new MenuButton("CONTINUE");
+        exitToMenuButton2 = new MenuButton("MAIN MENU");
+        wonButtonContainer = new VBox();
+
         retryButton = new MenuButton("RETRY");
         exitToMenuButton = new MenuButton("MAIN MENU");
-        menuElements = new MenuButton[]{retryButton, exitToMenuButton};
-        buttonContainer = new VBox();
-        buttonContainer.getChildren().addAll(retryButton, exitToMenuButton);
-        buttonContainer.setTranslateX(450);
-        buttonContainer.setTranslateY(550);
-        buttonContainer.setOpacity(0);
-        buttonContainer.setOnKeyPressed(event -> {
+        menuElements = new MenuButton[]{exitToMenuButton}; // ÅSMUND
+        //menuElements = new MenuButton[]{retryButton, exitToMenuButton}; //ÅSMUND
+        lostButtonContainer = new VBox();
+        lostButtonContainer.getChildren().addAll(exitToMenuButton); // ÅSMUND
+        //lostButtonContainer.getChildren().addAll(retryButton, exitToMenuButton); // ÅSMUND
+        lostButtonContainer.setTranslateX(450);
+        lostButtonContainer.setTranslateY(550);
+        lostButtonContainer.setOpacity(0);
+        lostButtonContainer.setOnKeyPressed(event -> { //ÅSMUND FJERN ALT INNI DETTE
             System.out.println(event.getCode());
             if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
                 menuElements[elementCounter].lostFocus();
@@ -141,25 +160,32 @@ public class GameView extends ViewUtil{
             }
             else if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE){
                 select(menuElements[elementCounter].getText(), event);
+                System.out.println(((Node)event.getSource()).getScene().getFocusOwner());
             }
         });
+        
+        root = new Pane();
 
-        Pane root = new Pane();
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
         if(gm.getMultiplayerStatus()) {
             root.getChildren().addAll(gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox, gs.player2.getImageView());
         }
         else {
-            root.getChildren().addAll(buttonContainer, gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox);
+            root.getChildren().addAll(lostButtonContainer, gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox);
         }
         return root;
     }
 
     @Override
     public void select(String buttonName, KeyEvent event) {
-        if(buttonName.equals("Retry")){
-            goToView(event, initScene());
+        if(buttonName.equals("RETRY")){
+            System.out.println("Totally started a new game");
+            gc.newGame();
+            gs.player.init();
+            gc.gameStart();
+            lostButtonContainer.setOpacity(0);
+            System.out.println(gs.player.isAlive());
         }
         else if(buttonName.equals("MAIN MENU")){
             goToView(event, MenuView.getInstance().initScene());
@@ -182,9 +208,9 @@ public class GameView extends ViewUtil{
     public void gameOver() {
         // Is ded!
         menuElements[0].gainedFocus();
-        buttonContainer.setOpacity(1);
-        buttonContainer.setFocusTraversable(true);
-        buttonContainer.requestFocus();
+        lostButtonContainer.setOpacity(1);
+        lostButtonContainer.setFocusTraversable(true); //ÅSMUND
+        lostButtonContainer.requestFocus(); // ÅSMUND
         graphics.drawImage(new Image("assets/image/gameover.png"), (VIEW_WIDTH/2) - 368, (VIEW_HEIGHT/2) - 51);
     }
     
@@ -198,6 +224,44 @@ public class GameView extends ViewUtil{
         hud.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
         bulletLayer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
         enemyLayer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+    }
+    
+    public void renderScoreScreen() {
+        
+	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                float bullets = gs.player.getBulletCount();
+                float hits = gs.player.getBulletsHit();
+                float accuracy = (hits / bullets) * 100;
+                DecimalFormat accuracyFormat = new DecimalFormat("#.00");
+                
+                Text levelComplete = new Text((VIEW_WIDTH/2) - 140, (VIEW_HEIGHT/2) - 180, "Level 1 Cleared!"); // Trenger å hente levelnr fra leveldata
+                Text scoreT = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 90, "Score:   " + Integer.toString(gs.player.getScore()));
+                Text shotsFired = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 40, "Shots fired:   " + Float.toString(bullets));
+                Text enemiesHit = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 10, "Enemies hit:   " + Float.toString(hits));
+                Text enemiesKilled = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 60, "Enemies killed:   " + Integer.toString(gs.player.getEnemiesKilled()));
+
+                Text hitPercent = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 110, "Accuracy:   " + accuracyFormat.format(accuracy) + "%");
+
+                levelComplete.setFill(Color.WHITE);
+                levelComplete.setFont(Font.font("Verdana", 32));  
+                scoreT.setFill(Color.WHITE);
+                scoreT.setFont(Font.font("Verdana", 30));        
+                shotsFired.setFill(Color.WHITE);
+                shotsFired.setFont(Font.font("Verdana", 30));
+                enemiesHit.setFill(Color.WHITE);
+                enemiesHit.setFont(Font.font("Verdana", 30));
+                enemiesKilled.setFill(Color.WHITE);
+                enemiesKilled.setFont(Font.font("Verdana", 30));
+                hitPercent.setFill(Color.WHITE);
+                hitPercent.setFont(Font.font("Verdana", 30));
+
+                root.getChildren().addAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent);
+
+                hud.drawImage(new Image("assets/image/scorescreen.png"), (VIEW_WIDTH/2) - 360, (VIEW_HEIGHT/2) - 225);                
+            }
+	});              
     }
     
     void renderHUD(HUD h, boolean shield) {
@@ -216,22 +280,30 @@ public class GameView extends ViewUtil{
             EnemyType boss = EnemyType.valueOf(bossType);
             for(Enemy enemy : GameState.enemies){
                 if(enemy.getType() == boss){
-                    hud.setFill(Color.GREEN);
-                    hud.fillRect(
-                            VIEW_WIDTH/3,
-                            40,
-                            VIEW_WIDTH/3,
-                            10
-                    );
-
-                    hud.setFill(Color.RED);
-                    int dmgWidth = VIEW_WIDTH/3 / boss.MAX_HEALTH * (boss.MAX_HEALTH - enemy.getHealth());
+                    hud.clearRect(VIEW_WIDTH/3, 40, 328, 105);
+                    if (enemy.getHealth() > 19) {
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Bar_Full.png"), VIEW_WIDTH/3, 40);
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
+                    }
+                    else if (enemy.getHealth() == 19) {
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Bar.png"), (VIEW_WIDTH/3) + 70, 73);
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
+                    }
+                    else if (enemy.getHealth() <= 0) {
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
+                    }
+                    else {
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Bar.png"), (VIEW_WIDTH/3) + 70, 73, 230 - ((boss.MAX_HEALTH - enemy.getHealth()) * 11.7), 30);
+                        hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
+                    }
+                    
+                    /*int dmgWidth = VIEW_WIDTH/3 / boss.MAX_HEALTH * (boss.MAX_HEALTH - enemy.getHealth());
                     hud.fillRect(
                             VIEW_WIDTH/3*2-dmgWidth,
                             40,
                             dmgWidth,
                             10
-                    );
+                    );*/
                 }
             }
         }
@@ -251,4 +323,6 @@ public class GameView extends ViewUtil{
     void clearPowerUpText(int x, int y) {
         hud.clearRect(x-10, y-50, 300, 300);
     }
+
+    public MenuButton[] getMenuElements(){return menuElements;}
 }

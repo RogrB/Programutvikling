@@ -6,6 +6,7 @@ import model.Existance;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
+import static controller.GameController.gs;
 
 public class Basic extends Existance {
 
@@ -69,6 +70,7 @@ public class Basic extends Existance {
 
     private void bulletDie(){
         if(timer == null) {
+            gs.player.setBulletsHit(gs.player.getBulletsHit() + 1);
             timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override

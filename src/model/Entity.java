@@ -81,4 +81,8 @@ public abstract class Entity extends Existance {
         }
     }
 
+    public void setAlive(Boolean alive){
+        this.alive = alive;
+    }
+
 }

@@ -19,6 +19,7 @@ public abstract class ViewUtil {
     public Pane root;
     public Text header = new Text("SPACE GAME");
     public int elementCounter = 0;
+    WarningField testField;
 
     public void goToView(InputEvent event, Parent node){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -69,6 +70,10 @@ public abstract class ViewUtil {
 
     public abstract Parent initScene();
     public abstract void select(String buttonName, KeyEvent event);
+
+    public int getElementCounter(){
+        return elementCounter;
+    }
 
 
 
