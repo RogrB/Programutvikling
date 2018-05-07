@@ -41,6 +41,8 @@ public class GameController {
     public Iterator<Basic> bulletIterator;
     public Iterator<Enemy> enemyIterator;
     public Iterator<PowerUp> powerUpIterator;
+    int levelCount = 1;
+    String currentLevel = "LEVEL" + levelCount;
 
     public void mvcSetup(){
         gm = GameModel.getInstance();
@@ -52,8 +54,10 @@ public class GameController {
     }
 
     public void newGame(){
+        String[][][] level = LevelData.getLevel(currentLevel);
         gv.clearAllGraphics();
-        gs.newGameState(LevelData.LEVEL4);
+        System.out.println("Starting level " + currentLevel);
+        gs.newGameState(level);
         gs.player.init();
         gameTimerInit();
         AutoSave.getInstance().start();
@@ -290,6 +294,9 @@ public class GameController {
             for(Enemy enemy : gs.enemies){
                 if(enemy.getType() == boss && !enemy.isAlive() && !gs.gameOver){
                     gs.gameOver = true;
+                    levelCount++;
+                    currentLevel = "LEVEL" + levelCount;
+                    System.out.println("Next level is " + currentLevel);
                     startGameWinTimer();
                     AutoSave.getInstance().stop();
                 }
@@ -304,6 +311,9 @@ public class GameController {
             public void run() {
                 System.out.println("Game Won!");
                 gv.renderScoreScreen();
+                newGame();
+                gs.player.init();
+                gameStart();
             }
         }, 2000);
     }
