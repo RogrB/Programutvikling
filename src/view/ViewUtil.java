@@ -1,6 +1,7 @@
 package view;
 
 import assets.java.AudioManager;
+import assets.java.SoundManager;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -50,6 +51,7 @@ public abstract class ViewUtil {
     }
 
     public void traverseMenu(KeyCode code, Parent[] menuElements){
+        //SoundManager.getInst().playSound("nav");
         AudioManager.getInstance().nav();
         if(code == KeyCode.DOWN){
             if(elementCounter == menuElements.length -1){
