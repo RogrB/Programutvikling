@@ -6,6 +6,7 @@ import javafx.animation.AnimationTimer;
 import io.AutoSave;
 import javafx.stage.Window;
 import model.GameModel;
+import model.GameSettings;
 import model.GameState;
 import model.enemy.*;
 import model.levels.LevelData;
@@ -269,7 +270,7 @@ public class GameController {
     }
 
     private void detectGameOver(){
-        if (!gs.player.isAlive()) {
+        if (!gs.player.isAlive() && !gs.gameOver) {
             gs.gameOver = true;
             startLossTimer();
             gv.gameOver();

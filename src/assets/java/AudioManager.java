@@ -59,8 +59,27 @@ public class AudioManager {
     private final File NAV =            new File(AUDIO_ASSETS + "sfx/nav_1.wav");
     private final File NAV_SELECT =     new File(AUDIO_ASSETS + "sfx/nav_select_1.wav");
 
-    MediaPlayer musicPlayer;
     Random rand;
+
+    MediaPlayer musicPlayer;
+    MediaPlayer shotPlayer;
+    MediaPlayer shotBoss;
+    MediaPlayer shotEnemy;
+    MediaPlayer impactBullets;
+    MediaPlayer impactShield;
+    MediaPlayer impactPlayer01;
+    MediaPlayer impactPlayer02;
+    MediaPlayer entityDead;
+    MediaPlayer bossWobble;
+    MediaPlayer bossTalk;
+    MediaPlayer bossDies01;
+    MediaPlayer bossDies02;
+    MediaPlayer bossDies03;
+    MediaPlayer nav;
+    MediaPlayer navSelect;
+    MediaPlayer upgradeWeapon;
+    MediaPlayer upgradeHealth;
+    MediaPlayer upgradeShield;
 
     private AudioManager(){
         rand = new Random();
@@ -103,65 +122,68 @@ public class AudioManager {
 
 
     public void shotPlayer(){
-        play(SHOT_PLAYER_01, 1f);
+        play(SHOT_PLAYER_01, shotPlayer, 1f);
     }
     public void shotBoss(){
-        play(SHOT_BOSS, .6f);
+        play(SHOT_BOSS, shotBoss, .6f);
     }
     public void shotEnemy(){
-        play(SHOT_ENEMY[rand.nextInt(SHOT_ENEMY.length)], .5f);
+        play(SHOT_ENEMY[rand.nextInt(SHOT_ENEMY.length)], shotEnemy, .5f);
     }
 
     public void impactBullets(){
-        play(BULLET_IMPACT, 1f);
+        play(BULLET_IMPACT, impactBullets, 1f);
     }
     public void impactShield(){
-        play(IMPACT_04, 1f);
+        play(IMPACT_04, impactShield, 1f);
     }
     public void impactPlayer() {
-        play(SFX_1, 1f);
-        play(SFX_2, .6f);
+        play(SFX_1, impactPlayer01, 1f);
+        play(SFX_2, impactPlayer02, .6f);
     }
 
     public void entityDead(){
-        play(IMPACT_02, 1f);
+        play(IMPACT_02, entityDead, 1f);
     }
     public void bossWobble(){
-        play(BOSS_WOBBLE_1, .7f);
+        play(BOSS_WOBBLE_1, bossWobble, .7f);
     }
     public void bossTalk(){
         if(rand.nextInt(180) == 0)
-            play(BOSS_TALK[rand.nextInt(BOSS_TALK.length)], 1f);
+            play(BOSS_TALK[rand.nextInt(BOSS_TALK.length)], bossTalk, 1f);
     }
 
     public void bossDies(){
-        play(IMPACT_01, 1f);
-        play(IMPACT_03, 1f);
-        play(MUSIC_WIN, 1f);
+        play(IMPACT_01, bossDies01, 1f);
+        play(IMPACT_03, bossDies02, 1f);
+        play(MUSIC_WIN, bossDies03, 1f);
         musicPlayer.stop();
     }
 
     public void nav(){
-        play(NAV, 1f);
+        play(NAV, nav, 1f);
     }
     public void navSelect(){
-        play(NAV_SELECT, 1f);
+        play(NAV_SELECT, navSelect, 1f);
     }
 
     public void upgradeWeapon() {
-        play(UP_WEAPON, 1f);
+        play(UP_WEAPON, upgradeWeapon, 1f);
     }
     public void upgradeHealth() {
-        play(UP_HEALTH, 1f);
+        play(UP_HEALTH, upgradeHealth, 1f);
     }
     public void upgradeShield() {
-        play(UP_SHIELD, .7f);
+        play(UP_SHIELD, upgradeShield, .7f);
     }
 
-    private void play(File file, Float volume){
-        Media sound = new Media(file.toURI().toString());
-        MediaPlayer sfxPlayer = new MediaPlayer(sound);
-        sfxPlayer.setVolume(volume * ((float) gameSettings.getSoundValue() / 100));
-        sfxPlayer.play();
+    private void play(File file, MediaPlayer player, Float volume){
+        if(player == null){
+            Media sound = new Media(file.toURI().toString());
+            player = new MediaPlayer(sound);
+        }
+        player.setVolume(volume * ((float) gameSettings.getSoundValue() / 100));
+        player.stop();
+        player.play();
     }
 }

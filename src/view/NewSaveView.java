@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.GameModel;
 
 import java.util.Objects;
 
@@ -66,6 +67,7 @@ public class NewSaveView extends ViewUtil{
                 Scene scene = new Scene(GameView.getInstance().initScene());
                 stage.setScene(scene);
                 UserInputs userInputs = new UserInputs(scene);
+                //GameModel.getInstance().gameSettings.savePrevSave(/* SAVE STATE SOM STARTES NÅ */);
                 System.out.println("Totally started a new game");
             }
         });
@@ -78,6 +80,7 @@ public class NewSaveView extends ViewUtil{
                 Scene scene = new Scene(GameView.getInstance().initScene());
                 stage.setScene(scene);
                 UserInputs userInputs = new UserInputs(scene);
+                //GameModel.getInstance().gameSettings.savePrevSave(/* SAVE STATE SOM STARTES NÅ */);
                 System.out.println("Totally started a new game");
             }
         });
