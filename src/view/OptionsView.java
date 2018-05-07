@@ -117,12 +117,36 @@ public class OptionsView extends ViewUtil{
             difficultyValue = newValue.intValue();
             difficultyTextLabel.setText(setDifficultyText(difficultyValue));
         });
+        errorField = new WarningField();
+        errorField.setTranslateX(475);
+        errorField.setTranslateY(250);
+
+
+        menuElements = new Parent[]{soundSlider, musicSlider, difficultySlider, backButton};
         backButton = new MenuButton("BACK");
         optionsMenu.getChildren().addAll(soundLabel, soundSlider, soundTextLabel, musicLabel, musicSlider, musicTextLabel, difficultyLabel, difficultySlider, difficultyTextLabel, backButton);
         optionsMenu.setSpacing(10);
         optionsMenu.setTranslateX(450);
         optionsMenu.setTranslateY(250);
+        elementCounter = 0;
         optionsMenu.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
+                backButton.lostFocus();
+                System.out.println(elementCounter);
+                traverseMenu(event.getCode(), menuElements);
+                setFocusButtons(elementCounter);
+                if(elementCounter == 3) backButton.gainedFocus();
+            }
+            if(event.getCode() == KeyCode.ENTER && elementCounter == 3 || event.getCode() == KeyCode.SPACE && elementCounter == 3){
+                select("BACK", event);
+            }
+            if(event.getCode() == KeyCode.ENTER && elementCounter < 3 || event.getCode() == KeyCode.SPACE && elementCounter == 3){
+                traverseMenu(KeyCode.DOWN, menuElements);
+                setFocusButtons(elementCounter);
+                if(elementCounter == 3){
+                    backButton.gainedFocus();
+                }
+            }
             if(event.getCode() == KeyCode.ESCAPE){
                 gameSettings.saveSettings(difficultyValue, soundValue, musicValue);
                 goToView(event, MenuView.getInstance().initScene());
@@ -132,12 +156,27 @@ public class OptionsView extends ViewUtil{
             gameSettings.saveSettings(difficultyValue, soundValue, musicValue);
             goToView(event, MenuView.getInstance().initScene());
         });
-        root.getChildren().addAll(header, optionsMenu);
+        root.getChildren().addAll(header, errorField, optionsMenu);
         return root;
+    }
+
+    void setFocusButtons(int currentFocus){
+        for(int i = 0; i < 3; i++){
+            if(i != currentFocus){
+                menuElements[i].setFocusTraversable(false);
+                System.out.println("Muted button" + i);
+            }
+            else{
+                menuElements[currentFocus].setFocusTraversable(true);
+                menuElements[currentFocus].requestFocus();
+            }
+        }
     }
 
     @Override
     public void select(String buttonName, KeyEvent event) {
-
+        if(buttonName.equals("BACK")){
+            goToView(event, MenuView.getInstance().initScene());
+        }
     }
 }

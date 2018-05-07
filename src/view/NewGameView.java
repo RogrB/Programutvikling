@@ -36,6 +36,10 @@ public class NewGameView extends ViewUtil{
         selectSaveText.setFill(Color.WHITE);
         selectSaveText.setFont(header.getFont().font(50));
 
+        errorField = new WarningField();
+        errorField.setTranslateX(475);
+        errorField.setTranslateY(250);
+
         root.setPrefSize(ViewUtil.VIEW_WIDTH, ViewUtil.VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
 
@@ -71,7 +75,7 @@ public class NewGameView extends ViewUtil{
         containerVBox.setTranslateX(400);
         containerVBox.setTranslateY(250);
         backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
-        root.getChildren().addAll(header, containerVBox);
+        root.getChildren().addAll(header, errorField, containerVBox);
         return root;
     }
 
