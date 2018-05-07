@@ -26,14 +26,14 @@ public class UserInputs {
         s.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.SPACE && GameController.gs.player.isAlive())
                 gs.player.isShooting();
-            //if (event.getCode() == KeyCode.SPACE || event.getCode() == KeyCode.ENTER && !GameController.gs.player.isAlive())
-                //gv.select(gv.getMenuElements()[gv.getElementCounter()].getText(), event);
-            if (event.getCode() == KeyCode.W || event.getCode() == KeyCode.UP && GameController.gs.player.isAlive())
+//            if (event.getCode() == KeyCode.SPACE  && !GameController.gs.player.isAlive()|| event.getCode() == KeyCode.ENTER && !GameController.gs.player.isAlive())
+//                gv.select(gv.getMenuElements()[gv.getElementCounter()].getText(), event);
+            if (event.getCode() == KeyCode.W  && GameController.gs.player.isAlive()|| event.getCode() == KeyCode.UP && GameController.gs.player.isAlive())
                 gs.player.move("UP");
-            //if (event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN && !GameController.gs.player.isAlive())
-                //gv.getMenuElements()[gv.elementCounter].lostFocus();
-                //gv.traverseMenu(event.getCode(), gv.getMenuElements());
-                //gv.getMenuElements()[gv.elementCounter].gainedFocus();
+//            if (event.getCode() == KeyCode.UP && !GameController.gs.player.isAlive() || event.getCode() == KeyCode.DOWN && !GameController.gs.player.isAlive())
+//                gv.getMenuElements()[gv.elementCounter].lostFocus();
+//                gv.traverseMenu(event.getCode(), gv.getMenuElements());
+//                gv.getMenuElements()[gv.elementCounter].gainedFocus();
             if (event.getCode() == KeyCode.S || event.getCode() == KeyCode.DOWN && GameController.gs.player.isAlive())
                 gs.player.move("DOWN");
             if (event.getCode() == KeyCode.E && GameController.gs.player.isAlive())

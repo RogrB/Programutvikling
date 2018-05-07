@@ -154,7 +154,11 @@ public class MenuView extends ViewUtil{
             }
         });
 
-        if(gameFileFound()){
+        if(gameFileFound() && GameController.getInstance().getLastGameLost()){
+            mainMenu.getChildren().addAll(newGameButton, loadGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton, randomButton);
+            menuElements = new MenuButton[]{newGameButton, loadGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton};
+        }
+        else if(gameFileFound()){
             mainMenu.getChildren().addAll(continueButton, loadGameButton, newGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton, randomButton);
             menuElements = new MenuButton[]{continueButton, loadGameButton, newGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton};
         }

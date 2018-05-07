@@ -45,6 +45,8 @@ public class GameController {
     int levelCount = 1;
     String currentLevel = "LEVEL" + levelCount;
 
+    private Boolean lastGameLost = false;
+
     public void mvcSetup(){
         gm = GameModel.getInstance();
         gv = GameView.getInstance();
@@ -57,6 +59,7 @@ public class GameController {
     public void newGame(){
         String[][][] level = LevelData.getLevel(currentLevel);
         gv.clearAllGraphics();
+        lastGameLost = false;
         System.out.println("Starting level " + currentLevel);
         gs.newGameState(level);
         gs.player.init();
@@ -272,6 +275,7 @@ public class GameController {
     private void detectGameOver(){
         if (!gs.player.isAlive() && !gs.gameOver) {
             gs.gameOver = true;
+            lastGameLost = true;
             startLossTimer();
             gv.gameOver();
             gameMainTimer.stop();
@@ -295,6 +299,7 @@ public class GameController {
             for(Enemy enemy : gs.enemies){
                 if(enemy.getType() == boss && !enemy.isAlive() && !gs.gameOver){
                     gs.gameOver = true;
+                    lastGameLost = false;
                     levelCount++;
                     currentLevel = "LEVEL" + levelCount;
                     System.out.println("Next level is " + currentLevel);
@@ -322,4 +327,6 @@ public class GameController {
     public HUD getHUD() {
         return this.hud;
     }
+
+    public Boolean getLastGameLost() {return this.lastGameLost; }
 }
