@@ -34,7 +34,7 @@ public class Player2 extends Entity {
         );
 
         setCanShoot(true);
-        getImageView().relocate(getX(), getY());
+        // getImageView().relocate(getX(), getY());
         weapon = Weapon.PLAYER_BASIC;
     }    
     
