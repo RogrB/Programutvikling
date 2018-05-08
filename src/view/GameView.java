@@ -272,14 +272,35 @@ public class GameView extends ViewUtil{
                 float hits = gs.player.getBulletsHit();
                 float accuracy = (hits / bullets) * 100;
                 DecimalFormat accuracyFormat = new DecimalFormat("#.00");
+                levelComplete.setText(getLevelName() + " Cleared!");
+                levelComplete.setX((VIEW_WIDTH/2) - 140);
+                levelComplete.setY((VIEW_HEIGHT/2) - 230);
+                // levelComplete = new Text((VIEW_WIDTH/2) - 140, (VIEW_HEIGHT/2) - 230, getLevelName() + " Cleared!"); // Trenger å hente levelnr fra leveldata
                 
-                Text levelComplete = new Text((VIEW_WIDTH/2) - 140, (VIEW_HEIGHT/2) - 230, getLevelName() + " Cleared!"); // Trenger å hente levelnr fra leveldata
-                Text scoreT = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 140, "Score:   " + Integer.toString(gs.player.getScore()));
-                Text shotsFired = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 90, "Shots fired:   " + Float.toString(bullets));
-                Text enemiesHit = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 40, "Enemies hit:   " + Float.toString(hits));
-                Text enemiesKilled = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 10, "Enemies killed:   " + Integer.toString(gs.player.getEnemiesKilled()));
+                scoreT.setText("Score:   " + Integer.toString(gs.player.getScore()));
+                scoreT.setX((VIEW_WIDTH/2) - 300);
+                scoreT.setY((VIEW_HEIGHT/2) - 140);
+                //Text scoreT = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 140, "Score:   " + Integer.toString(gs.player.getScore()));
+                
+                shotsFired.setText("Shots fired:   " + Float.toString(bullets));
+                shotsFired.setX((VIEW_WIDTH/2) - 300);
+                shotsFired.setY((VIEW_HEIGHT/2) - 90);
+                //Text shotsFired = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 90, "Shots fired:   " + Float.toString(bullets));
+                
+                enemiesHit.setText("Enemies hit:   " + Float.toString(hits));
+                enemiesHit.setX((VIEW_WIDTH/2) - 300);
+                enemiesHit.setY((VIEW_HEIGHT/2) - 40);
+                //Text enemiesHit = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 40, "Enemies hit:   " + Float.toString(hits));
+                
+                enemiesKilled.setText("Enemies killed:   " + Integer.toString(gs.player.getEnemiesKilled()));
+                enemiesKilled.setX((VIEW_WIDTH/2) - 300);
+                enemiesKilled.setY((VIEW_HEIGHT/2) + 10);
+                //Text enemiesKilled = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 10, "Enemies killed:   " + Integer.toString(gs.player.getEnemiesKilled()));
 
-                Text hitPercent = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 60, "Accuracy:   " + accuracyFormat.format(accuracy) + "%");
+                hitPercent.setText("Accuracy:   " + accuracyFormat.format(accuracy) + "%");
+                hitPercent.setX((VIEW_WIDTH/2) - 300);
+                hitPercent.setY((VIEW_HEIGHT/2) + 60);
+                //Text hitPercent = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 60, "Accuracy:   " + accuracyFormat.format(accuracy) + "%");
 
                 levelComplete.setFill(Color.WHITE);
                 levelComplete.setFont(Font.font("Verdana", 32));  
@@ -302,14 +323,7 @@ public class GameView extends ViewUtil{
     }
     
     public void clearScoreScreen() {
-        System.out.println("Clearing scorescreen");
         root.getChildren().removeAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent);
-        levelComplete.setY(-50);
-        scoreT.setY(-50);
-        shotsFired.setY(-50);
-        enemiesHit.setY(-50);
-        enemiesKilled.setY(-50);
-        hitPercent.setY(-50);
     }
     
     void renderHUD(HUD h, boolean shield) {
