@@ -15,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.GameModel;
 import model.GameSettings;
 
 public class MenuView extends ViewUtil{
@@ -69,7 +70,9 @@ public class MenuView extends ViewUtil{
     }
 
     private boolean gameFileFound(){
-        return IOManager.getInstance().saveStateExists();
+        if(IOManager.getInstance().saveStateExists() && GameModel.gameSettings.getPrevSave() > -1)
+            return true;
+        return false;
     }
 
     public void select(String buttonName, KeyEvent event){ //KeyEvent is only here so you can extract Stage from an event. Hacky, I know.

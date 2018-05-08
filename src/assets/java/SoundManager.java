@@ -193,7 +193,7 @@ public class SoundManager {
                     playSound("boss_talk_4");
                     break;
                 case 5:
-                    playSound("boss_talk_%");
+                    playSound("boss_talk_5");
                     break;
             }
         }
