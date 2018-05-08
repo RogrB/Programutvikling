@@ -12,6 +12,7 @@ import javafx.util.Duration;
 public class WarningField extends StackPane {
 
     private Text text;
+    private Color fill = Color.DARKRED;
 
     public WarningField(){
         text = new Text("");
@@ -19,7 +20,7 @@ public class WarningField extends StackPane {
         text.setFill(Color.WHITE);
 
         Rectangle bg = new Rectangle(250, 30);
-        bg.setFill(Color.DARKRED);
+        bg.setFill(fill);
         bg.setStroke(Color.BLACK);
         bg.setEffect(new GaussianBlur(3.5));
         bg.setArcWidth(30);
@@ -43,4 +44,9 @@ public class WarningField extends StackPane {
         fadeTransitionOut.setToValue(0);
         fadeTransitionOut.play();
     }
+    
+    public void setColor(Color color) {
+        this.fill = color;
+    }
+    
 }

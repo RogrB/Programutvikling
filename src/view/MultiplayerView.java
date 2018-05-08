@@ -46,6 +46,8 @@ public class MultiplayerView extends ViewUtil{
     public MenuButton backButton;
     
     public static Stage stage;
+    
+    public WarningField errorField = new WarningField();
 
     public Parent initScene(){
         root = new Pane();
@@ -67,11 +69,8 @@ public class MultiplayerView extends ViewUtil{
         remotePortField = new TextField();
         localPortField = new TextField();
 
-        errorField = new WarningField();
         errorField.setTranslateX(475);
-        errorField.setTranslateY(250);
-        //ROGER
-        //testField.changeText("TEST");
+        errorField.setTranslateY(550);
 
         connectButton = new MenuButton("CONNECT");
         backButton = new MenuButton("BACK");
@@ -121,6 +120,7 @@ public class MultiplayerView extends ViewUtil{
         String hostname = hostnameField.getText();
         int remoteport = Integer.parseInt(remotePortField.getText());
         int localport = Integer.parseInt(localPortField.getText());
+        setWarningField(Color.GRAY, "Attempting to connect to " + hostname);
         mp.init(hostname, remoteport, localport);
         gm.setMultiplayerStatus(true);
     }
@@ -137,5 +137,14 @@ public class MultiplayerView extends ViewUtil{
                 System.out.println("Totally started a new Multiplayer game");                      
             }
 	});              
+    }
+    
+    public void setWarningField(Color color, String str) {
+        errorField.setColor(color);
+        errorField.changeText(str);
+    }
+    
+    public void setWarningField(String str) {
+        errorField.changeText(str);
     }
 }
