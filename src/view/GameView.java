@@ -151,9 +151,11 @@ public class GameView extends ViewUtil{
         continueButton = new MenuButton("CONTINUE");
         exitToMenuButton2 = new MenuButton("MAIN MENU");
         wonButtonContainer = new VBox();
-        wonButtonContainer.setOpacity(1);
+        wonButtonContainer.getChildren().addAll(continueButton, exitToMenuButton2);
+        wonButtonContainer.setOpacity(0);
         wonButtonContainer.setTranslateX(450);
-        wonButtonContainer.setTranslateY(550);
+        wonButtonContainer.setTranslateY(675);
+        menuElementsWon = new MenuButton[]{continueButton, exitToMenuButton2};
 
         errorField = new WarningField();
         errorField.setTranslateX(475);
@@ -162,7 +164,6 @@ public class GameView extends ViewUtil{
         retryButton = new MenuButton("RETRY");
         exitToMenuButton = new MenuButton("MAIN MENU");
         menuElementsLost = new MenuButton[]{retryButton, exitToMenuButton};
-        menuElementsWon = new MenuButton[]{continueButton, exitToMenuButton2};
         lostButtonContainer = new VBox();
         lostButtonContainer.getChildren().addAll(retryButton, exitToMenuButton);
         lostButtonContainer.setTranslateX(450);
@@ -191,8 +192,13 @@ public class GameView extends ViewUtil{
             lostButtonContainer.setOpacity(0);
             System.out.println(gs.player.isAlive());
         }
-        else if(buttonName.equals("MAIN MENU")){
+        if(buttonName.equals("MAIN MENU")){
             goToView(event, MenuView.getInstance().initScene());
+        }
+        if(buttonName.equals("CONTINUE")){
+            System.out.println("Next level!");
+            gc.nextGame();
+            wonButtonContainer.setOpacity(0);
         }
         elementCounter = 0;
     }
@@ -222,8 +228,10 @@ public class GameView extends ViewUtil{
     }
 
     public void gameWon(){
+        System.out.println(GameController.gs.player.getPlaying());
+        System.out.println(GameController.gs.player.isAlive());
         renderScoreScreen();
-        getMenuElementsWon()[0].gainedFocus();
+        menuElementsWon[0].gainedFocus();
         wonButtonContainer.setOpacity(1);
     }
     

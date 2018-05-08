@@ -54,6 +54,7 @@ public class GameController {
 
     public void newGame(){
         gv.clearAllGraphics();
+        gs.player.isPlaying();
         lastGameLost = false;
         gs.firstLevel();
         gs.player.init();
@@ -61,6 +62,7 @@ public class GameController {
     }
 
     public void nextGame(){
+        gs.player.isPlaying();
         gv.clearAllGraphics();
         lastGameLost = false;
         gs.nextLevel();
@@ -68,11 +70,13 @@ public class GameController {
     }
 
     public void loadGame(){
+        gs.player.isPlaying();
         gs.loadGameData();
         gameStart();
     }
 
     private void gameStart(){
+        gs.player.isPlaying();
         gv.clearAllGraphics();
         gameTimerStart();
         if(!gm.getMultiplayerStatus()){
@@ -120,6 +124,7 @@ public class GameController {
     public void gamePause(){
         AutoSave.getInstance().stop();
         gameMainTimer.stop();
+        gs.player.isNotPlaying();
     }
 
     private void moveEnemies(){
@@ -281,6 +286,7 @@ public class GameController {
     private void detectGameOver(){
         if (!gs.player.isAlive() && !gs.gameOver) {
             gs.gameOver = true;
+            gs.player.isNotPlaying();
             lastGameLost = true;
             startLossTimer();
             gv.gameOver();
@@ -304,6 +310,7 @@ public class GameController {
             EnemyType boss = EnemyType.valueOf(bossType);
             for(Enemy enemy : gs.enemies){
                 if(enemy.getType() == boss && !enemy.isAlive() && !gs.gameOver){
+                    gs.player.isNotPlaying();
                     gs.gameOver = true;
                     lastGameLost = false;
                     startGameWinTimer();
@@ -313,14 +320,24 @@ public class GameController {
         }
     }
 
+    public void won(){
+        gs.player.isNotPlaying();
+        gs.gameOver = true;
+        lastGameLost = false;
+        startGameWinTimer();
+        gameMainTimer.stop();
+        AutoSave.getInstance().stop();
+    }
+
     private void startGameWinTimer(){
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 System.out.println("Game Won!");
-                gv.renderScoreScreen();
-                nextGame();
+                gv.gameWon();
+                //gv.renderScoreScreen();
+                //nextGame();
             }
         }, 2000);
     }
