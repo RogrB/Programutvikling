@@ -27,6 +27,8 @@ import javafx.scene.text.Font;
 import java.text.DecimalFormat;
 import javafx.application.Platform;
 import multiplayer.MultiplayerHandler;
+import model.player.Player;
+import model.player.Player2;
 
 import static model.GameState.bossType;
 import static controller.GameController.gs;
@@ -48,6 +50,8 @@ public class GameView extends ViewUtil{
     private final Canvas hudCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
     private final Canvas bulletLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
     private final Canvas enemyLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+    private final Canvas playerLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+    private final Canvas player2LayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
 
     private Text scoreText;
     private Text levelText;
@@ -59,6 +63,8 @@ public class GameView extends ViewUtil{
     private final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
     private final GraphicsContext bulletLayer = bulletLayerCanvas.getGraphicsContext2D();
     private final GraphicsContext enemyLayer = enemyLayerCanvas.getGraphicsContext2D();
+    private final GraphicsContext playerLayer = playerLayerCanvas.getGraphicsContext2D();
+    private final GraphicsContext player2Layer = player2LayerCanvas.getGraphicsContext2D();
 
     private Rectangle dialogBackground;
     private Text dialogText;
@@ -178,10 +184,10 @@ public class GameView extends ViewUtil{
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
         if(gm.getMultiplayerStatus()) {
-            root.getChildren().addAll(errorField, gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox, gs.player2.getImageView());
+            root.getChildren().addAll(errorField, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, dialogBox, player2LayerCanvas);
         }
         else {
-            root.getChildren().addAll(errorField, lostButtonContainer, gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox);
+            root.getChildren().addAll(errorField, lostButtonContainer, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, dialogBox);
         }
         return root;
     }
@@ -207,6 +213,10 @@ public class GameView extends ViewUtil{
             gc = bulletLayer;
         else if(object instanceof Enemy)
             gc = enemyLayer;
+        else if (object instanceof Player)
+            gc = playerLayer;
+        else if (object instanceof Player2)
+            gc = player2Layer;
         else
             gc = graphics;
 
