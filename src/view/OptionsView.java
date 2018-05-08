@@ -7,6 +7,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import model.GameModel;
+import model.GameSettings;
 
 import static model.GameModel.gameSettings;
 
@@ -20,9 +22,9 @@ public class OptionsView extends ViewUtil{
     private static final String BG_IMG = "assets/image/background.jpg";
     public VBox optionsMenu;
 
-    private int difficultyValue = 3;
-    private int soundValue = 50;
-    private int musicValue = 50;
+    private int difficultyValue = GameModel.gameSettings.getDifficultyValue();
+    private int soundValue = GameModel.gameSettings.getSoundValue();
+    private int musicValue = GameModel.gameSettings.getMusicValue();
 
     public Label soundLabel;
     private Label soundTextLabel;

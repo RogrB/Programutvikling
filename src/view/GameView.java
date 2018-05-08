@@ -27,6 +27,8 @@ import javafx.scene.text.Font;
 import java.text.DecimalFormat;
 import javafx.application.Platform;
 import multiplayer.MultiplayerHandler;
+import model.player.Player;
+import model.player.Player2;
 
 import static model.GameState.bossType;
 import static controller.GameController.gs;
@@ -48,6 +50,8 @@ public class GameView extends ViewUtil{
     private final Canvas hudCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
     private final Canvas bulletLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
     private final Canvas enemyLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+    private final Canvas playerLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+    private final Canvas player2LayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
 
     private Text scoreText;
     private Text levelText;
@@ -59,6 +63,8 @@ public class GameView extends ViewUtil{
     private final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
     private final GraphicsContext bulletLayer = bulletLayerCanvas.getGraphicsContext2D();
     private final GraphicsContext enemyLayer = enemyLayerCanvas.getGraphicsContext2D();
+    private final GraphicsContext playerLayer = playerLayerCanvas.getGraphicsContext2D();
+    private final GraphicsContext player2Layer = player2LayerCanvas.getGraphicsContext2D();
 
     private Rectangle dialogBackground;
     private Text dialogText;
@@ -151,37 +157,22 @@ public class GameView extends ViewUtil{
 
         retryButton = new MenuButton("RETRY");
         exitToMenuButton = new MenuButton("MAIN MENU");
-        menuElements = new MenuButton[]{exitToMenuButton}; // ÅSMUND
-        //menuElements = new MenuButton[]{retryButton, exitToMenuButton}; //ÅSMUND
+        menuElements = new MenuButton[]{retryButton, exitToMenuButton};
         lostButtonContainer = new VBox();
-        lostButtonContainer.getChildren().addAll(exitToMenuButton); // ÅSMUND
-        //lostButtonContainer.getChildren().addAll(retryButton, exitToMenuButton); // ÅSMUND
+        lostButtonContainer.getChildren().addAll(retryButton, exitToMenuButton);
         lostButtonContainer.setTranslateX(450);
         lostButtonContainer.setTranslateY(550);
         lostButtonContainer.setOpacity(0);
-        lostButtonContainer.setOnKeyPressed(event -> { //ÅSMUND FJERN ALT INNI DETTE
-            System.out.println(event.getCode());
-            if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
-                menuElements[elementCounter].lostFocus();
-                traverseMenu(event.getCode(), menuElements);
-                menuElements[elementCounter].gainedFocus();
-                System.out.println(elementCounter);
-            }
-            else if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE){
-                select(menuElements[elementCounter].getText(), event);
-                System.out.println(((Node)event.getSource()).getScene().getFocusOwner());
-            }
-        });
         
         root = new Pane();
 
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
         if(gm.getMultiplayerStatus()) {
-            root.getChildren().addAll(errorField, gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox, gs.player2.getImageView());
+            root.getChildren().addAll(errorField, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, dialogBox, player2LayerCanvas);
         }
         else {
-            root.getChildren().addAll(errorField, lostButtonContainer, gs.player.getImageView(), canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox);
+            root.getChildren().addAll(errorField, lostButtonContainer, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, dialogBox);
         }
         return root;
     }
@@ -206,6 +197,10 @@ public class GameView extends ViewUtil{
             gc = bulletLayer;
         else if(object instanceof Enemy)
             gc = enemyLayer;
+        else if (object instanceof Player)
+            gc = playerLayer;
+        else if (object instanceof Player2)
+            gc = player2Layer;
         else
             gc = graphics;
 
@@ -217,8 +212,6 @@ public class GameView extends ViewUtil{
         // Is ded!
         menuElements[0].gainedFocus();
         lostButtonContainer.setOpacity(1);
-        lostButtonContainer.setFocusTraversable(true); //ÅSMUND
-        lostButtonContainer.requestFocus(); // ÅSMUND
         graphics.drawImage(new Image("assets/image/gameover.png"), (VIEW_WIDTH/2) - 368, (VIEW_HEIGHT/2) - 51);
     }
     
@@ -232,6 +225,8 @@ public class GameView extends ViewUtil{
         hud.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
         bulletLayer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
         enemyLayer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+        playerLayer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+        player2Layer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
     }
     
     public void renderScoreScreen() {

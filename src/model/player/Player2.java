@@ -12,6 +12,7 @@ import model.weapons.SpeedBullets;
 import model.weapons.DamageBullets;
 import model.weapons.TripleBurst;
 import model.weapons.Weapon;
+import view.GameView;
 import view.ViewUtil;
 
 
@@ -73,11 +74,11 @@ public class Player2 extends Entity {
     }
     
     public void update(){
-        getImageView().relocate(getX(), getY());
+        GameView.getInstance().render(this);
     }
     
     public void unsetSprite() {
-        getImageView().setImage(new Image("assets/image/damage/clear.png"));
+        newSprite(Sprite.CLEAR);
     }
     
     public void setWeaponType(String weaponType) {
@@ -86,7 +87,7 @@ public class Player2 extends Entity {
     
     public void powerUp() {
         this.weaponType = behave.powerUp(weaponType);
-        System.out.println("weapontype is now " + weaponType);
+        // System.out.println("weapontype is now " + weaponType);
     }    
     
 }

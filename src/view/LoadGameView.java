@@ -90,5 +90,9 @@ public class LoadGameView extends ViewUtil{
         if(buttonName == "BACK"){
             goToView(event, MenuView.getInstance().initScene());
         }
+        if(buttonName.equals("SAVE 1")){
+            //start load game
+            //set last game variable in game settings
+        }
     }
 }

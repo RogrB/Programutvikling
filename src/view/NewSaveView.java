@@ -25,6 +25,8 @@ public class NewSaveView extends ViewUtil{
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
+    private int saveNumber = 0;
+
     private Text writeSaveNameText;
 
     private VBox containerVBox;
@@ -61,6 +63,7 @@ public class NewSaveView extends ViewUtil{
         saveNameLabel.setTextFill(Color.WHITE);
 
         saveNameTextField = new TextField();
+        System.out.println(saveNumber);
 
         saveNameTextField.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE && !Objects.equals(saveNameTextField.getText(), "")){
@@ -107,5 +110,10 @@ public class NewSaveView extends ViewUtil{
     @Override
     public void select(String buttonName, KeyEvent event) {
 
+    }
+
+    public void setSaveNumber(int n){
+        //saveNumber = n;
+        System.out.println("save number set to " + n);
     }
 }

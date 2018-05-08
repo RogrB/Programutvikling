@@ -45,11 +45,20 @@ public class NewGameView extends ViewUtil{
 
         MenuButton backButton = new MenuButton("BACK");
         MenuButton save1 = new MenuButton("SAVE 1");
-        save1.setOnMouseClicked(event -> goToView(event, NewSaveView.getInst().initScene()));
+        save1.setOnMouseClicked(event -> {
+            NewSaveView.getInst().setSaveNumber(0);
+            goToView(event, NewSaveView.getInst().initScene());
+        });
         MenuButton save2 = new MenuButton("SAVE 2");
-        save2.setOnMouseClicked(event -> goToView(event, NewSaveView.getInst().initScene()));
+        save2.setOnMouseClicked(event -> {
+            NewSaveView.getInst().setSaveNumber(1);
+            goToView(event, NewSaveView.getInst().initScene());
+        });
         MenuButton save3 = new MenuButton("SAVE 3");
-        save3.setOnMouseClicked(event -> goToView(event, NewSaveView.getInst().initScene()));
+        save3.setOnMouseClicked(event -> {
+            NewSaveView.getInst().setSaveNumber(2);
+            goToView(event, NewSaveView.getInst().initScene());
+        });
 
         menuElements = new MenuButton[]{save1, save2, save3, backButton};
 

@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import model.GameModel;
 import multiplayer.MultiplayerHandler;
 import assets.java.AudioManager;
+import view.GameView;
 import view.ViewUtil;
 import view.HUD;
 
@@ -47,7 +48,7 @@ public class Player extends Entity {
         );
 
         setCanShoot(true);
-        getImageView().relocate(getX(), getY());
+        //getImageView().relocate(getX(), getY());
         weapon = Weapon.PLAYER_BASIC;
     }
     
@@ -58,7 +59,7 @@ public class Player extends Entity {
         }
         setHealth(1);
         setY(ViewUtil.VIEW_HEIGHT / 2 - (int) new Image(Sprite.PLAYER.src).getHeight() / 2);
-        getImageView().relocate(getX(), getY());
+        //getImageView().relocate(getX(), getY());
         setAlive(true);
         immunity = false;
         shooting = false;
@@ -75,7 +76,8 @@ public class Player extends Entity {
         if(!playerIsOutOfBounds()){
             int i = getY() + playerBehaviour.next();
             setY(getY() + playerBehaviour.next());
-            getImageView().relocate(getX(), getY());
+            //getImageView().relocate(getX(), getY());
+            GameView.getInstance().render(this);
         }
         if(shield.isBroken() && hasShield()) {
             removeShield();
@@ -229,22 +231,22 @@ public class Player extends Entity {
                 blinkCounter++;           
                 switch(blinkCounter) {
                     case 5:
-                        getImageView().setImage(new Image("assets/image/player/playerShip3_red.png"));
+                        newSprite(Sprite.PLAYER_BLINK1);
                         break;
                     case 10:
-                        getImageView().setImage(new Image("assets/image/player/playerShip4_red.png"));
+                        newSprite(Sprite.PLAYER_BLINK2);
                         break;
                     case 15:
-                        getImageView().setImage(new Image("assets/image/player/playerShip3_red.png"));
+                        newSprite(Sprite.PLAYER_BLINK1);
                         break;
                     case 20:
-                        getImageView().setImage(new Image("assets/image/player/playerShip2_red.png"));
+                        newSprite(Sprite.PLAYER);
                         blinkCounter = 0;
                         break;
                 }
                 if (!immunity) {
                     this.cancel();
-                    getImageView().setImage(new Image("assets/image/player/playerShip2_red.png"));
+                    newSprite(Sprite.PLAYER);
                 }
             }
         }, 0, 20);
