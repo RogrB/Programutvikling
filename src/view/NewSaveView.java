@@ -1,6 +1,5 @@
 package view;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import controller.GameController;
 import controller.UserInputs;
 import javafx.scene.Node;
