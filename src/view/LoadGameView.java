@@ -1,5 +1,6 @@
 package view;
 
+import controller.GameController;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -7,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import model.GameModel;
 
 public class LoadGameView extends ViewUtil{
 
@@ -91,8 +93,15 @@ public class LoadGameView extends ViewUtil{
             goToView(event, MenuView.getInstance().initScene());
         }
         if(buttonName.equals("SAVE 1")){
-            //start load game
-            //set last game variable in game settings
+            GameModel.gameSettings.savePrevSave(0);
+            System.out.println(0);
+        } else if(buttonName.equals("SAVE 2")){
+            GameModel.gameSettings.savePrevSave(1);
+        } else if(buttonName.equals("SAVE 3")){
+            GameModel.gameSettings.savePrevSave(2);
         }
+        GameController.getInstance().loadGame();
+        goToView(event, GameView.getInstance().initScene());
+        System.out.println("Totally loaded a rad gamesave");
     }
 }

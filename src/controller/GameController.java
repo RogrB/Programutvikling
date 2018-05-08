@@ -7,7 +7,6 @@ import io.AutoSave;
 import model.GameModel;
 import model.GameState;
 import model.enemy.*;
-import model.levels.LevelData;
 import model.levels.LevelLoader;
 import model.weapons.*;
 import multiplayer.MultiplayerHandler;
@@ -53,29 +52,25 @@ public class GameController {
     }
 
     public void newGame(){
-        gv.clearAllGraphics();
-        gs.player.isPlaying();
         lastGameLost = false;
         gs.firstLevel();
         gs.player.init();
-        gameStart();
+        gameRun();
     }
 
     public void nextGame(){
-        gs.player.isPlaying();
-        gv.clearAllGraphics();
         lastGameLost = false;
         gs.nextLevel();
         gs.player.init();
+        gameRun();
     }
 
     public void loadGame(){
-        gs.player.isPlaying();
         gs.loadGameData();
-        gameStart();
+        gameRun();
     }
 
-    private void gameStart(){
+    private void gameRun(){
         gs.player.isPlaying();
         gv.clearAllGraphics();
         gameTimerStart();

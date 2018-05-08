@@ -1,6 +1,5 @@
 package view;
 
-import assets.java.AudioManager;
 import assets.java.SoundManager;
 import controller.GameController;
 import controller.UserInputs;
@@ -15,8 +14,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import model.GameModel;
-import model.GameSettings;
 
 public class MenuView extends ViewUtil{
 
