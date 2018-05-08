@@ -34,7 +34,7 @@ public class MenuView extends ViewUtil{
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         try {
             IOManager.getInstance().loadGameState();
-            GameController.getInstance().gameStart();
+            GameController.getInstance().loadGame();
             Scene scene = new Scene(GameView.getInstance().initScene());
             stage.setScene(scene);
             UserInputs userInputs = new UserInputs(scene);
@@ -70,7 +70,7 @@ public class MenuView extends ViewUtil{
     }
 
     private boolean gameFileFound(){
-        if(IOManager.getInstance().saveStateExists() && GameModel.gameSettings.getPrevSave() > -1)
+        if(IOManager.getInstance().saveStateExists()/* && GameModel.gameSettings.getPrevSave() > -1*/)
             return true;
         return false;
     }

@@ -2,12 +2,12 @@ package model;
 
 import assets.java.Sprite;
 import model.enemy.Enemy;
+import model.levels.LevelData;
 import model.levels.LevelLoader;
 import model.player.Player;
 import model.player.Player2;
 import model.weapons.Basic;
 
-import java.io.ObjectStreamException;
 import java.util.ArrayList;
 
 public class GameState implements java.io.Serializable {
@@ -26,7 +26,8 @@ public class GameState implements java.io.Serializable {
     public boolean gameOver;
 
     public String[][][] levelData;
-    public int levelIncrement;
+    public int levelIncrementor;    //Increment within a level
+    private int levelIterator;      //Iterate through levels
 
     public GameState(){
         powerups = new ArrayList();
@@ -35,22 +36,32 @@ public class GameState implements java.io.Serializable {
         enemyBullets = new ArrayList<>();
         playerBullets = new ArrayList<>();
         player2Bullets = new ArrayList<>();
+        levelIterator = 0;
     }
 
-    public void newGameState(String[][][] levelData){
+    public void firstLevel(){
+        levelIterator = 1;
+        initLevel();
+    }
+
+    public void nextLevel(){
+        levelIterator++;
+        initLevel();
+    }
+
+    private void initLevel(){
+        this.levelData = LevelData.getLevel("LEVEL"+levelIterator);
+
+        levelIncrementor = 0;
+
         powerups = new ArrayList();
         enemies = new ArrayList();
 
         enemyBullets = new ArrayList<>();
         playerBullets = new ArrayList<>();
         player2Bullets = new ArrayList<>();
-        initLevel(levelData);
-        gameOver = false;
-    }
 
-    public void initLevel(String[][][] levelData){
-        this.levelData = levelData;
-        levelIncrement = 0;
+        gameOver = false;
         LevelLoader.getInstance().setLevelData(levelData);
         bossType = null;
     }

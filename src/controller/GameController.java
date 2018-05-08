@@ -1,13 +1,10 @@
 package controller;
 
-import assets.java.AudioManager;
 import assets.java.SoundManager;
 import assets.java.Sprite;
 import javafx.animation.AnimationTimer;
 import io.AutoSave;
-import javafx.stage.Window;
 import model.GameModel;
-import model.GameSettings;
 import model.GameState;
 import model.enemy.*;
 import model.levels.LevelData;
@@ -43,8 +40,6 @@ public class GameController {
     public Iterator<Basic> bulletIterator;
     public Iterator<Enemy> enemyIterator;
     public Iterator<PowerUp> powerUpIterator;
-    int levelCount = 1;
-    String currentLevel = "LEVEL" + levelCount;
 
     private Boolean lastGameLost = false;
 
@@ -58,62 +53,67 @@ public class GameController {
     }
 
     public void newGame(){
-        String[][][] level = LevelData.getLevel(currentLevel);
         gv.clearAllGraphics();
         lastGameLost = false;
-        System.out.println("Starting level " + currentLevel);
-        gs.newGameState(level);
+        gs.firstLevel();
         gs.player.init();
-        gameTimerInit();
+        gameStart();
+    }
+
+    public void nextGame(){
+        gv.clearAllGraphics();
+        lastGameLost = false;
+        gs.nextLevel();
+        gs.player.init();
+    }
+
+    public void loadGame(){
+        gs.loadGameData();
+        gameStart();
+    }
+
+    private void gameStart(){
+        gv.clearAllGraphics();
+        gameTimerStart();
         if(!gm.getMultiplayerStatus()){
             AutoSave.getInstance().start();
         }
-    }
-
-    private void gameTimerInit() {
-        gameMainTimer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-
-                gs.levelIncrement = levelLoader.increment(gs.levelIncrement);
-
-                gs.player.update();
-                gv.renderShield();
-
-                spawnPowerUps();
-
-                moveEnemies();
-                movePowerups();
-                moveAllBullets();
-
-                detectPlayerCollidesWithEnemy();
-                detectEnemyShotByPlayer();
-                detectPlayerShotByEnemy();
-                detectPlayerCollidesWithPowerUp();
-
-                hud.renderHUD();
-
-                detectGameOver();
-                detectGameWin();
-                if(gm.getMultiplayerStatus()) {
-                    gs.player2.update();
-                    gm.getMP().send("Update", gs.player.getX(), gs.player.getY());
-                }
-            }
-        }; gameMainTimer.start();
-    }
-
-    public void gameStart(){
-        gv.clearAllGraphics();
-        gs.loadGameData();
-        try {
-            gameMainTimer.start();
-        } catch (Exception e) {
-            gameTimerInit();
-        }
-        AutoSave.getInstance().start();
-        //AudioManager.getInstance().setMusic("BATTLE");
         SoundManager.getInst().playMusic("music_battle");
+    }
+
+    private void gameTimerStart() {
+        if(gameMainTimer == null)
+            gameMainTimer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+
+                    gs.levelIncrementor = levelLoader.increment(gs.levelIncrementor);
+
+                    gs.player.update();
+                    gv.renderShield();
+
+                    spawnPowerUps();
+
+                    moveEnemies();
+                    movePowerups();
+                    moveAllBullets();
+
+                    detectPlayerCollidesWithEnemy();
+                    detectEnemyShotByPlayer();
+                    detectPlayerShotByEnemy();
+                    detectPlayerCollidesWithPowerUp();
+
+                    hud.renderHUD();
+
+                    detectGameOver();
+                    detectGameWin();
+                    if(gm.getMultiplayerStatus()) {
+                        gs.player2.update();
+                        gm.getMP().send("Update", gs.player.getX(), gs.player.getY());
+                    }
+                }
+            };
+        gameMainTimer.start();
     }
 
 
@@ -306,9 +306,6 @@ public class GameController {
                 if(enemy.getType() == boss && !enemy.isAlive() && !gs.gameOver){
                     gs.gameOver = true;
                     lastGameLost = false;
-                    levelCount++;
-                    currentLevel = "LEVEL" + levelCount;
-                    System.out.println("Next level is " + currentLevel);
                     startGameWinTimer();
                     AutoSave.getInstance().stop();
                 }
@@ -323,9 +320,7 @@ public class GameController {
             public void run() {
                 System.out.println("Game Won!");
                 gv.renderScoreScreen();
-                newGame();
-                gs.player.init();
-                gameStart();
+                nextGame();
             }
         }, 2000);
     }

@@ -192,7 +192,6 @@ public class GameView extends ViewUtil{
             System.out.println("Totally started a new game");
             gc.newGame();
             gs.player.init();
-            gc.gameStart();
             lostButtonContainer.setOpacity(0);
             System.out.println(gs.player.isAlive());
         }
