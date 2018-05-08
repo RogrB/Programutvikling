@@ -103,10 +103,14 @@ public class MultiplayerView extends ViewUtil{
         multiplayerMenu.setTranslateY(250);
         multiplayerMenu.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ESCAPE){
+                mp.cancelConnectAttempt();
                 goToView(event, MenuView.getInstance().initScene());
             }
         });
-        backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
+        backButton.setOnMouseClicked(event ->  {
+            mp.cancelConnectAttempt();
+            goToView(event, MenuView.getInstance().initScene());
+                });
         root.getChildren().addAll(header, errorField, multiplayerMenu);
         return root;
     }

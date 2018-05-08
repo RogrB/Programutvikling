@@ -86,7 +86,7 @@ public class Player2 extends Entity {
     
     public void powerUp() {
         this.weaponType = behave.powerUp(weaponType);
-        System.out.println("weapontype is now " + weaponType);
+        // System.out.println("weapontype is now " + weaponType);
     }    
     
 }
