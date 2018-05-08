@@ -151,4 +151,8 @@ public class MultiplayerView extends ViewUtil{
     public void setWarningField(String str) {
         errorField.changeText(str);
     }
+    
+    public WarningField getField() {
+        return errorField;
+    }
 }

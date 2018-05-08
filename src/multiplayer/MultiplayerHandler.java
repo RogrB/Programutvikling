@@ -12,6 +12,7 @@ import view.MultiplayerView;
 import javafx.stage.Stage;
 
 import static controller.GameController.gs;
+import java.util.Iterator;
 import model.GameModel;
 import static view.MultiplayerView.stage;
 public class MultiplayerHandler {
