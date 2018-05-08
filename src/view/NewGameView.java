@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import model.GameModel;
 
 import java.awt.*;
 
@@ -91,7 +92,6 @@ public class NewGameView extends ViewUtil{
     @Override
     public void select(String buttonName, KeyEvent event) {
         if(elementCounter >= 0 && elementCounter < 3){
-            //Åsmund bruk elementCounter sin int. 0-2 er savefiles.
             goToView(event, NewSaveView.getInst().initScene());
         }
         else if(elementCounter == 3){

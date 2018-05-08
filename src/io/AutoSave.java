@@ -14,10 +14,12 @@ public class AutoSave {
 
     IOManager io = IOManager.getInstance();
 
+    private boolean running = false;
     private Timer timer;
 
     public void start(){
         timer = new Timer();
+        running = true;
         timer.schedule(new TimerTask() {
 
             @Override
@@ -26,14 +28,16 @@ public class AutoSave {
                     io.saveGameState();
                 } catch (FileIOException e) {
                     System.err.println(e.getMessage());
-                    GameView.getInstance().getField().changeText("ERROR");
+                    //GameView.getInstance().getField().changeText("ERROR");
                 }
             }
         }, 700, 700);
     }
 
     public void stop(){
-        timer.cancel();
+        if(running)
+            timer.cancel();
+        running = false;
     }
 
 }

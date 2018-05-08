@@ -16,7 +16,17 @@ public class GameSettings implements Serializable {
     public GameSettings(){
         if(IOManager.getInstance().fileExists(url)){
             readFromFile();
+        } else {
+            initNewSettings();
         }
+    }
+
+    private void initNewSettings(){
+        prevSave = -1;
+        difficultyValue = 3;
+        musicvalue = 50;
+        soundValue = 50;
+        writeToFile();
     }
 
     public void saveSettings(int difficultyValue, int soundValue, int musicvalue){
@@ -28,6 +38,7 @@ public class GameSettings implements Serializable {
 
     public void savePrevSave(int prevSave){
         this.prevSave = prevSave;
+        System.out.println(this.prevSave);
         writeToFile();
     }
 
@@ -50,10 +61,7 @@ public class GameSettings implements Serializable {
             difficultyValue = fromFile.difficultyValue;
         } catch (FileIOException e) {
             System.err.println(e.getMessage());
-            difficultyValue = 3;
-            musicvalue = 50;
-            soundValue = 50;
-            writeToFile();
+            initNewSettings();
         }
     }
 

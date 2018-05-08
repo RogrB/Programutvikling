@@ -26,8 +26,6 @@ public class OptionsView extends ViewUtil{
     private int soundValue = GameModel.gameSettings.getSoundValue();
     private int musicValue = GameModel.gameSettings.getMusicValue();
 
-
-
     public Label soundLabel;
     private Label soundTextLabel;
     private Label musicTextLabel;

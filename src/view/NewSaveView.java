@@ -63,7 +63,6 @@ public class NewSaveView extends ViewUtil{
         saveNameLabel.setTextFill(Color.WHITE);
 
         saveNameTextField = new TextField();
-        System.out.println(saveNumber);
 
         saveNameTextField.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE && !Objects.equals(saveNameTextField.getText(), "")){
@@ -72,7 +71,7 @@ public class NewSaveView extends ViewUtil{
                 Scene scene = new Scene(GameView.getInstance().initScene());
                 stage.setScene(scene);
                 UserInputs userInputs = new UserInputs(scene);
-                //GameModel.getInstance().gameSettings.savePrevSave(/* SAVE STATE SOM STARTES NÅ */);
+                GameModel.gameSettings.savePrevSave(saveNumber);
                 System.out.println("Totally started a new game");
             }
         });
@@ -85,7 +84,7 @@ public class NewSaveView extends ViewUtil{
                 Scene scene = new Scene(GameView.getInstance().initScene());
                 stage.setScene(scene);
                 UserInputs userInputs = new UserInputs(scene);
-                //GameModel.getInstance().gameSettings.savePrevSave(/* SAVE STATE SOM STARTES NÅ */);
+                GameModel.gameSettings.savePrevSave(saveNumber);
                 System.out.println("Totally started a new game");
             }
         });
@@ -113,7 +112,6 @@ public class NewSaveView extends ViewUtil{
     }
 
     public void setSaveNumber(int n){
-        //saveNumber = n;
-        System.out.println("save number set to " + n);
+        saveNumber = n;
     }
 }
