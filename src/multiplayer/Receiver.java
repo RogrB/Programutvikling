@@ -3,6 +3,9 @@ package multiplayer;
 
 import java.net.*;
 import java.io.*;
+import view.WarningField;
+import view.MultiplayerView;
+import view.GameView;
 
 public class Receiver extends Thread {
 
@@ -23,6 +26,8 @@ public class Receiver extends Thread {
         catch(SocketException e) {
             System.err.println(e);
             // Trenger en måte å outputte feilmelding i UIen
+            MultiplayerView.getInst().getField().changeText(e.toString());
+            GameView.getInstance().getField().changeText(e.toString());
         }
     }
     
@@ -36,6 +41,8 @@ public class Receiver extends Thread {
         catch(SocketException e) {
             System.err.println(e);
             // Trenger en måte å outputte feilmelding i UIen
+            MultiplayerView.getInst().getField().changeText(e.toString());
+            GameView.getInstance().getField().changeText(e.toString());            
         }        
     }
     
@@ -45,6 +52,8 @@ public class Receiver extends Thread {
         }
         catch(Exception e){
             System.err.println(e);
+            MultiplayerView.getInst().getField().changeText(e.toString());
+            GameView.getInstance().getField().changeText(e.toString());            
         }
     }    
 
@@ -62,6 +71,8 @@ public class Receiver extends Thread {
             } 
             catch(IOException e) {
                 System.err.println(e);
+                MultiplayerView.getInst().getField().changeText(e.toString());
+                GameView.getInstance().getField().changeText(e.toString());                
             }
         } 
     }

@@ -9,6 +9,7 @@ import view.MultiplayerView;
 import javafx.stage.Stage;
 
 import static controller.GameController.gs;
+import java.util.Iterator;
 import model.GameModel;
 import static view.MultiplayerView.stage;
 public class MultiplayerHandler {
@@ -56,7 +57,8 @@ public class MultiplayerHandler {
     
     protected void updateEnemies(int id, int health, boolean alive) {
         // System.out.println("trying to find enemyid to apply update");
-        for(Enemy enemy: gs.enemies) {
+        for (Iterator<Enemy> it = gs.enemies.iterator(); it.hasNext();) {
+            Enemy enemy = it.next();
             if (enemy.getID() == id) {
                 if(health < enemy.getHealth()) {
                     enemy.setHealth(health);
