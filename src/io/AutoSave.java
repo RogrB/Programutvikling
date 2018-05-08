@@ -14,10 +14,12 @@ public class AutoSave {
 
     IOManager io = IOManager.getInstance();
 
+    private boolean running = false;
     private Timer timer;
 
     public void start(){
         timer = new Timer();
+        running = true;
         timer.schedule(new TimerTask() {
 
             @Override
@@ -33,7 +35,9 @@ public class AutoSave {
     }
 
     public void stop(){
-        timer.cancel();
+        if(running)
+            timer.cancel();
+        running = false;
     }
 
 }

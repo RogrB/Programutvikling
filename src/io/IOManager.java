@@ -14,7 +14,7 @@ import static controller.GameController.gs;
 public class IOManager {
 
     private static IOManager inst = new IOManager();
-    private IOManager(){}
+    private IOManager(){ initDirs(); }
     public static IOManager getInstance(){ return inst; }
 
     public void saveGameState() throws FileIOException {
@@ -183,6 +183,23 @@ public class IOManager {
         } catch (IOException e) {
             throw new FileIOException("Save settings - Could not write to file "+src);
         }
+    }
+
+    private void initDirs(){
+        File directory = null;
+
+        directory = new File("tmp");
+        if (! directory.exists())
+            directory.mkdir();
+        directory = new File("tmp/0");
+        if (! directory.exists())
+            directory.mkdir();
+        directory = new File("tmp/1");
+        if (! directory.exists())
+            directory.mkdir();
+        directory = new File("tmp/2");
+        if (! directory.exists())
+            directory.mkdir();
     }
 
 }

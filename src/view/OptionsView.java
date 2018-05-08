@@ -24,8 +24,6 @@ public class OptionsView extends ViewUtil{
     private int soundValue = 50;
     private int musicValue = 50;
 
-
-
     public Label soundLabel;
     private Label soundTextLabel;
     private Label musicTextLabel;
