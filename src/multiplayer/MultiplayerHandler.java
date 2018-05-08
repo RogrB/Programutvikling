@@ -2,6 +2,9 @@ package multiplayer;
 
 import controller.GameController;
 import java.io.DataInputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import model.GameState;
 import model.enemy.Enemy;
 import model.enemy.Asteroid;
@@ -56,7 +59,10 @@ public class MultiplayerHandler {
     
     protected void updateEnemies(int id, int health, boolean alive) {
         // System.out.println("trying to find enemyid to apply update");
-        for(Enemy enemy: gs.enemies) {
+        //Iterator<Enemy> enemyIterator = GameState.enemies.iterator();
+        ArrayList<Enemy> tempEnemies = new ArrayList<>();
+        for(Iterator<Enemy> enemyIterator = GameState.enemies.iterator(); enemyIterator.hasNext();){
+            Enemy enemy = enemyIterator.next();
             if (enemy.getID() == id) {
                 if(health < enemy.getHealth()) {
                     enemy.setHealth(health);
@@ -65,10 +71,13 @@ public class MultiplayerHandler {
                 if(!alive && enemy.isAlive()) {
                     enemy.isDead();
                     if (enemy instanceof Asteroid) {
-                        GameController.getInstance().spawnSmallAsteroids(enemy.getX(), enemy.getY());
+                        tempEnemies.add(enemy);
                     }
                 }
             }
+        }
+        for(Enemy e : tempEnemies){
+            GameController.getInstance().spawnSmallAsteroids(e.getX(), e.getY());
         }
     }
     

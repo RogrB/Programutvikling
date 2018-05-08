@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -17,7 +18,7 @@ import static model.GameModel.gameSettings;
 public class SoundManager {
     private static SoundManager inst = new SoundManager();
     public static SoundManager getInst(){return inst; }
-    private ExecutorService musicPool = Executors.newFixedThreadPool(2);
+    private ExecutorService musicPool = Executors.newSingleThreadExecutor();
     private ExecutorService soundPool = Executors.newFixedThreadPool(2);
     private Map<String, Media> musicMap = new HashMap<>();
     private Map<String, AudioClip> soundMap = new HashMap<>();
