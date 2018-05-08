@@ -106,6 +106,7 @@ public class GameController {
     public void gameStart(){
         gv.clearAllGraphics();
         gs.loadGameData();
+        gs.player.isPlaying();
         try {
             gameMainTimer.start();
         } catch (Exception e) {
@@ -118,6 +119,7 @@ public class GameController {
 
 
     public void gamePause(){
+        gs.player.isPlaying();
         AutoSave.getInstance().stop();
         gameMainTimer.stop();
     }
@@ -280,6 +282,7 @@ public class GameController {
 
     private void detectGameOver(){
         if (!gs.player.isAlive() && !gs.gameOver) {
+            gs.player.isNotPlaying();
             gs.gameOver = true;
             lastGameLost = true;
             startLossTimer();
@@ -305,8 +308,10 @@ public class GameController {
             for(Enemy enemy : gs.enemies){
                 if(enemy.getType() == boss && !enemy.isAlive() && !gs.gameOver){
                     gs.gameOver = true;
+                    gs.player.isNotPlaying();
                     lastGameLost = false;
                     levelCount++;
+                    gv.gameWon();
                     currentLevel = "LEVEL" + levelCount;
                     System.out.println("Next level is " + currentLevel);
                     startGameWinTimer();
@@ -316,16 +321,27 @@ public class GameController {
         }
     }
 
+    public void won(){
+        gs.gameOver = true;
+        gs.player.isNotPlaying();
+        lastGameLost = false;
+        levelCount++;
+        gv.gameWon();
+        currentLevel = "LEVEL" + levelCount;
+        System.out.println("Next level is " + currentLevel);
+        startGameWinTimer();
+        AutoSave.getInstance().stop();
+    }
+
     private void startGameWinTimer(){
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 System.out.println("Game Won!");
-                gv.renderScoreScreen();
-                newGame();
-                gs.player.init();
-                gameStart();
+                //newGame();
+                //gs.player.init();
+                //gameStart();
             }
         }, 2000);
     }

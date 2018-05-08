@@ -26,6 +26,7 @@ public class Player extends Entity {
 
     // State
     private boolean immunity = false;
+    private boolean playing = false;
     private int immunityTime = 2000;
     private int blinkCounter;
     private String weaponType = "Bullet";
@@ -265,6 +266,10 @@ public class Player extends Entity {
         shield.newSprite(Sprite.CLEAR);
         this.hasShield = false;
     }
+
+    public void isPlaying(){playing = true; }
+    public void isNotPlaying() {playing = false; }
+    public boolean getPlaying(){return playing;}
     
     public boolean hasShield() {
         return this.hasShield;

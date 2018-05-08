@@ -77,7 +77,8 @@ public class GameView extends ViewUtil{
     private MenuButton continueButton;
     private MenuButton exitToMenuButton2;
 
-    private MenuButton[] menuElements;
+    private MenuButton[] menuElementsLost;
+    private MenuButton[] menuElementsWon;
     private AudioManager am;
     private SoundManager sm;
     
@@ -150,6 +151,9 @@ public class GameView extends ViewUtil{
         continueButton = new MenuButton("CONTINUE");
         exitToMenuButton2 = new MenuButton("MAIN MENU");
         wonButtonContainer = new VBox();
+        wonButtonContainer.setOpacity(1);
+        wonButtonContainer.setTranslateX(450);
+        wonButtonContainer.setTranslateY(550);
 
         errorField = new WarningField();
         errorField.setTranslateX(475);
@@ -157,7 +161,8 @@ public class GameView extends ViewUtil{
 
         retryButton = new MenuButton("RETRY");
         exitToMenuButton = new MenuButton("MAIN MENU");
-        menuElements = new MenuButton[]{retryButton, exitToMenuButton};
+        menuElementsLost = new MenuButton[]{retryButton, exitToMenuButton};
+        menuElementsWon = new MenuButton[]{continueButton, exitToMenuButton2};
         lostButtonContainer = new VBox();
         lostButtonContainer.getChildren().addAll(retryButton, exitToMenuButton);
         lostButtonContainer.setTranslateX(450);
@@ -172,7 +177,7 @@ public class GameView extends ViewUtil{
             root.getChildren().addAll(errorField, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, dialogBox, player2LayerCanvas);
         }
         else {
-            root.getChildren().addAll(errorField, lostButtonContainer, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, dialogBox);
+            root.getChildren().addAll(errorField, wonButtonContainer, lostButtonContainer, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, dialogBox);
         }
         return root;
     }
@@ -190,6 +195,7 @@ public class GameView extends ViewUtil{
         else if(buttonName.equals("MAIN MENU")){
             goToView(event, MenuView.getInstance().initScene());
         }
+        elementCounter = 0;
     }
 
     public void render(Existance object) {
@@ -211,9 +217,15 @@ public class GameView extends ViewUtil{
 
     public void gameOver() {
         // Is ded!
-        menuElements[0].gainedFocus();
+        menuElementsLost[0].gainedFocus();
         lostButtonContainer.setOpacity(1);
         graphics.drawImage(new Image("assets/image/gameover.png"), (VIEW_WIDTH/2) - 368, (VIEW_HEIGHT/2) - 51);
+    }
+
+    public void gameWon(){
+        renderScoreScreen();
+        getMenuElementsWon()[0].gainedFocus();
+        wonButtonContainer.setOpacity(1);
     }
     
     public void renderShield() {
@@ -325,7 +337,9 @@ public class GameView extends ViewUtil{
         return errorField;
     }
 
-    public MenuButton[] getMenuElements(){return menuElements;}
+    public MenuButton[] getMenuElementsLost(){return menuElementsLost;}
+
+    public MenuButton[] getMenuElementsWon(){return menuElementsWon;}
 
     private String getLevelName(){
         if(gs.levelData.equals(LevelData.LEVEL1)){
