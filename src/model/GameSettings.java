@@ -38,6 +38,7 @@ public class GameSettings implements Serializable {
 
     public void savePrevSave(int prevSave){
         this.prevSave = prevSave;
+        System.out.println(this.prevSave);
         writeToFile();
     }
 
