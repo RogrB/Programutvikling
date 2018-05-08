@@ -80,12 +80,12 @@ public class GameView extends ViewUtil{
     private MenuButton[] menuElementsWon;
     private SoundManager sm;
     
-    Text levelComplete;
-    Text scoreT;
-    Text shotsFired;
-    Text enemiesHit;
-    Text enemiesKilled;
-    Text hitPercent;
+    Text levelComplete = new Text();
+    Text scoreT = new Text();
+    Text shotsFired = new Text();
+    Text enemiesHit = new Text();
+    Text enemiesKilled = new Text();
+    Text hitPercent = new Text();
     
     Pane root;
 
@@ -212,6 +212,7 @@ public class GameView extends ViewUtil{
             System.out.println("Next level!");
             gc.nextGame();
             wonButtonContainer.setOpacity(0);
+            clearScoreScreen();
         }
         elementCounter = 0;
     }
@@ -272,7 +273,7 @@ public class GameView extends ViewUtil{
                 float accuracy = (hits / bullets) * 100;
                 DecimalFormat accuracyFormat = new DecimalFormat("#.00");
                 
-                Text levelComplete = new Text((VIEW_WIDTH/2) - 140, (VIEW_HEIGHT/2) - 230, "Level 1 Cleared!"); // Trenger å hente levelnr fra leveldata
+                Text levelComplete = new Text((VIEW_WIDTH/2) - 140, (VIEW_HEIGHT/2) - 230, getLevelName() + " Cleared!"); // Trenger å hente levelnr fra leveldata
                 Text scoreT = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 140, "Score:   " + Integer.toString(gs.player.getScore()));
                 Text shotsFired = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 90, "Shots fired:   " + Float.toString(bullets));
                 Text enemiesHit = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 40, "Enemies hit:   " + Float.toString(hits));
@@ -301,7 +302,14 @@ public class GameView extends ViewUtil{
     }
     
     public void clearScoreScreen() {
+        System.out.println("Clearing scorescreen");
         root.getChildren().removeAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent);
+        levelComplete.setY(-50);
+        scoreT.setY(-50);
+        shotsFired.setY(-50);
+        enemiesHit.setY(-50);
+        enemiesKilled.setY(-50);
+        hitPercent.setY(-50);
     }
     
     void renderHUD(HUD h, boolean shield) {
