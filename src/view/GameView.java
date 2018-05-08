@@ -243,6 +243,8 @@ public class GameView extends ViewUtil{
         hud.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
         bulletLayer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
         enemyLayer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+        playerLayer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+        player2Layer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
     }
     
     public void renderScoreScreen() {
