@@ -1,10 +1,13 @@
 package controller;
 
 import assets.java.AudioManager;
+import assets.java.SoundManager;
 import assets.java.Sprite;
 import javafx.animation.AnimationTimer;
 import io.AutoSave;
+import javafx.stage.Window;
 import model.GameModel;
+import model.GameSettings;
 import model.GameState;
 import model.enemy.*;
 import model.levels.LevelData;
@@ -40,6 +43,10 @@ public class GameController {
     public Iterator<Basic> bulletIterator;
     public Iterator<Enemy> enemyIterator;
     public Iterator<PowerUp> powerUpIterator;
+    int levelCount = 1;
+    String currentLevel = "LEVEL" + levelCount;
+
+    private Boolean lastGameLost = false;
 
     public void mvcSetup(){
         gm = GameModel.getInstance();
@@ -51,8 +58,11 @@ public class GameController {
     }
 
     public void newGame(){
+        String[][][] level = LevelData.getLevel(currentLevel);
         gv.clearAllGraphics();
-        gs.newGameState(LevelData.LEVEL4);
+        lastGameLost = false;
+        System.out.println("Starting level " + currentLevel);
+        gs.newGameState(level);
         gs.player.init();
         gameTimerInit();
         AutoSave.getInstance().start();
@@ -100,7 +110,8 @@ public class GameController {
             gameTimerInit();
         }
         AutoSave.getInstance().start();
-        AudioManager.getInstance().setMusic("BATTLE");
+        //AudioManager.getInstance().setMusic("BATTLE");
+        SoundManager.getInst().playMusic("music_battle");
     }
 
     public void gamePause(){
@@ -161,7 +172,8 @@ public class GameController {
                     }
                     if (!bullet.getHasHit()) {
                         gs.player.setScore(gs.player.getScore() + 10);
-                        AudioManager.getInstance().impactBullets();
+                        //AudioManager.getInstance().impactBullets();
+                        SoundManager.getInst().impactBullets();
                     }
 
                     bullet.hasHit();
@@ -186,7 +198,7 @@ public class GameController {
         }
     }
     
-    private void spawnSmallAsteroids(int x, int y) {
+    public void spawnSmallAsteroids(int x, int y) {
         gs.enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN"), x, y - 20));
         gs.enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN_REVERSED"), x, y + 20));
     }
@@ -264,10 +276,24 @@ public class GameController {
     }
 
     private void detectGameOver(){
-        if (!gs.player.isAlive()) {
+        if (!gs.player.isAlive() && !gs.gameOver) {
+            gs.gameOver = true;
+            lastGameLost = true;
+            startLossTimer();
             gv.gameOver();
             gameMainTimer.stop();
+            AutoSave.getInstance().stop();
         }
+    }
+
+    void startLossTimer(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Game lost!");
+            }
+        }, 2000);
     }
     
     private void detectGameWin() {
@@ -276,6 +302,10 @@ public class GameController {
             for(Enemy enemy : gs.enemies){
                 if(enemy.getType() == boss && !enemy.isAlive() && !gs.gameOver){
                     gs.gameOver = true;
+                    lastGameLost = false;
+                    levelCount++;
+                    currentLevel = "LEVEL" + levelCount;
+                    System.out.println("Next level is " + currentLevel);
                     startGameWinTimer();
                     AutoSave.getInstance().stop();
                 }
@@ -289,6 +319,10 @@ public class GameController {
             @Override
             public void run() {
                 System.out.println("Game Won!");
+                gv.renderScoreScreen();
+                newGame();
+                gs.player.init();
+                gameStart();
             }
         }, 2000);
     }
@@ -296,4 +330,6 @@ public class GameController {
     public HUD getHUD() {
         return this.hud;
     }
+
+    public Boolean getLastGameLost() {return this.lastGameLost; }
 }

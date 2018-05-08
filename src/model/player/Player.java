@@ -1,5 +1,6 @@
 package model.player;
 
+import assets.java.SoundManager;
 import assets.java.Sprite;
 import model.Entity;
 import model.PowerUp;
@@ -31,6 +32,9 @@ public class Player extends Entity {
     private boolean shooting= false;
     Shield shield = new Shield(getX(), getY(), hasShield());
     private int score;
+    private int enemiesKilled;
+    private int bulletsHit;
+    private int bulletCount;
 
     private PlayerBehaviour playerBehaviour = new PlayerBehaviour();
 
@@ -49,21 +53,27 @@ public class Player extends Entity {
     
     public void init() {
         inst = new Player();
-        hasShield = false;
         if (hasShield) {
             removeShield();
         }
-        setHealth(5);
+        setHealth(1);
+        setY(ViewUtil.VIEW_HEIGHT / 2 - (int) new Image(Sprite.PLAYER.src).getHeight() / 2);
+        getImageView().relocate(getX(), getY());
+        setAlive(true);
         immunity = false;
         shooting = false;
         score = 0;
         this.weaponType = playerBehaviour.powerUp("Reset");
-        System.out.println("shield = " + hasShield);
-        System.out.println("width = " + getWidth());        
+        enemiesKilled = 0;
+        bulletsHit = 0;
+        bulletCount = 0;
+        // System.out.println("shield = " + hasShield);
+        // System.out.println("width = " + getWidth());        
     }
 
     public void update(){
         if(!playerIsOutOfBounds()){
+            int i = getY() + playerBehaviour.next();
             setY(getY() + playerBehaviour.next());
             getImageView().relocate(getX(), getY());
         }
@@ -76,7 +86,7 @@ public class Player extends Entity {
     }
 
     private boolean playerIsOutOfBounds(){
-        if(getY() + playerBehaviour.next() < 0) {
+        if(getY() + playerBehaviour.next() < 2) {
             playerBehaviour.moveStop();
             return true;
         }
@@ -93,17 +103,20 @@ public class Player extends Entity {
             case "WEAPON_POWERUP":
                 powerUp();
                 HUD.getInstance().renderPowerUpText("Weapon Upgraded!");
-                AudioManager.getInstance().upgradeWeapon();
+                //AudioManager.getInstance().upgradeWeapon();
+                SoundManager.getInst().upgradeWeapon();
                 break;
             case "HEALTH_POWERUP":
                 setHealth(getHealth() + 1);
                 HUD.getInstance().renderPowerUpText("Health up!");
-                AudioManager.getInstance().upgradeHealth();
+                //AudioManager.getInstance().upgradeHealth();
+                SoundManager.getInst().upgradeHealth();
                 break;
             case "SHIELD_POWERUP":
                 setShield();
                 HUD.getInstance().renderPowerUpText("Shield!");
-                AudioManager.getInstance().upgradeShield();
+                //AudioManager.getInstance().upgradeShield();
+                SoundManager.getInst().upgradeShield();
                 break;
         }
     }
@@ -131,10 +144,12 @@ public class Player extends Entity {
     @Override
     public void shoot() {
         if(canShoot()) {
-            AudioManager.getInstance().shotPlayer();
+            //AudioManager.getInstance().shotPlayer();
+            SoundManager.getInst().shotPlayer();
             playerBehaviour.shoot(this.weaponType, getX(), getY(), this.width, this.height, weapon);
             setCanShoot(false);
             shotDelayTimer();
+            bulletCount++;
             if (GameModel.getInstance().getMultiplayerStatus()) {
                 GameModel.getInstance().getMP().send("Shoot", getX(), getY());
             }
@@ -158,7 +173,8 @@ public class Player extends Entity {
     public void takeDamage(){
         if (!hasShield()) {
             if(!isImmune()){
-                AudioManager.getInstance().impactPlayer();
+                //AudioManager.getInstance().impactPlayer();
+                SoundManager.getInst().impactPlayer();
                 super.takeDamage();
                 if (isAlive()) {
                     initImmunity();
@@ -168,7 +184,8 @@ public class Player extends Entity {
         else {
             if (!shield.isImmune()) {
                 shield.takeDamage();
-                AudioManager.getInstance().impactShield();
+                //AudioManager.getInstance().impactShield();
+                SoundManager.getInst().impactShield();
             }
         }
     }
@@ -273,6 +290,26 @@ public class Player extends Entity {
     
     public String getWeaponType() {
         return this.weaponType;
+    }
+    
+    public int getEnemiesKilled() {
+        return this.enemiesKilled;
+    }
+    
+    public void setEnemiesKilled(int e) {
+        this.enemiesKilled = e;
+    }
+    
+    public int getBulletsHit() {
+        return this.bulletsHit;
+    }
+    
+    public void setBulletsHit(int hit) {
+        this.bulletsHit = hit;
+    }
+    
+    public int getBulletCount() {
+        return this.bulletCount;
     }
     
 }

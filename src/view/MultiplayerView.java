@@ -67,6 +67,12 @@ public class MultiplayerView extends ViewUtil{
         remotePortField = new TextField();
         localPortField = new TextField();
 
+        errorField = new WarningField();
+        errorField.setTranslateX(475);
+        errorField.setTranslateY(250);
+        //ROGER
+        //testField.changeText("TEST");
+
         connectButton = new MenuButton("CONNECT");
         backButton = new MenuButton("BACK");
         connectButton.setOnMouseClicked( event -> {
@@ -102,7 +108,7 @@ public class MultiplayerView extends ViewUtil{
             }
         });
         backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
-        root.getChildren().addAll(header, multiplayerMenu);
+        root.getChildren().addAll(header, errorField, multiplayerMenu);
         return root;
     }
 

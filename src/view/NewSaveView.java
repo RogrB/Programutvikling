@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.GameModel;
 
 import java.util.Objects;
 
@@ -52,6 +53,9 @@ public class NewSaveView extends ViewUtil{
         writeSaveNameText.setY(275);
         writeSaveNameText.setFill(Color.WHITE);
         writeSaveNameText.setFont(header.getFont().font(50));
+        errorField = new WarningField();
+        errorField.setTranslateX(475);
+        errorField.setTranslateY(250);
 
         saveNameLabel = new Label("SAVE NAME");
         saveNameLabel.setTextFill(Color.WHITE);
@@ -65,6 +69,7 @@ public class NewSaveView extends ViewUtil{
                 Scene scene = new Scene(GameView.getInstance().initScene());
                 stage.setScene(scene);
                 UserInputs userInputs = new UserInputs(scene);
+                //GameModel.getInstance().gameSettings.savePrevSave(/* SAVE STATE SOM STARTES NÅ */);
                 System.out.println("Totally started a new game");
             }
         });
@@ -77,6 +82,7 @@ public class NewSaveView extends ViewUtil{
                 Scene scene = new Scene(GameView.getInstance().initScene());
                 stage.setScene(scene);
                 UserInputs userInputs = new UserInputs(scene);
+                //GameModel.getInstance().gameSettings.savePrevSave(/* SAVE STATE SOM STARTES NÅ */);
                 System.out.println("Totally started a new game");
             }
         });
@@ -93,7 +99,7 @@ public class NewSaveView extends ViewUtil{
                 goToView(event, NewGameView.getInst().initScene());
             }
         });
-        root.getChildren().addAll(header, writeSaveNameText, containerVBox);
+        root.getChildren().addAll(header, writeSaveNameText, errorField, containerVBox);
 
         return root;
     }

@@ -1,9 +1,11 @@
 package view;
 
 import assets.java.AudioManager;
+import assets.java.SoundManager;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
@@ -19,6 +21,7 @@ public abstract class ViewUtil {
     public Pane root;
     public Text header = new Text("SPACE GAME");
     public int elementCounter = 0;
+    WarningField errorField;
 
     public void goToView(InputEvent event, Parent node){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -48,7 +51,8 @@ public abstract class ViewUtil {
     }
 
     public void traverseMenu(KeyCode code, Parent[] menuElements){
-        AudioManager.getInstance().nav();
+        SoundManager.getInst().nav();
+        //AudioManager.getInstance().nav();
         if(code == KeyCode.DOWN){
             if(elementCounter == menuElements.length -1){
                 elementCounter = 0;
@@ -69,6 +73,10 @@ public abstract class ViewUtil {
 
     public abstract Parent initScene();
     public abstract void select(String buttonName, KeyEvent event);
+
+    public int getElementCounter(){
+        return elementCounter;
+    }
 
 
 

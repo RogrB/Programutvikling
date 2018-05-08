@@ -1,6 +1,7 @@
 package model.enemy;
 
 import assets.java.AudioManager;
+import assets.java.SoundManager;
 
 import static java.lang.Math.*;
 
@@ -192,8 +193,8 @@ public class EnemyMovementPattern implements java.io.Serializable {
         if(bossCounter < BOSS_INIT_TIME) {
 
             if(bossCounter == 0)
-                AudioManager.getInstance().bossWobble();
-
+                //AudioManager.getInstance().bossWobble();
+                SoundManager.getInst().bossWobble();
             framesAlive = 0;
             x--;
             bossCounter++;

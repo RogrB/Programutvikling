@@ -50,6 +50,10 @@ public class GameSettings implements Serializable {
             difficultyValue = fromFile.difficultyValue;
         } catch (FileIOException e) {
             System.err.println(e.getMessage());
+            difficultyValue = 3;
+            musicvalue = 50;
+            soundValue = 50;
+            writeToFile();
         }
     }
 
@@ -63,5 +67,9 @@ public class GameSettings implements Serializable {
 
     public int getDifficultyValue() {
         return difficultyValue;
+    }
+
+    public int getPrevSave() {
+        return prevSave;
     }
 }

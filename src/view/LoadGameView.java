@@ -53,6 +53,10 @@ public class LoadGameView extends ViewUtil{
         save2 = new MenuButton("SAVE 2");
         save3 = new MenuButton("SAVE 3");
 
+        errorField = new WarningField();
+        errorField.setTranslateX(475);
+        errorField.setTranslateY(250);
+
         menuElements = new MenuButton[]{save1, save2, save3, backButton};
 
         saveFiles.getChildren().addAll(save1, save2, save3);
@@ -77,7 +81,7 @@ public class LoadGameView extends ViewUtil{
         containerVBox.setSpacing(40);
         containerVBox.setTranslateX(450);
         containerVBox.setTranslateY(250);
-        root.getChildren().addAll(header, containerVBox);
+        root.getChildren().addAll(header, errorField, containerVBox);
         return root;
     }
 

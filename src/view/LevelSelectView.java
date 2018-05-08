@@ -55,6 +55,10 @@ public class LevelSelectView extends ViewUtil{
         levelName.setFill(Color.WHITE);
         levelName.setFont(header.getFont().font(50));
 
+        errorField = new WarningField();
+        errorField.setTranslateX(475);
+        errorField.setTranslateY(250);
+
         level1 = new ImageView("assets/image/placeholderBorder.png");
         level1.setFitHeight(160);
         level1.setFitWidth(200);
@@ -102,7 +106,7 @@ public class LevelSelectView extends ViewUtil{
             }
         });
         backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
-        root.getChildren().addAll(header, levelName, containerVBox);
+        root.getChildren().addAll(header, levelName, errorField, containerVBox);
 
         return root;
     }

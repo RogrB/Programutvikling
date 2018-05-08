@@ -1,7 +1,6 @@
 package model.levels;
 
 public class LevelData {
-
     /*
     INFO ABOUT SPAWNING STUFF IN
     NUMBER TYPE_SPRITE_MOVEMENT PATTERN
@@ -37,7 +36,7 @@ public class LevelData {
     3-BOSS_EIGHT
      */
 
-    public static final String[][][] LEVEL4 = new String[][][]{
+    public static final String[][][] LEVEL1 = new String[][][]{
             {{"0"}, {"0"}, {"0"},                   {"0"}, {"0"}, {"0"}, {"0"}, {"1", "RED1", "SIN_REVERSED"},  {"1", "RED1", "SIN_REVERSED"},  {"1", "RED1", "SIN_REVERSED"},    {"0"}, {"0"}, {"0"},                  {"0"}, {"1", "GREEN1", "LEFT_PULSATING"},   {"0"}, {"0"}, {"0"}},
             {{"0"}, {"0"}, {"1", "BLUE2", "COS"},   {"0"}, {"0"}, {"0"}, {"0"}, {"0"},                          {"0"},                          {"0"},                            {"0"}, {"0"}, {"0"},                  {"0"}, {"1", "GREEN1", "LEFT_PULSATING"},   {"0"}, {"0"}, {"0"}},
             {{"0"}, {"1", "BLUE2", "COS"}, {"0"},   {"0"}, {"0"}, {"0"}, {"0"}, {"0"},                          {"0"},                          {"0"},                            {"0"}, {"0"}, {"0"},                  {"0"}, {"0"},                               {"0"}, {"0"}, {"0"}},
@@ -46,4 +45,20 @@ public class LevelData {
             {{"0"}, {"0"}, {"1", "BLUE2", "COS"},   {"0"}, {"0"}, {"0"}, {"0"}, {"0"},                          {"0"},                          {"0"},                            {"0"}, {"0"}, {"0"},                  {"0"}, {"1", "RED1", "LEFT_PULSATING"},     {"0"}, {"0"}, {"0"}},
             {{"0"}, {"0"}, {"0"},                   {"0"}, {"0"}, {"0"}, {"0"}, {"1", "RED1", "SIN"},           {"1", "RED1", "SIN"},           {"1", "RED1", "SIN"},             {"0"}, {"0"}, {"0"},                  {"0"}, {"1", "RED1", "LEFT_PULSATING"},     {"0"}, {"0"}, {"0"}}
     };
+
+    public static final String[][][] LEVEL2 = new String[][][]{
+            {{"0"}, {"0"}, {"0"}},
+            {{"2", "MADNESS_01"}, {"0"}},
+            {{"0"}, {"0"}, {"0"}},
+            {{"2", "MADNESS_01"}, {"0"}, {"0"}},
+            {{"0"}, {"0"}, {"0"}},
+            {{"0"}, {"0"}, {"0"}},
+            {{"0"}, {"0"}, {"0"}}
+    };
+
+    public static String[][][] getLevel(String levelName){
+        if (levelName.equals("LEVEL1")) return LEVEL1;
+        else if(levelName.equals("LEVEL2")) return LEVEL2;
+        else return null;
+    }
 }
