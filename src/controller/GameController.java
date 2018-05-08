@@ -65,7 +65,9 @@ public class GameController {
         gs.newGameState(level);
         gs.player.init();
         gameTimerInit();
-        AutoSave.getInstance().start();
+        if(!gm.getMultiplayerStatus()){
+            AutoSave.getInstance().start();
+        }
     }
 
     private void gameTimerInit() {
@@ -113,6 +115,7 @@ public class GameController {
         //AudioManager.getInstance().setMusic("BATTLE");
         SoundManager.getInst().playMusic("music_battle");
     }
+
 
     public void gamePause(){
         AutoSave.getInstance().stop();

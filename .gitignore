@@ -9,11 +9,7 @@ Programutvikling.iml
 /nbproject/*
 build.xml
 manifest.mf
-tmp/ArrayEnemies.ser
-tmp/ArrayEnemyBullets.ser
-tmp/ArrayPlayerBullets.ser
-tmp/ArrayPowerups.ser
-tmp/GameState.ser
+tmp/*
 dist/web-files/upgrade_javafx.png
 dist/web-files/upgrade_java.png
 dist/web-files/javafx-loading-25x25.gif

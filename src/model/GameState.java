@@ -23,7 +23,6 @@ public class GameState implements java.io.Serializable {
     public Player2 player2 = Player2.getInst();
 
     public static String bossType;
-    private boolean multiplayer = false;
     public boolean gameOver;
 
     public String[][][] levelData;

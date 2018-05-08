@@ -40,7 +40,7 @@ public class IOManager {
             saveArrayList(gs.powerups, "tmp/ArrayPowerups.ser");
 
         } catch (IOException e) {
-            throw new FileIOException("Save game - Could not save to file "+src);
+            throw new FileIOException("Save game - Could not save to file: "+src);
         } catch (FileIOException f) {
             throw new FileIOException("Save game - "+f.getMessage());
         }
