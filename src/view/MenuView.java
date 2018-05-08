@@ -1,6 +1,5 @@
 package view;
 
-import assets.java.AudioManager;
 import assets.java.SoundManager;
 import controller.GameController;
 import controller.UserInputs;
@@ -15,8 +14,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import model.GameModel;
-import model.GameSettings;
 
 public class MenuView extends ViewUtil{
 
@@ -70,13 +67,10 @@ public class MenuView extends ViewUtil{
     }
 
     private boolean gameFileFound(){
-        if(IOManager.getInstance().saveStateExists()/* && GameModel.gameSettings.getPrevSave() > -1*/)
-            return true;
-        return false;
+        return IOManager.getInstance().saveStateExists();
     }
 
     public void select(String buttonName, KeyEvent event){ //KeyEvent is only here so you can extract Stage from an event. Hacky, I know.
-        //AudioManager.getInstance().navSelect();
         SoundManager.getInst().navSelect();
         if(buttonName.equals("NEW GAME")){
             createNewSave(event);
@@ -95,6 +89,7 @@ public class MenuView extends ViewUtil{
         }
         if(buttonName.equals("OPTIONS")){
             showOptions(event);
+            System.out.println(SoundManager.getInst().getPlayer().getVolume());
         }
         if(buttonName.equals("EXIT")){
             exitGame();
@@ -106,9 +101,6 @@ public class MenuView extends ViewUtil{
     }
 
     public Parent initScene(){
-
-        //AudioManager.getInstance().setMusic("MENU");
-        SoundManager.getInst().playMusic("music_menu");
 
         root = new Pane();
         VBox mainMenu = new VBox();
@@ -131,9 +123,7 @@ public class MenuView extends ViewUtil{
         errorField.setTranslateY(250);
 
         MenuButton randomButton = new MenuButton("TEST");
-        randomButton.setOnMouseClicked(event -> {
-            errorField.changeText("TEST");
-        });
+        randomButton.setOnMouseClicked(event -> errorField.changeText("TEST"));
 
         newGameButton.setOnMouseClicked(this::createNewSave);
         continueButton.setOnMouseClicked(this::continueGame);
@@ -160,17 +150,18 @@ public class MenuView extends ViewUtil{
             }
         });
 
+        // remember to add selectLevelButton
         if(gameFileFound() && GameController.getInstance().getLastGameLost()){
-            mainMenu.getChildren().addAll(newGameButton, loadGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton, randomButton);
-            menuElements = new MenuButton[]{newGameButton, loadGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton};
+            mainMenu.getChildren().addAll(newGameButton, loadGameButton, multiplayerButton, optionsButton, exitButton, randomButton);
+            menuElements = new MenuButton[]{newGameButton, loadGameButton, multiplayerButton, optionsButton, exitButton};
         }
         else if(gameFileFound()){
-            mainMenu.getChildren().addAll(continueButton, loadGameButton, newGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton, randomButton);
-            menuElements = new MenuButton[]{continueButton, loadGameButton, newGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton};
+            mainMenu.getChildren().addAll(continueButton, loadGameButton, newGameButton, multiplayerButton, optionsButton, exitButton, randomButton);
+            menuElements = new MenuButton[]{continueButton, loadGameButton, newGameButton, multiplayerButton, optionsButton, exitButton};
         }
         else{
-            mainMenu.getChildren().addAll(newGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton);
-            menuElements = new MenuButton[]{newGameButton, multiplayerButton, selectLevelButton, optionsButton, exitButton};
+            mainMenu.getChildren().addAll(newGameButton, multiplayerButton, optionsButton, exitButton);
+            menuElements = new MenuButton[]{newGameButton, multiplayerButton, optionsButton, exitButton};
         }
         menuElements[0].gainedFocus();
         root.getChildren().addAll(header, errorField, mainMenu);

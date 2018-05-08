@@ -13,7 +13,6 @@ import java.util.TimerTask;
 import javafx.scene.image.Image;
 import model.GameModel;
 import multiplayer.MultiplayerHandler;
-import assets.java.AudioManager;
 import view.GameView;
 import view.ViewUtil;
 import view.HUD;
@@ -106,19 +105,16 @@ public class Player extends Entity {
             case "WEAPON_POWERUP":
                 powerUp();
                 HUD.getInstance().renderPowerUpText("Weapon Upgraded!");
-                //AudioManager.getInstance().upgradeWeapon();
                 SoundManager.getInst().upgradeWeapon();
                 break;
             case "HEALTH_POWERUP":
                 setHealth(getHealth() + 1);
                 HUD.getInstance().renderPowerUpText("Health up!");
-                //AudioManager.getInstance().upgradeHealth();
                 SoundManager.getInst().upgradeHealth();
                 break;
             case "SHIELD_POWERUP":
                 setShield();
                 HUD.getInstance().renderPowerUpText("Shield!");
-                //AudioManager.getInstance().upgradeShield();
                 SoundManager.getInst().upgradeShield();
                 break;
         }
@@ -147,7 +143,6 @@ public class Player extends Entity {
     @Override
     public void shoot() {
         if(canShoot()) {
-            //AudioManager.getInstance().shotPlayer();
             SoundManager.getInst().shotPlayer();
             playerBehaviour.shoot(this.weaponType, getX(), getY(), this.width, this.height, weapon);
             setCanShoot(false);
@@ -176,7 +171,6 @@ public class Player extends Entity {
     public void takeDamage(){
         if (!hasShield()) {
             if(!isImmune()){
-                //AudioManager.getInstance().impactPlayer();
                 SoundManager.getInst().impactPlayer();
                 super.takeDamage();
                 if (isAlive()) {
@@ -187,7 +181,7 @@ public class Player extends Entity {
         else {
             if (!shield.isImmune()) {
                 shield.takeDamage();
-                //AudioManager.getInstance().impactShield();
+
                 SoundManager.getInst().impactShield();
             }
         }

@@ -81,4 +81,6 @@ public class GameState implements java.io.Serializable {
         for(PowerUp powerUp : powerups){ powerUp.newSprite(powerUp.sprite); }
     }
 
+    public int getLevelIterator(){return levelIterator; }
+
 }

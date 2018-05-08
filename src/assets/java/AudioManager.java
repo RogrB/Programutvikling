@@ -1,5 +1,6 @@
 package assets.java;
 
+import controller.GameController;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -80,6 +81,7 @@ public class AudioManager {
     MediaPlayer upgradeWeapon;
     MediaPlayer upgradeHealth;
     MediaPlayer upgradeShield;
+
 
     private AudioManager(){
         rand = new Random();

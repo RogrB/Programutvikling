@@ -67,6 +67,7 @@ public class GameController {
         lastGameLost = false;
         gs.nextLevel();
         gs.player.init();
+        gameStart();
     }
 
     public void loadGame(){
@@ -82,7 +83,10 @@ public class GameController {
         if(!gm.getMultiplayerStatus()){
             AutoSave.getInstance().start();
         }
-        SoundManager.getInst().playMusic("music_battle");
+        if(SoundManager.getInst().getPlayer() != null){
+            SoundManager.getInst().playMusic("stop");
+        }
+            SoundManager.getInst().playMusic("music_battle");
     }
 
     private void gameTimerStart() {
@@ -180,7 +184,6 @@ public class GameController {
                     }
                     if (!bullet.getHasHit()) {
                         gs.player.setScore(gs.player.getScore() + 10);
-                        //AudioManager.getInstance().impactBullets();
                         SoundManager.getInst().impactBullets();
                     }
 
@@ -314,19 +317,11 @@ public class GameController {
                     gs.gameOver = true;
                     lastGameLost = false;
                     startGameWinTimer();
+                    gameMainTimer.stop();
                     AutoSave.getInstance().stop();
                 }
             }
         }
-    }
-
-    public void won(){
-        gs.player.isNotPlaying();
-        gs.gameOver = true;
-        lastGameLost = false;
-        startGameWinTimer();
-        gameMainTimer.stop();
-        AutoSave.getInstance().stop();
     }
 
     private void startGameWinTimer(){
@@ -336,8 +331,6 @@ public class GameController {
             public void run() {
                 System.out.println("Game Won!");
                 gv.gameWon();
-                //gv.renderScoreScreen();
-                //nextGame();
             }
         }, 2000);
     }

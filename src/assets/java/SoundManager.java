@@ -22,6 +22,12 @@ public class SoundManager {
     private ExecutorService soundPool = Executors.newFixedThreadPool(2);
     private Map<String, Media> musicMap = new HashMap<>();
     private Map<String, AudioClip> soundMap = new HashMap<>();
+    private MediaPlayer player;
+    private String currentMusic = "music_menu";
+
+    File MUSIC_MENU =     new File("src/assets/audio/music/music_menu_2.wav");
+    File MUSIC_BATTLE =   new File("src/assets/audio/music/music_battle_2.wav");
+    File MUSIC_WIN =      new File("src/assets/audio/music/music_retro_1.wav");
 
 
     public SoundManager(){
@@ -55,10 +61,6 @@ public class SoundManager {
             File BOSS_TALK_6 = new File(AUDIO_ASSETS + "boss_sfx/boss_talk_6.wav");
             File NAV = new File(AUDIO_ASSETS + "sfx/nav_1.wav");
             File NAV_SELECT = new File(AUDIO_ASSETS + "sfx/nav_select_1.wav");
-
-            File MUSIC_MENU =     new File(AUDIO_ASSETS + "music/music_menu_2.wav");
-            File MUSIC_BATTLE =   new File(AUDIO_ASSETS + "music/music_battle_2.wav");
-            File MUSIC_WIN =      new File(AUDIO_ASSETS + "music/music_retro_1.wav");
 
             loadSound("shot_player", (SHOT_PLAYER_01).toURI().toURL(), 1f);
             loadSound("shot_boss", (SHOT_BOSS).toURI().toURL(), .6f);
@@ -104,6 +106,8 @@ public class SoundManager {
         soundMap.put(id, audioClip);
     }
 
+    public String getCurrentMusic(){return currentMusic; }
+
     public void loadMusic(String id, URL url){
         Media media = new Media(url.toExternalForm());
         musicMap.put(id, media);
@@ -111,16 +115,40 @@ public class SoundManager {
 
     public void playMusic(String id){
         Runnable music = () -> {
-            MediaPlayer player = new MediaPlayer(musicMap.get(id));
-            player.setVolume((float) gameSettings.getMusicValue() / 100);
-            player.setCycleCount(MediaPlayer.INDEFINITE);
-            player.play();
+            currentMusic = id;
+            switch(id){
+                case "music_menu":
+                    player = new MediaPlayer(musicMap.get(id));
+                    player.setVolume((float) gameSettings.getMusicValue() / 100);
+                    player.setCycleCount(MediaPlayer.INDEFINITE);
+                    player.play();
+                    break;
+                case "music_battle":
+                    player = new MediaPlayer(musicMap.get(id));
+                    player.setVolume((float) gameSettings.getMusicValue() / 100);
+                    player.setCycleCount(MediaPlayer.INDEFINITE);
+                    player.play();
+                    break;
+                case "music_win":
+                    player = new MediaPlayer(musicMap.get(id));
+                    player.setVolume((float) gameSettings.getMusicValue() / 100);
+                    player.setCycleCount(MediaPlayer.INDEFINITE);
+                    player.play();
+                    break;
+                case "stop":
+                    player.stop();
+                    player = null;
+                    break;
+            }
         };
         musicPool.execute(music);
     }
 
     private void playSound(String id){
-        Runnable sound = () -> soundMap.get(id).play();
+        Runnable sound = () -> {
+            soundMap.get(id).setVolume((float) gameSettings.getSoundValue() / 100);
+            soundMap.get(id).play();
+        };
         soundPool.execute(sound);
     }
 
@@ -204,6 +232,10 @@ public class SoundManager {
         playSound("impact_1");
         playSound("impact_3");
         //play music
+    }
+
+    public MediaPlayer getPlayer() {
+        return player;
     }
 
     public void nav(){

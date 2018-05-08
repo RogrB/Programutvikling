@@ -1,5 +1,6 @@
 package view;
 
+import assets.java.SoundManager;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -149,11 +150,15 @@ public class OptionsView extends ViewUtil{
             }
             if(event.getCode() == KeyCode.ESCAPE){
                 gameSettings.saveSettings(difficultyValue, soundValue, musicValue);
+                SoundManager.getInst().getPlayer().setVolume((float)musicValue / 100);
+                System.out.println(SoundManager.getInst().getPlayer().getVolume());
+                System.out.println(SoundManager.getInst().getPlayer() == null);
                 goToView(event, MenuView.getInstance().initScene());
             }
         });
         backButton.setOnMouseClicked(event -> {
             gameSettings.saveSettings(difficultyValue, soundValue, musicValue);
+            SoundManager.getInst().getPlayer().setVolume((float)musicValue/100);
             goToView(event, MenuView.getInstance().initScene());
         });
         root.getChildren().addAll(header, errorField, optionsMenu);
@@ -176,6 +181,8 @@ public class OptionsView extends ViewUtil{
     @Override
     public void select(String buttonName, KeyEvent event) {
         if(buttonName.equals("BACK")){
+            SoundManager.getInst().getPlayer().setVolume((float)musicValue/100);
+            gameSettings.saveSettings(difficultyValue, soundValue, musicValue);
             goToView(event, MenuView.getInstance().initScene());
         }
     }

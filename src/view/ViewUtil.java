@@ -1,6 +1,5 @@
 package view;
 
-import assets.java.AudioManager;
 import assets.java.SoundManager;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -24,7 +23,7 @@ public abstract class ViewUtil {
     WarningField errorField;
 
     public void goToView(InputEvent event, Parent node){
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage)((Node)event.getTarget()).getScene().getWindow();
         Pane root = new Pane();
         root.getChildren().add(node);
         Scene scene = new Scene(root);
@@ -52,7 +51,6 @@ public abstract class ViewUtil {
 
     public void traverseMenu(KeyCode code, Parent[] menuElements){
         SoundManager.getInst().nav();
-        //AudioManager.getInstance().nav();
         if(code == KeyCode.DOWN){
             if(elementCounter == menuElements.length -1){
                 elementCounter = 0;

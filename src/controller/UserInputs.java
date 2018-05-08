@@ -61,8 +61,8 @@ public class UserInputs {
                 GameController.getInstance().getHUD().renderPowerUpText("Test");
             }
             if (event.getCode() == KeyCode.R && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()) {
-                //GameView.getInstance().renderScoreScreen();
-                GameController.getInstance().won();
+                GameView.getInstance().renderScoreScreen();
+
             }
         });
 

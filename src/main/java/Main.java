@@ -1,5 +1,6 @@
 package main.java;
 
+import assets.java.SoundManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -23,6 +24,7 @@ public class Main extends Application {
             Platform.exit();
             System.exit(0);});
         Scene scene = new Scene(mv.initScene());
+        SoundManager.getInst().playMusic("music_menu");
 
         primaryStage.setScene(scene);
         primaryStage.show();

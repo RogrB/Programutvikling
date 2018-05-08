@@ -1,6 +1,5 @@
 package view;
 
-import assets.java.AudioManager;
 import assets.java.SoundManager;
 import controller.UserInputs;
 import javafx.scene.Node;
@@ -79,7 +78,6 @@ public class GameView extends ViewUtil{
 
     private MenuButton[] menuElementsLost;
     private MenuButton[] menuElementsWon;
-    private AudioManager am;
     private SoundManager sm;
     
     Pane root;
@@ -89,17 +87,17 @@ public class GameView extends ViewUtil{
     public void mvcSetup(){
         gm.mvcSetup();
         gc.mvcSetup();
-        am = AudioManager.getInstance();
         sm = SoundManager.getInst();
     }
 
     public Parent initScene() {
-
-        //AudioManager.getInstance().setMusic("BATTLE");
+        if(SoundManager.getInst().getPlayer() != null){
+            SoundManager.getInst().playMusic("stop");
+        }
         SoundManager.getInst().playMusic("music_battle");
 
         scoreText = new Text(VIEW_WIDTH - 150, 60, "Score: " + Integer.toString(gs.player.getScore()));
-        levelText = new Text(VIEW_WIDTH - 150, 30, "Level 1"); // Må hente riktig level fra leveldata
+        levelText = new Text(VIEW_WIDTH - 150, 30, "Level " + Integer.toString(gs.getLevelIterator())); // Må hente riktig level fra leveldata
 
         scoreText.setFill(Color.WHITE);
         scoreText.setFont(Font.font("Verdana", 20));  
@@ -131,6 +129,10 @@ public class GameView extends ViewUtil{
         dialogBox.requestFocus();
         dialogBox.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ESCAPE){
+                if(SoundManager.getInst().getPlayer() != null){
+                    SoundManager.getInst().playMusic("stop");
+                }
+                SoundManager.getInst().playMusic("music_menu");
                 goToView(event, MenuView.getInstance().initScene());
                 if(gm.getMultiplayerStatus()) {
                     MultiplayerHandler.getInstance().send("Disconnect", 0, 0);
@@ -193,6 +195,10 @@ public class GameView extends ViewUtil{
             System.out.println(gs.player.isAlive());
         }
         if(buttonName.equals("MAIN MENU")){
+            if(SoundManager.getInst().getPlayer() != null){
+                SoundManager.getInst().playMusic("stop");
+            }
+            SoundManager.getInst().playMusic("music_menu");
             goToView(event, MenuView.getInstance().initScene());
         }
         if(buttonName.equals("CONTINUE")){

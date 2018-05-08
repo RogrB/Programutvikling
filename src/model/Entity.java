@@ -1,6 +1,5 @@
 package model;
 
-import assets.java.AudioManager;
 import assets.java.SoundManager;
 import assets.java.Sprite;
 import model.enemy.Enemy;
@@ -34,12 +33,10 @@ public abstract class Entity extends Existance {
 
     public void isDead(){
         if(alive)
-            //AudioManager.getInstance().entityDead();
             SoundManager.getInst().entityDead();
 
         if(this.getClass() == Enemy.class && alive)
             if(((Enemy)this).getType().IS_BOSS)
-                //AudioManager.getInstance().bossDies();
                 SoundManager.getInst().bossDies();
 
         alive = false;

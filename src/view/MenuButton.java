@@ -1,6 +1,5 @@
 package view;
 
-import assets.java.AudioManager;
 import assets.java.SoundManager;
 import javafx.geometry.Pos;
 import javafx.scene.effect.GaussianBlur;
@@ -28,7 +27,6 @@ public class MenuButton extends StackPane{
         this.setOnMouseEntered(event -> {
             gainedFocus();
             SoundManager.getInst().nav();
-            //AudioManager.getInstance().nav();
         });
         this.setOnMouseExited(event -> lostFocus());
     }
