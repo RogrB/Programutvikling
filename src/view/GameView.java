@@ -80,6 +80,13 @@ public class GameView extends ViewUtil{
     private MenuButton[] menuElementsWon;
     private SoundManager sm;
     
+    Text levelComplete;
+    Text scoreT;
+    Text shotsFired;
+    Text enemiesHit;
+    Text enemiesKilled;
+    Text hitPercent;
+    
     Pane root;
 
     private static final String BG_IMG = "assets/image/background.jpg";
@@ -265,13 +272,13 @@ public class GameView extends ViewUtil{
                 float accuracy = (hits / bullets) * 100;
                 DecimalFormat accuracyFormat = new DecimalFormat("#.00");
                 
-                Text levelComplete = new Text((VIEW_WIDTH/2) - 140, (VIEW_HEIGHT/2) - 180, "Level 1 Cleared!"); // Trenger å hente levelnr fra leveldata
-                Text scoreT = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 90, "Score:   " + Integer.toString(gs.player.getScore()));
-                Text shotsFired = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 40, "Shots fired:   " + Float.toString(bullets));
-                Text enemiesHit = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 10, "Enemies hit:   " + Float.toString(hits));
-                Text enemiesKilled = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 60, "Enemies killed:   " + Integer.toString(gs.player.getEnemiesKilled()));
+                Text levelComplete = new Text((VIEW_WIDTH/2) - 140, (VIEW_HEIGHT/2) - 230, "Level 1 Cleared!"); // Trenger å hente levelnr fra leveldata
+                Text scoreT = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 140, "Score:   " + Integer.toString(gs.player.getScore()));
+                Text shotsFired = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 90, "Shots fired:   " + Float.toString(bullets));
+                Text enemiesHit = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 40, "Enemies hit:   " + Float.toString(hits));
+                Text enemiesKilled = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 10, "Enemies killed:   " + Integer.toString(gs.player.getEnemiesKilled()));
 
-                Text hitPercent = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 110, "Accuracy:   " + accuracyFormat.format(accuracy) + "%");
+                Text hitPercent = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 60, "Accuracy:   " + accuracyFormat.format(accuracy) + "%");
 
                 levelComplete.setFill(Color.WHITE);
                 levelComplete.setFont(Font.font("Verdana", 32));  
@@ -288,9 +295,13 @@ public class GameView extends ViewUtil{
 
                 root.getChildren().addAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent);
 
-                hud.drawImage(new Image("assets/image/scorescreen.png"), (VIEW_WIDTH/2) - 360, (VIEW_HEIGHT/2) - 225);                
+                hud.drawImage(new Image("assets/image/scorescreen.png"), (VIEW_WIDTH/2) - 360, (VIEW_HEIGHT/2) - 275);                
             }
 	});              
+    }
+    
+    public void clearScoreScreen() {
+        root.getChildren().removeAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent);
     }
     
     void renderHUD(HUD h, boolean shield) {
