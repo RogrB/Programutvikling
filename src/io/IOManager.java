@@ -1,6 +1,7 @@
 package io;
 
 import exceptions.FileIOException;
+import model.GameModel;
 import model.GameSettings;
 import model.GameState;
 import model.enemy.Enemy;
@@ -21,7 +22,7 @@ public class IOManager {
         FileOutputStream fos = null;
         ObjectOutputStream oos = null;
 
-        String src = "tmp/GameState.ser";
+        String src = "tmp/"+GameModel.gameSettings.getPrevSave()+"/GameState.ser";
 
         try {
             fos = new FileOutputStream(src);
@@ -34,10 +35,10 @@ public class IOManager {
             oos.close();
             fos.close();
 
-            saveArrayList(gs.enemies, "tmp/ArrayEnemies.ser");
-            saveArrayList(gs.enemyBullets, "tmp/ArrayEnemyBullets.ser");
-            saveArrayList(gs.playerBullets, "tmp/ArrayPlayerBullets.ser");
-            saveArrayList(gs.powerups, "tmp/ArrayPowerups.ser");
+            saveArrayList(gs.enemies, "tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayEnemies.ser");
+            saveArrayList(gs.enemyBullets, "tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayEnemyBullets.ser");
+            saveArrayList(gs.playerBullets, "tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayPlayerBullets.ser");
+            saveArrayList(gs.powerups, "tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayPowerups.ser");
 
         } catch (IOException e) {
             throw new FileIOException("Save game - Could not save to file: "+src);
@@ -50,7 +51,7 @@ public class IOManager {
         FileInputStream fis = null;
         ObjectInputStream ois = null;
 
-        String src = "tmp/GameState.ser";
+        String src = "tmp/"+GameModel.gameSettings.getPrevSave()+"/GameState.ser";
 
         try {
             fis = new FileInputStream(src);
@@ -61,10 +62,10 @@ public class IOManager {
             ois.close();
             fis.close();
 
-            gs.enemies = (ArrayList) loadList("tmp/ArrayEnemies.ser");
-            gs.enemyBullets = (ArrayList) loadList("tmp/ArrayEnemyBullets.ser");
-            gs.playerBullets = (ArrayList) loadList("tmp/ArrayPlayerBullets.ser");
-            gs.powerups = (ArrayList) loadList("tmp/ArrayPowerups.ser");
+            gs.enemies = (ArrayList) loadList("tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayEnemies.ser");
+            gs.enemyBullets = (ArrayList) loadList("tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayEnemyBullets.ser");
+            gs.playerBullets = (ArrayList) loadList("tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayPlayerBullets.ser");
+            gs.powerups = (ArrayList) loadList("tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayPowerups.ser");
 
         } catch (IOException i) {
             throw new FileIOException("Load game - Can't locate file: "+src);
@@ -117,11 +118,11 @@ public class IOManager {
     }
 
     public boolean saveStateExists(){
-        if(!fileExists("tmp/GameState.ser") ||
-                !fileExists("tmp/ArrayEnemies.ser") ||
-                !fileExists("tmp/ArrayEnemyBullets.ser") ||
-                !fileExists("tmp/ArrayPlayerBullets.ser") ||
-                !fileExists("tmp/ArrayPowerups.ser"))
+        if(!fileExists("tmp/"+GameModel.gameSettings.getPrevSave()+"/GameState.ser") ||
+                !fileExists("tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayEnemies.ser") ||
+                !fileExists("tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayEnemyBullets.ser") ||
+                !fileExists("tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayPlayerBullets.ser") ||
+                !fileExists("tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayPowerups.ser"))
             return false;
         return true;
     }

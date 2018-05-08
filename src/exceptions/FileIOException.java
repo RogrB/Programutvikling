@@ -8,5 +8,5 @@ public class FileIOException extends Exception {
         super(message);
         //GameView.getInstance().getField().changeText(message);
     }
-    
+
 }
