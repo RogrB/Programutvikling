@@ -157,27 +157,27 @@ public class GameView extends ViewUtil{
 
         retryButton = new MenuButton("RETRY");
         exitToMenuButton = new MenuButton("MAIN MENU");
-        menuElements = new MenuButton[]{exitToMenuButton}; // ÅSMUND
-        //menuElements = new MenuButton[]{retryButton, exitToMenuButton}; //ÅSMUND
+        //menuElements = new MenuButton[]{exitToMenuButton}; // ÅSMUND
+        menuElements = new MenuButton[]{retryButton, exitToMenuButton}; //ÅSMUND
         lostButtonContainer = new VBox();
-        lostButtonContainer.getChildren().addAll(exitToMenuButton); // ÅSMUND
-        //lostButtonContainer.getChildren().addAll(retryButton, exitToMenuButton); // ÅSMUND
+        //lostButtonContainer.getChildren().addAll(exitToMenuButton); // ÅSMUND
+        lostButtonContainer.getChildren().addAll(retryButton, exitToMenuButton); // ÅSMUND
         lostButtonContainer.setTranslateX(450);
         lostButtonContainer.setTranslateY(550);
         lostButtonContainer.setOpacity(0);
-        lostButtonContainer.setOnKeyPressed(event -> { //ÅSMUND FJERN ALT INNI DETTE
-            System.out.println(event.getCode());
-            if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
-                menuElements[elementCounter].lostFocus();
-                traverseMenu(event.getCode(), menuElements);
-                menuElements[elementCounter].gainedFocus();
-                System.out.println(elementCounter);
-            }
-            else if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE){
-                select(menuElements[elementCounter].getText(), event);
-                System.out.println(((Node)event.getSource()).getScene().getFocusOwner());
-            }
-        });
+//        lostButtonContainer.setOnKeyPressed(event -> { //ÅSMUND FJERN ALT INNI DETTE
+//            System.out.println(event.getCode());
+//            if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
+//                menuElements[elementCounter].lostFocus();
+//                traverseMenu(event.getCode(), menuElements);
+//                menuElements[elementCounter].gainedFocus();
+//                System.out.println(elementCounter);
+//            }
+//            else if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE){
+//                select(menuElements[elementCounter].getText(), event);
+//                System.out.println(((Node)event.getSource()).getScene().getFocusOwner());
+//            }
+//        });
         
         root = new Pane();
 
@@ -228,8 +228,8 @@ public class GameView extends ViewUtil{
         // Is ded!
         menuElements[0].gainedFocus();
         lostButtonContainer.setOpacity(1);
-        lostButtonContainer.setFocusTraversable(true); //ÅSMUND
-        lostButtonContainer.requestFocus(); // ÅSMUND
+        //lostButtonContainer.setFocusTraversable(true); //ÅSMUND
+        //lostButtonContainer.requestFocus(); // ÅSMUND
         graphics.drawImage(new Image("assets/image/gameover.png"), (VIEW_WIDTH/2) - 368, (VIEW_HEIGHT/2) - 51);
     }
     
