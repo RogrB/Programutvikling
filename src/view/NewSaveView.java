@@ -46,6 +46,7 @@ public class NewSaveView extends ViewUtil{
         header.setY(175);
         header.setFill(Color.WHITE);
         header.setFont(header.getFont().font(100));
+        System.out.println(NewGameView.getInst().getSaveNumber());
 
         root.setPrefSize(ViewUtil.VIEW_WIDTH, ViewUtil.VIEW_HEIGHT);
 
