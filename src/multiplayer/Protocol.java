@@ -105,6 +105,7 @@ public class Protocol {
                 catch (IOException e) {
                     System.err.println(e);
                 }
+                MultiplayerHandler.getInstance().disconnect();
                 break;
             case "NextGame":
                 try {
@@ -151,8 +152,6 @@ public class Protocol {
                         break;
                     case 'D':
                         MultiplayerHandler.getInstance().disconnect();
-                        GameView.getInstance().getField().changeText("Player 2 disconnected"); 
-                        System.out.println("Player 2 disconnected");
                         break;
                     case 'N':
                         MultiplayerHandler.getInstance().startNextLevel();

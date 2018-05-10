@@ -212,7 +212,9 @@ public class GameView extends ViewUtil{
     
     public void renderPlayer2() {
         player2Layer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
-        player2Layer.drawImage(gs.player2.getImage(), gs.player2.getX(), gs.player2.getY());
+        if(GameModel.getInstance().getMultiplayerStatus()) {
+            player2Layer.drawImage(gs.player2.getImage(), gs.player2.getX(), gs.player2.getY());
+        }
     }
 
     public void gameOver() {

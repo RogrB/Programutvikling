@@ -46,14 +46,17 @@ public class MultiplayerHandler {
     }
 
     public void send(String action, int x, int y) {
+        if(connected)
         sender.send(protocol.sendPrep(action, x, y));
     }
     
     public void send(String action, int id, int healt, boolean alive) {
+        if(connected)
         sender.send(protocol.sendPrep(action, id, healt, alive));
     }
     
     public void recieveProtocol(DataInputStream input) {
+        if(connected)
         protocol.recieve(input);
     }
     
@@ -120,10 +123,16 @@ public class MultiplayerHandler {
     }
     
     public void disconnect() {
-        setConnected(false);
-        GameModel.getInstance().setMultiplayerStatus(false);
-        gs.player2.unsetSprite();
-        sender.closeSocket();
+        if (connected) {
+            GameModel.getInstance().setMultiplayerStatus(false);
+            System.out.println("setting mp to " + GameModel.getInstance().getMultiplayerStatus());
+            gs.player2.unsetSprite();
+            sender.closeSocket();
+            // receiver.closeSocket();
+            GameView.getInstance().getField().changeText("Player 2 disconnected"); 
+            System.out.println("Player 2 disconnected");      
+            setConnected(false);
+        }
     }
     
     public void cancelConnectAttempt() {
@@ -139,8 +148,10 @@ public class MultiplayerHandler {
     }
     
     public void nextGame() {
-        if (!nextGameRequest) {
-            sender.send(protocol.sendPrep("NextGame", 0, 0));
+        if (connected) {
+            if (!nextGameRequest) {
+                sender.send(protocol.sendPrep("NextGame", 0, 0));
+            }
         }
     }
     
