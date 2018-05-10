@@ -77,6 +77,18 @@ public abstract class ViewUtil {
         }
     }
 
+    void setFocusButtons(int currentFocus, int length, Parent[] menuElements){
+        for(int i = 0; i < length; i++){
+            if(i != currentFocus){
+                menuElements[i].setFocusTraversable(false);
+            }
+            else{
+                menuElements[currentFocus].setFocusTraversable(true);
+                menuElements[currentFocus].requestFocus();
+            }
+        }
+    }
+
     public abstract Parent initScene();
     public abstract void select(String buttonName, KeyEvent event);
 

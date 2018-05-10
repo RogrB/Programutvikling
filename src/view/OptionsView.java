@@ -116,10 +116,9 @@ public class OptionsView extends ViewUtil{
         errorField = new WarningField();
         errorField.setTranslateX(475);
         errorField.setTranslateY(250);
-
+        backButton = new MenuButton("BACK");
 
         menuElements = new Parent[]{soundSlider, musicSlider, difficultySlider, backButton};
-        backButton = new MenuButton("BACK");
         optionsMenu.getChildren().addAll(soundLabel, soundSlider, soundTextLabel, musicLabel, musicSlider, musicTextLabel, difficultyLabel, difficultySlider, difficultyTextLabel, backButton);
         optionsMenu.setSpacing(10);
         optionsMenu.setTranslateX(450);
@@ -129,7 +128,7 @@ public class OptionsView extends ViewUtil{
             if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
                 backButton.lostFocus();
                 traverseMenu(event.getCode(), menuElements);
-                setFocusButtons(elementCounter);
+                setFocusButtons(elementCounter, 3, menuElements);
                 if(elementCounter == 3) backButton.gainedFocus();
             }
             if(event.getCode() == KeyCode.ENTER && elementCounter == 3 || event.getCode() == KeyCode.SPACE && elementCounter == 3){
@@ -137,7 +136,7 @@ public class OptionsView extends ViewUtil{
             }
             if(event.getCode() == KeyCode.ENTER && elementCounter < 3 || event.getCode() == KeyCode.SPACE && elementCounter == 3){
                 traverseMenu(KeyCode.DOWN, menuElements);
-                setFocusButtons(elementCounter);
+                setFocusButtons(elementCounter, 3, menuElements);
                 if(elementCounter == 3){
                     backButton.gainedFocus();
                 }
@@ -155,18 +154,6 @@ public class OptionsView extends ViewUtil{
         });
         root.getChildren().addAll(header, errorField, optionsMenu);
         return root;
-    }
-
-    private void setFocusButtons(int currentFocus){
-        for(int i = 0; i < 3; i++){
-            if(i != currentFocus){
-                menuElements[i].setFocusTraversable(false);
-            }
-            else{
-                menuElements[currentFocus].setFocusTraversable(true);
-                menuElements[currentFocus].requestFocus();
-            }
-        }
     }
 
     @Override

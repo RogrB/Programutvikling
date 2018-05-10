@@ -2,6 +2,8 @@ package multiplayer;
 
 import java.net.*;
 import java.io.*;
+import view.GameView;
+import view.MultiplayerView;
 
 public class Sender {
     
@@ -15,6 +17,8 @@ public class Sender {
         }
         catch (UnknownHostException e) {
             System.err.println(e);
+            MultiplayerView.getInst().getHostnameField().changeText("Unknown Hostname: " + hostname);
+            MultiplayerHandler.getInstance().cancelConnectAttempt();
         }
         this.remotePort = remoteport;
         
@@ -23,6 +27,7 @@ public class Sender {
         }
         catch(SocketException e) {
             System.err.println(e);
+            MultiplayerView.getInst().getField().changeText(e.toString());
         }
     }
     
@@ -33,6 +38,8 @@ public class Sender {
         }
         catch(Exception e) {
             System.err.println(e);
+            MultiplayerView.getInst().getField().changeText(e.toString());
+            GameView.getInstance().getField().changeText(e.toString());              
         }
     }       
     
@@ -43,7 +50,15 @@ public class Sender {
             socket.send(packet);            
         }
         catch(IOException e) {
-            System.err.println(e);
-        } 
+            if (e instanceof UnknownHostException) {
+                MultiplayerView.getInst().getHostnameField().changeText("Unknown Hostname: " + hostname);
+                System.err.println(e);
+            }
+            else {
+                System.err.println(e);
+                MultiplayerView.getInst().getField().changeText(e.toString());
+                GameView.getInstance().getField().changeText(e.toString());              
+            }
+        }
     }
 }

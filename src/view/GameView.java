@@ -206,7 +206,12 @@ public class GameView extends ViewUtil{
         else
             gc = graphics;
 
-        gc.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
+        if(object instanceof Basic) {
+            gc.clearRect(object.getOldX()-10, object.getOldY(), object.getOldWidth()+50, object.getOldHeight()+1);
+        }
+        else {
+            gc.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
+        }
         gc.drawImage(object.getImage(), object.getX(), object.getY());
     }
     
@@ -249,57 +254,51 @@ public class GameView extends ViewUtil{
     public void renderScoreScreen() {
         
 	Platform.runLater(() -> {
-        float bullets = gs.player.getBulletCount();
-        float hits = gs.player.getBulletsHit();
-        float accuracy = (hits / bullets) * 100;
-        DecimalFormat accuracyFormat = new DecimalFormat("#.00");
-        levelComplete.setText("Level " + gs.getLevelIterator() + " Cleared!");
-        levelComplete.setX((VIEW_WIDTH/2) - 140);
-        levelComplete.setY((VIEW_HEIGHT/2) - 230);
-        // levelComplete = new Text((VIEW_WIDTH/2) - 140, (VIEW_HEIGHT/2) - 230, getLevelName() + " Cleared!"); // Trenger å hente levelnr fra leveldata
+            float bullets = gs.player.getBulletCount();
+            float hits = gs.player.getBulletsHit();
+            float accuracy = (hits / bullets) * 100;
+            DecimalFormat accuracyFormat = new DecimalFormat("#.00");
+            levelComplete.setText("Level " + gs.getLevelIterator() + " Cleared!");
+            levelComplete.setX((VIEW_WIDTH/2) - 140);
+            levelComplete.setY((VIEW_HEIGHT/2) - 230);
 
-        scoreT.setText("Score:   " + Integer.toString(gs.player.getScore()));
-        scoreT.setX((VIEW_WIDTH/2) - 300);
-        scoreT.setY((VIEW_HEIGHT/2) - 140);
-        //Text scoreT = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 140, "Score:   " + Integer.toString(gs.player.getScore()));
+            scoreT.setText("Score:   " + Integer.toString(gs.player.getScore()));
+            scoreT.setX((VIEW_WIDTH/2) - 300);
+            scoreT.setY((VIEW_HEIGHT/2) - 140);
 
-        shotsFired.setText("Shots fired:   " + Float.toString(bullets));
-        shotsFired.setX((VIEW_WIDTH/2) - 300);
-        shotsFired.setY((VIEW_HEIGHT/2) - 90);
-        //Text shotsFired = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 90, "Shots fired:   " + Float.toString(bullets));
+            shotsFired.setText("Shots fired:   " + Float.toString(bullets));
+            shotsFired.setX((VIEW_WIDTH/2) - 300);
+            shotsFired.setY((VIEW_HEIGHT/2) - 90);
 
-        enemiesHit.setText("Enemies hit:   " + Float.toString(hits));
-        enemiesHit.setX((VIEW_WIDTH/2) - 300);
-        enemiesHit.setY((VIEW_HEIGHT/2) - 40);
-        //Text enemiesHit = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) - 40, "Enemies hit:   " + Float.toString(hits));
+            enemiesHit.setText("Enemies hit:   " + Float.toString(hits));
+            enemiesHit.setX((VIEW_WIDTH/2) - 300);
+            enemiesHit.setY((VIEW_HEIGHT/2) - 40);
 
-        enemiesKilled.setText("Enemies killed:   " + Integer.toString(gs.player.getEnemiesKilled()));
-        enemiesKilled.setX((VIEW_WIDTH/2) - 300);
-        enemiesKilled.setY((VIEW_HEIGHT/2) + 10);
-        //Text enemiesKilled = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 10, "Enemies killed:   " + Integer.toString(gs.player.getEnemiesKilled()));
+            enemiesKilled.setText("Enemies killed:   " + Integer.toString(gs.player.getEnemiesKilled()));
+            enemiesKilled.setX((VIEW_WIDTH/2) - 300);
+            enemiesKilled.setY((VIEW_HEIGHT/2) + 10);
 
-        hitPercent.setText("Accuracy:   " + accuracyFormat.format(accuracy) + "%");
-        hitPercent.setX((VIEW_WIDTH/2) - 300);
-        hitPercent.setY((VIEW_HEIGHT/2) + 60);
-        //Text hitPercent = new Text((VIEW_WIDTH/2) - 300, (VIEW_HEIGHT/2) + 60, "Accuracy:   " + accuracyFormat.format(accuracy) + "%");
+            hitPercent.setText("Accuracy:   " + accuracyFormat.format(accuracy) + "%");
+            hitPercent.setX((VIEW_WIDTH/2) - 300);
+            hitPercent.setY((VIEW_HEIGHT/2) + 60);
 
-        levelComplete.setFill(Color.WHITE);
-        levelComplete.setFont(Font.font("Verdana", 32));
-        scoreT.setFill(Color.WHITE);
-        scoreT.setFont(Font.font("Verdana", 30));
-        shotsFired.setFill(Color.WHITE);
-        shotsFired.setFont(Font.font("Verdana", 30));
-        enemiesHit.setFill(Color.WHITE);
-        enemiesHit.setFont(Font.font("Verdana", 30));
-        enemiesKilled.setFill(Color.WHITE);
-        enemiesKilled.setFont(Font.font("Verdana", 30));
-        hitPercent.setFill(Color.WHITE);
-        hitPercent.setFont(Font.font("Verdana", 30));
+            levelComplete.setFill(Color.WHITE);
+            levelComplete.setFont(Font.font("Verdana", 32));
+            scoreT.setFill(Color.WHITE);
+            scoreT.setFont(Font.font("Verdana", 30));
+            shotsFired.setFill(Color.WHITE);
+            shotsFired.setFont(Font.font("Verdana", 30));
+            enemiesHit.setFill(Color.WHITE);
+            enemiesHit.setFont(Font.font("Verdana", 30));
+            enemiesKilled.setFill(Color.WHITE);
+            enemiesKilled.setFont(Font.font("Verdana", 30));
+            hitPercent.setFill(Color.WHITE);
+            hitPercent.setFont(Font.font("Verdana", 30));
 
-        root.getChildren().addAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent);
+            root.getChildren().addAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent);
 
-        hud.drawImage(new Image("assets/image/scorescreen.png"), (VIEW_WIDTH/2) - 360, (VIEW_HEIGHT/2) - 275);
-    });
+            hud.drawImage(new Image("assets/image/scorescreen.png"), (VIEW_WIDTH/2) - 360, (VIEW_HEIGHT/2) - 275);
+        });
     }
 
     public void clearScoreScreen() {
@@ -344,7 +343,7 @@ public class GameView extends ViewUtil{
         }
 
         scoreText.setText("Score: " + Integer.toString(gs.player.getScore()));
-        levelText.setText("Level " + Integer.toString(gs.getLevelIterator())); // må hente riktig level fra leveldata
+        levelText.setText("Level " + Integer.toString(gs.getLevelIterator()));
         weaponType.setText(h.weaponType());
     }
     

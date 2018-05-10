@@ -29,6 +29,8 @@ public class MultiplayerView extends ViewUtil{
     private MultiplayerHandler mp = MultiplayerHandler.getInstance();
     private GameModel gm = GameModel.getInstance();
 
+    private Parent[] menuElements;
+
     private static final String BG_IMG = "assets/image/background.jpg";
 
     private TextField hostnameField;
@@ -38,6 +40,7 @@ public class MultiplayerView extends ViewUtil{
     public static Stage stage;
     
     private WarningField errorField = new WarningField();
+    private WarningField hostErrorField = new WarningField();
 
     public Parent initScene(){
         root = new Pane();
@@ -61,20 +64,29 @@ public class MultiplayerView extends ViewUtil{
 
         errorField.setTranslateX(475);
         errorField.setTranslateY(550);
+        hostErrorField.setTranslateX(475);
+        hostErrorField.setTranslateY(590);
 
         MenuButton connectButton = new MenuButton("CONNECT");
         MenuButton backButton = new MenuButton("BACK");
+
+        menuElements = new Parent[]{hostnameField, remotePortField, localPortField, connectButton, backButton};
         connectButton.setOnMouseClicked(event -> {
-            System.out.println(hostnameField.getText());
             if(hostnameField.getText() != null && hostnameField.getText() != null && localPortField.getText() != null){
-                
-                initMultiplayerGame();
-                stage = (Stage) ((Node)event.getTarget()).getScene().getWindow();
-                mp.startConnection();                
-                
+                try {
+                    if(testRange(Integer.parseInt(remotePortField.getText()), Integer.parseInt(localPortField.getText()))) {
+                        initMultiplayerGame();
+                        stage = (Stage) ((Node)event.getTarget()).getScene().getWindow();
+                        mp.startConnection();   
+                    }    
+                }
+                catch(Exception e) {
+                    System.err.println(e);
+                    errorField.changeText(e.toString());
+                }
             }
             else{
-                if(hostnameField.getText().equals("")){ // not sure if these work yet, cba to check
+                if(hostnameField.getText() == null){ // not sure if these work yet, cba to check
                     System.out.println("Make sure to fill out the hostname field!");
                 }
                 else if(remotePortField.getText().equals("")){
@@ -91,8 +103,13 @@ public class MultiplayerView extends ViewUtil{
         multiplayerMenu.setTranslateX(450);
         multiplayerMenu.setTranslateY(250);
         multiplayerMenu.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
+                System.out.println(elementCounter);
+            }
             if(event.getCode() == KeyCode.ESCAPE){
-                mp.cancelConnectAttempt();
+                if(mp.getInitConnection()){
+                    mp.cancelConnectAttempt();
+                }
                 goToView(event, MenuView.getInstance().initScene());
             }
         });
@@ -102,7 +119,7 @@ public class MultiplayerView extends ViewUtil{
             }
             goToView(event, MenuView.getInstance().initScene());
                 });
-        root.getChildren().addAll(header, errorField, multiplayerMenu);
+        root.getChildren().addAll(header, errorField, hostErrorField, multiplayerMenu);
         return root;
     }
 
@@ -131,6 +148,19 @@ public class MultiplayerView extends ViewUtil{
         });
     }
     
+    public boolean testRange(int remote, int local) {
+        boolean valid = true;
+        if (remote < 0 || remote > 100000) {
+            valid = false;
+            errorField.changeText("Invalid RemotePort Range");
+        }
+        if (local < 0 || local > 100000) {
+            valid = false;
+            errorField.changeText("Invalid LocalPort Range");
+        }
+        return valid;
+    }
+    
     private void setWarningField(Color color, String str) {
         errorField.setColor(color);
         errorField.changeText(str);
@@ -143,4 +173,9 @@ public class MultiplayerView extends ViewUtil{
     public WarningField getField() {
         return errorField;
     }
+    
+    public WarningField getHostnameField() {
+        return hostErrorField;
+    }
+    
 }

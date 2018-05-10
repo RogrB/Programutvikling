@@ -19,7 +19,8 @@ public class MenuButton extends StackPane{
 
         bg = new Rectangle(300, 30);
         bg.setFill(Color.BLACK);
-        bg.setStroke(Color.WHITE);
+        bg.setStrokeWidth(2);
+        bg.setStroke(Color.rgb(255, 255, 255));
         bg.setEffect(new GaussianBlur(3.5));
 
         setAlignment(Pos.CENTER);
@@ -43,5 +44,10 @@ public class MenuButton extends StackPane{
     public void lostFocus(){
         bg.setFill(Color.BLACK);
         text.setFill(Color.WHITE);
+    }
+
+    public void setColor(Color color){
+        bg.setStroke(color);
+        text.setFill(Color.GREY);
     }
 }
