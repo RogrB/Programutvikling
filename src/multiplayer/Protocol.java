@@ -105,7 +105,6 @@ public class Protocol {
                 catch (IOException e) {
                     System.err.println(e);
                 }
-                MultiplayerHandler.getInstance().disconnect();
                 break;
             case "NextGame":
                 try {
