@@ -67,7 +67,7 @@ public class LoadGameView extends ViewUtil{
             }
             else{
                 try{
-                    tempElements.get(counter).setText("SAVE "+(i+1)+": "+IOManager.getInstance().getGameState(counter).getStateName());
+                    tempElements.get(counter).setText(IOManager.getInstance().getGameState(counter).getStateName());
                 }
                 catch(Exception e){
                     System.out.println(e);
@@ -117,18 +117,18 @@ public class LoadGameView extends ViewUtil{
 
     @Override
     public void select(String buttonName, KeyEvent event) {
-        switch (buttonName) {
-            case "BACK":
-                goToView(event, MenuView.getInstance().initScene());
-                break;
-            case "SAVE 1":
+        switch (elementCounter) {
+            case 0:
                 loadGame(event,0);
                 break;
-            case "SAVE 2":
+            case 1:
                 loadGame(event,1);
                 break;
-            case "SAVE 3":
+            case 2:
                 loadGame(event,2);
+                break;
+            case 3:
+                goToView(event, MenuView.getInstance().initScene());
                 break;
             }
         System.out.println(gs.getStateName());
