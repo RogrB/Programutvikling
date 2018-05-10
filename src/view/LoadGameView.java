@@ -27,6 +27,8 @@ public class LoadGameView extends ViewUtil{
 
     private MenuButton[] menuElements;
 
+    private String save1, save2, save3;
+
     @Override
     public Parent initScene() {
         root = new Pane();
@@ -45,6 +47,14 @@ public class LoadGameView extends ViewUtil{
 
         root.setPrefSize(ViewUtil.VIEW_WIDTH, ViewUtil.VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
+
+        try {
+            save1 = IOManager.getInstance().getGameState(0).getStateName();
+            save1 = IOManager.getInstance().getGameState(1).getStateName();
+            save1 = IOManager.getInstance().getGameState(2).getStateName();
+        } catch (FileIOException e) {
+            e.printStackTrace();
+        }
 
         MenuButton backButton = new MenuButton("BACK");
         MenuButton save1 = new MenuButton("SAVE 1");
