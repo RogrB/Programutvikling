@@ -328,7 +328,6 @@ public class GameController {
                     gs.gameOver = true;
                     lastGameLost = false;
                     startGameWinTimer();
-                    gameMainTimer.stop();
                     AutoSave.getInstance().stop();
                 }
             }
@@ -342,6 +341,7 @@ public class GameController {
             public void run() {
                 System.out.println("Game Won!");
                 gv.gameWon();
+                gameMainTimer.stop();
             }
         }, 2000);
     }
