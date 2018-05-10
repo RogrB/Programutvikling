@@ -16,14 +16,12 @@ public class Receiver extends Thread {
 
     
     Receiver(int localPort) {
-
         try {
             socket = new DatagramSocket(localPort);
             looping = true;
         } 
         catch(SocketException e) {
             System.err.println(e);
-            // Trenger en måte å outputte feilmelding i UIen
             MultiplayerView.getInst().getField().changeText(e.toString());
             GameView.getInstance().getField().changeText(e.toString());
         }
