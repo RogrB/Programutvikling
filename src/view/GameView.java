@@ -140,12 +140,7 @@ public class GameView extends ViewUtil{
                     SoundManager.getInst().playMusic("stop");
                 }
                 SoundManager.getInst().playMusic("music_menu");
-                goToView(event, MenuView.getInstance().initScene());
-                if(gm.getMultiplayerStatus()) {
-                    MultiplayerHandler.getInstance().send("Disconnect", 0, 0);
-                    MultiplayerHandler.getInstance().disconnect();
-                    System.out.println("Game paused, disconnected from multiplayer");
-                }                
+                goToView(event, MenuView.getInstance().initScene());         
                 gc.gamePause();
             }
         });

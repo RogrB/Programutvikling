@@ -18,6 +18,7 @@ import view.ViewUtil;
 import java.util.*;
 
 import static model.GameState.bossType;
+import view.MenuView;
 
 public class GameController {
 
@@ -126,6 +127,12 @@ public class GameController {
         AutoSave.getInstance().stop();
         gameMainTimer.stop();
         gs.player.isNotPlaying();
+        if(gm.getMultiplayerStatus()) {
+            MultiplayerHandler.getInstance().send("Disconnect", 0, 0);
+            MultiplayerHandler.getInstance().disconnect();
+            MenuView.getInstance().getField().changeText("Game Paused, disconnected from Multiplayer");
+            System.out.println("Game paused, disconnected from Multiplayer");
+        } 
     }
 
     private void moveEnemies(){
@@ -292,6 +299,12 @@ public class GameController {
             gv.gameOver();
             gameMainTimer.stop();
             AutoSave.getInstance().stop();
+            if(gm.getMultiplayerStatus()) {
+                MultiplayerHandler.getInstance().send("Disconnect", 0, 0);
+                MultiplayerHandler.getInstance().disconnect();
+                GameView.getInstance().getField().changeText("Disconnected from Multiplayer");
+                System.out.println("Game Over, disconnected from multiplayer");
+            }             
         }
     }
 
