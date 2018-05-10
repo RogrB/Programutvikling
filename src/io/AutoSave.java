@@ -27,10 +27,9 @@ public class AutoSave {
                     io.saveGameState();
                 } catch (FileIOException e) {
                     System.err.println(e.getMessage());
-                    //GameView.getInstance().getField().changeText("ERROR");
                 }
             }
-        }, 700, 700);
+        }, 10, 700);
     }
 
     public void stop(){
