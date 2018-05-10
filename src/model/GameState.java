@@ -29,6 +29,8 @@ public class GameState implements java.io.Serializable {
     public int levelIncrementor;    //Increment within a level
     private int levelIterator;      //Iterate through levels
 
+    private String stateName;
+
     public GameState(){
         powerups = new ArrayList();
         enemies = new ArrayList();
@@ -92,4 +94,10 @@ public class GameState implements java.io.Serializable {
 
     public int getLevelIterator(){return levelIterator; }
 
+    public void setStateName(String stateName){
+        this.stateName = stateName;
+    }
+    public String getStateName() {
+        return stateName;
+    }
 }
