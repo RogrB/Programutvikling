@@ -17,10 +17,10 @@ import static controller.GameController.gs;
 /**
  * <h1>Reads and writes save states</h1>
  * Class to handle reading and writing to and from save states, options
- * and back end settings. These are all serialized classes whom are saved
- * in the <i>tmp/</i> folder.
+ * and back end settings. These are all serialized classes whom are stored
+ * in the {@code tmp/} folder or sub directories of this.
  * <p>
- * <b>Note:</b> The IOManager is a singleton.
+ * <b>Note:</b> The {@code IOManager} is a singleton.
  * 
  * @author  Åsmund Røst Wien
  */
@@ -31,9 +31,9 @@ public class IOManager {
     public static IOManager getInstance(){ return inst; }
 
     /**
-     * This method is continually called on AutoSave
+     * This method is continually called on {@code AutoSave}
      * when a single player game runs. It serializes and writes the
-     * GameState and all of it's arrays of content.
+     * {@code GameState} and all of it's arrays of content.
      * @throws FileIOException
      * @see FileIOException
      * @see AutoSave
@@ -68,9 +68,9 @@ public class IOManager {
     }
 
     /**
-     * Reads and returns a GameState.
-     * @param saveState The save state (0-2) to be returned.
-     * @return The GameState object which is called for.
+     * Reads and returns a {@code GameState}.
+     * @param saveState The save (0-2) to be returned.
+     * @return The {@code GameState} object which is called for.
      * @throws FileIOException
      * @see FileIOException
      * @see GameState
@@ -101,7 +101,7 @@ public class IOManager {
     }
 
     /**
-     * Overwrites the current GameState object with the loaded instance.
+     * Overwrites the current {@code GameState} object with the loaded instance.
      * @throws FileIOException
      * @see FileIOException
      * @see GameState
@@ -136,9 +136,9 @@ public class IOManager {
     }
 
     /**
-     * Serializes and writes an <i>ArrayList</i> to a directory.
-     * @param list The ArrayList to be serialized and written to the <i>src</i> directory.
-     * @param src The directory of where to store <i>list</i>.
+     * Serializes and writes an {@code ArrayList} to a directory.
+     * @param list The {@code ArrayList} to be serialized and written to the {@code src} directory.
+     * @param src The directory of where to store {@code ArrayList}
      * @throws FileIOException
      * @see FileIOException
      */
@@ -160,9 +160,9 @@ public class IOManager {
     }
 
     /**
-     * Reads and returns a <i>list</i> from the <i>src</i> directory.
+     * Reads and returns a {@code list} from the {@code src} directory.
      * @param src Directory where the file is expected to be.
-     * @return The <i>list</i> at the <i>src</i> directory, if found.
+     * @return The {@code list} at the {@code src} directory, if found.
      * @throws FileIOException
      * @see FileIOException
      * @see List
@@ -193,7 +193,7 @@ public class IOManager {
 
     /**
      * Checks if the last played save state exists, with all of it's files.
-     * @return <i>true</i> or <i>false</i>.
+     * @return {@code true} or {@code false}.
      * @see GameSettings
      */
     public boolean saveStateExists(){
@@ -224,8 +224,8 @@ public class IOManager {
     }
 
     /**
-     * Loads the stored GameSettings object.
-     * @return The stored GameSettings object.
+     * Loads the stored {@code GameSettings} object.
+     * @return The stored {@code GameSettings} object.
      * @throws FileIOException
      * @see FileIOException
      */
@@ -258,7 +258,7 @@ public class IOManager {
     }
 
     /**
-     * Serializes and stores a GameSettings object.
+     * Serializes and stores a {@code GameSettings} object.
      * @param gameSettings The object to be stored.
      * @throws FileIOException
      * @see FileIOException
@@ -287,6 +287,7 @@ public class IOManager {
 
     /**
      * Looks for directories, and creates them if they don't exist.
+     * <br>
      * <b>Note: </b>This typically only happens the first time the
      * game runs, or if the folders are manually removed.
      */

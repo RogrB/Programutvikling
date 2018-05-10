@@ -7,6 +7,11 @@ import view.ViewUtil;
 
 import java.util.Iterator;
 
+/**
+ * <h1>Class to define core properties.</h1>
+ * This class is extended by any object that exists, as
+ * all existing things have these properties.
+ */
 public abstract class Existance implements java.io.Serializable {
 
     private int x, y;
@@ -18,6 +23,7 @@ public abstract class Existance implements java.io.Serializable {
     protected transient Image image;
     transient ImageView imageView;
     public Sprite sprite;
+
 
     public Existance(int x, int y){
         this.x = x;
