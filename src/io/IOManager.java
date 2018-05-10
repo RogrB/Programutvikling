@@ -5,6 +5,8 @@ import model.GameModel;
 import model.GameSettings;
 import model.GameState;
 import model.enemy.Enemy;
+import view.LoadGameView;
+import view.ViewUtil;
 
 import java.io.*;
 import java.util.ArrayList;

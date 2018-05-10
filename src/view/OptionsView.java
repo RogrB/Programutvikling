@@ -21,6 +21,8 @@ public class OptionsView extends ViewUtil{
         return inst;
     }
 
+    private String lastError = "";
+
     private static final String BG_IMG = "assets/image/background.jpg";
 
     private int difficultyValue = GameModel.gameSettings.getDifficultyValue();
@@ -153,6 +155,9 @@ public class OptionsView extends ViewUtil{
             goToView(event, MenuView.getInstance().initScene());
         });
         root.getChildren().addAll(header, errorField, optionsMenu);
+
+        compareErrorMessage(lastError);
+
         return root;
     }
 

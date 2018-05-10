@@ -28,6 +28,8 @@ public class MultiplayerView extends ViewUtil{
     }
 
     private MultiplayerView(){}
+
+    private String lastError = "";
     
     private MultiplayerHandler mp = MultiplayerHandler.getInstance();
     private GameModel gm = GameModel.getInstance();
@@ -42,7 +44,7 @@ public class MultiplayerView extends ViewUtil{
 
     public static Stage stage;
     
-    private WarningField errorField = new WarningField();
+    //private WarningField errorField = new WarningField();
     private WarningField hostErrorField = new WarningField();
 
     public Parent initScene(){
@@ -129,6 +131,9 @@ public class MultiplayerView extends ViewUtil{
             goToView(event, MenuView.getInstance().initScene());
                 });
         root.getChildren().addAll(header, errorField, hostErrorField, multiplayerMenu);
+
+        compareErrorMessage(lastError);
+
         return root;
     }
 

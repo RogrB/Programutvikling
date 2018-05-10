@@ -26,6 +26,8 @@ public class NewSaveView extends ViewUtil{
     public static NewSaveView inst = new NewSaveView();
     public static NewSaveView getInst(){return inst;}
 
+    private String lastError = "";
+
     private static final String BG_IMG = "assets/image/background.jpg";
 
     private Parent menuElements[];
@@ -82,6 +84,8 @@ public class NewSaveView extends ViewUtil{
             }
         });
         root.getChildren().addAll(header, writeSaveNameText, errorField, containerVBox);
+
+        compareErrorMessage(lastError);
 
         return root;
     }

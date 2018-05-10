@@ -23,6 +23,8 @@ public class MenuView extends ViewUtil{
     private static final String BG_IMG = "assets/image/background.jpg";
     private MenuButton[] menuElements;
 
+    private String lastError = "";
+
     private MenuView(){
 
     }
@@ -119,8 +121,8 @@ public class MenuView extends ViewUtil{
         MenuButton optionsButton = new MenuButton("OPTIONS");
         MenuButton exitButton = new MenuButton("EXIT");
         errorField = new WarningField();
-        errorField.setTranslateX(475);
-        errorField.setTranslateY(250);
+        errorField.setTranslateX(200);
+        errorField.setTranslateY(750);
 
         newGameButton.setOnMouseClicked(this::createNewSave);
         continueButton.setOnMouseClicked(this::continueGame);
@@ -162,6 +164,9 @@ public class MenuView extends ViewUtil{
         }
         menuElements[0].gainedFocus();
         root.getChildren().addAll(header, errorField, mainMenu);
+
+        compareErrorMessage(lastError);
+
         return root;
 
     }

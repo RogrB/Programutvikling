@@ -262,8 +262,11 @@ public class Player extends Entity {
         this.hasShield = false;
     }
 
-    public void isPlaying(){playing = true; }
+    public void isPlaying(){
+        setImmunity(false);
+        playing = true; }
     public void isNotPlaying() {
+        setImmunity(true);
         playing = false;
         isNotShooting();
     }
