@@ -22,7 +22,7 @@ import static controller.GameController.gs;
  * <p>
  * <b>Note:</b> The {@code IOManager} is a singleton.
  * 
- * @author  Åsmund Røst Wien
+ * @author asmundwien
  */
 public class IOManager {
 
@@ -287,7 +287,7 @@ public class IOManager {
 
     /**
      * Looks for directories, and creates them if they don't exist.
-     * <br>
+     * <p>
      * <b>Note: </b>This typically only happens the first time the
      * game runs, or if the folders are manually removed.
      */
