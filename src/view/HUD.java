@@ -1,25 +1,13 @@
 package view;
 
 import javafx.scene.image.Image;
-
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import model.GameModel;
-import model.GameState;
-import model.enemy.EnemyType;
-import javafx.scene.text.Text;
-import javafx.scene.text.Font;
-
-import java.util.ArrayList;
 import static controller.GameController.gs;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class HUD {
     
-    GameView gv = GameView.getInstance();
-    GameModel gm = GameModel.getInstance();
+    private GameView gv = GameView.getInstance();
 
     private Image playerIcon = new Image("assets/image/hud/playerIcon.png");
     private Image shieldIcon = new Image("assets/image/hud/shieldIcon.png");
@@ -31,8 +19,6 @@ public class HUD {
     private int powerUpY;
     private int fadeCounter;
     private float opacity = 1;
-    
-    Text weaponText;
     
     private static HUD inst = new HUD();
     private HUD(){
@@ -69,32 +55,31 @@ public class HUD {
         }, 0, 30);  
     }
     
-    public Image getPlayerIcon() {
+    Image getPlayerIcon() {
         return this.playerIcon;
     }
     
-    public Image getShieldIcon() {
+    Image getShieldIcon() {
         return this.shieldIcon;
     }
     
-    public Image getLifeCounter() {
+    Image getLifeCounter() {
         return this.lifeCounter;
     }
     
-    public void setlifeCounter(int n) {
+    private void setlifeCounter(int n) {
         this.lifeCounter = new Image("assets/image/hud/numeral" + n + ".png");
     }
     
-    public Image getNumeralX() {
+    Image getNumeralX() {
         return this.numeralX;
     }
     
-    public String weaponType() {
-        String weapon = gs.player.getWeaponType();
-        return weapon;
+    String weaponType() {
+        return gs.player.getWeaponType();
     }
     
-    public Image getWeaponTypeImg() {
+    Image getWeaponTypeImg() {
         return this.weaponTypeImg;
     }
     
