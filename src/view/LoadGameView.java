@@ -26,8 +26,6 @@ public class LoadGameView extends ViewUtil{
 
     private MenuButton[] menuElements;
 
-
-
     @Override
     public Parent initScene() {
         root = new Pane();
