@@ -73,10 +73,6 @@ public class Player extends Entity {
         immunity = false;
         shooting = false;
         canShoot = true;
-        if(hasShield()) {
-            shield.newSprite(sprite.SHIELD1);
-            GameView.getInstance().renderShield();
-        }
     }
 
     public void update(){
