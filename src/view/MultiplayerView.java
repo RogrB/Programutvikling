@@ -29,6 +29,8 @@ public class MultiplayerView extends ViewUtil{
     private MultiplayerHandler mp = MultiplayerHandler.getInstance();
     private GameModel gm = GameModel.getInstance();
 
+    private Parent[] menuElements;
+
     private static final String BG_IMG = "assets/image/background.jpg";
 
     private TextField hostnameField;
@@ -67,6 +69,8 @@ public class MultiplayerView extends ViewUtil{
 
         MenuButton connectButton = new MenuButton("CONNECT");
         MenuButton backButton = new MenuButton("BACK");
+
+        menuElements = new Parent[]{hostnameField, remotePortField, localPortField, connectButton, backButton};
         connectButton.setOnMouseClicked(event -> {
             //if (user_name.getText() == null || user_name.getText().trim().isEmpty())
             if (hostnameField.getText() == null || hostnameField.getText().trim().isEmpty()) {
@@ -101,6 +105,9 @@ public class MultiplayerView extends ViewUtil{
         multiplayerMenu.setTranslateX(450);
         multiplayerMenu.setTranslateY(250);
         multiplayerMenu.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
+                System.out.println(elementCounter);
+            }
             if(event.getCode() == KeyCode.ESCAPE){
                 if(mp.getInitConnection()){
                     mp.cancelConnectAttempt();

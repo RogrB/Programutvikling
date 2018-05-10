@@ -47,6 +47,31 @@ public class IOManager {
         }
     }
 
+    public GameState getGameState(int saveState) throws FileIOException {
+        FileInputStream fis;
+        ObjectInputStream ois;
+
+        String src = "tmp/"+saveState+"/GameState.ser";
+        GameState res = null;
+
+        try {
+            fis = new FileInputStream(src);
+            ois = new ObjectInputStream(fis);
+
+            res = (GameState) ois.readObject();
+
+            ois.close();
+            fis.close();
+
+        } catch (IOException i) {
+            throw new FileIOException("Load game - Can't locate file: "+src);
+        } catch (ClassNotFoundException c) {
+            throw new FileIOException("Load game - Corrupt class or file in: " + src);
+        }
+
+        return res;
+    }
+
     public void loadGameState() throws FileIOException {
         FileInputStream fis;
         ObjectInputStream ois;

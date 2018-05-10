@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import model.GameModel;
 
+import static controller.GameController.gs;
 import java.util.ArrayList;
 
 public class LoadGameView extends ViewUtil{
@@ -124,6 +125,7 @@ public class LoadGameView extends ViewUtil{
                 loadGame(event,2);
                 break;
             }
+        System.out.println(gs.getStateName());
         System.out.println("Totally loaded a rad gamesave");
     }
 
