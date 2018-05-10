@@ -125,8 +125,8 @@ public class MultiplayerView extends ViewUtil{
             Scene scene = new Scene(GameView.getInstance().initScene());
             stage.setScene(scene);
             UserInputs userInputs = new UserInputs(scene);
-            System.out.println("Totally started a new Multiplayer game");
-    });
+            //System.out.println("Totally started a new Multiplayer game");
+        });
     }
     
     private void setWarningField(Color color, String str) {
