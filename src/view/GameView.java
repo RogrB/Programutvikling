@@ -225,13 +225,16 @@ public class GameView extends ViewUtil{
             gc = enemyLayer;
         else if (object instanceof Player)
             gc = playerLayer;
-        else if (object instanceof Player2)
-            gc = player2Layer;
         else
             gc = graphics;
 
         gc.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
         gc.drawImage(object.getImage(), object.getX(), object.getY());
+    }
+    
+    public void renderPlayer2() {
+        player2Layer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+        player2Layer.drawImage(gs.player2.getImage(), gs.player2.getX(), gs.player2.getY());
     }
 
     public void gameOver() {
