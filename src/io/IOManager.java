@@ -26,15 +26,27 @@ import static controller.GameController.gs;
  */
 public class IOManager {
 
+    /**
+     * The singleton object.
+     */
     private static IOManager inst = new IOManager();
+
+    /**
+     * Private constructor (singleton).
+     */
     private IOManager(){ initDirs(); }
+
+    /**
+     * Method to access singleton class.
+     * @return Returns a reference to the singleton object.
+     */
     public static IOManager getInstance(){ return inst; }
 
     /**
      * This method is continually called on {@code AutoSave}
      * when a single player game runs. It serializes and writes the
      * {@code GameState} and all of it's arrays of content.
-     * @throws FileIOException
+     * @throws FileIOException When file can't be written to.
      * @see FileIOException
      * @see AutoSave
      */
@@ -71,7 +83,7 @@ public class IOManager {
      * Reads and returns a {@code GameState}.
      * @param saveState The save (0-2) to be returned.
      * @return The {@code GameState} object which is called for.
-     * @throws FileIOException
+     * @throws FileIOException When file can't be read from.
      * @see FileIOException
      * @see GameState
      */
@@ -80,7 +92,7 @@ public class IOManager {
         ObjectInputStream ois;
 
         String src = "tmp/"+saveState+"/GameState.ser";
-        GameState res = null;
+        GameState res;
 
         try {
             fis = new FileInputStream(src);
@@ -102,7 +114,7 @@ public class IOManager {
 
     /**
      * Overwrites the current {@code GameState} object with the loaded instance.
-     * @throws FileIOException
+     * @throws FileIOException When file can't be read from.
      * @see FileIOException
      * @see GameState
      */
@@ -139,7 +151,7 @@ public class IOManager {
      * Serializes and writes an {@code ArrayList} to a directory.
      * @param list The {@code ArrayList} to be serialized and written to the {@code src} directory.
      * @param src The directory of where to store {@code ArrayList}
-     * @throws FileIOException
+     * @throws FileIOException When file can't be written to.
      * @see FileIOException
      */
     private void saveArrayList(ArrayList list, String src) throws FileIOException {
@@ -163,7 +175,7 @@ public class IOManager {
      * Reads and returns a {@code list} from the {@code src} directory.
      * @param src Directory where the file is expected to be.
      * @return The {@code list} at the {@code src} directory, if found.
-     * @throws FileIOException
+     * @throws FileIOException When file can't be read from.
      * @see FileIOException
      * @see List
      */
@@ -226,7 +238,7 @@ public class IOManager {
     /**
      * Loads the stored {@code GameSettings} object.
      * @return The stored {@code GameSettings} object.
-     * @throws FileIOException
+     * @throws FileIOException When file can't be read from.
      * @see FileIOException
      */
     public GameSettings loadGameSettings() throws FileIOException {
@@ -260,7 +272,7 @@ public class IOManager {
     /**
      * Serializes and stores a {@code GameSettings} object.
      * @param gameSettings The object to be stored.
-     * @throws FileIOException
+     * @throws FileIOException When file can't be written to.
      * @see FileIOException
      */
     public void saveGameSettings(GameSettings gameSettings) throws FileIOException {
