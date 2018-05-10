@@ -49,7 +49,7 @@ public class MultiplayerView extends ViewUtil{
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
         VBox multiplayerMenu = new VBox();
-        Label hostname = new Label("OTHER PLAYERS IP");
+        Label hostname = new Label("HOSTNAME (OTHER PLAYERS IP)");
         hostname.setTextFill(Color.WHITE);
         Label remotePort = new Label("REMOTE PORT");
         remotePort.setTextFill(Color.WHITE);
@@ -68,7 +68,20 @@ public class MultiplayerView extends ViewUtil{
         MenuButton connectButton = new MenuButton("CONNECT");
         MenuButton backButton = new MenuButton("BACK");
         connectButton.setOnMouseClicked(event -> {
-            if(hostnameField.getText() != null && hostnameField.getText() != null && localPortField.getText() != null){
+            //if (user_name.getText() == null || user_name.getText().trim().isEmpty())
+            if (hostnameField.getText() == null || hostnameField.getText().trim().isEmpty()) {
+                System.out.println("Enter Hostname");
+                errorField.changeText("Enter Hostname");
+            }
+            else if (remotePortField.getText() == null || remotePortField.getText().trim().isEmpty()) {
+                System.out.println("Enter RemotePort");
+                errorField.changeText("Enter RemotePort");
+            }
+            else if (localPortField.getText() == null || localPortField.getText().trim().isEmpty()) {
+                System.out.println("Enter LocalPort");
+                errorField.changeText("Enter LocalPort");
+            }            
+            else {
                 try {
                     if(testRange(Integer.parseInt(remotePortField.getText()), Integer.parseInt(localPortField.getText()))) {
                         initMultiplayerGame();
@@ -79,17 +92,6 @@ public class MultiplayerView extends ViewUtil{
                 catch(Exception e) {
                     System.err.println(e);
                     errorField.changeText(e.toString());
-                }
-            }
-            else{
-                if(hostnameField.getText() == null){ // not sure if these work yet, cba to check
-                    System.out.println("Make sure to fill out the hostname field!");
-                }
-                else if(remotePortField.getText().equals("")){
-                    System.out.println("Make sure to fill out the remote port field");
-                }
-                else if(localPortField.getText().equals("")){
-                    System.out.println("Make sure to fill out the local port field!");
                 }
             }
         });
@@ -131,13 +133,11 @@ public class MultiplayerView extends ViewUtil{
     }
     
     public void startMultiplayerGame(Stage stage) {
-        
 	Platform.runLater(() -> {
             GameController.getInstance().newGame();
             Scene scene = new Scene(GameView.getInstance().initScene());
             stage.setScene(scene);
             UserInputs userInputs = new UserInputs(scene);
-            //System.out.println("Totally started a new Multiplayer game");
         });
     }
     
