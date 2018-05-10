@@ -31,10 +31,12 @@ public class IOManager {
     public static IOManager getInstance(){ return inst; }
 
     /**
-     * This method is constantly called from <i>io.AutoSave.java</i>
+     * This method is continually called on AutoSave
      * when a single player game runs. It serializes and writes the
      * GameState and all of it's arrays of content.
      * @throws FileIOException
+     * @see FileIOException
+     * @see AutoSave
      */
     public void saveGameState() throws FileIOException {
         FileOutputStream fos;
@@ -66,12 +68,12 @@ public class IOManager {
     }
 
     /**
-     * This method is constantly called from <i>io.AutoSave.java</i>
-     * when a single player game runs. It serializes and writes the
-     * GameState and all of it's arrays of content.
+     * Reads and returns a GameState.
      * @param saveState The save state (0-2) to be returned.
      * @return The GameState object which is called for.
      * @throws FileIOException
+     * @see FileIOException
+     * @see GameState
      */
     public GameState getGameState(int saveState) throws FileIOException {
         FileInputStream fis;
@@ -101,6 +103,8 @@ public class IOManager {
     /**
      * Overwrites the current GameState object with the loaded instance.
      * @throws FileIOException
+     * @see FileIOException
+     * @see GameState
      */
     public void loadGameState() throws FileIOException {
         FileInputStream fis;
@@ -136,6 +140,7 @@ public class IOManager {
      * @param list The ArrayList to be serialized and written to the <i>src</i> directory.
      * @param src The directory of where to store <i>list</i>.
      * @throws FileIOException
+     * @see FileIOException
      */
     private void saveArrayList(ArrayList list, String src) throws FileIOException {
         FileOutputStream fos;
@@ -159,6 +164,8 @@ public class IOManager {
      * @param src Directory where the file is expected to be.
      * @return The <i>list</i> at the <i>src</i> directory, if found.
      * @throws FileIOException
+     * @see FileIOException
+     * @see List
      */
     private List loadList(String src) throws FileIOException {
         FileInputStream fis;
@@ -187,6 +194,7 @@ public class IOManager {
     /**
      * Checks if the last played save state exists, with all of it's files.
      * @return <i>true</i> or <i>false</i>.
+     * @see GameSettings
      */
     public boolean saveStateExists(){
         return saveStateExists(GameModel.gameSettings.getPrevSave());
@@ -219,6 +227,7 @@ public class IOManager {
      * Loads the stored GameSettings object.
      * @return The stored GameSettings object.
      * @throws FileIOException
+     * @see FileIOException
      */
     public GameSettings loadGameSettings() throws FileIOException {
         FileInputStream fis;
@@ -252,6 +261,7 @@ public class IOManager {
      * Serializes and stores a GameSettings object.
      * @param gameSettings The object to be stored.
      * @throws FileIOException
+     * @see FileIOException
      */
     public void saveGameSettings(GameSettings gameSettings) throws FileIOException {
         FileOutputStream fos;
