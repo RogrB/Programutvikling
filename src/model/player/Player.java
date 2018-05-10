@@ -70,9 +70,15 @@ public class Player extends Entity {
     }
 
     public void resume(){
+        System.out.println("resumed");
+        System.out.println("shield is " + hasShield());
         immunity = false;
         shooting = false;
         canShoot = true;
+        if(hasShield()) {
+            shield.newSprite(sprite.SHIELD1);
+            GameView.getInstance().renderShield();
+        }
     }
 
     public void update(){
