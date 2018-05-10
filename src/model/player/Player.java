@@ -26,12 +26,11 @@ public class Player extends Entity {
     // State
     private boolean immunity = false;
     private boolean playing = false;
-    private int immunityTime = 2000;
     private int blinkCounter;
     private String weaponType = "Bullet";
     private boolean hasShield = false;
     private boolean shooting= false;
-    Shield shield = new Shield(getX(), getY(), hasShield());
+    private Shield shield = new Shield(getX(), getY(), hasShield());
     private int score;
     private int enemiesKilled;
     private int bulletsHit;
@@ -59,8 +58,7 @@ public class Player extends Entity {
         }
         setHealth(5);
         setY(ViewUtil.VIEW_HEIGHT / 2 - (int) new Image(Sprite.PLAYER.src).getHeight() / 2);
-        //getImageView().relocate(getX(), getY());
-        setAlive(true);
+        setAlive();
         immunity = false;
         shooting = false;
         score = 0;
@@ -69,15 +67,11 @@ public class Player extends Entity {
         bulletsHit = 0;
         bulletCount = 0;
         canShoot = true;
-        // System.out.println("shield = " + hasShield);
-        // System.out.println("width = " + getWidth());        
     }
 
     public void update(){
         if(!playerIsOutOfBounds()){
-            int i = getY() + playerBehaviour.next();
             setY(getY() + playerBehaviour.next());
-            //getImageView().relocate(getX(), getY());
             GameView.getInstance().render(this);
         }
         if(shield.isBroken() && hasShield()) {
@@ -155,7 +149,7 @@ public class Player extends Entity {
         }
     }
     
-    public void shotDelayTimer() {
+    private void shotDelayTimer() {
         Timer shotTimer = new Timer();
         shotTimer.schedule(new TimerTask() {
             
@@ -210,12 +204,12 @@ public class Player extends Entity {
         shooting = false;
     }
 
-    public boolean isImmune() {
+    private boolean isImmune() {
         return this.immunity;
     }
-    public void setImmunity(boolean immunity) { this.immunity = immunity; }
-    public int getImmunityTime() {
-        return immunityTime;
+    private void setImmunity(boolean immunity) { this.immunity = immunity; }
+    private int getImmunityTime() {
+        return 2000;
     }
 
     private void immunityBlinkAnimation() {
@@ -256,7 +250,7 @@ public class Player extends Entity {
         shield = new Shield(this.getX(), this.getY(), true);
     }
     
-    public void removeShield() {
+    private void removeShield() {
         this.width = getWidth() - 10;
         shield.newSprite(Sprite.CLEAR);
         this.hasShield = false;

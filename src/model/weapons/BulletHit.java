@@ -2,9 +2,6 @@ package model.weapons;
 
 import assets.java.Sprite;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public enum BulletHit {
     PLAYER_BASIC( new Sprite[] {
             Sprite.WEAPON_PLAYER_BASIC_DMG_1,

@@ -11,9 +11,8 @@ public class GameSettings implements Serializable {
     private int soundValue;
     private int difficultyValue;
 
-    private final String url = "tmp/GameSettings.ser";
-
     public GameSettings(){
+        String url = "tmp/GameSettings.ser";
         if(IOManager.getInstance().fileExists(url)){
             readFromFile();
         } else {
@@ -51,7 +50,7 @@ public class GameSettings implements Serializable {
     }
 
     private void readFromFile(){
-        GameSettings fromFile = null;
+        GameSettings fromFile;
 
         try {
             fromFile = IOManager.getInstance().loadGameSettings();

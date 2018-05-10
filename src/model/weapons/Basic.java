@@ -10,11 +10,9 @@ import static controller.GameController.gs;
 
 public class Basic extends Existance {
 
-    protected final Weapon WEAPON;
+    private final Weapon WEAPON;
     private boolean isHit = false;
 
-    // Animation variables
-    private final int ANIM_SPEED = 20;
     private int animCounter = 0;
     private int animIndex = 0;
     private transient Timer timer = null;
@@ -63,15 +61,12 @@ public class Basic extends Existance {
             return WEAPON.DMG;
         return 0;
     }
-    
-    public int getFireRate() {
-        return WEAPON.FIRERATE;
-    }
 
     private void bulletDie(){
         if(timer == null) {
             gs.player.setBulletsHit(gs.player.getBulletsHit() + 1);
             timer = new Timer();
+            int ANIM_SPEED = 20;
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {

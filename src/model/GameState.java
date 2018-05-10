@@ -25,7 +25,7 @@ public class GameState implements java.io.Serializable {
     public static String bossType;
     public boolean gameOver;
 
-    public String[][][] levelData;
+    private String[][][] levelData;
     public int levelIncrementor;    //Increment within a level
     private int levelIterator;      //Iterate through levels
 

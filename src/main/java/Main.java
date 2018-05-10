@@ -10,8 +10,8 @@ import view.MenuView;
 
 public class Main extends Application {
 
-    public static GameView gv = GameView.getInstance();
-    public static MenuView mv = MenuView.getInstance();
+    private static GameView gv = GameView.getInstance();
+    private static MenuView mv = MenuView.getInstance();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
