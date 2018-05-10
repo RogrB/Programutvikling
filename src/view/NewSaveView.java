@@ -25,7 +25,7 @@ public class NewSaveView extends ViewUtil{
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
-    private int saveNumber = 0;
+    private int saveNumber;
 
     private Text writeSaveNameText;
 
@@ -46,7 +46,8 @@ public class NewSaveView extends ViewUtil{
         header.setY(175);
         header.setFill(Color.WHITE);
         header.setFont(header.getFont().font(100));
-        System.out.println(NewGameView.getInst().getSaveNumber());
+        saveNumber = NewGameView.getInst().getSaveNumber();
+        System.out.println("NewSaveView::saveNumber == "+NewGameView.getInst().getSaveNumber());
 
         root.setPrefSize(ViewUtil.VIEW_WIDTH, ViewUtil.VIEW_HEIGHT);
 

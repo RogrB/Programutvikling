@@ -1,6 +1,8 @@
 package view;
 
 import controller.GameController;
+import exceptions.FileIOException;
+import io.IOManager;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -94,14 +96,32 @@ public class LoadGameView extends ViewUtil{
         }
         if(buttonName.equals("SAVE 1")){
             GameModel.gameSettings.savePrevSave(0);
-            System.out.println(0);
+            try {
+                IOManager.getInstance().loadGameState();
+                GameController.getInstance().loadGame();
+                goToView(event, GameView.getInstance().initScene());
+            } catch (FileIOException e) {
+                e.printStackTrace();
+            }
         } else if(buttonName.equals("SAVE 2")){
             GameModel.gameSettings.savePrevSave(1);
+            try {
+                IOManager.getInstance().loadGameState();
+                GameController.getInstance().loadGame();
+                goToView(event, GameView.getInstance().initScene());
+            } catch (FileIOException e) {
+                e.printStackTrace();
+            }
         } else if(buttonName.equals("SAVE 3")){
             GameModel.gameSettings.savePrevSave(2);
+            try {
+                IOManager.getInstance().loadGameState();
+                GameController.getInstance().loadGame();
+                goToView(event, GameView.getInstance().initScene());
+            } catch (FileIOException e) {
+                e.printStackTrace();
+            }
         }
-        GameController.getInstance().loadGame();
-        goToView(event, GameView.getInstance().initScene());
         System.out.println("Totally loaded a rad gamesave");
     }
 }
