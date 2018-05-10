@@ -21,7 +21,7 @@ public abstract class ViewUtil {
     Pane root;
     Text header = new Text("SPACE GAME");
     int elementCounter = 0;
-    WarningField errorField;
+    static WarningField errorField = new WarningField();
 
     void goToView(InputEvent event, Parent node){
         Stage stage = (Stage)((Node)event.getTarget()).getScene().getWindow();
@@ -95,6 +95,8 @@ public abstract class ViewUtil {
     public int getElementCounter(){
         return elementCounter;
     }
+
+    public static void setError(String text){errorField.changeText(text);}
 
 
 

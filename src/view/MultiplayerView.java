@@ -42,7 +42,7 @@ public class MultiplayerView extends ViewUtil{
 
     public static Stage stage;
     
-    private WarningField errorField = new WarningField();
+    //private WarningField errorField = new WarningField();
     private WarningField hostErrorField = new WarningField();
 
     public Parent initScene(){
