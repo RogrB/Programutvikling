@@ -22,6 +22,7 @@ public class MultiplayerHandler {
     
     private Protocol protocol;
     private Sender sender;
+    private boolean initiateConnection = false;
     private boolean connected = false;
     private boolean gameStarted = false;
     private boolean cancel = false;
@@ -40,6 +41,7 @@ public class MultiplayerHandler {
         connected = false;
         gameStarted = false;
         nextGameRequest = false;
+        initiateConnection = true;
 
         Thread receiveActivity = new Thread(receiver);
         receiveActivity.start();         
@@ -159,6 +161,7 @@ public class MultiplayerHandler {
         setConnected(false);
         GameModel.getInstance().setMultiplayerStatus(false);
         sender.closeSocket();
+        initiateConnection = false;
     }
     
     public void setCancel(boolean state) {
@@ -188,7 +191,14 @@ public class MultiplayerHandler {
         GameView.getInstance().setWinButtonOpacity(0);
         GameView.getInstance().getField().changeText("Player 2 started next level");
         System.out.println("Player 2 started next level");
-        
+    }
+    
+    public boolean getInitConnection() {
+        return this.initiateConnection;
+    }
+    
+    public void setInitConnection(boolean b) {
+        this.initiateConnection = b;
     }
     
 }
