@@ -58,11 +58,13 @@ public class NewSaveView extends ViewUtil{
         saveNameTextField = new TextField();
 
         saveNameTextField.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.ENTER && !Objects.equals(saveNameTextField.getText(), "")){
-                startGameView(event);
-            }
-            else{
-                errorField.changeText("Save name can't be blank!");
+            if(event.getCode() == KeyCode.ENTER){
+                if(!Objects.equals(saveNameTextField.getText(), "")){
+                    startGameView(event);
+                }
+                else{
+                    errorField.changeText("Save name can't be blank!");
+                }
             }
         });
 
