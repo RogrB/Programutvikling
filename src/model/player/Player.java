@@ -57,7 +57,7 @@ public class Player extends Entity {
         if (hasShield) {
             removeShield();
         }
-        setHealth(1);
+        setHealth(5);
         setY(ViewUtil.VIEW_HEIGHT / 2 - (int) new Image(Sprite.PLAYER.src).getHeight() / 2);
         //getImageView().relocate(getX(), getY());
         setAlive(true);
