@@ -59,24 +59,12 @@ public class NewSaveView extends ViewUtil{
 
         saveNameTextField.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ENTER){
-                if(!Objects.equals(saveNameTextField.getText(), "")){
-                    startGameView(event);
-                }
-                else{
-                    errorField.changeText("Save name can't be blank!");
-                }
+                checkFileName(event);
             }
         });
 
         MenuButton startGameButton = new MenuButton("START");
-        startGameButton.setOnMouseClicked(event -> {
-            if(!Objects.equals(saveNameTextField.getText(), "")){
-                startGameView(event);
-            }
-            else{
-                errorField.changeText("Save name can't be blank!");
-            }
-        });
+        startGameButton.setOnMouseClicked(this::checkFileName);
         MenuButton backButton = new MenuButton("BACK");
         backButton.setOnMouseClicked(event -> goToView(event, NewGameView.getInst().initScene()));
 
@@ -108,5 +96,17 @@ public class NewSaveView extends ViewUtil{
         GameController.getInstance().newGame(saveNameTextField.getText());
         startGameView(event, GameView.getInstance().initScene());
         System.out.println("Totally started a new game");
+    }
+
+    private void checkFileName(InputEvent event){
+        if(!Objects.equals(saveNameTextField.getText(), "") && saveNameTextField.getText().length() < 15){
+            startGameView(event);
+        }
+        else if(Objects.equals(saveNameTextField.getText(), "")){
+            errorField.changeText("Save name can't be blank!");
+        }
+        else if(saveNameTextField.getText().length() > 15){
+            errorField.changeText("Save name is too long!");
+        }
     }
 }

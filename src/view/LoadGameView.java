@@ -67,7 +67,7 @@ public class LoadGameView extends ViewUtil{
             }
             else{
                 try{
-                    tempElements.get(counter).setText(IOManager.getInstance().getGameState(counter).getStateName());
+                    tempElements.get(counter).setText("SAVE "+(i+1)+": "+IOManager.getInstance().getGameState(counter).getStateName());
                 }
                 catch(Exception e){
                     System.out.println(e);

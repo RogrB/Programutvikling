@@ -122,9 +122,6 @@ public class MenuView extends ViewUtil{
         errorField.setTranslateX(475);
         errorField.setTranslateY(250);
 
-        MenuButton randomButton = new MenuButton("TEST");
-        randomButton.setOnMouseClicked(event -> errorField.changeText("TEST"));
-
         newGameButton.setOnMouseClicked(this::createNewSave);
         continueButton.setOnMouseClicked(this::continueGame);
         multiplayerButton.setOnMouseClicked(this::loadMultiplayer);
@@ -152,11 +149,11 @@ public class MenuView extends ViewUtil{
 
         // remember to add selectLevelButton
         if(gameFileFound() && GameController.getInstance().getLastGameLost()){
-            mainMenu.getChildren().addAll(newGameButton, loadGameButton, multiplayerButton, optionsButton, exitButton, randomButton);
+            mainMenu.getChildren().addAll(newGameButton, loadGameButton, multiplayerButton, optionsButton, exitButton);
             menuElements = new MenuButton[]{newGameButton, loadGameButton, multiplayerButton, optionsButton, exitButton};
         }
         else if(gameFileFound()){
-            mainMenu.getChildren().addAll(continueButton, loadGameButton, newGameButton, multiplayerButton, optionsButton, exitButton, randomButton);
+            mainMenu.getChildren().addAll(continueButton, loadGameButton, newGameButton, multiplayerButton, optionsButton, exitButton);
             menuElements = new MenuButton[]{continueButton, loadGameButton, newGameButton, multiplayerButton, optionsButton, exitButton};
         }
         else{
