@@ -68,6 +68,7 @@ public class Player extends Entity {
         enemiesKilled = 0;
         bulletsHit = 0;
         bulletCount = 0;
+        canShoot = true;
         // System.out.println("shield = " + hasShield);
         // System.out.println("width = " + getWidth());        
     }
