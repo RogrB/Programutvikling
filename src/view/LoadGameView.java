@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameController;
+import controller.UserInputs;
 import exceptions.FileIOException;
 import io.IOManager;
 import javafx.scene.Parent;

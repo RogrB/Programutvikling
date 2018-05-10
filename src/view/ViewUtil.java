@@ -1,6 +1,8 @@
 package view;
 
 import assets.java.SoundManager;
+import controller.GameController;
+import controller.UserInputs;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,6 +30,14 @@ public abstract class ViewUtil {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         elementCounter = 0;
+    }
+
+    void startGameView(InputEvent event, Parent node){
+        Stage stage = (Stage) ((Node)event.getTarget()).getScene().getWindow();
+        GameController.getInstance().newGame();
+        Scene scene = new Scene(node);
+        stage.setScene(scene);
+        UserInputs userInputs = new UserInputs(scene);
     }
 
     Background getBackGroundImage(String BG_IMG){
