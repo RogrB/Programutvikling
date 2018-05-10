@@ -326,7 +326,12 @@ public class GameView extends ViewUtil{
     }
     
     public void clearScoreScreen() {
-        root.getChildren().removeAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent);
+	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                root.getChildren().removeAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent);
+            }
+	});          
     }
     
     void renderHUD(HUD h, boolean shield) {
@@ -367,7 +372,7 @@ public class GameView extends ViewUtil{
         }
 
         scoreText.setText("Score: " + Integer.toString(gs.player.getScore()));
-        levelText.setText(getLevelName()); // må hente riktig level fra leveldata
+        levelText.setText(getLevelName());
         weaponType.setText(h.weaponType());
     }
     
@@ -398,5 +403,9 @@ public class GameView extends ViewUtil{
         } else {
             return "Custom Level";
         }
+    }
+    
+    public void setWinButtonOpacity(int opacity) {
+        wonButtonContainer.setOpacity(opacity);
     }
 }

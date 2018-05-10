@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import static controller.GameController.gs;
 import java.util.Iterator;
 import model.GameModel;
+import view.GameView;
 import static view.MultiplayerView.stage;
 public class MultiplayerHandler {
     
@@ -24,6 +25,7 @@ public class MultiplayerHandler {
     private boolean connected = false;
     private boolean gameStarted = false;
     private boolean cancel = false;
+    private boolean nextGameRequest = false;
     
     // Singleton
     private static MultiplayerHandler inst = new MultiplayerHandler();
@@ -37,6 +39,7 @@ public class MultiplayerHandler {
         cancel = false;
         connected = false;
         gameStarted = false;
+        nextGameRequest = false;
 
         receiveActivity = new Thread(receiver);
         receiveActivity.start();         
@@ -67,7 +70,7 @@ public class MultiplayerHandler {
             if (enemy.getID() == id) {
                 if(health < enemy.getHealth()) {
                     enemy.setHealth(health);
-                    System.out.println("Setting health to " + health);
+                    //System.out.println("Setting health to " + health);
                 }
                 if(!alive && enemy.isAlive()) {
                     enemy.isDead();
@@ -133,6 +136,29 @@ public class MultiplayerHandler {
     
     public void setCancel(boolean state) {
         this.cancel = state;
+    }
+    
+    public void nextGame() {
+        if (!nextGameRequest) {
+            sender.send(protocol.sendPrep("NextGame", 0, 0));
+        }
+    }
+    
+    public boolean getNextGameRequest() {
+        return this.nextGameRequest;
+    }
+    
+    public void setNextGameRequest(boolean state) {
+        this.nextGameRequest = state;
+    }
+    
+    public void startNextLevel() {
+        setNextGameRequest(true);
+        GameController.getInstance().nextGame();
+        GameView.getInstance().clearScoreScreen();
+        GameView.getInstance().setWinButtonOpacity(0);
+        System.out.println("Player 2 started next level");
+        
     }
     
 }
