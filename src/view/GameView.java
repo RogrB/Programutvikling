@@ -212,7 +212,9 @@ public class GameView extends ViewUtil{
     
     public void renderPlayer2() {
         player2Layer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
-        player2Layer.drawImage(gs.player2.getImage(), gs.player2.getX(), gs.player2.getY());
+        if(GameModel.getInstance().getMultiplayerStatus()) {
+            player2Layer.drawImage(gs.player2.getImage(), gs.player2.getX(), gs.player2.getY());
+        }
     }
 
     public void gameOver() {
@@ -251,7 +253,7 @@ public class GameView extends ViewUtil{
         float hits = gs.player.getBulletsHit();
         float accuracy = (hits / bullets) * 100;
         DecimalFormat accuracyFormat = new DecimalFormat("#.00");
-        levelComplete.setText(gs.getLevelIterator() + " Cleared!");
+        levelComplete.setText("Level " + gs.getLevelIterator() + " Cleared!");
         levelComplete.setX((VIEW_WIDTH/2) - 140);
         levelComplete.setY((VIEW_HEIGHT/2) - 230);
         // levelComplete = new Text((VIEW_WIDTH/2) - 140, (VIEW_HEIGHT/2) - 230, getLevelName() + " Cleared!"); // Trenger å hente levelnr fra leveldata
@@ -342,7 +344,7 @@ public class GameView extends ViewUtil{
         }
 
         scoreText.setText("Score: " + Integer.toString(gs.player.getScore()));
-        levelText.setText(Integer.toString(gs.getLevelIterator())); // må hente riktig level fra leveldata
+        levelText.setText("Level " + Integer.toString(gs.getLevelIterator())); // må hente riktig level fra leveldata
         weaponType.setText(h.weaponType());
     }
     

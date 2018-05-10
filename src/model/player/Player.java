@@ -69,6 +69,12 @@ public class Player extends Entity {
         canShoot = true;
     }
 
+    public void resume(){
+        immunity = false;
+        shooting = false;
+        canShoot = true;
+    }
+
     public void update(){
         if(!playerIsOutOfBounds()){
             setY(getY() + playerBehaviour.next());

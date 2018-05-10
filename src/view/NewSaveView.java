@@ -94,9 +94,9 @@ public class NewSaveView extends ViewUtil{
     }
 
     private void startGameView(InputEvent event){
+        GameController.getInstance().newGame();
         startGameView(event, GameView.getInstance().initScene());
-        int saveNumber = -1;
-        GameModel.gameSettings.savePrevSave(saveNumber);
+        GameModel.gameSettings.savePrevSave(NewGameView.getInst().getSaveNumber());
         System.out.println("Totally started a new game");
     }
 }

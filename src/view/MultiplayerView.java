@@ -116,17 +116,18 @@ public class MultiplayerView extends ViewUtil{
         setWarningField(Color.GRAY, "Attempting to connect to " + hostname);
         mp.init(hostname, remoteport, localport);
         gm.setMultiplayerStatus(true);
+        System.out.println("setting mpstatus to " + gm.getMultiplayerStatus());
     }
     
     public void startMultiplayerGame(Stage stage) {
         
 	Platform.runLater(() -> {
-        GameController.getInstance().newGame();
-        Scene scene = new Scene(GameView.getInstance().initScene());
-        stage.setScene(scene);
-        UserInputs userInputs = new UserInputs(scene);
-        System.out.println("Totally started a new Multiplayer game");
-    });
+            GameController.getInstance().newGame();
+            Scene scene = new Scene(GameView.getInstance().initScene());
+            stage.setScene(scene);
+            UserInputs userInputs = new UserInputs(scene);
+            //System.out.println("Totally started a new Multiplayer game");
+        });
     }
     
     private void setWarningField(Color color, String str) {

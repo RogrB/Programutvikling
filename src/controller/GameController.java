@@ -60,7 +60,7 @@ public class GameController {
     public void nextGame(){
         lastGameLost = false;
         gs.nextLevel();
-        //gs.player.init();
+        gs.player.resume();
         gameRun();
         if (GameModel.getInstance().getMultiplayerStatus()) {
             MultiplayerHandler.getInstance().nextGame();
@@ -69,6 +69,7 @@ public class GameController {
 
     public void loadGame(){
         gs.loadGameData();
+        gs.player.resume();
         gameRun();
     }
 
@@ -127,7 +128,7 @@ public class GameController {
         gs.player.isNotPlaying();
         if(gm.getMultiplayerStatus()) {
             MultiplayerHandler.getInstance().send("Disconnect", 0, 0);
-            MultiplayerHandler.getInstance().disconnect();
+            // MultiplayerHandler.getInstance().disconnect();
             MenuView.getInstance().getField().changeText("Game Paused, disconnected from Multiplayer");
             System.out.println("Game paused, disconnected from Multiplayer");
         } 
