@@ -16,6 +16,9 @@ import model.GameModel;
 import multiplayer.MultiplayerHandler;
 import controller.UserInputs;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 
 public class MultiplayerView extends ViewUtil{
 
@@ -69,8 +72,9 @@ public class MultiplayerView extends ViewUtil{
 
         MenuButton connectButton = new MenuButton("CONNECT");
         MenuButton backButton = new MenuButton("BACK");
+        Button helpButton = new Button("?");
 
-        menuElements = new Parent[]{hostnameField, remotePortField, localPortField, connectButton, backButton};
+        menuElements = new Parent[]{hostnameField, remotePortField, localPortField, connectButton, backButton, helpButton};
         connectButton.setOnMouseClicked(event -> {
             //if (user_name.getText() == null || user_name.getText().trim().isEmpty())
             if (hostnameField.getText() == null || hostnameField.getText().trim().isEmpty()) {
@@ -99,8 +103,11 @@ public class MultiplayerView extends ViewUtil{
                 }
             }
         });
+        helpButton.setOnMouseClicked(event -> getHelp());
+        helpButton.setTranslateX(275);
+        helpButton.setTranslateY(-313);
         backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
-        multiplayerMenu.getChildren().addAll(hostname, hostnameField, remotePort, remotePortField, localPort, localPortField, connectButton, backButton);
+        multiplayerMenu.getChildren().addAll(hostname, hostnameField, remotePort, remotePortField, localPort, localPortField, connectButton, backButton, helpButton);
         multiplayerMenu.setSpacing(10);
         multiplayerMenu.setTranslateX(450);
         multiplayerMenu.setTranslateY(250);
@@ -159,6 +166,17 @@ public class MultiplayerView extends ViewUtil{
             errorField.changeText("Invalid LocalPort Range");
         }
         return valid;
+    }
+    
+    private void getHelp() {
+        Alert help = new Alert(AlertType.INFORMATION);
+        help.setTitle("Multiplayer Help");
+        help.setHeaderText(null);
+        help.setContentText("Enter Player 2's hostname (ip adress) in hostname Field - For testing use \"localhost\" \n \n"
+                + "To find your IP adress open a command prompt and type \"ipconfig\" (windows) you can use your IPv4 \n \n"
+                + "Your LocalPort must be Player 2's RemotePort and vice versa. (Example 5566 / 5567)");
+
+        help.showAndWait();
     }
     
     private void setWarningField(Color color, String str) {
