@@ -89,7 +89,7 @@ public class Player extends Entity {
     }
 
     private boolean playerIsOutOfBounds(){
-        if(getY() + playerBehaviour.next() < 2) {
+        if(getY() + playerBehaviour.next() < 10) {
             playerBehaviour.moveStop();
             return true;
         }

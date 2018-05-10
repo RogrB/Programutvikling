@@ -12,7 +12,7 @@ public class MenuButton extends StackPane{
     private Text text;
     private Rectangle bg;
 
-    public MenuButton(String name){
+    MenuButton(String name){
         text = new Text(name);
         text.setFont(text.getFont().font(20));
         text.setFill(Color.WHITE);

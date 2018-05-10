@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import model.GameModel;
@@ -21,31 +22,25 @@ public class OptionsView extends ViewUtil{
     }
 
     private static final String BG_IMG = "assets/image/background.jpg";
-    public VBox optionsMenu;
 
     private int difficultyValue = GameModel.gameSettings.getDifficultyValue();
     private int soundValue = GameModel.gameSettings.getSoundValue();
     private int musicValue = GameModel.gameSettings.getMusicValue();
 
-    public Label soundLabel;
     private Label soundTextLabel;
     private Label musicTextLabel;
-    public Label musicLabel;
-    public Label difficultyLabel;
-    public Label difficultyTextLabel;
+    private Label difficultyTextLabel;
 
-    public Slider soundSlider;
-    public Slider musicSlider;
-    public Slider difficultySlider;
+    private Slider difficultySlider;
 
-    public MenuButton backButton;
+    private MenuButton backButton;
 
     private Parent[] menuElements;
 
     public OptionsView(){
     }
 
-    public String setDifficultyText(int difficultyValue){
+    private String setDifficultyText(int difficultyValue){
         String text = "";
         switch(difficultyValue){
             case 1:
@@ -69,23 +64,23 @@ public class OptionsView extends ViewUtil{
 
     public Parent initScene(){
         root = new Pane();
-        optionsMenu = new VBox();
+        VBox optionsMenu = new VBox();
         header.setX(300);
         header.setY(175);
         header.setFill(Color.WHITE);
         header.setFont(header.getFont().font(100));
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
-        soundLabel = new Label("VOLUME");
+        Label soundLabel = new Label("VOLUME");
         soundLabel.setTextFill(Color.WHITE);
-        musicLabel = new Label("MUSIC");
+        Label musicLabel = new Label("MUSIC");
         musicLabel.setTextFill(Color.WHITE);
-        difficultyLabel = new Label("DIFFICULTY");
+        Label difficultyLabel = new Label("DIFFICULTY");
         difficultyLabel.setTextFill(Color.WHITE);
         difficultyTextLabel = new Label(setDifficultyText(difficultyValue));
         difficultyTextLabel.setTranslateX(125);
         difficultyTextLabel.setTextFill(Color.WHITE);
-        soundSlider = new Slider(0, 100, soundValue);
+        Slider soundSlider = new Slider(0, 100, soundValue);
         soundSlider.setShowTickMarks(true);
         soundSlider.setMajorTickUnit(25);
         soundSlider.setBlockIncrement(25);
@@ -96,7 +91,7 @@ public class OptionsView extends ViewUtil{
         }));
         soundTextLabel.setTranslateX(145);
         soundTextLabel.setTextFill(Color.WHITE);
-        musicSlider = new Slider(0, 100, musicValue);
+        Slider musicSlider = new Slider(0, 100, musicValue);
         musicSlider.setShowTickMarks(true);
         musicSlider.setMajorTickUnit(25);
         musicSlider.setBlockIncrement(25);
@@ -133,7 +128,6 @@ public class OptionsView extends ViewUtil{
         optionsMenu.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
                 backButton.lostFocus();
-                System.out.println(elementCounter);
                 traverseMenu(event.getCode(), menuElements);
                 setFocusButtons(elementCounter);
                 if(elementCounter == 3) backButton.gainedFocus();
@@ -151,12 +145,10 @@ public class OptionsView extends ViewUtil{
             if(event.getCode() == KeyCode.ESCAPE){
                 gameSettings.saveSettings(difficultyValue, soundValue, musicValue);
                 SoundManager.getInst().getPlayer().setVolume((float)musicValue / 100);
-                System.out.println(SoundManager.getInst().getPlayer().getVolume());
-                System.out.println(SoundManager.getInst().getPlayer() == null);
                 goToView(event, MenuView.getInstance().initScene());
             }
         });
-        backButton.setOnMouseClicked(event -> {
+        backButton.setOnMouseClicked((MouseEvent event) -> {
             gameSettings.saveSettings(difficultyValue, soundValue, musicValue);
             SoundManager.getInst().getPlayer().setVolume((float)musicValue/100);
             goToView(event, MenuView.getInstance().initScene());
@@ -165,11 +157,10 @@ public class OptionsView extends ViewUtil{
         return root;
     }
 
-    void setFocusButtons(int currentFocus){
+    private void setFocusButtons(int currentFocus){
         for(int i = 0; i < 3; i++){
             if(i != currentFocus){
                 menuElements[i].setFocusTraversable(false);
-                System.out.println("Muted button" + i);
             }
             else{
                 menuElements[currentFocus].setFocusTraversable(true);

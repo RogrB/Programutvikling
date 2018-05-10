@@ -187,7 +187,7 @@ public class GameView extends ViewUtil{
             root.getChildren().addAll(errorField, wonButtonContainer, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, dialogBox, player2LayerCanvas);
         }
         else {
-            root.getChildren().addAll(errorField, wonButtonContainer, lostButtonContainer, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, dialogBox);
+            root.getChildren().addAll(errorField, wonButtonContainer, lostButtonContainer, playerLayerCanvas, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox);
         }
         return root;
     }
