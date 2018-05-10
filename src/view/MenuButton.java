@@ -19,6 +19,7 @@ public class MenuButton extends StackPane{
 
         bg = new Rectangle(300, 30);
         bg.setFill(Color.BLACK);
+        bg.setStrokeWidth(2);
         bg.setStroke(Color.rgb(255, 255, 255));
         bg.setEffect(new GaussianBlur(3.5));
 
