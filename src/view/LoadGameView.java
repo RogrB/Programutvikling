@@ -4,6 +4,7 @@ import controller.GameController;
 import exceptions.FileIOException;
 import io.IOManager;
 import javafx.scene.Parent;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -81,43 +82,43 @@ public class LoadGameView extends ViewUtil{
 
     @Override
     public void select(String buttonName, KeyEvent event) {
-        try {
-            switch (buttonName) {
-                case "BACK":
-                    goToView(event, MenuView.getInstance().initScene());
-                    break;
-                case "SAVE 1":
-                    System.out.println("Load0 Start");
-                    GameModel.gameSettings.savePrevSave(0);
-                    IOManager.getInstance().loadGameState();
-                    GameController.getInstance().loadGame();
-                    startGameView(event, GameView.getInstance().initScene());
-                    System.out.println("Load0 Complete");
-                    break;
-                case "SAVE 2":
-                    System.out.println("Load1 Start");
-                    GameModel.gameSettings.savePrevSave(1);
-                    IOManager.getInstance().loadGameState();
-                    GameController.getInstance().loadGame();
-                    startGameView(event, GameView.getInstance().initScene());
-                    System.out.println("Load1 Complete");
-                    break;
-                case "SAVE 3":
-                    System.out.println("Load2 Start");
-                    GameModel.gameSettings.savePrevSave(2);
-                    IOManager.getInstance().loadGameState();
-                    GameController.getInstance().loadGame();
-                    startGameView(event, GameView.getInstance().initScene());
-                    System.out.println("Load2 Complete");
-                    break;
+        switch (buttonName) {
+            case "BACK":
+                goToView(event, MenuView.getInstance().initScene());
+                break;
+            case "SAVE 1":
+                System.out.println("Load0 Start");
+                loadGame(event,0);
+                System.out.println("Load0 Complete");
+                break;
+            case "SAVE 2":
+                System.out.println("Load1 Start");
+                loadGame(event,1);
+                System.out.println("Load1 Complete");
+                break;
+            case "SAVE 3":
+                System.out.println("Load2 Start");
+                loadGame(event,2);
+                System.out.println("Load2 Complete");
+                break;
             }
-        } catch (FileIOException e) {
-            e.printStackTrace();
-        }
         System.out.println("Totally loaded a rad gamesave");
     }
 
-    private void loadGame(int gameSave){
-        
+    private void loadGame(InputEvent event, int gameSave){
+        int prevSave = GameModel.gameSettings.getPrevSave();
+        GameModel.gameSettings.savePrevSave(gameSave);
+        if (IOManager.getInstance().saveStateExists()){
+            try {
+                IOManager.getInstance().loadGameState();
+                GameController.getInstance().loadGame();
+                startGameView(event, GameView.getInstance().initScene());
+            } catch (FileIOException e) {
+                System.err.println(e.getMessage());
+                GameModel.gameSettings.savePrevSave(prevSave);
+            }
+        } else {
+            GameModel.gameSettings.savePrevSave(prevSave);
+        }
     }
 }
