@@ -92,8 +92,6 @@ public class GameController {
                 @Override
                 public void handle(long now) {
 
-                    System.out.println(gs.bossType);
-
                     gs.levelIncrementor = levelLoader.increment(gs.levelIncrementor);
 
                     gs.player.update();
