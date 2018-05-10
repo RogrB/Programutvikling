@@ -11,6 +11,10 @@ import model.enemy.Asteroid;
 import view.MultiplayerView;
 
 import static controller.GameController.gs;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 import model.GameModel;
 import view.GameView;
 import static view.MultiplayerView.stage;
@@ -118,11 +122,29 @@ public class MultiplayerHandler {
         return this.connected;
     }
     
+    public void sendDisconnect() {
+        sender.send(protocol.sendPrep("Disconnect", 0, 0));
+        
+        Timer dcTimer = new Timer();
+        dcTimer.schedule(new TimerTask() {
+            
+            @Override
+            public void run() {
+                if (connected) {
+                    disconnect();
+                    System.out.println("closing connection");
+                }
+            }
+        }, 0, 50);        
+        
+    }
+    
     public void disconnect() {
         if (connected) {
             GameModel.getInstance().setMultiplayerStatus(false);
             System.out.println("setting mp to " + GameModel.getInstance().getMultiplayerStatus());
             gs.player2.unsetSprite();
+            GameView.getInstance().renderPlayer2();
             sender.closeSocket();
             // receiver.closeSocket();
             GameView.getInstance().getField().changeText("Player 2 disconnected"); 
