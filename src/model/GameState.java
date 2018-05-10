@@ -72,6 +72,9 @@ public class GameState implements java.io.Serializable {
         player.getImageView().relocate(player.getX(), player.getY());
         player2.newSprite(Sprite.PLAYER2);
         player2.getImageView().relocate(player2.getX(), player2.getY());
+        if(player.hasShield()) {
+            player.shield().newSprite(Sprite.SHIELD1);
+        }
 
         for(Enemy enemy : enemies) { enemy.newSprite(enemy.sprite); }
         for(Basic bullet : enemyBullets){ bullet.newSprite(bullet.sprite); }

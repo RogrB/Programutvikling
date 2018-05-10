@@ -52,9 +52,19 @@ public class LevelData {
             {{"0"}, {"0"}, {"0"}},
             {{"2", "MADNESS_01"}, {"0"}, {"0"}},
             {{"0"}, {"0"}, {"0"}},
-            {{"0"}, {"0"}, {"0"}},
+            {{"0"}, {"3", "BOSS01", "BOSS_EIGHT"}, {"0"}},
             {{"0"}, {"0"}, {"0"}}
     };
+    
+    private static final String[][][] LEVEL3 = new String[][][]{
+            {{"0"}, {"0"}, {"0"}},
+            {{"2", "MADNESS_01"}, {"0"}},
+            {{"0"}, {"0"}, {"0"}},
+            {{"2", "MADNESS_01"}, {"0"}, {"0"}},
+            {{"0"}, {"0"}, {"0"}},
+            {{"0"}, {"0"}, {"0"}},
+            {{"0"}, {"0"}, {"0"}}
+    };    
 
     public static String[][][] getLevel(String levelName){
         switch (levelName) {
@@ -62,6 +72,8 @@ public class LevelData {
                 return LEVEL1;
             case "LEVEL2":
                 return LEVEL2;
+            case "LEVEL3":
+                return LEVEL3;
             default:
                 return null;
         }
