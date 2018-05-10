@@ -13,12 +13,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import model.GameModel;
 
+import java.util.ArrayList;
+
 public class LoadGameView extends ViewUtil{
 
     public static LoadGameView inst = new LoadGameView();
     public static LoadGameView getInst(){return inst;}
 
     private static final String BG_IMG = "assets/image/background.jpg";
+
+    private ArrayList<MenuButton> tempElements;
 
     private MenuButton[] menuElements;
 
@@ -45,12 +49,37 @@ public class LoadGameView extends ViewUtil{
         MenuButton save1 = new MenuButton("SAVE 1");
         MenuButton save2 = new MenuButton("SAVE 2");
         MenuButton save3 = new MenuButton("SAVE 3");
+        tempElements = new ArrayList<>();
+        tempElements.add(save1);
+        tempElements.add(save2);
+        tempElements.add(save3);
 
         errorField = new WarningField();
         errorField.setTranslateX(475);
         errorField.setTranslateY(250);
 
-        menuElements = new MenuButton[]{save1, save2, save3, backButton};
+        int counter = 0;
+        for(int i = 0; i < 3; i++){
+            if(!IOManager.getInstance().saveStateExists(i)){
+                tempElements.get(counter).setColor(Color.GREY);
+                tempElements.remove(counter);
+            }
+            else{
+                counter++;
+            }
+        }
+
+        switch(tempElements.size()){
+            case 1:
+                menuElements = new MenuButton[]{tempElements.get(0), backButton};
+                break;
+            case 2:
+                menuElements = new MenuButton[]{tempElements.get(0), tempElements.get(1), backButton};
+                break;
+            case 3:
+                menuElements = new MenuButton[]{tempElements.get(0), tempElements.get(1), tempElements.get(2), backButton};
+                break;
+        }
 
         saveFiles.getChildren().addAll(save1, save2, save3);
         saveFiles.setSpacing(10);
