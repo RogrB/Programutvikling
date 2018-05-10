@@ -118,11 +118,15 @@ public class IOManager {
     }
 
     public boolean saveStateExists(){
-        return fileExists("tmp/" + GameModel.gameSettings.getPrevSave() + "/GameState.ser") &&
-                fileExists("tmp/" + GameModel.gameSettings.getPrevSave() + "/ArrayEnemies.ser") &&
-                fileExists("tmp/" + GameModel.gameSettings.getPrevSave() + "/ArrayEnemyBullets.ser") &&
-                fileExists("tmp/" + GameModel.gameSettings.getPrevSave() + "/ArrayPlayerBullets.ser") &&
-                fileExists("tmp/" + GameModel.gameSettings.getPrevSave() + "/ArrayPowerups.ser");
+        return saveStateExists(GameModel.gameSettings.getPrevSave());
+    }
+
+    public boolean saveStateExists(int saveState){
+        return fileExists("tmp/" + saveState + "/GameState.ser") &&
+                fileExists("tmp/" + saveState + "/ArrayEnemies.ser") &&
+                fileExists("tmp/" + saveState + "/ArrayEnemyBullets.ser") &&
+                fileExists("tmp/" + saveState + "/ArrayPlayerBullets.ser") &&
+                fileExists("tmp/" + saveState + "/ArrayPowerups.ser");
     }
 
     public boolean fileExists(String src){
