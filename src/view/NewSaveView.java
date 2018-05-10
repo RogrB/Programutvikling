@@ -50,7 +50,7 @@ public class NewSaveView extends ViewUtil{
         writeSaveNameText.setFont(header.getFont().font(50));
         errorField = new WarningField();
         errorField.setTranslateX(475);
-        errorField.setTranslateY(250);
+        errorField.setTranslateY(500);
 
         Label saveNameLabel = new Label("SAVE NAME");
         saveNameLabel.setTextFill(Color.WHITE);
@@ -61,12 +61,18 @@ public class NewSaveView extends ViewUtil{
             if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE && !Objects.equals(saveNameTextField.getText(), "")){
                 startGameView(event);
             }
+            else{
+                errorField.changeText("Save name can't be blank!");
+            }
         });
 
         MenuButton startGameButton = new MenuButton("START");
         startGameButton.setOnMouseClicked(event -> {
             if(!Objects.equals(saveNameTextField.getText(), "")){
                 startGameView(event);
+            }
+            else{
+                errorField.changeText("Save name can't be blank!");
             }
         });
         MenuButton backButton = new MenuButton("BACK");
@@ -78,6 +84,9 @@ public class NewSaveView extends ViewUtil{
         containerVBox.setTranslateX(450);
         containerVBox.setTranslateY(325);
         containerVBox.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
+                System.out.println(event.getCode());
+            }
             if(event.getCode() == KeyCode.ESCAPE){
                 goToView(event, NewGameView.getInst().initScene());
             }
