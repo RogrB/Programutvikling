@@ -58,21 +58,21 @@ public class NewSaveView extends ViewUtil{
         saveNameTextField = new TextField();
 
         saveNameTextField.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.ENTER && !Objects.equals(saveNameTextField.getText(), "")){
+            if(event.getCode() == KeyCode.ENTER && !Objects.equals(saveNameTextField.getText(), "") && saveNameTextField.getText().length() < 15){
                 startGameView(event);
             }
             else{
-                errorField.changeText("Save name can't be blank!");
+                errorField.changeText("Invalid save name!");
             }
         });
 
         MenuButton startGameButton = new MenuButton("START");
         startGameButton.setOnMouseClicked(event -> {
-            if(!Objects.equals(saveNameTextField.getText(), "")){
+            if(!Objects.equals(saveNameTextField.getText(), "") && saveNameTextField.getText().length() < 15){
                 startGameView(event);
             }
             else{
-                errorField.changeText("Save name can't be blank!");
+                errorField.changeText("Invalid save name!");
             }
         });
         MenuButton backButton = new MenuButton("BACK");
