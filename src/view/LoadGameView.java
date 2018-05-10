@@ -24,6 +24,7 @@ public class LoadGameView extends ViewUtil{
     private static final String BG_IMG = "assets/image/background.jpg";
 
     private ArrayList<MenuButton> tempElements;
+    private String lastError = "";
 
     private MenuButton[] menuElements;
     
@@ -55,9 +56,8 @@ public class LoadGameView extends ViewUtil{
         tempElements.add(save2);
         tempElements.add(save3);
 
-        errorField = new WarningField();
-        errorField.setTranslateX(475);
-        errorField.setTranslateY(250);
+        errorField.setTranslateX(200);
+        errorField.setTranslateY(750);
 
         int counter = 0;
         for(int i = 0; i < 3; i++){
@@ -112,6 +112,9 @@ public class LoadGameView extends ViewUtil{
         containerVBox.setTranslateX(450);
         containerVBox.setTranslateY(250);
         root.getChildren().addAll(header, errorField, containerVBox);
+
+        compareErrorMessage(lastError);
+
         return root;
     }
 

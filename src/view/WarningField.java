@@ -19,7 +19,7 @@ public class WarningField extends StackPane {
         text.setFont(text.getFont().font(15));
         text.setFill(Color.WHITE);
 
-        Rectangle bg = new Rectangle(250, 30);
+        Rectangle bg = new Rectangle(800, 30);
         bg.setFill(fill);
         bg.setStroke(Color.BLACK);
         bg.setEffect(new GaussianBlur(3.5));

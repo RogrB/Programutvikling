@@ -16,6 +16,8 @@ public class NewGameView extends ViewUtil{
     public static NewGameView inst = new NewGameView();
     public static NewGameView getInst(){return inst;}
 
+    private String lastError = "";
+
     private static final String BG_IMG = "assets/image/background.jpg";
 
     private int saveNumber = -1;
@@ -87,6 +89,9 @@ public class NewGameView extends ViewUtil{
         containerVBox.setTranslateY(250);
         backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
         root.getChildren().addAll(header, errorField, containerVBox);
+
+        compareErrorMessage(lastError);
+
         return root;
     }
 

@@ -1,7 +1,6 @@
 package view;
 
 import assets.java.SoundManager;
-import controller.GameController;
 import controller.UserInputs;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -22,6 +21,7 @@ public abstract class ViewUtil {
     Text header = new Text("SPACE GAME");
     int elementCounter = 0;
     static WarningField errorField = new WarningField();
+    private static String lastErrorMessage = "";
 
     void goToView(InputEvent event, Parent node){
         Stage stage = (Stage)((Node)event.getTarget()).getScene().getWindow();
@@ -96,8 +96,14 @@ public abstract class ViewUtil {
         return elementCounter;
     }
 
-    public static void setError(String text){errorField.changeText(text);}
+    public static void setError(String text){
+        lastErrorMessage = text;
+        errorField.changeText(text);
+    }
 
-
-
+    public void compareErrorMessage(String msg){
+        if(!lastErrorMessage.equals(msg)){
+            errorField.changeText(lastErrorMessage);
+        }
+    }
 }

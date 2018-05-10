@@ -48,6 +48,7 @@ public class GameView extends ViewUtil{
     private Text scoreText;
     private Text levelText;
     private Text weaponType;
+    private String lastError = "";
     
     private final static Font powerUpFont = new Font("SansSerif", 12);
     
@@ -144,9 +145,8 @@ public class GameView extends ViewUtil{
         wonButtonContainer.setTranslateY(675);
         menuElementsWon = new MenuButton[]{continueButton, exitToMenuButton2};
 
-        errorField = new WarningField();
-        errorField.setTranslateX(475);
-        errorField.setTranslateY(250);
+        errorField.setTranslateX(200);
+        errorField.setTranslateY(750);
 
         MenuButton retryButton = new MenuButton("RETRY");
         MenuButton exitToMenuButton = new MenuButton("MAIN MENU");
@@ -167,6 +167,9 @@ public class GameView extends ViewUtil{
         else {
             root.getChildren().addAll(errorField, wonButtonContainer, lostButtonContainer, playerLayerCanvas, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox);
         }
+
+        compareErrorMessage(lastError);
+
         return root;
     }
 

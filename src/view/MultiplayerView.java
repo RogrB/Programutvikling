@@ -28,6 +28,8 @@ public class MultiplayerView extends ViewUtil{
     }
 
     private MultiplayerView(){}
+
+    private String lastError = "";
     
     private MultiplayerHandler mp = MultiplayerHandler.getInstance();
     private GameModel gm = GameModel.getInstance();
@@ -129,6 +131,9 @@ public class MultiplayerView extends ViewUtil{
             goToView(event, MenuView.getInstance().initScene());
                 });
         root.getChildren().addAll(header, errorField, hostErrorField, multiplayerMenu);
+
+        compareErrorMessage(lastError);
+
         return root;
     }
 
