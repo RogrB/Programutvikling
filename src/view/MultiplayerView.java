@@ -92,7 +92,9 @@ public class MultiplayerView extends ViewUtil{
         multiplayerMenu.setTranslateY(250);
         multiplayerMenu.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ESCAPE){
-                mp.cancelConnectAttempt();
+                if(mp.getInitConnection()){
+                    mp.cancelConnectAttempt();
+                }
                 goToView(event, MenuView.getInstance().initScene());
             }
         });
