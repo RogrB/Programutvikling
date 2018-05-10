@@ -88,19 +88,13 @@ public class LoadGameView extends ViewUtil{
                 goToView(event, MenuView.getInstance().initScene());
                 break;
             case "SAVE 1":
-                System.out.println("Load0 Start");
                 loadGame(event,0);
-                System.out.println("Load0 Complete");
                 break;
             case "SAVE 2":
-                System.out.println("Load1 Start");
                 loadGame(event,1);
-                System.out.println("Load1 Complete");
                 break;
             case "SAVE 3":
-                System.out.println("Load2 Start");
                 loadGame(event,2);
-                System.out.println("Load2 Complete");
                 break;
             }
         System.out.println("Totally loaded a rad gamesave");

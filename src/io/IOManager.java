@@ -117,6 +117,14 @@ public class IOManager {
         return res;
     }
 
+    public boolean saveStateExists(int saveState){
+        return fileExists("tmp/" + saveState + "/GameState.ser") &&
+                fileExists("tmp/" + saveState + "/ArrayEnemies.ser") &&
+                fileExists("tmp/" + saveState + "/ArrayEnemyBullets.ser") &&
+                fileExists("tmp/" + saveState + "/ArrayPlayerBullets.ser") &&
+                fileExists("tmp/" + saveState + "/ArrayPowerups.ser");
+    }
+
     public boolean saveStateExists(){
         return fileExists("tmp/" + GameModel.gameSettings.getPrevSave() + "/GameState.ser") &&
                 fileExists("tmp/" + GameModel.gameSettings.getPrevSave() + "/ArrayEnemies.ser") &&
