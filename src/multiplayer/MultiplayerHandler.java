@@ -124,14 +124,14 @@ public class MultiplayerHandler {
     
     public void disconnect() {
         if (connected) {
-            setConnected(false);
             GameModel.getInstance().setMultiplayerStatus(false);
             System.out.println("setting mp to " + GameModel.getInstance().getMultiplayerStatus());
             gs.player2.unsetSprite();
             sender.closeSocket();
             // receiver.closeSocket();
             GameView.getInstance().getField().changeText("Player 2 disconnected"); 
-            System.out.println("Player 2 disconnected");        
+            System.out.println("Player 2 disconnected");      
+            setConnected(false);
         }
     }
     

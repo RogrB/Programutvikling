@@ -116,6 +116,7 @@ public class MultiplayerView extends ViewUtil{
         setWarningField(Color.GRAY, "Attempting to connect to " + hostname);
         mp.init(hostname, remoteport, localport);
         gm.setMultiplayerStatus(true);
+        System.out.println("setting mpstatus to " + gm.getMultiplayerStatus());
     }
     
     public void startMultiplayerGame(Stage stage) {

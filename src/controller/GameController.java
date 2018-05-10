@@ -128,7 +128,7 @@ public class GameController {
         gs.player.isNotPlaying();
         if(gm.getMultiplayerStatus()) {
             MultiplayerHandler.getInstance().send("Disconnect", 0, 0);
-            MultiplayerHandler.getInstance().disconnect();
+            // MultiplayerHandler.getInstance().disconnect();
             MenuView.getInstance().getField().changeText("Game Paused, disconnected from Multiplayer");
             System.out.println("Game paused, disconnected from Multiplayer");
         } 
