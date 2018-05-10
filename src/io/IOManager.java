@@ -179,8 +179,6 @@ public class IOManager {
             oos.close();
             fos.close();
 
-            System.out.println("Saved game settings");
-
         } catch (IOException e) {
             throw new FileIOException("Save settings - Could not write to file "+src);
         }

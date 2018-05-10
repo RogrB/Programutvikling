@@ -70,7 +70,13 @@ public class Player extends Entity {
         bulletCount = 0;
         canShoot = true;
         // System.out.println("shield = " + hasShield);
-        // System.out.println("width = " + getWidth());        
+        // System.out.println("width = " + getWidth());
+    }
+
+    public void resume(){
+        immunity = false;
+        shooting = false;
+        canShoot = true;
     }
 
     public void update(){

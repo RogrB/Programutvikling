@@ -34,7 +34,6 @@ public abstract class ViewUtil {
 
     void startGameView(InputEvent event, Parent node){
         Stage stage = (Stage) ((Node)event.getTarget()).getScene().getWindow();
-        GameController.getInstance().newGame();
         Scene scene = new Scene(node);
         stage.setScene(scene);
         UserInputs userInputs = new UserInputs(scene);

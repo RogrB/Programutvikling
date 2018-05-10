@@ -62,6 +62,7 @@ public class GameController {
     public void nextGame(){
         lastGameLost = false;
         gs.nextLevel();
+        gs.player.resume();
         gameRun();
         if (GameModel.getInstance().getMultiplayerStatus()) {
             MultiplayerHandler.getInstance().nextGame();
@@ -70,6 +71,7 @@ public class GameController {
 
     public void loadGame(){
         gs.loadGameData();
+        gs.player.resume();
         gameRun();
     }
 
