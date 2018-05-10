@@ -206,7 +206,12 @@ public class GameView extends ViewUtil{
         else
             gc = graphics;
 
-        gc.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
+        if(object instanceof Basic) {
+            gc.clearRect(object.getOldX()-10, object.getOldY(), object.getOldWidth()+20, object.getOldHeight());
+        }
+        else {
+            gc.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
+        }
         gc.drawImage(object.getImage(), object.getX(), object.getY());
     }
     
