@@ -4,6 +4,7 @@ import exceptions.FileIOException;
 import io.IOManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class GameSettings implements Serializable {
     private int prevSave;

@@ -13,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import model.GameModel;
 
+import static controller.GameController.gs;
 import java.util.ArrayList;
 
 public class LoadGameView extends ViewUtil{
@@ -25,6 +26,8 @@ public class LoadGameView extends ViewUtil{
     private ArrayList<MenuButton> tempElements;
 
     private MenuButton[] menuElements;
+
+    private String save1, save2, save3;
 
     @Override
     public Parent initScene() {
@@ -44,6 +47,14 @@ public class LoadGameView extends ViewUtil{
 
         root.setPrefSize(ViewUtil.VIEW_WIDTH, ViewUtil.VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
+
+        try {
+            save1 = IOManager.getInstance().getGameState(0).getStateName();
+            save1 = IOManager.getInstance().getGameState(1).getStateName();
+            save1 = IOManager.getInstance().getGameState(2).getStateName();
+        } catch (FileIOException e) {
+            e.printStackTrace();
+        }
 
         MenuButton backButton = new MenuButton("BACK");
         MenuButton save1 = new MenuButton("SAVE 1");
@@ -124,6 +135,7 @@ public class LoadGameView extends ViewUtil{
                 loadGame(event,2);
                 break;
             }
+        System.out.println(gs.getStateName());
         System.out.println("Totally loaded a rad gamesave");
     }
 

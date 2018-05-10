@@ -50,6 +50,11 @@ public class GameController {
         hud = HUD.getInstance();
     }
 
+    public void newGame(String stateName){
+        newGame();
+        gs.setStateName(stateName);
+    }
+
     public void newGame(){
         lastGameLost = false;
         gs.firstLevel();

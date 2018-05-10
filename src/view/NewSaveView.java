@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 import model.GameModel;
 
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class NewSaveView extends ViewUtil{
 
@@ -26,9 +28,7 @@ public class NewSaveView extends ViewUtil{
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
-
     private Parent menuElements[];
-
     private TextField saveNameTextField;
 
     @Override
@@ -58,7 +58,7 @@ public class NewSaveView extends ViewUtil{
         saveNameTextField = new TextField();
 
         saveNameTextField.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE && !Objects.equals(saveNameTextField.getText(), "")){
+            if(event.getCode() == KeyCode.ENTER && !Objects.equals(saveNameTextField.getText(), "")){
                 startGameView(event);
             }
             else{
@@ -102,9 +102,9 @@ public class NewSaveView extends ViewUtil{
     }
 
     private void startGameView(InputEvent event){
-        GameController.getInstance().newGame();
-        startGameView(event, GameView.getInstance().initScene());
         GameModel.gameSettings.savePrevSave(NewGameView.getInst().getSaveNumber());
+        GameController.getInstance().newGame(saveNameTextField.getText());
+        startGameView(event, GameView.getInstance().initScene());
         System.out.println("Totally started a new game");
     }
 }
