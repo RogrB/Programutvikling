@@ -68,6 +68,7 @@ public class LoadGameView extends ViewUtil{
             }
             if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE){
                 select(menuElements[elementCounter].getText(), event);
+                elementCounter = 0;
             }
         });
         backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
