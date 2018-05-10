@@ -74,7 +74,7 @@ public class Player2 extends Entity {
     }
     
     public void update(){
-        GameView.getInstance().render(this);
+        GameView.getInstance().renderPlayer2();
     }
     
     public void unsetSprite() {

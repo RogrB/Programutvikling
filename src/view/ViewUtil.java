@@ -4,7 +4,6 @@ import assets.java.SoundManager;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
@@ -17,12 +16,12 @@ public abstract class ViewUtil {
 
     public static final int VIEW_WIDTH = 1200;
     public static final int VIEW_HEIGHT = 800;
-    public Pane root;
-    public Text header = new Text("SPACE GAME");
-    public int elementCounter = 0;
+    Pane root;
+    Text header = new Text("SPACE GAME");
+    int elementCounter = 0;
     WarningField errorField;
 
-    public void goToView(InputEvent event, Parent node){
+    void goToView(InputEvent event, Parent node){
         Stage stage = (Stage)((Node)event.getTarget()).getScene().getWindow();
         Pane root = new Pane();
         root.getChildren().add(node);
@@ -31,7 +30,7 @@ public abstract class ViewUtil {
         elementCounter = 0;
     }
 
-    public Background getBackGroundImage(String BG_IMG){
+    Background getBackGroundImage(String BG_IMG){
         BackgroundImage bg = new BackgroundImage(
                 new Image(BG_IMG),
                 BackgroundRepeat.NO_REPEAT,

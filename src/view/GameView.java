@@ -184,10 +184,10 @@ public class GameView extends ViewUtil{
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
         if(gm.getMultiplayerStatus()) {
-            root.getChildren().addAll(errorField, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, dialogBox, player2LayerCanvas);
+            root.getChildren().addAll(errorField, wonButtonContainer, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, dialogBox, player2LayerCanvas);
         }
         else {
-            root.getChildren().addAll(errorField, wonButtonContainer, lostButtonContainer, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, dialogBox);
+            root.getChildren().addAll(errorField, wonButtonContainer, lostButtonContainer, playerLayerCanvas, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, dialogBox);
         }
         return root;
     }
@@ -225,13 +225,16 @@ public class GameView extends ViewUtil{
             gc = enemyLayer;
         else if (object instanceof Player)
             gc = playerLayer;
-        else if (object instanceof Player2)
-            gc = player2Layer;
         else
             gc = graphics;
 
         gc.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
         gc.drawImage(object.getImage(), object.getX(), object.getY());
+    }
+    
+    public void renderPlayer2() {
+        player2Layer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
+        player2Layer.drawImage(gs.player2.getImage(), gs.player2.getX(), gs.player2.getY());
     }
 
     public void gameOver() {

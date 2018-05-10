@@ -19,16 +19,6 @@ public class LoadGameView extends ViewUtil{
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
-    private Text loadSaveText;
-
-    private VBox saveFiles;
-    private VBox containerVBox;
-
-    private MenuButton save1;
-    private MenuButton save2;
-    private MenuButton save3;
-    private MenuButton backButton;
-
     private MenuButton[] menuElements;
 
 
@@ -36,14 +26,14 @@ public class LoadGameView extends ViewUtil{
     @Override
     public Parent initScene() {
         root = new Pane();
-        saveFiles = new VBox();
-        containerVBox = new VBox();
+        VBox saveFiles = new VBox();
+        VBox containerVBox = new VBox();
         header.setX(300);
         header.setY(175);
         header.setFill(Color.WHITE);
         header.setFont(header.getFont().font(100));
 
-        loadSaveText = new Text("LOAD SAVE FILE");
+        Text loadSaveText = new Text("LOAD SAVE FILE");
         loadSaveText.setX(500);
         loadSaveText.setY(275);
         loadSaveText.setFill(Color.WHITE);
@@ -52,10 +42,10 @@ public class LoadGameView extends ViewUtil{
         root.setPrefSize(ViewUtil.VIEW_WIDTH, ViewUtil.VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
 
-        backButton = new MenuButton("BACK");
-        save1 = new MenuButton("SAVE 1");
-        save2 = new MenuButton("SAVE 2");
-        save3 = new MenuButton("SAVE 3");
+        MenuButton backButton = new MenuButton("BACK");
+        MenuButton save1 = new MenuButton("SAVE 1");
+        MenuButton save2 = new MenuButton("SAVE 2");
+        MenuButton save3 = new MenuButton("SAVE 3");
 
         errorField = new WarningField();
         errorField.setTranslateX(475);
@@ -91,36 +81,32 @@ public class LoadGameView extends ViewUtil{
 
     @Override
     public void select(String buttonName, KeyEvent event) {
-        if(buttonName == "BACK"){
-            goToView(event, MenuView.getInstance().initScene());
-        }
-        if(buttonName.equals("SAVE 1")){
-            GameModel.gameSettings.savePrevSave(0);
-            try {
-                IOManager.getInstance().loadGameState();
-                GameController.getInstance().loadGame();
-                goToView(event, GameView.getInstance().initScene());
-            } catch (FileIOException e) {
-                e.printStackTrace();
+        try {
+            switch (buttonName) {
+                case "BACK":
+                    goToView(event, MenuView.getInstance().initScene());
+                    break;
+                case "SAVE 1":
+                    GameModel.gameSettings.savePrevSave(0);
+                    IOManager.getInstance().loadGameState();
+                    GameController.getInstance().loadGame();
+                    goToView(event, GameView.getInstance().initScene());
+                    break;
+                case "SAVE 2":
+                    GameModel.gameSettings.savePrevSave(1);
+                    IOManager.getInstance().loadGameState();
+                    GameController.getInstance().loadGame();
+                    goToView(event, GameView.getInstance().initScene());
+                    break;
+                case "SAVE 3":
+                    GameModel.gameSettings.savePrevSave(2);
+                    IOManager.getInstance().loadGameState();
+                    GameController.getInstance().loadGame();
+                    goToView(event, GameView.getInstance().initScene());
+                    break;
             }
-        } else if(buttonName.equals("SAVE 2")){
-            GameModel.gameSettings.savePrevSave(1);
-            try {
-                IOManager.getInstance().loadGameState();
-                GameController.getInstance().loadGame();
-                goToView(event, GameView.getInstance().initScene());
-            } catch (FileIOException e) {
-                e.printStackTrace();
-            }
-        } else if(buttonName.equals("SAVE 3")){
-            GameModel.gameSettings.savePrevSave(2);
-            try {
-                IOManager.getInstance().loadGameState();
-                GameController.getInstance().loadGame();
-                goToView(event, GameView.getInstance().initScene());
-            } catch (FileIOException e) {
-                e.printStackTrace();
-            }
+        } catch (FileIOException e) {
+            e.printStackTrace();
         }
         System.out.println("Totally loaded a rad gamesave");
     }
