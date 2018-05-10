@@ -143,11 +143,11 @@ public class MultiplayerView extends ViewUtil{
     
     public boolean testRange(int remote, int local) {
         boolean valid = true;
-        if (remote < 0 || remote > 10000) {
+        if (remote < 0 || remote > 100000) {
             valid = false;
             errorField.changeText("Invalid RemotePort Range");
         }
-        if (local < 0 || local > 10000) {
+        if (local < 0 || local > 100000) {
             valid = false;
             errorField.changeText("Invalid LocalPort Range");
         }
