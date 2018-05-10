@@ -123,12 +123,7 @@ public class GameView extends ViewUtil{
                     SoundManager.getInst().playMusic("stop");
                 }
                 SoundManager.getInst().playMusic("music_menu");
-                goToView(event, MenuView.getInstance().initScene());
-                if(gm.getMultiplayerStatus()) {
-                    MultiplayerHandler.getInstance().send("Disconnect", 0, 0);
-                    MultiplayerHandler.getInstance().disconnect();
-                    System.out.println("Game paused, disconnected from multiplayer");
-                }                
+                goToView(event, MenuView.getInstance().initScene());         
                 gc.gamePause();
             }
         });
@@ -304,9 +299,9 @@ public class GameView extends ViewUtil{
         hud.drawImage(new Image("assets/image/scorescreen.png"), (VIEW_WIDTH/2) - 360, (VIEW_HEIGHT/2) - 275);
     });
     }
-    
-    private void clearScoreScreen() {
-        root.getChildren().removeAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent);
+
+    public void clearScoreScreen() {
+	Platform.runLater(() -> root.getChildren().removeAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent));
     }
     
     void renderHUD(HUD h, boolean shield) {
@@ -369,4 +364,8 @@ public class GameView extends ViewUtil{
     public MenuButton[] getMenuElementsLost(){return menuElementsLost;}
 
     public MenuButton[] getMenuElementsWon(){return menuElementsWon;}
+    
+    public void setWinButtonOpacity(int opacity) {
+        wonButtonContainer.setOpacity(opacity);
+    }
 }

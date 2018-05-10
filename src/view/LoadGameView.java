@@ -1,6 +1,8 @@
 package view;
 
 import controller.GameController;
+import exceptions.FileIOException;
+import io.IOManager;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -79,19 +81,32 @@ public class LoadGameView extends ViewUtil{
 
     @Override
     public void select(String buttonName, KeyEvent event) {
-        switch (buttonName) {
-            case "BACK":
-                goToView(event, MenuView.getInstance().initScene());
-            case "SAVE 1":
-                GameModel.gameSettings.savePrevSave(0);
-                System.out.println(0);
-                break;
-            case "SAVE 2":
-                GameModel.gameSettings.savePrevSave(1);
-                break;
-            case "SAVE 3":
-                GameModel.gameSettings.savePrevSave(2);
-                break;
+        try {
+            switch (buttonName) {
+                case "BACK":
+                    goToView(event, MenuView.getInstance().initScene());
+                    break;
+                case "SAVE 1":
+                    GameModel.gameSettings.savePrevSave(0);
+                    IOManager.getInstance().loadGameState();
+                    GameController.getInstance().loadGame();
+                    goToView(event, GameView.getInstance().initScene());
+                    break;
+                case "SAVE 2":
+                    GameModel.gameSettings.savePrevSave(1);
+                    IOManager.getInstance().loadGameState();
+                    GameController.getInstance().loadGame();
+                    goToView(event, GameView.getInstance().initScene());
+                    break;
+                case "SAVE 3":
+                    GameModel.gameSettings.savePrevSave(2);
+                    IOManager.getInstance().loadGameState();
+                    GameController.getInstance().loadGame();
+                    goToView(event, GameView.getInstance().initScene());
+                    break;
+            }
+        } catch (FileIOException e) {
+            e.printStackTrace();
         }
         System.out.println("Totally loaded a rad gamesave");
     }

@@ -1,5 +1,6 @@
 package multiplayer;
 
+import controller.GameController;
 import java.io.*;
 
 import model.GameState;
@@ -8,6 +9,7 @@ import model.enemy.Enemy;
 import view.MultiplayerView;
 
 import static controller.GameController.gs;
+import view.GameView;
 
 public class Protocol {
     
@@ -104,13 +106,21 @@ public class Protocol {
                     System.err.println(e);
                 }
                 break;
+            case "NextGame":
+                try {
+                    stream.writeChar('N');
+                }
+                catch (IOException e) {
+                    System.err.println(e);
+                }
+                break;                
         }
         return bytestream;
     }
     
     public void recieve(DataInputStream input) {
         Player2 player2 = Player2.getInst();
-        char breaker = 'b';
+        //char breaker = 'b';
         try {
             while (input.available() > 0) {
                 char action = input.readChar();
@@ -141,7 +151,11 @@ public class Protocol {
                         break;
                     case 'D':
                         MultiplayerHandler.getInstance().disconnect();
+                        GameView.getInstance().getField().changeText("Player 2 disconnected"); 
                         System.out.println("Player 2 disconnected");
+                        break;
+                    case 'N':
+                        MultiplayerHandler.getInstance().startNextLevel();
                         break;
                 }
             }

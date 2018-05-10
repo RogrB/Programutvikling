@@ -26,6 +26,7 @@ public class NewSaveView extends ViewUtil{
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
+
     private Parent menuElements[];
 
     private TextField saveNameTextField;
@@ -38,7 +39,7 @@ public class NewSaveView extends ViewUtil{
         header.setY(175);
         header.setFill(Color.WHITE);
         header.setFont(header.getFont().font(100));
-        System.out.println(NewGameView.getInst().getSaveNumber());
+        System.out.println("NewSaveView::saveNumber == "+NewGameView.getInst().getSaveNumber());
 
         root.setPrefSize(ViewUtil.VIEW_WIDTH, ViewUtil.VIEW_HEIGHT);
 
