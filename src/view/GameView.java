@@ -207,7 +207,7 @@ public class GameView extends ViewUtil{
             gc = graphics;
 
         if(object instanceof Basic) {
-            gc.clearRect(object.getOldX()-10, object.getOldY(), object.getOldWidth()+20, object.getOldHeight());
+            gc.clearRect(object.getOldX()-10, object.getOldY(), object.getOldWidth()+50, object.getOldHeight());
         }
         else {
             gc.clearRect(object.getOldX(), object.getOldY(), object.getOldWidth(), object.getOldHeight());
