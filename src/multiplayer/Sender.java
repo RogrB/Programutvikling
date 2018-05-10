@@ -9,7 +9,7 @@ public class Sender {
     private int remotePort;
     private InetAddress hostname;
     
-    public Sender(String hostname, int remoteport) {
+    Sender(String hostname, int remoteport) {
         try {
             this.hostname = InetAddress.getByName(hostname);
         }
@@ -24,24 +24,6 @@ public class Sender {
         catch(SocketException e) {
             System.err.println(e);
         }
-    }     
-    
-    public Sender() {
-        this.remotePort = 2000;
-        try {
-            String address = "localhost";
-            this.hostname = InetAddress.getByName(address);        
-        }
-        catch (UnknownHostException e) {
-            System.err.println(e);
-        }
-        
-        try {
-            socket = new DatagramSocket();
-        }
-        catch(SocketException e) {
-            System.err.println(e);
-        }        
     }
     
     public void closeSocket() {
@@ -54,7 +36,7 @@ public class Sender {
         }
     }       
     
-    protected synchronized void send(ByteArrayOutputStream stream) {
+    synchronized void send(ByteArrayOutputStream stream) {
         try {
             byte[]data = stream.toByteArray();
             DatagramPacket packet = new DatagramPacket(data, data.length, hostname, remotePort);

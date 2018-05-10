@@ -157,6 +157,7 @@ public class MultiplayerHandler {
         GameController.getInstance().nextGame();
         GameView.getInstance().clearScoreScreen();
         GameView.getInstance().setWinButtonOpacity(0);
+        GameView.getInstance().getField().changeText("Player 2 started next level");
         System.out.println("Player 2 started next level");
         
     }
