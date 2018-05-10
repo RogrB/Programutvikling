@@ -1,26 +1,23 @@
 package multiplayer;
 
-import controller.GameController;
 import java.io.*;
 
 import model.GameState;
 import model.player.Player2;
 import model.enemy.Enemy;
-import view.MultiplayerView;
 
-import static controller.GameController.gs;
 import view.GameView;
 
-public class Protocol {
+class Protocol {
     
-    protected synchronized ByteArrayOutputStream sendPrep(String action, int id, int health, boolean alive) {
+    synchronized ByteArrayOutputStream sendPrep(String action, int id, int health, boolean alive) {
         ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
         DataOutputStream stream = new DataOutputStream(bytestream);    
         
         switch(action) {
             case "EnemyUpdate":
                 try {
-                    for(Enemy enemy: gs.enemies) {
+                    for(Enemy enemy: GameState.enemies) {
                         if (enemy.getID() == id) {
                             stream.writeChar('E');
                             stream.writeInt(id);
@@ -41,7 +38,7 @@ public class Protocol {
         return bytestream;
     }
     
-    protected synchronized ByteArrayOutputStream sendPrep(String action, int x, int y) {
+    synchronized ByteArrayOutputStream sendPrep(String action, int x, int y) {
         ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
         DataOutputStream stream = new DataOutputStream(bytestream);          
         
@@ -118,7 +115,7 @@ public class Protocol {
         return bytestream;
     }
     
-    public void recieve(DataInputStream input) {
+    void recieve(DataInputStream input) {
         Player2 player2 = Player2.getInst();
         //char breaker = 'b';
         try {

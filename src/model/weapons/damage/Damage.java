@@ -8,7 +8,7 @@ import model.Existance;
 public class Damage extends Existance {
     // Klasse for damage animasjon
     private int teller;
-    boolean finished = false;
+    private boolean finished = false;
 
     private Image sprite = new Image("assets/image/damage/laserBlue08.png");
     
@@ -21,7 +21,7 @@ public class Damage extends Existance {
         this.display();
     }
 
-    public void display() {
+    private void display() {
         // Viser damageAnimasjon på
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -58,11 +58,7 @@ public class Damage extends Existance {
         }, 0, 10);
     }
 
-    public boolean getFinished() {
-        return this.finished;
-    }
-
-    public void clearImage() {
+    private void clearImage() {
         this.sprite = new Image("assets/image/damage/clear.png");
     }
     

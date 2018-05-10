@@ -9,21 +9,19 @@ import model.GameState;
 import model.enemy.Enemy;
 import model.enemy.Asteroid;
 import view.MultiplayerView;
-import javafx.stage.Stage;
 
 import static controller.GameController.gs;
-import java.util.Iterator;
+
 import java.util.Timer;
 import java.util.TimerTask;
+
 import model.GameModel;
 import view.GameView;
 import static view.MultiplayerView.stage;
 public class MultiplayerHandler {
     
-    Protocol protocol;
-    Receiver receiver;
-    Sender sender;
-    public Thread receiveActivity;
+    private Protocol protocol;
+    private Sender sender;
     private boolean connected = false;
     private boolean gameStarted = false;
     private boolean cancel = false;
@@ -37,13 +35,13 @@ public class MultiplayerHandler {
     public void init(String hostname, int remoteport, int localport) {
         protocol = new Protocol();
         sender = new Sender(hostname, remoteport);
-        receiver = new Receiver(localport);
+        Receiver receiver = new Receiver(localport);
         cancel = false;
         connected = false;
         gameStarted = false;
         nextGameRequest = false;
 
-        receiveActivity = new Thread(receiver);
+        Thread receiveActivity = new Thread(receiver);
         receiveActivity.start();         
     }
 
@@ -66,7 +64,7 @@ public class MultiplayerHandler {
         return this.protocol;
     }
     
-    protected void updateEnemies(int id, int health, boolean alive) {
+    void updateEnemies(int id, int health, boolean alive) {
         // System.out.println("trying to find enemyid to apply update");
         //Iterator<Enemy> enemyIterator = GameState.enemies.iterator();
         ArrayList<Enemy> tempEnemies = new ArrayList<>();
@@ -90,7 +88,7 @@ public class MultiplayerHandler {
         }
     }
     
-    Thread thread = new Thread(new Runnable() {
+    private Thread thread = new Thread(new Runnable() {
         @Override
         public void run() {
             while(!connected && !cancel) {
@@ -103,7 +101,7 @@ public class MultiplayerHandler {
         thread.start();
     }
     
-    public void establishConnection() {
+    void establishConnection() {
         setConnected(true);
         thread.interrupt();
         if (!gameStarted) {
@@ -112,11 +110,11 @@ public class MultiplayerHandler {
         }
     }
     
-    public void replyConnection() {
+    void replyConnection() {
         sender.send(protocol.sendPrep("Reply", 0, 0));
     }
     
-    public void setConnected(boolean connected) {
+    private void setConnected(boolean connected) {
         this.connected = connected;
     }
     
@@ -183,7 +181,7 @@ public class MultiplayerHandler {
         this.nextGameRequest = state;
     }
     
-    public void startNextLevel() {
+    void startNextLevel() {
         setNextGameRequest(true);
         GameController.getInstance().nextGame();
         GameView.getInstance().clearScoreScreen();

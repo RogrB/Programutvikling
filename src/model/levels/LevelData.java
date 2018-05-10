@@ -36,7 +36,7 @@ public class LevelData {
     3-BOSS_EIGHT
      */
 
-    public static final String[][][] LEVEL1 = new String[][][]{
+    private static final String[][][] LEVEL1 = new String[][][]{
             {{"0"}, {"0"}, {"0"},                   {"0"}, {"0"}, {"0"}, {"0"}, {"1", "RED1", "SIN_REVERSED"},  {"1", "RED1", "SIN_REVERSED"},  {"1", "RED1", "SIN_REVERSED"},    {"0"}, {"0"}, {"0"},                  {"0"}, {"1", "GREEN1", "LEFT_PULSATING"},   {"0"}, {"0"}, {"0"}},
             {{"0"}, {"0"}, {"1", "BLUE2", "COS"},   {"0"}, {"0"}, {"0"}, {"0"}, {"0"},                          {"0"},                          {"0"},                            {"0"}, {"0"}, {"0"},                  {"0"}, {"1", "GREEN1", "LEFT_PULSATING"},   {"0"}, {"0"}, {"0"}},
             {{"0"}, {"1", "BLUE2", "COS"}, {"0"},   {"0"}, {"0"}, {"0"}, {"0"}, {"0"},                          {"0"},                          {"0"},                            {"0"}, {"0"}, {"0"},                  {"0"}, {"0"},                               {"0"}, {"0"}, {"0"}},
@@ -46,7 +46,7 @@ public class LevelData {
             {{"0"}, {"0"}, {"0"},                   {"0"}, {"0"}, {"0"}, {"0"}, {"1", "RED1", "SIN"},           {"1", "RED1", "SIN"},           {"1", "RED1", "SIN"},             {"0"}, {"0"}, {"0"},                  {"0"}, {"1", "RED1", "LEFT_PULSATING"},     {"0"}, {"0"}, {"0"}}
     };
 
-    public static final String[][][] LEVEL2 = new String[][][]{
+    private static final String[][][] LEVEL2 = new String[][][]{
             {{"0"}, {"0"}, {"0"}},
             {{"2", "MADNESS_01"}, {"0"}},
             {{"0"}, {"0"}, {"0"}},
@@ -57,8 +57,13 @@ public class LevelData {
     };
 
     public static String[][][] getLevel(String levelName){
-        if (levelName.equals("LEVEL1")) return LEVEL1;
-        else if(levelName.equals("LEVEL2")) return LEVEL2;
-        else return null;
+        switch (levelName) {
+            case "LEVEL1":
+                return LEVEL1;
+            case "LEVEL2":
+                return LEVEL2;
+            default:
+                return null;
+        }
     }
 }

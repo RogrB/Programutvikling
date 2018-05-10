@@ -3,21 +3,19 @@ package multiplayer;
 
 import java.net.*;
 import java.io.*;
-import view.WarningField;
+
 import view.MultiplayerView;
 import view.GameView;
 
 public class Receiver extends Thread {
 
-    private int localPort;
     private DatagramSocket socket;
     private boolean looping = false;
     private final static int MAX_PACKET_SIZE = 8192;
     private Protocol protocol = new Protocol();
 
     
-    public Receiver(int localPort) {
-        this.localPort = localPort;
+    Receiver(int localPort) {
 
         try {
             socket = new DatagramSocket(localPort);
@@ -30,22 +28,7 @@ public class Receiver extends Thread {
             GameView.getInstance().getField().changeText(e.toString());
         }
     }
-    
-    public Receiver() {
-        this.localPort = 2001;
-        
-        try {
-            socket = new DatagramSocket(localPort);
-            looping = true;
-        } 
-        catch(SocketException e) {
-            System.err.println(e);
-            // Trenger en måte å outputte feilmelding i UIen
-            MultiplayerView.getInst().getField().changeText(e.toString());
-            GameView.getInstance().getField().changeText(e.toString());            
-        }        
-    }
-    
+
     public void closeSocket() {
         try {
             socket.close();

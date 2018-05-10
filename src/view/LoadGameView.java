@@ -1,7 +1,6 @@
 package view;
 
 import controller.GameController;
-import controller.UserInputs;
 import exceptions.FileIOException;
 import io.IOManager;
 import javafx.scene.Parent;
@@ -88,22 +87,28 @@ public class LoadGameView extends ViewUtil{
                     goToView(event, MenuView.getInstance().initScene());
                     break;
                 case "SAVE 1":
+                    System.out.println("Load0 Start");
                     GameModel.gameSettings.savePrevSave(0);
                     IOManager.getInstance().loadGameState();
                     GameController.getInstance().loadGame();
-                    goToView(event, GameView.getInstance().initScene());
+                    startGameView(event, GameView.getInstance().initScene());
+                    System.out.println("Load0 Complete");
                     break;
                 case "SAVE 2":
+                    System.out.println("Load1 Start");
                     GameModel.gameSettings.savePrevSave(1);
                     IOManager.getInstance().loadGameState();
                     GameController.getInstance().loadGame();
-                    goToView(event, GameView.getInstance().initScene());
+                    startGameView(event, GameView.getInstance().initScene());
+                    System.out.println("Load1 Complete");
                     break;
                 case "SAVE 3":
+                    System.out.println("Load2 Start");
                     GameModel.gameSettings.savePrevSave(2);
                     IOManager.getInstance().loadGameState();
                     GameController.getInstance().loadGame();
-                    goToView(event, GameView.getInstance().initScene());
+                    startGameView(event, GameView.getInstance().initScene());
+                    System.out.println("Load2 Complete");
                     break;
             }
         } catch (FileIOException e) {

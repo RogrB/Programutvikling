@@ -12,11 +12,11 @@ public abstract class Existance implements java.io.Serializable {
     private int x, y;
     private int oldX, oldY;
     protected int height, width;
-    protected int oldHeight, oldWidth;
+    private int oldHeight, oldWidth;
     private boolean readyToPurge;
 
     protected transient Image image;
-    protected transient ImageView imageView;
+    transient ImageView imageView;
     public Sprite sprite;
 
     public Existance(int x, int y){
@@ -35,11 +35,11 @@ public abstract class Existance implements java.io.Serializable {
         return y;
     }
 
-    public int getWidth() {
+    protected int getWidth() {
         return width;
     }
 
-    public int getHeight() {
+    private int getHeight() {
         return height;
     }
 
@@ -53,11 +53,11 @@ public abstract class Existance implements java.io.Serializable {
         this.y = y;
     }
 
-    public void setOldX(int oldX) {
+    protected void setOldX(int oldX) {
         this.oldX = oldX;
     }
 
-    public void setOldY(int oldY) {
+    protected void setOldY(int oldY) {
         this.oldY = oldY;
     }
 
@@ -112,23 +112,19 @@ public abstract class Existance implements java.io.Serializable {
         return false;
     }
 
-    public boolean isOffScreenLeft(){
-        if (x + width < 0)
-            return true;
-        return false;
+    private boolean isOffScreenLeft(){
+        return x + width < 0;
     }
 
-    public boolean isOffScreenRight(){
-        if(x > ViewUtil.VIEW_WIDTH + ViewUtil.VIEW_WIDTH/10)
-            return true;
-        return false;
+    private boolean isOffScreenRight(){
+        return x > ViewUtil.VIEW_WIDTH + ViewUtil.VIEW_WIDTH / 10;
     }
 
-    public boolean isOffScreen(){
+    protected boolean isOffScreen(){
         return isOffScreenLeft() || isOffScreenRight();
     }
 
-    public boolean getReadyToPurge(){
+    protected boolean getReadyToPurge(){
         return readyToPurge;
     }
 
@@ -136,7 +132,7 @@ public abstract class Existance implements java.io.Serializable {
         this.readyToPurge = true;
     }
 
-    public void purge(Iterator iterator){
+    protected void purge(Iterator iterator){
         iterator.remove();
     }
 

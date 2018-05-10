@@ -1,6 +1,5 @@
 package model.enemy;
 
-import controller.GameController;
 import assets.java.Sprite;
 import java.util.Iterator;
 import java.util.Timer;

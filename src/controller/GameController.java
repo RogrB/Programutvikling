@@ -28,18 +28,16 @@ public class GameController {
     public static GameController getInstance(){ return inst; }
 
     // MVC-access
-    GameModel gm;
-    GameView gv;
+    private GameModel gm;
+    private GameView gv;
     public static GameState gs;
 
-    HUD hud;
-    LevelLoader levelLoader;
+    private HUD hud;
+    private LevelLoader levelLoader;
 
-    AnimationTimer gameMainTimer;
+    private AnimationTimer gameMainTimer;
 
-    public Iterator<Basic> bulletIterator;
-    public Iterator<Enemy> enemyIterator;
-    public Iterator<PowerUp> powerUpIterator;
+    private Iterator<Enemy> enemyIterator;
 
     private Boolean lastGameLost = false;
 
@@ -62,6 +60,7 @@ public class GameController {
     public void nextGame(){
         lastGameLost = false;
         gs.nextLevel();
+        gs.player.resume();
         gameRun();
         if (GameModel.getInstance().getMultiplayerStatus()) {
             MultiplayerHandler.getInstance().nextGame();
@@ -70,6 +69,7 @@ public class GameController {
 
     public void loadGame(){
         gs.loadGameData();
+        gs.player.resume();
         gameRun();
     }
 
@@ -134,7 +134,7 @@ public class GameController {
     }
 
     private void moveEnemies(){
-        enemyIterator = gs.enemies.iterator();
+        enemyIterator = GameState.enemies.iterator();
         while(enemyIterator.hasNext()){
             Enemy enemy = enemyIterator.next();
             enemy.update(enemyIterator);
@@ -143,7 +143,7 @@ public class GameController {
     }
 
     private void movePowerups(){
-        powerUpIterator = gs.powerups.iterator();
+        Iterator<PowerUp> powerUpIterator = gs.powerups.iterator();
         while (powerUpIterator.hasNext()){
             PowerUp powerUp = powerUpIterator.next();
             powerUp.update(-2, 0, powerUpIterator);
@@ -152,7 +152,7 @@ public class GameController {
     }
 
     private void moveAllBullets(){
-        bulletIterator = gs.playerBullets.iterator();
+        Iterator<Basic> bulletIterator = gs.playerBullets.iterator();
         while(bulletIterator.hasNext()){
             Basic bullet = bulletIterator.next();
             bullet.update(20, 0, bulletIterator);
@@ -177,7 +177,7 @@ public class GameController {
     private void detectEnemyShotByPlayer(){
         ArrayList<Enemy> tempEnemies = new ArrayList<>();
         for(Basic bullet : gs.playerBullets){
-            for(enemyIterator = gs.enemies.iterator(); enemyIterator.hasNext();){
+            for(enemyIterator = GameState.enemies.iterator(); enemyIterator.hasNext();){
                 Enemy enemy = enemyIterator.next();
                 if(bullet.collidesWith(enemy)){
                     enemy.takeDamage(bullet.getDmg());
@@ -200,7 +200,7 @@ public class GameController {
         }
 
         for(Basic bullet : gs.player2Bullets){
-            for(Enemy enemy : gs.enemies){
+            for(Enemy enemy : GameState.enemies){
                 if(bullet.collidesWith(enemy))
                     bullet.hasHit();
             }
@@ -212,8 +212,8 @@ public class GameController {
     }
 
     public void spawnSmallAsteroids(int x, int y) {
-        gs.enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN"), x, y - 20));
-        gs.enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN_REVERSED"), x, y + 20));
+        GameState.enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN"), x, y - 20));
+        GameState.enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN_REVERSED"), x, y + 20));
     }
 
     private void detectPlayerShotByEnemy(){
@@ -226,7 +226,7 @@ public class GameController {
     }
 
     private void detectPlayerCollidesWithEnemy(){
-        for (Enemy enemy: gs.enemies) {
+        for (Enemy enemy: GameState.enemies) {
             if(enemy.collidesWith(gs.player)){
                 if(enemy.isAlive()) {
                     gs.player.takeDamage();
@@ -280,12 +280,11 @@ public class GameController {
                 sprite = Sprite.IMMUNE_POWERUP;
                 break;*/
         }
-        PowerUp res = new PowerUp(
+        return new PowerUp(
                 sprite,
                 ViewUtil.VIEW_WIDTH - 1,
                 rand.nextInt(ViewUtil.VIEW_HEIGHT - sprite.getHeight())
         );
-        return res;
     }
 
     private void detectGameOver(){
@@ -305,7 +304,7 @@ public class GameController {
         }
     }
 
-    void startLossTimer(){
+    private void startLossTimer(){
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -323,7 +322,7 @@ public class GameController {
         }
         if(bossType != null){
             EnemyType boss = EnemyType.valueOf(bossType);
-            for(Enemy enemy : gs.enemies){
+            for(Enemy enemy : GameState.enemies){
                 if(enemy.getType() == boss && !enemy.isAlive() && !gs.gameOver){
                     gs.player.isNotPlaying();
                     gs.gameOver = true;
@@ -347,7 +346,7 @@ public class GameController {
         }, 2000);
     }
 
-    public HUD getHUD() {
+    HUD getHUD() {
         return this.hud;
     }
 

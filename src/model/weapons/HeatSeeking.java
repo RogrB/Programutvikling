@@ -3,15 +3,16 @@ package model.weapons;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import model.GameState;
 import model.enemy.Enemy;
 
 import static controller.GameController.gs;
 
 public class HeatSeeking extends Basic {
     
-    ArrayList<Enemy> enemies = gs.enemies;
+    private ArrayList<Enemy> enemies = GameState.enemies;
     private boolean locked = false;
-    Enemy target;
+    private Enemy target;
 
     public HeatSeeking(int x, int y, Weapon weapon) {
         super(
@@ -37,7 +38,7 @@ public class HeatSeeking extends Basic {
         }
     }
     
-    public void setLock() {
+    private void setLock() {
         // Finner nærmeste enemy i X aksen og låser inn target
         int closestX = 2500;
         int targetIndex = 0;
@@ -53,7 +54,7 @@ public class HeatSeeking extends Basic {
         locked = true;
     }
     
-    public void moveMissile() {
+    private void moveMissile() {
         // Flytter bullet mot target
         if (target != null && target.isAlive()) {
             if (Math.abs(target.getX() - getX()) < 7) {

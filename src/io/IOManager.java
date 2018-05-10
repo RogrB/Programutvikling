@@ -18,9 +18,9 @@ public class IOManager {
     private IOManager(){ initDirs(); }
     public static IOManager getInstance(){ return inst; }
 
-    public void saveGameState() throws FileIOException {
-        FileOutputStream fos = null;
-        ObjectOutputStream oos = null;
+    void saveGameState() throws FileIOException {
+        FileOutputStream fos;
+        ObjectOutputStream oos;
 
         String src = "tmp/"+GameModel.gameSettings.getPrevSave()+"/GameState.ser";
 
@@ -35,7 +35,7 @@ public class IOManager {
             oos.close();
             fos.close();
 
-            saveArrayList(gs.enemies, "tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayEnemies.ser");
+            saveArrayList(GameState.enemies, "tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayEnemies.ser");
             saveArrayList(gs.enemyBullets, "tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayEnemyBullets.ser");
             saveArrayList(gs.playerBullets, "tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayPlayerBullets.ser");
             saveArrayList(gs.powerups, "tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayPowerups.ser");
@@ -48,8 +48,8 @@ public class IOManager {
     }
 
     public void loadGameState() throws FileIOException {
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
+        FileInputStream fis;
+        ObjectInputStream ois;
 
         String src = "tmp/"+GameModel.gameSettings.getPrevSave()+"/GameState.ser";
 
@@ -77,8 +77,8 @@ public class IOManager {
     }
 
     private void saveArrayList(ArrayList list, String src) throws FileIOException {
-        FileOutputStream fos = null;
-        ObjectOutputStream oos = null;
+        FileOutputStream fos;
+        ObjectOutputStream oos;
 
         try {
             fos = new FileOutputStream(src);
@@ -94,10 +94,10 @@ public class IOManager {
     }
 
     private List loadList(String src) throws FileIOException {
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
+        FileInputStream fis;
+        ObjectInputStream ois;
 
-        List<Enemy> res = null;
+        List<Enemy> res;
 
         try {
             fis = new FileInputStream(src);
@@ -118,29 +118,25 @@ public class IOManager {
     }
 
     public boolean saveStateExists(){
-        if(!fileExists("tmp/"+GameModel.gameSettings.getPrevSave()+"/GameState.ser") ||
-                !fileExists("tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayEnemies.ser") ||
-                !fileExists("tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayEnemyBullets.ser") ||
-                !fileExists("tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayPlayerBullets.ser") ||
-                !fileExists("tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayPowerups.ser"))
-            return false;
-        return true;
+        return fileExists("tmp/" + GameModel.gameSettings.getPrevSave() + "/GameState.ser") &&
+                fileExists("tmp/" + GameModel.gameSettings.getPrevSave() + "/ArrayEnemies.ser") &&
+                fileExists("tmp/" + GameModel.gameSettings.getPrevSave() + "/ArrayEnemyBullets.ser") &&
+                fileExists("tmp/" + GameModel.gameSettings.getPrevSave() + "/ArrayPlayerBullets.ser") &&
+                fileExists("tmp/" + GameModel.gameSettings.getPrevSave() + "/ArrayPowerups.ser");
     }
 
     public boolean fileExists(String src){
         File file = new File(src);
-        if(file.exists() && !file.isDirectory())
-            return true;
-        return false;
+        return file.exists() && !file.isDirectory();
     }
 
     public GameSettings loadGameSettings() throws FileIOException {
-        FileInputStream fis = null;
-        ObjectInputStream ois = null;
+        FileInputStream fis;
+        ObjectInputStream ois;
 
         String src = "tmp/GameSettings.ser";
 
-        GameSettings res = null;
+        GameSettings res;
 
         try {
             fis = new FileInputStream(src);
@@ -163,8 +159,8 @@ public class IOManager {
     }
 
     public void saveGameSettings(GameSettings gameSettings) throws FileIOException {
-        FileOutputStream fos = null;
-        ObjectOutputStream oos = null;
+        FileOutputStream fos;
+        ObjectOutputStream oos;
 
         String src = "tmp/GameSettings.ser";
 
@@ -179,15 +175,13 @@ public class IOManager {
             oos.close();
             fos.close();
 
-            System.out.println("Saved game settings");
-
         } catch (IOException e) {
             throw new FileIOException("Save settings - Could not write to file "+src);
         }
     }
 
     private void initDirs(){
-        File directory = null;
+        File directory;
 
         directory = new File("tmp");
         if (! directory.exists())

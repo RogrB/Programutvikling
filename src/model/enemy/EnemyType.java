@@ -3,6 +3,8 @@ package model.enemy;
 import assets.java.Sprite;
 import model.weapons.Weapon;
 
+import java.util.Objects;
+
 public enum EnemyType {
 
     //              Health      Sprite                  Shooting chance     Weapon
@@ -38,16 +40,11 @@ public enum EnemyType {
         this.SPRITE = sprite;
         this.SHOOTING_CHANCE = shootingChance;
         this.WEAPON = weapon;
-        if(this.name() == "BOSS01" || this.name() == "BOSS02")
-            IS_BOSS = true;
-        else
-            IS_BOSS = false;
+        IS_BOSS = Objects.equals(this.name(), "BOSS01") || Objects.equals(this.name(), "BOSS02");
     }
 
     public boolean canShoot(){
-        if(WEAPON != null)
-            return true;
-        return false;
+        return WEAPON != null;
     }
 
 }

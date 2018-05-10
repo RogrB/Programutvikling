@@ -7,9 +7,8 @@ import model.weapons.Weapon;
 
 public abstract class Entity extends Existance {
     protected int health;
-    protected boolean alive;
+    private boolean alive;
     protected boolean canShoot;
-    protected boolean canMove;
     protected Weapon weapon;
     private int deathAnimCounter;
 
@@ -43,15 +42,11 @@ public abstract class Entity extends Existance {
         setCanShoot(false);
     }
 
-    public boolean canShoot() {
+    protected boolean canShoot() {
         return canShoot;
     }
 
     public void setCanShoot(boolean canShoot) { this.canShoot = canShoot; }
-
-    public boolean canMove() {
-        return canMove;
-    }
 
     public void setHealth(int health) {
         this.health = health;
@@ -69,7 +64,7 @@ public abstract class Entity extends Existance {
         }
     }
 
-    public void animateDeath() {
+    protected void animateDeath() {
         deathAnimCounter++;
         if (deathAnimCounter < 9) {
             newSprite("assets/image/playerDeath/playerDeath_00" + deathAnimCounter + ".png");
@@ -81,8 +76,8 @@ public abstract class Entity extends Existance {
         }
     }
 
-    public void setAlive(Boolean alive){
-        this.alive = alive;
+    protected void setAlive(){
+        this.alive = true;
     }
 
 }
