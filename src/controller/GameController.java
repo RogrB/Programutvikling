@@ -329,7 +329,6 @@ public class GameController {
             EnemyType boss = EnemyType.valueOf(bossType);
             for(Enemy enemy : GameState.enemies){
                 if(enemy.getType() == boss && !enemy.isAlive() && !gs.gameOver){
-                    gs.player.isNotPlaying();
                     gs.gameOver = true;
                     lastGameLost = false;
                     startGameWinTimer();
@@ -345,6 +344,7 @@ public class GameController {
             @Override
             public void run() {
                 System.out.println("Game Won!");
+                gs.player.isNotPlaying();
                 gv.gameWon();
                 gameMainTimer.stop();
             }

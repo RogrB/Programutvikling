@@ -20,6 +20,7 @@ public class Main extends Application {
         primaryStage.setTitle("Working Title: Pippi");
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(e -> {
+            SoundManager.getInst().shutdown();
             System.out.println(java.lang.Thread.activeCount());
             Platform.exit();
             System.exit(0);});

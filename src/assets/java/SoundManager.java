@@ -3,6 +3,8 @@ package assets.java;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import sun.audio.AudioStream;
+import view.ViewUtil;
 
 import java.io.File;
 import java.net.URL;
@@ -24,75 +26,55 @@ public class SoundManager {
     private MediaPlayer player;
     private String currentMusic = "music_menu";
 
+    private File MUSIC_WIN =      new File("src/assets/audio/music/music_retro_1.wav");
+
 
     public SoundManager(){
         try{
-            String AUDIO_ASSETS = "src/assets/audio/";
-            File SHOT_PLAYER_01 = new File(AUDIO_ASSETS + "shots/player_1.wav");
-            File SHOT_BOSS = new File(AUDIO_ASSETS + "boss_sfx/boss_shot_1.wav");
-            File SHOT_ENEMY_1 = new File(AUDIO_ASSETS + "shots/enemy_1.wav");
-            File SHOT_ENEMY_2 = new File(AUDIO_ASSETS + "shots/enemy_2.wav");
-            File SHOT_ENEMY_3 = new File(AUDIO_ASSETS + "shots/enemy_3.wav");
-            File SHOT_ENEMY_4 = new File(AUDIO_ASSETS + "shots/enemy_4.wav");
-            File SHOT_ENEMY_5 = new File(AUDIO_ASSETS + "shots/enemy_5.wav");
-            File SHOT_ENEMY_6 = new File(AUDIO_ASSETS + "shots/enemy_6.wav");
-            File BULLET_IMPACT = new File(AUDIO_ASSETS + "impacts/bullet_impact_1.wav");
-            File IMPACT_01 = new File(AUDIO_ASSETS + "impacts/impact_1.wav");
-            File IMPACT_02 = new File(AUDIO_ASSETS + "impacts/impact_2.wav");
-            File IMPACT_03 = new File(AUDIO_ASSETS + "impacts/impact_3.wav");
-            File IMPACT_04 = new File(AUDIO_ASSETS + "impacts/impact_4.wav");
-            File UP_WEAPON = new File(AUDIO_ASSETS + "sfx/beep_1.wav");
-            File UP_HEALTH = new File(AUDIO_ASSETS + "sfx/ascending_2.wav");
-            File UP_SHIELD = new File(AUDIO_ASSETS + "sfx/ascending_1.wav");
-            File SFX_1 = new File(AUDIO_ASSETS + "sfx/hit_1.wav");
-            File SFX_2 = new File(AUDIO_ASSETS + "sfx/alarm_1.wav");
-            File BOSS_SPAWN_1 = new File(AUDIO_ASSETS + "boss_sfx/boss_spawn_1.wav");
-            File BOSS_WOBBLE_1 = new File(AUDIO_ASSETS + "sfx/wobble_1.wav");
-            File BOSS_TALK_1 = new File(AUDIO_ASSETS + "boss_sfx/boss_talk_1.wav");
-            File BOSS_TALK_2 = new File(AUDIO_ASSETS + "boss_sfx/boss_talk_2.wav");
-            File BOSS_TALK_3 = new File(AUDIO_ASSETS + "boss_sfx/boss_talk_3.wav");
-            File BOSS_TALK_4 = new File(AUDIO_ASSETS + "boss_sfx/boss_talk_4.wav");
-            File BOSS_TALK_5 = new File(AUDIO_ASSETS + "boss_sfx/boss_talk_5.wav");
-            File BOSS_TALK_6 = new File(AUDIO_ASSETS + "boss_sfx/boss_talk_6.wav");
-            File NAV = new File(AUDIO_ASSETS + "sfx/nav_1.wav");
-            File NAV_SELECT = new File(AUDIO_ASSETS + "sfx/nav_select_1.wav");
+            String audio = "/assets/audio/";
 
-            loadSound("shot_player", (SHOT_PLAYER_01).toURI().toURL(), 1f);
-            loadSound("shot_boss", (SHOT_BOSS).toURI().toURL(), .6f);
-            loadSound("shot_enemy_1", (SHOT_ENEMY_1).toURI().toURL(), .5f);
-            loadSound("shot_enemy_2", (SHOT_ENEMY_2).toURI().toURL(), .5f);
-            loadSound("shot_enemy_3", (SHOT_ENEMY_3).toURI().toURL(), .5f);
-            loadSound("shot_enemy_4", (SHOT_ENEMY_4).toURI().toURL(), .5f);
-            loadSound("shot_enemy_5", (SHOT_ENEMY_5).toURI().toURL(), .5f);
-            loadSound("shot_enemy_6", (SHOT_ENEMY_6).toURI().toURL(), .5f);
-            loadSound("bullet_impact", (BULLET_IMPACT).toURI().toURL(), 1f);
-            loadSound("impact_1", (IMPACT_01).toURI().toURL(), 1f);
-            loadSound("impact_2", (IMPACT_02).toURI().toURL(), 1f);
-            loadSound("impact_3", (IMPACT_03).toURI().toURL(), 1f);
-            loadSound("impact_4", (IMPACT_04).toURI().toURL(), 1f);
-            loadSound("up_weapon", (UP_WEAPON).toURI().toURL(), 1f);
-            loadSound("up_health", (UP_HEALTH).toURI().toURL(), 1f);
-            loadSound("up_shield", (UP_SHIELD).toURI().toURL(), .7f);
-            loadSound("sfx_1", (SFX_1).toURI().toURL(), 1f);
-            loadSound("sfx_2", (SFX_2).toURI().toURL(), .6f);
-            loadSound("boss_spawn_1", (BOSS_SPAWN_1).toURI().toURL(), 1f);
-            loadSound("boss_wobble", (BOSS_WOBBLE_1).toURI().toURL(), .7f);
-            loadSound("boss_talk_1", (BOSS_TALK_1).toURI().toURL(), 1f);
-            loadSound("boss_talk_2", (BOSS_TALK_2).toURI().toURL(), 1f);
-            loadSound("boss_talk_3", (BOSS_TALK_3).toURI().toURL(), 1f);
-            loadSound("boss_talk_4", (BOSS_TALK_4).toURI().toURL(), 1f);
-            loadSound("boss_talk_5", (BOSS_TALK_5).toURI().toURL(), 1f);
-            loadSound("boss_talk_6", (BOSS_TALK_6).toURI().toURL(), 1f);
-            loadSound("nav", (NAV).toURI().toURL(), 1f);
-            loadSound("nav_select", (NAV_SELECT).toURI().toURL(), 1f);
-            File MUSIC_WIN = new File("src/assets/audio/music/music_retro_1.wav");
-            loadMusic("music_win", (MUSIC_WIN).toURI().toURL());
-            File MUSIC_MENU = new File("src/assets/audio/music/music_menu_2.wav");
-            loadMusic("music_menu", (MUSIC_MENU).toURI().toURL());
-            File MUSIC_BATTLE = new File("src/assets/audio/music/music_battle_2.wav");
-            loadMusic("music_battle", (MUSIC_BATTLE).toURI().toURL());
+            loadSound("shot_player", getClass().getResource(audio + "shots/player_1.wav").toURI().toURL(), 1f);
+
+            loadSound("shot_boss", getClass().getResource(audio + "boss_sfx/boss_shot_1.wav").toURI().toURL(), .6f);
+
+            loadSound("shot_enemy_1", getClass().getResource(audio + "shots/enemy_1.wav").toURI().toURL(), .5f);
+            loadSound("shot_enemy_2", getClass().getResource(audio + "shots/enemy_2.wav").toURI().toURL(), .5f);
+            loadSound("shot_enemy_3", getClass().getResource(audio + "shots/enemy_3.wav").toURI().toURL(), .5f);
+            loadSound("shot_enemy_4", getClass().getResource(audio + "shots/enemy_4.wav").toURI().toURL(), .5f);
+            loadSound("shot_enemy_5", getClass().getResource(audio + "shots/enemy_5.wav").toURI().toURL(), .5f);
+            loadSound("shot_enemy_6", getClass().getResource(audio + "shots/enemy_6.wav").toURI().toURL(), .5f);
+
+            loadSound("bullet_impact", getClass().getResource(audio + "impacts/bullet_impact_1.wav").toURI().toURL(), 1f);
+            loadSound("impact_1", getClass().getResource(audio + "impacts/impact_1.wav").toURI().toURL(), 1f);
+            loadSound("impact_2", getClass().getResource(audio + "impacts/impact_2.wav").toURI().toURL(), 1f);
+            loadSound("impact_3", getClass().getResource(audio + "impacts/impact_3.wav").toURI().toURL(), 1f);
+            loadSound("impact_4", getClass().getResource(audio + "impacts/impact_4.wav").toURI().toURL(), 1f);
+
+            loadSound("up_weapon", getClass().getResource(audio + "sfx/beep_1.wav").toURI().toURL(), 1f);
+            loadSound("up_health", getClass().getResource(audio + "sfx/ascending_2.wav").toURI().toURL(), 1f);
+            loadSound("up_shield", getClass().getResource(audio + "sfx/ascending_1.wav").toURI().toURL(), .7f);
+
+            loadSound("sfx_1", getClass().getResource(audio + "sfx/hit_1.wav").toURI().toURL(), 1f);
+            loadSound("sfx_2", getClass().getResource(audio + "sfx/alarm_1.wav").toURI().toURL(), .6f);
+
+            loadSound("boss_spawn_1", getClass().getResource(audio + "boss_sfx/boss_spawn_1.wav").toURI().toURL(), 1f);
+            loadSound("boss_wobble", getClass().getResource(audio + "sfx/wobble_1.wav").toURI().toURL(), .7f);
+            loadSound("boss_talk_1", getClass().getResource(audio + "boss_sfx/boss_talk_1.wav").toURI().toURL(), 1f);
+            loadSound("boss_talk_2", getClass().getResource(audio + "boss_sfx/boss_talk_2.wav").toURI().toURL(), 1f);
+            loadSound("boss_talk_3", getClass().getResource(audio + "boss_sfx/boss_talk_3.wav").toURI().toURL(), 1f);
+            loadSound("boss_talk_4", getClass().getResource(audio + "boss_sfx/boss_talk_4.wav").toURI().toURL(), 1f);
+            loadSound("boss_talk_5", getClass().getResource(audio + "boss_sfx/boss_talk_5.wav").toURI().toURL(), 1f);
+            loadSound("boss_talk_6", getClass().getResource(audio + "boss_sfx/boss_talk_6.wav").toURI().toURL(), 1f);
+
+            loadSound("nav", getClass().getResource(audio + "sfx/nav_1.wav").toURI().toURL(), 1f);
+            loadSound("nav_select", getClass().getResource(audio + "sfx/nav_select_1.wav").toURI().toURL(), 1f);
+
+            loadMusic("music_win", getClass().getResource(audio + "music/music_retro_1.wav").toURI().toURL());
+            loadMusic("music_menu", getClass().getResource(audio + "music/music_menu_2.wav").toURI().toURL());
+            loadMusic("music_battle", getClass().getResource(audio + "music/music_battle_2.wav").toURI().toURL());
         }
         catch(Exception e){
+            ViewUtil.setError(e.getMessage());
             e.printStackTrace();
         }
 
