@@ -263,7 +263,10 @@ public class Player extends Entity {
     }
 
     public void isPlaying(){playing = true; }
-    public void isNotPlaying() {playing = false; }
+    public void isNotPlaying() {
+        playing = false;
+        isNotShooting();
+    }
     public boolean getPlaying(){return playing;}
     
     public boolean hasShield() {
