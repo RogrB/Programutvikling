@@ -11,18 +11,13 @@ import view.GameView;
 
 public class UserInputs {
 
-    private Scene s;
-
     public UserInputs(Scene s){
-        this.s = s;
         setKeyListeners(s);
     }
 
-    // MVC-access
+    private GameView gv = GameView.getInstance();
 
-    GameView gv = GameView.getInstance();
-
-    public void setKeyListeners(Scene s){
+    private void setKeyListeners(Scene s){
         s.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.SPACE && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()) {
                 gs.player.isShooting();

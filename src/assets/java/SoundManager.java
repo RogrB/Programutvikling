@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -24,10 +23,6 @@ public class SoundManager {
     private Map<String, AudioClip> soundMap = new HashMap<>();
     private MediaPlayer player;
     private String currentMusic = "music_menu";
-
-    File MUSIC_MENU =     new File("src/assets/audio/music/music_menu_2.wav");
-    File MUSIC_BATTLE =   new File("src/assets/audio/music/music_battle_2.wav");
-    File MUSIC_WIN =      new File("src/assets/audio/music/music_retro_1.wav");
 
 
     public SoundManager(){
@@ -90,8 +85,11 @@ public class SoundManager {
             loadSound("boss_talk_6", (BOSS_TALK_6).toURI().toURL(), 1f);
             loadSound("nav", (NAV).toURI().toURL(), 1f);
             loadSound("nav_select", (NAV_SELECT).toURI().toURL(), 1f);
+            File MUSIC_WIN = new File("src/assets/audio/music/music_retro_1.wav");
             loadMusic("music_win", (MUSIC_WIN).toURI().toURL());
+            File MUSIC_MENU = new File("src/assets/audio/music/music_menu_2.wav");
             loadMusic("music_menu", (MUSIC_MENU).toURI().toURL());
+            File MUSIC_BATTLE = new File("src/assets/audio/music/music_battle_2.wav");
             loadMusic("music_battle", (MUSIC_BATTLE).toURI().toURL());
         }
         catch(Exception e){
@@ -100,15 +98,13 @@ public class SoundManager {
 
     }
 
-    public void loadSound(String id, URL url, float volume){
+    private void loadSound(String id, URL url, float volume){
         AudioClip audioClip = new AudioClip(url.toExternalForm());
         audioClip.setVolume(volume * ((float) gameSettings.getSoundValue() / 100));
         soundMap.put(id, audioClip);
     }
 
-    public String getCurrentMusic(){return currentMusic; }
-
-    public void loadMusic(String id, URL url){
+    private void loadMusic(String id, URL url){
         Media media = new Media(url.toExternalForm());
         musicMap.put(id, media);
     }

@@ -1,7 +1,6 @@
 package assets.java;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public enum Sprite {
 

@@ -2,6 +2,8 @@ package model.enemy;
 
 import assets.java.SoundManager;
 
+import java.util.Objects;
+
 import static java.lang.Math.*;
 
 public class EnemyMovementPattern implements java.io.Serializable {
@@ -30,7 +32,6 @@ public class EnemyMovementPattern implements java.io.Serializable {
     // Boss functionality
     private boolean bossInitializing = true;
     private int bossCounter;
-    private final int BOSS_INIT_TIME = 250;
 
     public EnemyMovementPattern(String name){
 
@@ -40,7 +41,7 @@ public class EnemyMovementPattern implements java.io.Serializable {
         modDepth = 1;       // Modulasjonsdybden til oscillatoren
         modSpeed = 2.5;     // Frekvensen til oscillatoren
 
-        if(name == "TRI")
+        if(Objects.equals(name, "TRI"))
             triState = true;
     }
 
@@ -151,13 +152,13 @@ public class EnemyMovementPattern implements java.io.Serializable {
         }
     }
 
-    public void updatePosition(){
+    void updatePosition(){
         framesAlive++;
         nextX();
         nextY();
     }
 
-    public void setStartPosition(int x, int y){
+    void setStartPosition(int x, int y){
         if(this.x == 0 && this.y == 0){
             this.x = x;
             this.y = y;
@@ -189,6 +190,7 @@ public class EnemyMovementPattern implements java.io.Serializable {
     }
 
     private void bossInit(){
+        int BOSS_INIT_TIME = 250;
         if(bossCounter < BOSS_INIT_TIME) {
 
             if(bossCounter == 0)

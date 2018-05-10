@@ -18,7 +18,6 @@ public class LevelLoader {
     public static LevelLoader getInstance(){ return inst; }
 
     private String[][][] levelData;
-    private final int COLUMN_WIDTH = 70;
 
     public void setLevelData(String[][][] levelData){
         bossType = null;
@@ -26,7 +25,8 @@ public class LevelLoader {
     }
     
     public int increment(int increment){
-        if((increment < (levelData[1].length*COLUMN_WIDTH))) {
+        int COLUMN_WIDTH = 70;
+        if((increment < (levelData[1].length* COLUMN_WIDTH))) {
             if (increment % COLUMN_WIDTH == 0) {
                 int column = (increment / COLUMN_WIDTH);
                 loopThroughEnemyRows(getEnemyColumn(column));
@@ -69,7 +69,7 @@ public class LevelLoader {
         }
     }
 
-    public String[][] getEnemyColumn(int column){
+    private String[][] getEnemyColumn(int column){
 
         int rows = levelData.length;
         String[][] res = new String[rows][3];

@@ -1,7 +1,6 @@
 package io;
 
 import exceptions.FileIOException;
-import view.GameView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,7 +11,7 @@ public class AutoSave {
     private AutoSave(){}
     public static AutoSave getInstance(){ return inst; }
 
-    IOManager io = IOManager.getInstance();
+    private IOManager io = IOManager.getInstance();
 
     private boolean running = false;
     private Timer timer;

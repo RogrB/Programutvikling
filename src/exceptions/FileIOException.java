@@ -1,6 +1,5 @@
 package exceptions;
 
-import view.GameView;
 
 public class FileIOException extends Exception {
 

@@ -8,7 +8,6 @@ public class Shield extends Existance {
     
     private int charges;
     private boolean immunity = false;
-    private int immunitytime = 250;
     private boolean broken = false;
     private int animCounter;
     
@@ -26,7 +25,7 @@ public class Shield extends Existance {
         }
     }
     
-    public void setCharges(int charges) {
+    private void setCharges(int charges) {
         this.charges = charges;
     }
     
@@ -38,12 +37,13 @@ public class Shield extends Existance {
         return this.immunity;
     }
     
-    public void setImmunity(boolean immunity) {
+    private void setImmunity(boolean immunity) {
         this.immunity = immunity;
     }
     
-    public void immunityTimer() {
+    private void immunityTimer() {
         Timer shotTimer = new Timer();
+        int immunitytime = 250;
         shotTimer.schedule(new TimerTask() {
             
             @Override
@@ -69,7 +69,7 @@ public class Shield extends Existance {
         return this.broken;
     }
     
-    public void animate() {
+    private void animate() {
         Timer shieldBlinkTimer = new Timer();
         shieldBlinkTimer.schedule(new TimerTask() {
             

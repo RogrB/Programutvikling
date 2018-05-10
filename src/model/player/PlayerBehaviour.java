@@ -1,7 +1,5 @@
 package model.player;
 
-import model.GameModel;
-import model.GameState;
 import model.weapons.*;
 
 import static controller.GameController.gs;
@@ -9,10 +7,6 @@ import static controller.GameController.gs;
 public class PlayerBehaviour implements java.io.Serializable {
 
     private static final long serialVersionUID = 185835451720483588L;
-
-    private final int MAX_SPEED = 20;
-    private final int MOD_SPEED = 1;
-    // MVC-access
 
     private int speed;
     private int dir;
@@ -23,17 +17,18 @@ public class PlayerBehaviour implements java.io.Serializable {
     }
 
 
-    public void move(int direction){
+    void move(int direction){
         if(this.dir != direction) {
             dir = direction;
         }
     }
 
-    public void moveStop(){
+    void moveStop(){
         speed = 0;
     }
 
-    public int next(){
+    int next(){
+        int MOD_SPEED = 1;
         if(!isMaxSpeed())
             speed += dir * MOD_SPEED;
         if(dir == 0){
@@ -46,12 +41,11 @@ public class PlayerBehaviour implements java.io.Serializable {
     }
 
     private boolean isMaxSpeed(){
-        if(Math.abs(speed) > MAX_SPEED)
-            return true;
-        return false;
+        int MAX_SPEED = 20;
+        return Math.abs(speed) > MAX_SPEED;
     }
     
-    public void shoot(String weapontype, int x, int y, int width, int height, Weapon weapon) {
+    void shoot(String weapontype, int x, int y, int width, int height, Weapon weapon) {
             switch(weapontype) {
                 case "Basic":
                     gs.playerBullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));

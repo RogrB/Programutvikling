@@ -2,10 +2,8 @@ package model.enemy;
 
 import assets.java.SoundManager;
 import model.Entity;
-import model.GameModel;
 import model.IdGen;
 import model.weapons.Basic;
-import view.OptionsView;
 
 import java.util.Iterator;
 import java.util.Random;
@@ -52,7 +50,7 @@ public class Enemy extends Entity {
     public int getHealth() {
         return health;
     }
-    public EnemyMovementPattern getPattern(){
+    EnemyMovementPattern getPattern(){
         return pattern;
     }
 
@@ -103,7 +101,7 @@ public class Enemy extends Entity {
             shoot();
     }
     
-    public void addScore() {
+    private void addScore() {
         if (!this.scoreCount) {
             gs.player.setScore(gs.player.getScore() + 100);
             gs.player.setEnemiesKilled(gs.player.getEnemiesKilled() + 1);
