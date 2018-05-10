@@ -19,9 +19,7 @@ import static controller.GameController.gs;
  * Class to handle reading and writing to and from save states, options
  * and back end settings. These are all serialized classes whom are stored
  * in the {@code tmp/} folder or sub directories of this.
- * <p>
- * <b>Note:</b> The {@code IOManager} is a singleton.
- * 
+ *
  * @author asmundwien
  */
 public class IOManager {

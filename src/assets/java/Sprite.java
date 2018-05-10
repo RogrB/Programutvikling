@@ -6,6 +6,8 @@ import javafx.scene.image.Image;
  * <h1>A container for sprite source files</h1>
  * An enum which contains the source files for the most used sprites,
  * and adds some funconality to them.
+ *
+ * @author asmundwien
  */
 public enum Sprite {
 
