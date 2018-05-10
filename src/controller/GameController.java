@@ -63,6 +63,9 @@ public class GameController {
         gs.nextLevel();
         gs.player.init();
         gameRun();
+        if (GameModel.getInstance().getMultiplayerStatus()) {
+            MultiplayerHandler.getInstance().nextGame();
+        }
     }
 
     public void loadGame(){
@@ -303,6 +306,11 @@ public class GameController {
     }
 
     private void detectGameWin() {
+        if (GameModel.getInstance().getMultiplayerStatus()) {
+            if(MultiplayerHandler.getInstance().getNextGameRequest()) {
+                MultiplayerHandler.getInstance().setNextGameRequest(false);
+            }
+        }
         if(bossType != null){
             EnemyType boss = EnemyType.valueOf(bossType);
             for(Enemy enemy : gs.enemies){
