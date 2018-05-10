@@ -76,6 +76,12 @@ public class LoadGameView extends ViewUtil{
                 tempElements.remove(counter);
             }
             else{
+                try{
+                    tempElements.get(counter).setText(IOManager.getInstance().getGameState(counter).getStateName());
+                }
+                catch(Exception e){
+                    System.out.println(e);
+                }
                 counter++;
             }
         }

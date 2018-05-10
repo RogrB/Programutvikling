@@ -50,4 +50,8 @@ public class MenuButton extends StackPane{
         bg.setStroke(color);
         text.setFill(Color.GREY);
     }
+
+    public void setText(String text){
+        this.text.setText(text);
+    }
 }
