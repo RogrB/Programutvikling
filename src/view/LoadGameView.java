@@ -116,4 +116,8 @@ public class LoadGameView extends ViewUtil{
         }
         System.out.println("Totally loaded a rad gamesave");
     }
+
+    private void loadGame(int gameSave){
+        
+    }
 }
