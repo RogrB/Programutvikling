@@ -28,7 +28,7 @@ public class MenuView extends ViewUtil{
     }
 
     private void continueGame(InputEvent event){
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node)event.getTarget()).getScene().getWindow();
         try {
             IOManager.getInstance().loadGameState();
             GameController.getInstance().loadGame();
