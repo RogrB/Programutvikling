@@ -117,6 +117,7 @@ public abstract class Entity extends Existance {
 
     /**
      * The object takes 1 point of damage.
+     * * <p><b>Note: </b>If {@code health} < 1, {@code isDead()} is called.
      */
     public void takeDamage(){
         takeDamage(-1);
@@ -124,6 +125,7 @@ public abstract class Entity extends Existance {
 
     /**
      * The object takes damage according to the {@code dmg} parameter.
+     * * <p><b>Note: </b>If {@code health} < 1, {@code isDead()} is called.
      * @param dmg How much damage for the object to take.
      */
     public void takeDamage(int dmg){
