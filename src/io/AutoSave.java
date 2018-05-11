@@ -12,6 +12,8 @@ import java.util.TimerTask;
  * and automatically saves the GameState every 0,7 seconds.
  * <p>
  * <b>Note: </b>This is only a functionality in single player.
+ *
+ * @author Åsmund Røst Wien
  */
 public class AutoSave {
 

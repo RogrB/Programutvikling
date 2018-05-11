@@ -20,7 +20,7 @@ import static controller.GameController.gs;
  * and back end settings. These are all serialized classes whom are stored
  * in the {@code tmp/} folder or sub directories of this.
  *
- * @author asmundwien
+ * @author Åsmund Røst Wien
  */
 public class IOManager {
 
