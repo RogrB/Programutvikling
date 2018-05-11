@@ -51,12 +51,14 @@ public class GameState implements java.io.Serializable {
 
     /**
      * Stores the boss' type when it spawns.
-     * <p><b>Note: </b>used to set correct boss attributes when the game loads.
+     * <p><b>Note: </b>used to set correct boss attributes
+     * when the game loads.
      */
     public static String bossType;
 
     /**
-     * Boolean to check if the game is over or not. Used for specific logic purposes when the game loads.
+     * Boolean to check if the game is over or not. Used
+     * for specific logic purposes when the game loads.
      */
     public boolean gameOver;
 
@@ -95,7 +97,8 @@ public class GameState implements java.io.Serializable {
     }
 
     /**
-     * Resets the GameState to level 1. Called on the creation of a new game.
+     * Resets the GameState to level 1.
+     * Called on the creation of a new game.
      */
     public void firstLevel(){
         levelIterator = 1;
@@ -103,7 +106,8 @@ public class GameState implements java.io.Serializable {
     }
 
     /**
-     * Sets the GameState to the next level. Called when the level is completed.
+     * Sets the GameState to the next level.
+     * Called when the level is completed.
      */
     public void nextLevel(){
         levelIterator++;
@@ -167,7 +171,8 @@ public class GameState implements java.io.Serializable {
     public int getLevelIterator(){return levelIterator; }
 
     /**
-     * Sets a custom name of this {@code GameState}. Called when a new game is created.
+     * Sets a custom name of this {@code GameState}.
+     * Called when a new game is created.
      * @param stateName The custom name for this {@code GameState}.
      */
     public void setStateName(String stateName){
