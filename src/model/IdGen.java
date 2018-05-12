@@ -5,7 +5,7 @@ package model;
  * This is a class to generate unique identification
  * numbers, specifically used for multiplayer purposes.
  *
- * @author asmundwien
+ * @author Åsmund Røst Wien
  */
 public class IdGen {
 

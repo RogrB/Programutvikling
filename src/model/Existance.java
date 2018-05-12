@@ -15,7 +15,7 @@ import java.util.Iterator;
  * <b>Note: </b>This class also stores the objects dimensions and
  * position at the previous frame, for rendering purposes.
  *
- * @author asmundwien
+ * @author Åsmund Røst Wien
  */
 public abstract class Existance implements java.io.Serializable {
 

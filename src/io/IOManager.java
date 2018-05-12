@@ -5,8 +5,6 @@ import model.GameModel;
 import model.GameSettings;
 import model.GameState;
 import model.enemy.Enemy;
-import view.LoadGameView;
-import view.ViewUtil;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -16,11 +14,12 @@ import static controller.GameController.gs;
 
 /**
  * <h1>Reads and writes save states</h1>
- * Class to handle reading and writing to and from save states, options
- * and back end settings. These are all serialized classes whom are stored
- * in the {@code tmp/} folder or sub directories of this.
+ * This class handles the process of reading and writing to
+ * and from save states, options and back end settings.
+ * These are all serialized classes whom are stored in the
+ * {@code tmp/} folder or its sub directories.
  *
- * @author asmundwien
+ * @author Åsmund Røst Wien
  */
 public class IOManager {
 

@@ -1,17 +1,20 @@
 package io;
 
 import exceptions.FileIOException;
-import view.ViewUtil;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
  * <h1>Automatically saves the game</h1>
- * This thread is run in paralell with the game's progression,
- * and automatically saves the GameState every 0,7 seconds.
- * <p>
- * <b>Note: </b>This is only a functionality in single player.
+ * This class manages a thread which is run in paralell
+ * with the game's progression, and automatically saves
+ * the GameState every 0,7 seconds.
+ *
+ * <p><b>Note: </b>This is only a functionality in single
+ * player.
+ *
+ * @author Åsmund Røst Wien
  */
 public class AutoSave {
 
