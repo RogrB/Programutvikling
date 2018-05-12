@@ -40,9 +40,7 @@ public class NewGameView extends ViewUtil{
         selectSaveText.setFill(Color.WHITE);
         selectSaveText.setFont(header.getFont().font(50));
 
-        errorField = new WarningField();
-        errorField.setTranslateX(475);
-        errorField.setTranslateY(250);
+        setErrorFieldPosition();
 
         root.setPrefSize(ViewUtil.VIEW_WIDTH, ViewUtil.VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));

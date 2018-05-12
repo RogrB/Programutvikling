@@ -115,9 +115,7 @@ public class OptionsView extends ViewUtil{
             difficultyValue = newValue.intValue();
             difficultyTextLabel.setText(setDifficultyText(difficultyValue));
         });
-        errorField = new WarningField();
-        errorField.setTranslateX(475);
-        errorField.setTranslateY(250);
+        setErrorFieldPosition();
         backButton = new MenuButton("BACK");
 
         menuElements = new Parent[]{soundSlider, musicSlider, difficultySlider, backButton};

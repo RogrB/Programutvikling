@@ -145,8 +145,7 @@ public class GameView extends ViewUtil{
         wonButtonContainer.setTranslateY(675);
         menuElementsWon = new MenuButton[]{continueButton, exitToMenuButton2};
 
-        errorField.setTranslateX(200);
-        errorField.setTranslateY(750);
+        setErrorFieldPosition();
 
         MenuButton retryButton = new MenuButton("RETRY");
         MenuButton exitToMenuButton = new MenuButton("MAIN MENU");

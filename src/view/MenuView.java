@@ -120,9 +120,7 @@ public class MenuView extends ViewUtil{
         MenuButton selectLevelButton = new MenuButton("LEVEL SELECT");
         MenuButton optionsButton = new MenuButton("OPTIONS");
         MenuButton exitButton = new MenuButton("EXIT");
-        errorField = new WarningField();
-        errorField.setTranslateX(200);
-        errorField.setTranslateY(750);
+        setErrorFieldPosition();
 
         newGameButton.setOnMouseClicked(this::createNewSave);
         continueButton.setOnMouseClicked(this::continueGame);

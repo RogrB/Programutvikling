@@ -50,9 +50,7 @@ public class NewSaveView extends ViewUtil{
         writeSaveNameText.setY(275);
         writeSaveNameText.setFill(Color.WHITE);
         writeSaveNameText.setFont(header.getFont().font(50));
-        errorField = new WarningField();
-        errorField.setTranslateX(475);
-        errorField.setTranslateY(500);
+        setErrorFieldPosition();
 
         Label saveNameLabel = new Label("SAVE NAME");
         saveNameLabel.setTextFill(Color.WHITE);

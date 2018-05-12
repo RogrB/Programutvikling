@@ -56,8 +56,7 @@ public class LoadGameView extends ViewUtil{
         tempElements.add(save2);
         tempElements.add(save3);
 
-        errorField.setTranslateX(200);
-        errorField.setTranslateY(750);
+        setErrorFieldPosition();
 
         int counter = 0;
         for(int i = 0; i < 3; i++){

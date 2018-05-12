@@ -91,6 +91,10 @@ public abstract class ViewUtil {
 
     public abstract Parent initScene();
     public abstract void select(String buttonName, KeyEvent event);
+    public void setErrorFieldPosition(){
+        errorField.setTranslateX(200);
+        errorField.setTranslateY(750);
+    }
 
     public int getElementCounter(){
         return elementCounter;
