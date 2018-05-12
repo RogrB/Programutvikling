@@ -6,33 +6,95 @@ import java.util.Objects;
 
 import static java.lang.Math.*;
 
+/**
+ * <h1>Implementation of an enemies movement</h1>
+ * This class calculates and implements an enemies movement across
+ * the screen by implementing it's own simple LFO (low frequency
+ * oscillator) functionality. The different LFOs are defined by
+ * names (strings) which are passed through the constructor. The
+ * available options are:
+ *
+ * {@code
+ * LEFT,       LEFT_PULSATING
+ * SIN,        SIN_REVERSED
+ * COS,        COS_REVERSED
+ * TRI,        TRI_REVERSED
+ *
+ * MADNESS_01, MADNESS_02, MADNESS_03
+ * BOSS_LINE,  BOSS_EIGHT, BOSS_OVAL
+ * }.
+ *
+ * All enemies has an {@code EnemyMovementPattern}.
+ *
+ * @author Åsmund Røst Wien
+ * @see Enemy
+ */
 public class EnemyMovementPattern implements java.io.Serializable {
 
-    /*
-    * LEFT,       LEFT_PULSATING,
-    * SIN,        SIN_REVERSED,
-    * COS,        COS_REVERSED,
-    * TRI,        TRI_REVERSED,
-    *
-    * MADNESS_01, MADNESS_02, MADNESS_03,
-    * BOSS_LINE,  BOSS_EIGHT, BOSS_OVAL;
-    * */
-
+    /**
+     * The name which defines this objects pattern behaviour.
+     */
     private String name;
 
+    /**
+     * The current X and Y position of the {@code Enemy} who has this pattern.
+     * Used to calculate the next X and Y position by the LFO.
+     */
     private double x, y;
+
+    /**
+     * The movement speed for this {@code Enemy}.
+     */
     private double movementSpeed;
+
+    /**
+     * How many frames this {@code Enemy} has existed.
+     * Used to calculate the forward angle of the LFO.
+     */
     private int framesAlive;
+
+    /**
+     * Attributes to manipulate the LFOs wavelength and modulation depth.
+     */
     private double modDepth, modSpeed;
 
-    // Triangle functionality
+    /**
+     * <b>Triangle functionality: </b>Custom attribute used specifically
+     * for implementation of the triangle movement patterns.
+     * <p>
+     * {@code triState} defines the current direction of the triangle.
+     */
     private boolean triState = false;
+
+    /**
+     * <b>Triangle functionality: </b>Custom attribute used specifically
+     * for implementation of the triangle movement patterns.
+     * <p>
+     * {@code triCount} defines the modulation depth of the triangle pattern.
+     */
     private int triCount;
 
-    // Boss functionality
+    /**
+     * <b>Boss functionality: </b>Custom attribute for calculating the
+     * boss position as it spawns.
+     * <p>
+     * {@code bossInitializing} is set for the duration of the spawn movement.
+     */
     private boolean bossInitializing = true;
+
+    /**
+     * <b>Boss functionality: </b>Custom attribute for calculating the
+     * boss position as it spawns.
+     * <p>
+     * {@code bossInitializing} timer for definition of how long the
+     * boss should spawn before the regular pattern kicks in.
+     */
     private int bossCounter;
 
+    /**
+     * <b>Constructor: </b> used to define attributes for the LFO to be set.
+     * @param name Takes a name {@code String} as an input parameter.
+     */
     public EnemyMovementPattern(String name){
 
         this.name = name;
@@ -45,6 +107,9 @@ public class EnemyMovementPattern implements java.io.Serializable {
             triState = true;
     }
 
+    /**
+     * Calculates the objects next position across the LFOs X axis.
+     */
     private void nextX(){
         switch(name){
             case "LEFT":
@@ -85,10 +150,16 @@ public class EnemyMovementPattern implements java.io.Serializable {
             case "MADNESS_02":
                 x -= cos(rads(framesAlive * modSpeed * movementSpeed * 2)) * getModifiersMultiplied() + (movementSpeed * 2);
                 break;
+            default:
+                x -= movementSpeed * 2;
+                break;
 
         }
     }
 
+    /**
+     * Calculates the objects next position across the LFOs Y axis.
+     */
     private void nextY(){
         switch(name) {
             case "LEFT":
@@ -148,10 +219,15 @@ public class EnemyMovementPattern implements java.io.Serializable {
             case "MADNESS_03":
                 y -= cos(rads(framesAlive * modSpeed * movementSpeed / 2)) * getModifiersMultiplied();
                 break;
+            default:
+                break;
 
         }
     }
 
+    /**
+     * 
+     */
     void updatePosition(){
         framesAlive++;
         nextX();

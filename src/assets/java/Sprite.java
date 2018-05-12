@@ -2,6 +2,13 @@ package assets.java;
 
 import javafx.scene.image.Image;
 
+/**
+ * <h1>A container for sprite source files</h1>
+ * An enum which contains the source files for the most used sprites,
+ * and adds some specific functionality to them.
+ *
+ * @author Åsmund Røst Wien
+ */
 public enum Sprite {
 
     // Enemies
@@ -90,20 +97,39 @@ public enum Sprite {
     PLAYER_DEATH_8("assets/image/playerDeath/playerDeath_008.png"),
     PLAYER_DEATH_9("assets/image/playerDeath/playerDeath_009.png");
 
+    /**
+     * The source file path of the object.
+     */
     public String src;
 
+    /**
+     * Defines which sprite to use.
+     * @param src The source file path for this object.
+     */
     Sprite(String src){
         this.src = src;
     }
-    
+
+    /**
+     * Returns the file path of the object.
+     * @return The file path of the object.
+     */
     public String getSrc() {
         return this.src;
     }
 
+    /**
+     * Returns the height of the object.
+     * @return The height of the object.
+     */
     public int getHeight(){
         return (int) new Image(src).getHeight();
     }
 
+    /**
+     * Returns the width of the object.
+     * @return The width of the object.
+     */
     public int getWidth(){
         return (int) new Image(src).getWidth();
     }
