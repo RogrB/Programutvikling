@@ -2,6 +2,12 @@ package model.weapons;
 
 import assets.java.Sprite;
 
+/**
+ * <h1>Contains the Weapon Types available in the game</h1>
+ * Contains the data for all the weapon types available.
+ * Sets the sprite, damage, firerate and hitanimation for all weapon types.
+ * Both player and enemy weapons.
+ */
 public enum Weapon {
 
     //                  Sprite                              Damage  FireRate    HitAnimation            
@@ -15,12 +21,35 @@ public enum Weapon {
     ENEMY_BASIC(        Sprite.WEAPON_ENEMY_BASIC,          1,      300,        BulletHit.ENEMY_BASIC),
     ENEMY_CIRCLE(       Sprite.WEAPON_PLAYER_LASERCIRCLE4,  1,      300,        BulletHit.ENEMY_BASIC);
 
-
+    /**
+     * {@code This' Sprite}.
+     * @see Sprite
+     */
     public final Sprite SPRITE;
+    
+    /**
+     * The amount of damage the projectile does upon hit
+     */    
     public final int DMG;
+    
+    /**
+     * Decides how fast a weapon can fire
+     */    
     public final int FIRERATE;
+    
+    /**
+     * Contains the {@code Sprite} for the bullet hit effect
+     * @see Sprite
+     */    
     public final Sprite[] BULLET_HIT;
 
+    /**
+     * <b>Constructor: </b>sets the Sprite, damage, fireRate and BulletHit sprites for {@code this}
+     * @param sprite Sets the Sprite
+     * @param dmg Sets the damage
+     * @param fireRate Sets the fire rate
+     * @param bulletHit Sets the sprite container for the BulletHit effect
+     */       
     Weapon(Sprite sprite, int dmg, int fireRate, BulletHit bulletHit){
         SPRITE = sprite;
         DMG = dmg;
