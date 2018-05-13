@@ -143,9 +143,7 @@ public class GameState implements java.io.Serializable {
     public void loadGameData(){
         LevelLoader.getInstance().setLevelData(levelData);
         player.newSprite(Sprite.PLAYER);
-        player.getImageView().relocate(player.getX(), player.getY());
         player2.newSprite(Sprite.PLAYER2);
-        player2.getImageView().relocate(player2.getX(), player2.getY());
         if(player.hasShield()) {
             player.shield().newSprite(Sprite.SHIELD1);
         }
