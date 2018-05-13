@@ -65,14 +65,8 @@ public class OptionsView extends ViewUtil{
     }
 
     public Parent initScene(){
-        root = new Pane();
+        root = initBaseScene(BG_IMG);
         VBox optionsMenu = new VBox();
-        header.setX(300);
-        header.setY(175);
-        header.setFill(Color.WHITE);
-        header.setFont(header.getFont().font(100));
-        root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
-        root.setBackground(getBackGroundImage(BG_IMG));
         Label soundLabel = new Label("VOLUME");
         soundLabel.setTextFill(Color.WHITE);
         Label musicLabel = new Label("MUSIC");

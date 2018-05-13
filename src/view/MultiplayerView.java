@@ -27,8 +27,6 @@ public class MultiplayerView extends ViewUtil{
         return inst;
     }
 
-    private MultiplayerView(){}
-
     private MultiplayerHandler mp = MultiplayerHandler.getInstance();
     private GameModel gm = GameModel.getInstance();
 
@@ -41,13 +39,7 @@ public class MultiplayerView extends ViewUtil{
     public static Stage stage;
 
     public Parent initScene(){
-        root = new Pane();
-        header.setX(300);
-        header.setY(175);
-        header.setFill(Color.WHITE);
-        header.setFont(header.getFont().font(100));
-        root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
-        root.setBackground(getBackGroundImage(BG_IMG));
+        root = initBaseScene(BG_IMG);
         VBox multiplayerMenu = new VBox();
         Label hostname = new Label("HOSTNAME (OTHER PLAYERS IP)");
         hostname.setTextFill(Color.WHITE);

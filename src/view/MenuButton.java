@@ -11,6 +11,7 @@ import javafx.scene.text.Text;
 public class MenuButton extends StackPane{
     private Text text;
     private Rectangle bg;
+    private int value;
 
     MenuButton(String name){
         text = new Text(name);
@@ -54,4 +55,8 @@ public class MenuButton extends StackPane{
     public void setText(String text){
         this.text.setText(text);
     }
+
+    public void setValue(int value){this.value = value; }
+
+    public int getValue(){return value; }
 }

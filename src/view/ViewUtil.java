@@ -10,6 +10,7 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -18,10 +19,18 @@ public abstract class ViewUtil {
     public static final int VIEW_WIDTH = 1200;
     public static final int VIEW_HEIGHT = 800;
     Pane root;
-    Text header = new Text("SPACE GAME");
+    Text header = new Text("AERO");
     int elementCounter = 0;
     static WarningField errorField = new WarningField();
     private static String lastErrorMessage = "";
+
+    public Pane initBaseScene(String bg){
+        root = new Pane();
+        setHeader();
+        root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
+        root.setBackground(getBackGroundImage(bg));
+        return root;
+    }
 
     void goToView(InputEvent event, Parent node){
         Stage stage = (Stage)((Node)event.getTarget()).getScene().getWindow();
@@ -109,5 +118,12 @@ public abstract class ViewUtil {
         if(!lastErrorMessage.equals(msg)){
             errorField.changeText(lastErrorMessage);
         }
+    }
+
+    void setHeader(){
+        header.setX(485);
+        header.setY(175);
+        header.setFill(Color.WHITE);
+        header.setFont(header.getFont().font(100));
     }
 }

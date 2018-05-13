@@ -24,21 +24,15 @@ public class NewSaveView extends ViewUtil{
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
+
     private Parent menuElements[];
     private TextField saveNameTextField;
 
     @Override
     public Parent initScene() {
-        root = new Pane();
+        root = initBaseScene(BG_IMG);
+
         VBox containerVBox = new VBox();
-        header.setX(300);
-        header.setY(175);
-        header.setFill(Color.WHITE);
-        header.setFont(header.getFont().font(100));
-
-        root.setPrefSize(ViewUtil.VIEW_WIDTH, ViewUtil.VIEW_HEIGHT);
-
-        root.setBackground(getBackGroundImage(BG_IMG));
         Text writeSaveNameText = new Text("NEW GAME");
         writeSaveNameText.setX(475);
         writeSaveNameText.setY(275);

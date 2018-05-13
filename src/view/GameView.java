@@ -71,8 +71,6 @@ public class GameView extends ViewUtil{
     private Text enemiesHit = new Text();
     private Text enemiesKilled = new Text();
     private Text hitPercent = new Text();
-    
-    private Pane root;
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
@@ -82,13 +80,14 @@ public class GameView extends ViewUtil{
     }
 
     public Parent initScene() {
+        root = initBaseScene(BG_IMG);
         if(SoundManager.getInst().getPlayer() != null){
             SoundManager.getInst().playMusic("stop");
         }
         SoundManager.getInst().playMusic("music_battle");
 
         scoreText = new Text(VIEW_WIDTH - 150, 60, "Score: " + Integer.toString(gs.player.getScore()));
-        levelText = new Text(VIEW_WIDTH - 150, 30, "Level " + Integer.toString(gs.getLevelIterator())); // Må hente riktig level fra leveldata
+        levelText = new Text(VIEW_WIDTH - 150, 30, "Level " + Integer.toString(gs.getLevelIterator()));
 
         scoreText.setFill(Color.WHITE);
         scoreText.setFont(Font.font("Verdana", 20));  
@@ -155,11 +154,7 @@ public class GameView extends ViewUtil{
         lostButtonContainer.setTranslateX(450);
         lostButtonContainer.setTranslateY(550);
         lostButtonContainer.setOpacity(0);
-        
-        root = new Pane();
 
-        root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
-        root.setBackground(getBackGroundImage(BG_IMG));
         if(gm.getMultiplayerStatus()) {
             root.getChildren().addAll(errorField, wonButtonContainer, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, dialogBox, player2LayerCanvas);
         }

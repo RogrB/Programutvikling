@@ -12,7 +12,6 @@ import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class MenuView extends ViewUtil{
@@ -25,9 +24,12 @@ public class MenuView extends ViewUtil{
 
     private String lastError = "";
 
-    private MenuView(){
-
-    }
+    private  MenuButton newGameButton;
+    private MenuButton continueButton;
+    private MenuButton multiplayerButton;
+    private MenuButton loadGameButton;
+    private MenuButton optionsButton;
+    private MenuButton exitButton;
 
     private void continueGame(InputEvent event){
         Stage stage = (Stage) ((Node)event.getTarget()).getScene().getWindow();
@@ -41,11 +43,6 @@ public class MenuView extends ViewUtil{
         } catch (FileIOException e) {
             System.err.println(e.getMessage());
         }
-    }
-
-    private void showLevelSelect(InputEvent event){
-        goToView(event, LevelSelectView.getInst().initScene());
-        System.out.println("Totally showed u some tight levels");
     }
 
     private void createNewSave(InputEvent event){
@@ -86,9 +83,6 @@ public class MenuView extends ViewUtil{
         if(buttonName.equals("MULTIPLAYER")){
             loadMultiplayer(event);
         }
-        if(buttonName.equals("LEVEL SELECT")){
-            showLevelSelect(event);
-        }
         if(buttonName.equals("OPTIONS")){
             showOptions(event);
             System.out.println(SoundManager.getInst().getPlayer().getVolume());
@@ -98,39 +92,26 @@ public class MenuView extends ViewUtil{
         }
     }
 
-    public Parent initScene(){
+    private void createButtons(){
+        newGameButton = new MenuButton("NEW GAME");
+        continueButton = new MenuButton("CONTINUE");
+        multiplayerButton = new MenuButton("MULTIPLAYER");
+        loadGameButton = new MenuButton("LOAD GAME");
+        optionsButton = new MenuButton("OPTIONS");
+        exitButton = new MenuButton("EXIT");
+    }
 
-        root = new Pane();
-        VBox mainMenu = new VBox();
-        header.setX(300);
-        header.setY(175);
-        header.setFill(Color.WHITE);
-        header.setFont(header.getFont().font(100));
-        root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
-        root.setBackground(getBackGroundImage(BG_IMG));
 
-        MenuButton newGameButton = new MenuButton("NEW GAME");
-        MenuButton continueButton = new MenuButton("CONTINUE");
-        MenuButton multiplayerButton = new MenuButton("MULTIPLAYER");
-        MenuButton loadGameButton = new MenuButton("LOAD GAME");
-        MenuButton selectLevelButton = new MenuButton("LEVEL SELECT");
-        MenuButton optionsButton = new MenuButton("OPTIONS");
-        MenuButton exitButton = new MenuButton("EXIT");
-        setErrorFieldPosition();
-
+    private void setButtonClickEvents(){
         newGameButton.setOnMouseClicked(this::createNewSave);
         continueButton.setOnMouseClicked(this::continueGame);
         multiplayerButton.setOnMouseClicked(this::loadMultiplayer);
         loadGameButton.setOnMouseClicked(this::loadGame);
-        selectLevelButton.setOnMouseClicked(this::showLevelSelect);
         optionsButton.setOnMouseClicked(this::showOptions);
         exitButton.setOnMouseClicked(event -> System.exit(1));
+    }
 
-        mainMenu.setFocusTraversable(true);
-        mainMenu.setSpacing(10);
-        mainMenu.setTranslateY(300);
-        mainMenu.setTranslateX(450);
-
+    private void setButtonPressEvents(Parent mainMenu){
         mainMenu.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
                 menuElements[elementCounter].lostFocus();
@@ -142,8 +123,18 @@ public class MenuView extends ViewUtil{
                 elementCounter = 0;
             }
         });
+    }
 
-        // remember to add selectLevelButton
+    public VBox createMainMenuContainer(){
+        VBox mainMenu = new VBox();
+        mainMenu.setFocusTraversable(true);
+        mainMenu.setSpacing(10);
+        mainMenu.setTranslateY(300);
+        mainMenu.setTranslateX(450);
+        return mainMenu;
+    }
+
+    public void decideMenuLayout(VBox mainMenu){
         if(gameFileFound() && GameController.getInstance().getLastGameLost()){
             mainMenu.getChildren().addAll(newGameButton, loadGameButton, multiplayerButton, optionsButton, exitButton);
             menuElements = new MenuButton[]{newGameButton, loadGameButton, multiplayerButton, optionsButton, exitButton};
@@ -156,12 +147,34 @@ public class MenuView extends ViewUtil{
             mainMenu.getChildren().addAll(newGameButton, multiplayerButton, optionsButton, exitButton);
             menuElements = new MenuButton[]{newGameButton, multiplayerButton, optionsButton, exitButton};
         }
+    }
+
+
+    public Parent initScene(){
+
+        root = initBaseScene(BG_IMG);
+
+        VBox mainMenu = createMainMenuContainer();
+
+        setErrorFieldPosition();
+
+        createButtons();
+        setButtonClickEvents();
+        setButtonPressEvents(mainMenu);
+
+        decideMenuLayout(mainMenu);
+
+
         menuElements[0].gainedFocus();
         root.getChildren().addAll(header, errorField, mainMenu);
 
         compareErrorMessage(lastError);
 
         return root;
+
+    }
+
+    private void layoutLogic(){
 
     }
 

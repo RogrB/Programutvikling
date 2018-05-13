@@ -26,13 +26,10 @@ public class NewGameView extends ViewUtil{
 
     @Override
     public Parent initScene() {
-        root = new Pane();
+        root = initBaseScene(BG_IMG);
+
         VBox saveFiles = new VBox();
         VBox containerVBox = new VBox();
-        header.setX(300);
-        header.setY(175);
-        header.setFill(Color.WHITE);
-        header.setFont(header.getFont().font(100));
 
         Text selectSaveText = new Text("SELECT SAVE FILE");
         selectSaveText.setX(500);
@@ -41,9 +38,6 @@ public class NewGameView extends ViewUtil{
         selectSaveText.setFont(header.getFont().font(50));
 
         setErrorFieldPosition();
-
-        root.setPrefSize(ViewUtil.VIEW_WIDTH, ViewUtil.VIEW_HEIGHT);
-        root.setBackground(getBackGroundImage(BG_IMG));
 
         MenuButton backButton = new MenuButton("BACK");
         MenuButton save1 = new MenuButton("SAVE 1");
@@ -83,7 +77,7 @@ public class NewGameView extends ViewUtil{
         });
         menuElements[0].gainedFocus();
         containerVBox.setSpacing(40);
-        containerVBox.setTranslateX(400);
+        containerVBox.setTranslateX(410);
         containerVBox.setTranslateY(250);
         backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
         root.getChildren().addAll(header, errorField, containerVBox);
