@@ -5,16 +5,43 @@ import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * <h1>The Asteroid class</h1>
+ * The {@code Asteroid} class extends the {@code Enemy} class to create a
+ * type of enemy that behaves differently than regular enemies.
+ */
 public class Asteroid extends Enemy {
     
+    /**
+     * Counter for the animation method
+     * that creates a spin effect
+     */      
     private int animationCounter;
+    
+    /**
+     * When an Asteroid object is shot it breaks off into
+     * to smaller asteroids. This boolean checks if that has
+     * happened.
+     */      
     private boolean spawned = false;
 
+    /**
+     * <b>Constructor: </b>sets values required by the superclass {@code Enemy}
+     * which extends {@code Entity}
+     * @param pattern sets the movement pattern of {@code this} based on patterns defined in the {@code EnemyMovementPattern} class
+     * @param x sets the X value
+     * @param y sets the Y value
+     */     
      public Asteroid(EnemyMovementPattern pattern, int x, int y){
         super(EnemyType.ASTEROID, pattern, x, y);
         animate();
         }
      
+    /**
+     * Method for animating the Asteroid.
+     * Updates the asteroids sprites to
+     * create a spinning effect
+     */      
     private void animate() {
         Timer spinTimer = new Timer();
         spinTimer.schedule(new TimerTask() {
@@ -55,6 +82,11 @@ public class Asteroid extends Enemy {
         }, 0, 20);
     }     
     
+    /**
+     * Overrides the {@code update} method of the {@code Enemy} superclass
+     * Since asteroids cannot shoot or be a Boss type they behave differently
+     * than regular enemies.
+     */     
     @Override
     public void update(Iterator i){
         if(isAlive()) {
@@ -72,10 +104,18 @@ public class Asteroid extends Enemy {
         }
     }    
     
+    /**
+     * @return Gets the spawned boolean
+     * which decides if {@code this} has spawned 
+     * two small asteroids upon death
+     */     
     public boolean getSpawned() {
         return this.spawned;
     }
     
+    /**
+     * @param spawn sets the spawned boolean
+     */     
     public void setSpawned(boolean spawn) {
         this.spawned = spawn;
     }

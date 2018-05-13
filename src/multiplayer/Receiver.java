@@ -8,14 +8,40 @@ import view.MultiplayerView;
 import view.GameView;
 import view.ViewUtil;
 
+/**
+ * <h1>Receives data transmissions from Player2</h1>
+ * This class listens to and receives data packets on a specified port.
+ * Since the Receiver is constantly listening to packets it runs on its own thread
+ * @author Roger Birkenes Solli
+ */
 public class Receiver extends Thread {
 
+    /**
+     * DatagramSocket - to send and receive datagram packets
+     */    
     private DatagramSocket socket;
+    
+    /**
+     * If the receiver is active and accepting packets
+     */    
     private boolean looping = false;
+    
+    /**
+     * Max packet size
+     */    
     private final static int MAX_PACKET_SIZE = 8192;
+    
+    /**
+     * {@code Protocol} object to interpret received data
+     * @see {@code Protocol}
+     */    
     private Protocol protocol = new Protocol();
 
-    
+    /**
+     * <b>Constructor: </b>creates a DatagramSocket that listens
+     * to packets on the specified port.
+     * @param localPort specifies port
+     */    
     Receiver(int localPort) {
         try {
             socket = new DatagramSocket(localPort);
@@ -27,6 +53,9 @@ public class Receiver extends Thread {
         }
     }
 
+    /**
+     * Method for closing the DatagramSocket
+     */    
     public void closeSocket() {
         try {
             socket.close();
@@ -37,6 +66,10 @@ public class Receiver extends Thread {
         }
     }    
 
+    /**
+     * Method to receive DatagramPackets and
+     * send them to the {@code Protocol} to be interpreted and processed
+     */    
     @Override
     public void run() {
         byte[] buffer = new byte[MAX_PACKET_SIZE];
@@ -56,6 +89,10 @@ public class Receiver extends Thread {
         } 
     }
 
+    /**
+     * @param looping sets looping variable
+     * if the receiver is active or not
+     */    
     public void setLooping(boolean looping) {
         this.looping = looping;
     }

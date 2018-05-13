@@ -17,27 +17,90 @@ import view.GameView;
 import view.ViewUtil;
 import view.HUD;
 
+/**
+ * <h1>The Player class</h1>
+ * The {@code Enemy} class extends the {@code Entity} class and handles
+ * all the events for the Player object
+ */
 public class Player extends Entity {
 
-    // Singleton
+    /**
+     * The singleton object.
+     */
     private static Player inst = new Player();
+    
+    /**
+     * Method to access singleton class.
+     * @return Returns a reference to the singleton object.
+     */        
     public static Player getInst(){ return inst; }
 
-    // State
+    /**
+     * If the player is currently immune - After taking damage the player gets
+     * a couple of seconds of immunityframes
+     */    
     private boolean immunity = false;
+    
+    /**
+     * If the game is currently running - Used for pause functionality
+     */        
     private boolean playing = false;
+    
+    /**
+     * Counter for handling blinking animation during immunityframes
+     */        
     private int blinkCounter;
+    
+    /**
+     * The weapon type currently equipped - can be upgraded several times
+     */        
     private String weaponType = "Bullet";
+    
+    /**
+     * If the player currently has a shield equipped
+     */        
     private boolean hasShield = false;
+    
+    /**
+     * If the player is currently shooting
+     */        
     private boolean shooting= false;
+    
+    /**
+     * {@code Shield} object
+     * @see Shield
+     */        
     private Shield shield = new Shield(getX(), getY(), hasShield());
+    
+    /**
+     * Score
+     */        
     private int score;
+    
+    /**
+     * Enemies killed counter - the amount of enemies killed by the player
+     */        
     private int enemiesKilled;
+    
+    /**
+     * Bullet hit counter - the amount of enemies hit by the player
+     */        
     private int bulletsHit;
+    
+    /**
+     * Bullet counter - the amount of shots fired by the player
+     */        
     private int bulletCount;
 
+    /**
+     * {@code PlayerBehaviour} object
+     * @see PlayerBehaviour
+     */        
     private PlayerBehaviour playerBehaviour = new PlayerBehaviour();
 
+    /**
+     * <b>Constructor: </b>sets the player sprite, X and Y positions as well as health.
+     */        
     private Player(){
         super(
                 Sprite.PLAYER,
@@ -51,6 +114,11 @@ public class Player extends Entity {
         weapon = Weapon.PLAYER_BASIC;
     }
     
+    /**
+     * Method to initiate the object.
+     * This method is called when starting a new game, either for the
+     * first time or after death.
+     */        
     public void init() {
         inst = new Player();
         if (hasShield) {
@@ -69,12 +137,21 @@ public class Player extends Entity {
         canShoot = true;
     }
 
+    /**
+     * Method for resuming play 
+     * either after pausing the game or 
+     * continuing to the next level
+     */        
     public void resume(){
         immunity = false;
         shooting = false;
         canShoot = true;
     }
 
+    /**
+     * Method that handles updating the player
+     * for each tick of the animationtimer in the {@code GameController} class.
+     */        
     public void update(){
         if(!playerIsOutOfBounds()){
             setY(getY() + playerBehaviour.next());
@@ -88,6 +165,10 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * @return if the player is out of bounds 
+     * to keep the player from moving off the screen
+     */        
     private boolean playerIsOutOfBounds(){
         if(getY() + playerBehaviour.next() < 10) {
             playerBehaviour.moveStop();
@@ -101,6 +182,12 @@ public class Player extends Entity {
         return false;
     }
 
+    /**
+     * Method that handles the powerup events.
+     * There are three types of powerups available: Weapon upgrades, health and shield. 
+     * @param powerUp {@code PowerUp} object that decides which type
+     * of powerup to process
+     */        
     public void powerUp(PowerUp powerUp) {
         switch(powerUp.getName()) {
             case "WEAPON_POWERUP":
@@ -121,6 +208,11 @@ public class Player extends Entity {
         }
     }
     
+    /**
+     * Method that handles weapon upgrades.
+     * If multiplayer is active the method sends a powerup notification to player2, so
+     * that the player2 client renders the correct weapon projectiles
+     */        
     public void powerUp() {
         this.weaponType = playerBehaviour.powerUp(weaponType);
         if(GameModel.getInstance().getMultiplayerStatus()) {
@@ -128,6 +220,10 @@ public class Player extends Entity {
         }
     }
     
+    /**
+     * Method for handling Player movement
+     * @param dir sets the direction of motion
+     */        
     public void move(String dir){
         switch(dir){
             case "UP":
@@ -141,6 +237,14 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Method that handles shooting events for the player.
+     * calls the shoot() method in the {@code PlayerBehaviour} class.
+     * then calls a shotDelayTimer to start a countdown for when the player is
+     * able to shoot again. This is to limit the amount of times a player can shoot
+     * each second.
+     * If multiplayer is active the method sends a shot notification to the player2 client.
+     */        
     @Override
     public void shoot() {
         if(canShoot()) {
@@ -155,6 +259,9 @@ public class Player extends Entity {
         }
     }
     
+    /**
+     * Starts a timer that enables the player to shoot again
+     */        
     private void shotDelayTimer() {
         Timer shotTimer = new Timer();
         shotTimer.schedule(new TimerTask() {
@@ -167,7 +274,11 @@ public class Player extends Entity {
         }, 300);
     }
 
-
+    /**
+     * Method that handles player damage.
+     * Checks if the player currently has immunityframes or a shield and
+     * calls audio accordingly
+     */    
     @Override
     public void takeDamage(){
         if (!hasShield()) {
@@ -188,6 +299,10 @@ public class Player extends Entity {
         }
     }
 
+    /**
+     * Initiates immunityframes. To give the player immunity for
+     * a few seconds after taking damage
+     */        
     private void initImmunity(){
         setImmunity(true);
         immunityBlinkAnimation();
@@ -202,22 +317,46 @@ public class Player extends Entity {
 
     }
 
+    /**
+     * Sets shooting = true
+     */        
     public void isShooting(){
         shooting = true;
     }
 
+    /**
+     * Sets shooting = false
+     */        
     public void isNotShooting(){
         shooting = false;
     }
 
+    /**
+     * @return if player currently has immunityframes
+     */        
     private boolean isImmune() {
         return this.immunity;
     }
+    
+    /**
+     * @param immunity sets immunity
+     */        
     private void setImmunity(boolean immunity) { this.immunity = immunity; }
+    
+    /**
+     * @return gets immunity time in MS
+     */        
     private int getImmunityTime() {
         return 2000;
     }
 
+    /**
+     * Method to animate a blinking effect during the
+     * players immunityframes. To visually communicate that
+     * the player has taken damage and is currently immune for a few seconds.
+     * This method changes the players sprite based on the images defined in the
+     * {@code Sprite} class
+     */        
     private void immunityBlinkAnimation() {
         Timer blinkTimer = new Timer();
         blinkTimer.schedule(new TimerTask() {
@@ -248,6 +387,11 @@ public class Player extends Entity {
         }, 0, 20);
     }
 
+    /**
+     * Method that sets a shield when the player gets a shield powerup. 
+     * Expands the player width by 10 pixels, so that the player hitbox 
+     * is wider when a shield is equipped.
+     */        
     public void setShield() {
         if (!hasShield()) {
             this.width = getWidth() + 10;
@@ -256,66 +400,118 @@ public class Player extends Entity {
         shield = new Shield(this.getX(), this.getY(), true);
     }
     
+    /**
+     * Method that removes the shield and resets the player width
+     */        
     private void removeShield() {
         this.width = getWidth() - 10;
         shield.newSprite(Sprite.CLEAR);
         this.hasShield = false;
     }
 
+    /**
+     * Method that sets {@code this} object active 
+     * after resuming from pause
+     */        
     public void isPlaying(){
         setImmunity(false);
         playing = true; }
+    
+    /**
+     * Method that sets {@code this} object inactive
+     * when game is paused
+     */        
     public void isNotPlaying() {
         setImmunity(true);
         playing = false;
         isNotShooting();
     }
+    
+    /**
+     * @return if the game is active
+     */        
     public boolean getPlaying(){return playing;}
     
+    /**
+     * @return whether the player currently has a shield equipped
+     */        
     public boolean hasShield() {
         return this.hasShield;
     }
     
+    /**
+     * @return the shield sprite
+     */        
     public Image getShieldSprite() {
         return shield.getImage();
     }
     
+    /**
+     * @return the amount of charges left on the shield
+     */        
     public int getShieldCharges() {
         return shield.getCharges();
     }
     
+    /**
+     * @return the {@code Shield} object
+     */        
     public Shield shield() {
         return this.shield;
     }
     
+    /**
+     * @return the current score
+     */        
     public int getScore() {
         return this.score;
     }
     
+    /**
+     * @param score sets the score
+     */        
     public void setScore(int score) {
         this.score = score;
     }
     
+    /**
+     * @return gets the current weapon type equipped
+     */        
     public String getWeaponType() {
         return this.weaponType;
     }
     
+    /**
+     * @return the amount of enemies killed
+     */        
     public int getEnemiesKilled() {
         return this.enemiesKilled;
     }
     
+    /**
+     * @param e sets the amount of enemies killed
+     */        
     public void setEnemiesKilled(int e) {
         this.enemiesKilled = e;
     }
     
+    /**
+     * @return gets amount of player projectiles that has hit a target
+     */        
     public int getBulletsHit() {
         return this.bulletsHit;
     }
     
+    /**
+     * @param hit sets the amount of player projectiles that has hit a target
+     */        
     public void setBulletsHit(int hit) {
         this.bulletsHit = hit;
     }
     
+    /**
+     * @return the amount of shots fired by the player
+     */        
     public int getBulletCount() {
         return this.bulletCount;
     }

@@ -4,29 +4,52 @@ import model.weapons.*;
 
 import static controller.GameController.gs;
 
+/**
+ * <h1>A class for handling Player behaviour</h1>
+ * This class handles movements, shooting and weapon powerups
+ */
 public class PlayerBehaviour implements java.io.Serializable {
 
     private static final long serialVersionUID = 185835451720483588L;
 
+    /**
+     * Speed value
+     */      
     private int speed;
+    
+    /**
+     * The players movement direction
+     */      
     private int dir;
 
+    /**
+     * <b>Constructor: </b>sets the speed and direction variables to 0
+     */        
     public PlayerBehaviour() {
         speed = 0;
         dir = 0;
     }
 
 
+    /**
+     * @param direction sets the movement direction
+     */      
     void move(int direction){
         if(this.dir != direction) {
             dir = direction;
         }
     }
 
+    /**
+     * Stops movement
+     */      
     void moveStop(){
         speed = 0;
     }
 
+    /**
+     * @return new value for Player Y position
+     */      
     int next(){
         int MOD_SPEED = 1;
         if(!isMaxSpeed())
@@ -40,11 +63,20 @@ public class PlayerBehaviour implements java.io.Serializable {
         return speed;
     }
 
+    /**
+     * @return if the player is moving at max speed
+     */      
     private boolean isMaxSpeed(){
         int MAX_SPEED = 20;
         return Math.abs(speed) > MAX_SPEED;
     }
     
+    /**
+     * Method for handling player shooting event.
+     * Checks the current weapon type equipped and created bullet objects
+     * accordingly. The bullets are spawned at the appropriate position based
+     * on the players X and Y values.
+     */      
     void shoot(String weapontype, int x, int y, int width, int height, Weapon weapon) {
             switch(weapontype) {
                 case "Basic":
@@ -75,6 +107,11 @@ public class PlayerBehaviour implements java.io.Serializable {
             }
     }
     
+    /**
+     * Method for handling weapon powerups.
+     * @param weaponType input the current weapon equipped.
+     * @return outputs the new weapon.
+     */      
     public String powerUp(String weaponType) {
         String returnString = "";
         switch(weaponType) {
