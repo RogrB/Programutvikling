@@ -24,6 +24,7 @@ import static view.MultiplayerView.stage;
 /**
  * <h1>The base for handling all data transmission between players</h1>
  * This class acts as a layer between the Game logic and multiplayer events
+ * 
  * @author Roger Birkenes Solli
  */
 public class MultiplayerHandler {

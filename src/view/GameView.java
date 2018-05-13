@@ -27,60 +27,198 @@ import model.player.Player;
 import static model.GameState.bossType;
 import static controller.GameController.gs;
 
+/**
+ * <h1>The main class for rendering all in-game objects</h1>
+ * Everything that is displayed to the player
+ * in-game is handled through this class, including the Heads Up Display. 
+ */
 public class GameView extends ViewUtil{
 
-    // Singleton
+    /**
+     * The singleton object.
+     */  
     private static GameView inst = new GameView();
+    
+    /**
+     * Private <b>constructor</b>
+     */        
     private GameView(){}
+    
+    /**
+     * Method to access singleton class.
+     * @return Returns a reference to the singleton object.
+     */        
     public static GameView getInstance(){ return inst; }
 
-    // MVC-access
+    /**
+     * Accesses an instance of the {@code GameController} object
+     */    
     private GameController gc = GameController.getInstance();
+    
+    /**
+     * Accesses an instance of the {@code GameModel} object
+     */     
     private GameModel gm = GameModel.getInstance();
 
+    /**
+     * A default canvas, for rendering everything
+     * that does not need its own layer
+     */     
     private final Canvas canvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+    
+    /**
+     * A canvas for rendering the Heads Up Display
+     */     
     private final Canvas hudCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+    
+    /**
+     * A canvas for rendering the bullets
+     */     
     private final Canvas bulletLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+    
+    /**
+     * A canvas for rendering enemies
+     */     
     private final Canvas enemyLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+    
+    /**
+     * A canvas for rendering the player
+     */     
     private final Canvas playerLayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
+    
+    /**
+     * A canvas for rendering player2 - needs its own canvas to avoid
+     * clearing issues between the players
+     */     
     private final Canvas player2LayerCanvas = new Canvas(VIEW_WIDTH, VIEW_HEIGHT);
 
+    /**
+     * Text for displaying the score on the HUD
+     */     
     private Text scoreText;
+    
+    /**
+     * Text for displaying the current level on the HUD
+     */     
     private Text levelText;
+    
+    /**
+     * Text for displaying the current weapon type on the HUD
+     */     
     private Text weaponType;
+    
+    /**
+     * Last error string
+     */     
     private String lastError = "";
     
+    /**
+     * Sets font for the powerUp text
+     */     
     private final static Font powerUpFont = new Font("SansSerif", 12);
     
+    /**
+     * GraphicsContext for the default canvas layer
+     */     
     private final GraphicsContext graphics = canvas.getGraphicsContext2D();
+    
+    /**
+     * GraphicsContext for the HUD canvas layer
+     */         
     private final GraphicsContext hud = hudCanvas.getGraphicsContext2D();
+    
+    /**
+     * GraphicsContext for the bullet canvas layer
+     */         
     private final GraphicsContext bulletLayer = bulletLayerCanvas.getGraphicsContext2D();
+    
+    /**
+     * GraphicsContext for the enemy canvas layer
+     */         
     private final GraphicsContext enemyLayer = enemyLayerCanvas.getGraphicsContext2D();
+    
+    /**
+     * GraphicsContext for the player canvas layer
+     */         
     private final GraphicsContext playerLayer = playerLayerCanvas.getGraphicsContext2D();
+    
+    /**
+     * GraphicsContext for the player2 canvas layer
+     */         
     private final GraphicsContext player2Layer = player2LayerCanvas.getGraphicsContext2D();
 
+    /**
+     * Container for the Game-Over menu buttons
+     */         
     private VBox lostButtonContainer;
+    
+    /**
+     * Container for the Level-complete menu buttons
+     */         
     private VBox wonButtonContainer;
 
+    /**
+     * Array of MenuButtons for the Game-Over menu
+     */         
     private MenuButton[] menuElementsLost;
+    
+    /**
+     * Array of MenuButtons for the Level-Complete menu
+     */         
     private MenuButton[] menuElementsWon;
     
+    /**
+     * Text for the Scorescreen - Level complete
+     */         
     private Text levelComplete = new Text();
+    
+    /**
+     * Text for the Scorescreen - Score count
+     */         
     private Text scoreT = new Text();
+    
+    /**
+     * Text for the Scorescreen - Amounts of shots fired
+     */             
     private Text shotsFired = new Text();
+    
+    /**
+     * Text for the Scorescreen - Amount of enemies hit
+     */             
     private Text enemiesHit = new Text();
+    
+    /**
+     * Text for the Scorescreen - Amount of enemies killed
+     */             
     private Text enemiesKilled = new Text();
+    
+    /**
+     * Text for the Scorescreen - Accuracy
+     */             
     private Text hitPercent = new Text();
     
+    /**
+     * root pane
+     */             
     private Pane root;
 
+    /**
+     * Background source
+     */             
     private static final String BG_IMG = "assets/image/background.jpg";
 
+    /**
+     * sets up the model-view-controller
+     */             
     public void mvcSetup(){
         gm.mvcSetup();
         gc.mvcSetup();
     }
 
+    /**
+     * Method for initiating the object
+     * @return gets the root pane
+     */             
     public Parent initScene() {
         if(SoundManager.getInst().getPlayer() != null){
             SoundManager.getInst().playMusic("stop");
@@ -160,6 +298,7 @@ public class GameView extends ViewUtil{
 
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(BG_IMG));
+        
         if(gm.getMultiplayerStatus()) {
             root.getChildren().addAll(errorField, wonButtonContainer, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, dialogBox, player2LayerCanvas);
         }
@@ -172,6 +311,11 @@ public class GameView extends ViewUtil{
         return root;
     }
 
+    /**
+     * Method for handling selection of menu elements
+     * @param buttonName inputs the name of the button that was pressed
+     * @param event inputs the event
+     */             
     @Override
     public void select(String buttonName, KeyEvent event) {
         if(buttonName.equals("RETRY")){
@@ -197,6 +341,13 @@ public class GameView extends ViewUtil{
         elementCounter = 0;
     }
 
+    /**
+     * Method that handles the rendering of most objects
+     * to the game screen.
+     * The method clears the previous frames image based on the old dimensions and draws a
+     * new one at the updated position.
+     * @param object takes in an {@code Existance} object to be rendered
+     */             
     public void render(Existance object) {
         GraphicsContext gc;
         if(object instanceof Basic)
@@ -217,6 +368,9 @@ public class GameView extends ViewUtil{
         gc.drawImage(object.getImage(), object.getX(), object.getY());
     }
     
+    /**
+     * Method that handles rendering player2 to the game screen
+     */             
     public void renderPlayer2() {
         player2Layer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
         if(GameModel.getInstance().getMultiplayerStatus()) {
@@ -224,6 +378,10 @@ public class GameView extends ViewUtil{
         }
     }
 
+    /**
+     * Method that handles the visual feedback of the
+     * game over event.
+     */             
     public void gameOver() {
         // Is ded!
         menuElementsLost[0].gainedFocus();
@@ -231,19 +389,29 @@ public class GameView extends ViewUtil{
         graphics.drawImage(new Image("assets/image/gameover.png"), (VIEW_WIDTH/2) - 368, (VIEW_HEIGHT/2) - 51);
     }
 
+    /**
+     * Method that handles the visual feedback of the
+     * level completed event.
+     */             
     public void gameWon(){
-        System.out.println(GameController.gs.player.getPlaying());
-        System.out.println(GameController.gs.player.isAlive());
+        //System.out.println(GameController.gs.player.getPlaying());
+        //System.out.println(GameController.gs.player.isAlive());
         renderScoreScreen();
         menuElementsWon[0].gainedFocus();
         wonButtonContainer.setOpacity(1);
     }
     
+    /**
+     * Method that renders the players shield to the game screen.
+     */             
     public void renderShield() {
         graphics.clearRect(gs.player.getX()-10, gs.player.getY()-30, gs.player.getOldWidth()+35, gs.player.getOldHeight()+70);
         graphics.drawImage(gs.player.getShieldSprite(), gs.player.getX(), gs.player.getY()-1);
     }
 
+    /**
+     * Method that clears all graphics from all layers
+     */             
     public void clearAllGraphics(){
         graphics.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
         hud.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
@@ -253,6 +421,11 @@ public class GameView extends ViewUtil{
         player2Layer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
     }
     
+    /**
+     * Method that renders the scorescreen when a level is completed.
+     * Shows the score, shots fired, enemies hit, enemies killed and accuracy.
+     * May or may not be called from a thread, so the method is surrounded by Platform.runLater
+     */             
     public void renderScoreScreen() {
         
 	Platform.runLater(() -> {
@@ -303,10 +476,19 @@ public class GameView extends ViewUtil{
         });
     }
 
+    /**
+     * Clears the scorescreen
+     * May or may not be called from a thread, so the method is surrounded by Platform.runLater 
+     */             
     public void clearScoreScreen() {
 	Platform.runLater(() -> root.getChildren().removeAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent));
     }
     
+    /**
+     * Method that renders the Heads Up Display.
+     * This includes Player Hit points, shield charges, current weapon type,
+     * boss health bar, score and current level.
+     */             
     void renderHUD(HUD h, boolean shield) {
         hud.clearRect(15, 15, 120, 50);
         hud.drawImage(h.getPlayerIcon(), 20, 20);
@@ -349,6 +531,11 @@ public class GameView extends ViewUtil{
         weaponType.setText(h.weaponType());
     }
     
+    /**
+     * Method for rendering the PowerUp text that shows a descriptive text
+     * of the PowerUp when the player picks it up which floats upwards and
+     * fades out over time.
+     */             
     void renderPowerUpText(String powerUp, int x, int y, float opacity) {
         hud.clearRect(x-10, y-10, 300, 100);
         hud.setFill(new Color(1, 1, 1, opacity));
@@ -356,14 +543,26 @@ public class GameView extends ViewUtil{
         hud.fillText(powerUp, x, y);
     }
     
+    /**
+     * Clears the powerUp text
+     */             
     void clearPowerUpText(int x, int y) {
         hud.clearRect(x-10, y-50, 300, 300);
     }
 
+    /**
+     * @return gets the MenuButtons for the Game-Over event.
+     */             
     public MenuButton[] getMenuElementsLost(){return menuElementsLost;}
 
+    /**
+     * @return gets the MenuButtons for the Level completed event.
+     */             
     public MenuButton[] getMenuElementsWon(){return menuElementsWon;}
     
+    /**
+     * @param opacity sets the opacity for the Buttons in the Level completed event.
+     */             
     public void setWinButtonOpacity(int opacity) {
         wonButtonContainer.setOpacity(opacity);
     }

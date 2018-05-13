@@ -13,6 +13,7 @@ import view.GameView;
  * This class handles action requests and encodes them accordingly in order to minimize
  * data needed to be transmitted between clients. The data received is then interpreted
  * and processed accordingly.
+ * 
  * @author Roger Birkenes Solli
  */
 class Protocol {

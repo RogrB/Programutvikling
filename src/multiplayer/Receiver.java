@@ -12,6 +12,7 @@ import view.ViewUtil;
  * <h1>Receives data transmissions from Player2</h1>
  * This class listens to and receives data packets on a specified port.
  * Since the Receiver is constantly listening to packets it runs on its own thread
+ * 
  * @author Roger Birkenes Solli
  */
 public class Receiver extends Thread {
