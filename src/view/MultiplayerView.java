@@ -27,8 +27,6 @@ public class MultiplayerView extends ViewUtil{
         return inst;
     }
 
-    private MultiplayerView(){}
-
     private MultiplayerHandler mp = MultiplayerHandler.getInstance();
     private GameModel gm = GameModel.getInstance();
 
@@ -37,35 +35,40 @@ public class MultiplayerView extends ViewUtil{
     private TextField hostnameField;
     private TextField remotePortField;
     private TextField localPortField;
+    private Label hostname;
+    private Label remotePort;
+    private Label localPort;
+
+    private MenuButton connectButton;
+    private MenuButton backButton;
+    private Button helpButton;
 
     public static Stage stage;
 
-    public Parent initScene(){
-        root = new Pane();
-        header.setX(300);
-        header.setY(175);
-        header.setFill(Color.WHITE);
-        header.setFont(header.getFont().font(100));
-        root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
-        root.setBackground(getBackGroundImage(BG_IMG));
-        VBox multiplayerMenu = new VBox();
-        Label hostname = new Label("HOSTNAME (OTHER PLAYERS IP)");
-        hostname.setTextFill(Color.WHITE);
-        Label remotePort = new Label("REMOTE PORT");
-        remotePort.setTextFill(Color.WHITE);
-        Label localPort = new Label("LOCAL PORT");
-        localPort.setTextFill(Color.WHITE);
+    private void createLabels(){
+        hostname = createBaseLabel("HOSTNAME (OTHER PLAYERS IP");
+        remotePort = createBaseLabel("REMOTE PORT");
+        localPort = createBaseLabel("LOCAL PORT");
+    }
 
+    private void createTextFields(){
         hostnameField = new TextField();
         remotePortField = new TextField();
         localPortField = new TextField();
+    }
 
-        setErrorFieldPosition();
+    private void createButtons(){
+        connectButton = new MenuButton("CONNECT");
+        backButton = new MenuButton("BACK");
+        helpButton = new Button("?");
 
-        MenuButton connectButton = new MenuButton("CONNECT");
-        MenuButton backButton = new MenuButton("BACK");
-        Button helpButton = new Button("?");
+        helpButton.setTranslateX(275);
+        helpButton.setTranslateY(-313);
+    }
 
+
+    @Override
+    void setButtonClickEvents() {
         connectButton.setOnMouseClicked(event -> {
             //if (user_name.getText() == null || user_name.getText().trim().isEmpty())
             if (hostnameField.getText() == null || hostnameField.getText().trim().isEmpty()) {
@@ -79,33 +82,34 @@ public class MultiplayerView extends ViewUtil{
             else if (localPortField.getText() == null || localPortField.getText().trim().isEmpty()) {
                 System.out.println("Enter LocalPort");
                 errorField.changeText("Enter LocalPort");
-            }            
+            }
             else {
                 try {
                     if(testRange(Integer.parseInt(remotePortField.getText()), Integer.parseInt(localPortField.getText()))) {
                         initMultiplayerGame();
                         stage = (Stage) ((Node)event.getTarget()).getScene().getWindow();
-                        mp.startConnection();   
-                    }    
+                        mp.startConnection();
+                    }
                 }
                 catch(Exception e) {
-                    System.err.println(e);
+                    System.err.println(e.getMessage());
                     errorField.changeText(e.toString());
                 }
             }
         });
         helpButton.setOnMouseClicked(event -> getHelp());
-        helpButton.setTranslateX(275);
-        helpButton.setTranslateY(-313);
         backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
-        multiplayerMenu.getChildren().addAll(hostname, hostnameField, remotePort, remotePortField, localPort, localPortField, connectButton, backButton, helpButton);
-        multiplayerMenu.setSpacing(10);
-        multiplayerMenu.setTranslateX(450);
-        multiplayerMenu.setTranslateY(250);
-        multiplayerMenu.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
-                System.out.println(elementCounter);
+        backButton.setOnMouseClicked(event ->  {
+            if (mp.getInitConnection()) {
+                mp.cancelConnectAttempt();
             }
+            goToView(event, MenuView.getInstance().initScene());
+        });
+    }
+
+    @Override
+    void setButtonPressEvents(Parent container) {
+        container.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ESCAPE){
                 if(mp.getInitConnection()){
                     mp.cancelConnectAttempt();
@@ -113,17 +117,28 @@ public class MultiplayerView extends ViewUtil{
                 goToView(event, MenuView.getInstance().initScene());
             }
         });
-        backButton.setOnMouseClicked(event ->  {
-            if (mp.getInitConnection()) {
-                mp.cancelConnectAttempt();
-            }
-            goToView(event, MenuView.getInstance().initScene());
-                });
-        root.getChildren().addAll(header, errorField, multiplayerMenu);
+    }
 
-        String lastError = "";
-        compareErrorMessage(lastError);
+    private void createUI(){
+        createLabels();
+        createTextFields();
+        createButtons();
+    }
 
+    private void setEvents(Parent container){
+        setButtonClickEvents();
+        setButtonPressEvents(container);
+    }
+
+    public Parent initScene(){
+        root = initBaseScene(BG_IMG);
+        VBox menuContainer = createMenuContainer(450, 250, 10);
+        createUI();
+        setEvents(menuContainer);
+        setErrorFieldPosition();
+        menuContainer.getChildren().addAll(hostname, hostnameField, remotePort, remotePortField, localPort, localPortField, connectButton, backButton, helpButton);
+        root.getChildren().addAll(header, errorField, menuContainer);
+        compareErrorMessage("");
         return root;
     }
 

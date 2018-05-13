@@ -5,11 +5,14 @@ import controller.UserInputs;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -18,10 +21,27 @@ public abstract class ViewUtil {
     public static final int VIEW_WIDTH = 1200;
     public static final int VIEW_HEIGHT = 800;
     Pane root;
-    Text header = new Text("SPACE GAME");
+    Text header = new Text("AERO");
     int elementCounter = 0;
     static WarningField errorField = new WarningField();
     private static String lastErrorMessage = "";
+
+    public Pane initBaseScene(String bg){
+        root = new Pane();
+        setHeader();
+        root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
+        root.setBackground(getBackGroundImage(bg));
+        return root;
+    }
+
+    public Text createText(String textInput, int x, int y, Font font){
+        Text text = new Text(textInput);
+        text.setX(x);
+        text.setY(y);
+        text.setFill(Color.WHITE);
+        text.setFont(font);
+        return text;
+    }
 
     void goToView(InputEvent event, Parent node){
         Stage stage = (Stage)((Node)event.getTarget()).getScene().getWindow();
@@ -89,6 +109,23 @@ public abstract class ViewUtil {
         }
     }
 
+    abstract void setButtonClickEvents();
+    abstract void setButtonPressEvents(Parent container);
+
+    Label createBaseLabel(String labelText){
+        Label label = new Label(labelText);
+        label.setTextFill(Color.WHITE);
+        return label;
+    }
+
+    VBox createMenuContainer(int x, int y, int spacing){
+        VBox menuContainer = new VBox();
+        menuContainer.setTranslateX(x);
+        menuContainer.setTranslateY(y);
+        menuContainer.setSpacing(spacing);
+        return menuContainer;
+    }
+
     public abstract Parent initScene();
     public abstract void select(String buttonName, KeyEvent event);
     void setErrorFieldPosition(){
@@ -109,5 +146,12 @@ public abstract class ViewUtil {
         if(!lastErrorMessage.equals(msg)){
             errorField.changeText(lastErrorMessage);
         }
+    }
+
+    void setHeader(){
+        header.setX(485);
+        header.setY(175);
+        header.setFill(Color.WHITE);
+        header.setFont(header.getFont().font(100));
     }
 }

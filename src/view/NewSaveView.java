@@ -10,6 +10,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.GameModel;
 
@@ -20,34 +21,43 @@ public class NewSaveView extends ViewUtil{
     public static NewSaveView inst = new NewSaveView();
     public static NewSaveView getInst(){return inst;}
 
-    private String lastError = "";
-
     private static final String BG_IMG = "assets/image/background.jpg";
 
-    private Parent menuElements[];
+    private MenuButton startGameButton;
+    private MenuButton backButton;
+
     private TextField saveNameTextField;
+
+    private void createButtons(){
+        startGameButton = new MenuButton("START");
+        backButton = new MenuButton("BACK");
+    }
+
+
+    @Override
+    void setButtonClickEvents() {
+        backButton.setOnMouseClicked(event -> goToView(event, NewGameView.getInst().initScene()));
+        startGameButton.setOnMouseClicked(this::checkFileName);
+    }
+
+    @Override
+    void setButtonPressEvents(Parent container) {
+        container.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.ESCAPE){
+                goToView(event, NewGameView.getInst().initScene());
+            }
+        });
+    }
 
     @Override
     public Parent initScene() {
-        root = new Pane();
-        VBox containerVBox = new VBox();
-        header.setX(300);
-        header.setY(175);
-        header.setFill(Color.WHITE);
-        header.setFont(header.getFont().font(100));
+        root = initBaseScene(BG_IMG);
 
-        root.setPrefSize(ViewUtil.VIEW_WIDTH, ViewUtil.VIEW_HEIGHT);
-
-        root.setBackground(getBackGroundImage(BG_IMG));
-        Text writeSaveNameText = new Text("NEW GAME");
-        writeSaveNameText.setX(475);
-        writeSaveNameText.setY(275);
-        writeSaveNameText.setFill(Color.WHITE);
-        writeSaveNameText.setFont(header.getFont().font(50));
+        VBox menuContainer = createMenuContainer(450, 325, 10);
+        Text writeSaveNameText = createText("NEW GAME", 475, 275, Font.font("Verdana", 50));
         setErrorFieldPosition();
 
-        Label saveNameLabel = new Label("SAVE NAME");
-        saveNameLabel.setTextFill(Color.WHITE);
+        Label saveNameLabel = createBaseLabel("SAVE NAME");
 
         saveNameTextField = new TextField();
 
@@ -57,27 +67,16 @@ public class NewSaveView extends ViewUtil{
             }
         });
 
-        MenuButton startGameButton = new MenuButton("START");
-        startGameButton.setOnMouseClicked(this::checkFileName);
-        MenuButton backButton = new MenuButton("BACK");
-        backButton.setOnMouseClicked(event -> goToView(event, NewGameView.getInst().initScene()));
 
-        menuElements = new Parent[]{saveNameTextField, startGameButton, backButton};
-        containerVBox.getChildren().addAll(saveNameLabel, saveNameTextField, startGameButton, backButton);
-        containerVBox.setSpacing(10);
-        containerVBox.setTranslateX(450);
-        containerVBox.setTranslateY(325);
-        containerVBox.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
-                System.out.println(event.getCode());
-            }
-            if(event.getCode() == KeyCode.ESCAPE){
-                goToView(event, NewGameView.getInst().initScene());
-            }
-        });
-        root.getChildren().addAll(header, writeSaveNameText, errorField, containerVBox);
+        createButtons();
 
-        compareErrorMessage(lastError);
+        setButtonClickEvents();
+        setButtonPressEvents(menuContainer);
+
+        menuContainer.getChildren().addAll(saveNameLabel, saveNameTextField, startGameButton, backButton);
+        root.getChildren().addAll(header, writeSaveNameText, errorField, menuContainer);
+
+        compareErrorMessage("");
 
         return root;
     }
