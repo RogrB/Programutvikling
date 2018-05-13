@@ -1,7 +1,7 @@
 package model.weapons;
 
 import assets.java.Sprite;
-import model.Existance;
+import model.Existence;
 
 import java.util.Iterator;
 import java.util.Timer;
@@ -10,10 +10,10 @@ import static controller.GameController.gs;
 
 /**
  * <h1>Base class for all Player projectiles</h1>
- * The {@code Basic} class extends the {@code Existance} class to create a
+ * The {@code Basic} class extends the {@code Existence} class to create a
  * base for all bullets.
  */
-public class Basic extends Existance {
+public class Basic extends Existence {
 
     /**
      * {@code Weapon} object. To control sprite, damage, fire rate

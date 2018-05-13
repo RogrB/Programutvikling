@@ -10,7 +10,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import controller.GameController;
 import javafx.scene.paint.Color;
-import model.Existance;
 import model.GameModel;
 import model.GameState;
 import model.enemy.Enemy;
@@ -48,18 +47,22 @@ public class GameView extends ViewUtil{
      * Method to access singleton class.
      * @return Returns a reference to the singleton object.
      */
+    
+    /**
+     * Method to access singleton class.
+     * @return Returns a reference to the singleton object.
+     */
     public static GameView getInstance(){ return inst; }
 
     /**
      * Accesses an instance of the {@code GameController} object
      */
     private GameController gc = GameController.getInstance();
-
+    
     /**
      * Accesses an instance of the {@code GameModel} object
      */
     private GameModel gm = GameModel.getInstance();
-
     /**
      * A default canvas, for rendering everything
      * that does not need its own layer
@@ -131,12 +134,12 @@ public class GameView extends ViewUtil{
      * GraphicsContext for the enemy canvas layer
      */
     private final GraphicsContext enemyLayer = enemyLayerCanvas.getGraphicsContext2D();
-
+    
     /**
      * GraphicsContext for the player canvas layer
-     */
+     */         
     private final GraphicsContext playerLayer = playerLayerCanvas.getGraphicsContext2D();
-
+    
     /**
      * GraphicsContext for the player2 canvas layer
      */
@@ -192,17 +195,17 @@ public class GameView extends ViewUtil{
      */
     private Text hitPercent = new Text();
 
-    /**
-     * Background source
-     */
-    private static final String BG_IMG = "assets/image/background.jpg";
-
     private MenuButton continueButton;
     private MenuButton retryButton;
     private MenuButton exitToMenuButton;
     private MenuButton exitToMenuButton2;
 
     private Pane requestPane;
+
+    /**
+     * Background source
+     */             
+    private static final String BG_IMG = "assets/image/background.jpg";
 
     /**
      * sets up the model-view-controller
@@ -339,7 +342,7 @@ public class GameView extends ViewUtil{
      * new one at the updated position.
      * @param object takes in an {@code Existance} object to be rendered
      */
-    public void render(Existance object) {
+    public void render(Existence object) {
         GraphicsContext gc;
         if(object instanceof Basic)
             gc = bulletLayer;
@@ -385,8 +388,6 @@ public class GameView extends ViewUtil{
      * level completed event.
      */
     public void gameWon(){
-        //System.out.println(GameController.gs.player.getPlaying());
-        //System.out.println(GameController.gs.player.isAlive());
         renderScoreScreen();
         menuElementsWon[0].gainedFocus();
         wonButtonContainer.setOpacity(1);
@@ -411,7 +412,6 @@ public class GameView extends ViewUtil{
         playerLayer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
         player2Layer.clearRect(0, 0, VIEW_WIDTH, VIEW_HEIGHT);
     }
-
     /**
      * Method that renders the scorescreen when a level is completed.
      * Shows the score, shots fired, enemies hit, enemies killed and accuracy.
@@ -526,7 +526,6 @@ public class GameView extends ViewUtil{
      * Method for rendering the PowerUp text that shows a descriptive text
      * of the PowerUp when the player picks it up which floats upwards and
      * fades out over time.
-     */
     void renderPowerUpText(String powerUp, int x, int y, float opacity) {
         hud.clearRect(x-10, y-10, 300, 100);
         hud.setFill(new Color(1, 1, 1, opacity));

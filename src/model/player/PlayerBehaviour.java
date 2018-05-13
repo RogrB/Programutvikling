@@ -18,12 +18,12 @@ public class PlayerBehaviour implements java.io.Serializable {
     private int speed;
     
     /**
-     * The players movement direction
+     * The players movement direction.
      */      
     private int dir;
 
     /**
-     * <b>Constructor: </b>sets the speed and direction variables to 0
+     * <b>Constructor: </b>initiates the speed and direction variables to 0
      */        
     public PlayerBehaviour() {
         speed = 0;
@@ -41,7 +41,7 @@ public class PlayerBehaviour implements java.io.Serializable {
     }
 
     /**
-     * Stops movement
+     * Stops movement instantly. Called when the player reaches the bounds of the screen.
      */      
     void moveStop(){
         speed = 0;
@@ -64,7 +64,8 @@ public class PlayerBehaviour implements java.io.Serializable {
     }
 
     /**
-     * @return if the player is moving at max speed
+     * Checks if the player is moving at max speed
+     * @return {@code true} or {@code false}.
      */      
     private boolean isMaxSpeed(){
         int MAX_SPEED = 20;
@@ -138,7 +139,7 @@ public class PlayerBehaviour implements java.io.Serializable {
                 break;
             case "TripleBurst":
                 returnString = "TripleBurst";
-                break;                
+                break;
         }
         return returnString;
     }

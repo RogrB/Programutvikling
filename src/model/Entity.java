@@ -7,13 +7,13 @@ import model.weapons.Weapon;
 
 /**
  * <h1>Base class for all living things</h1>
- * The {@code Entity} class extends the {@code Existance} class to create
+ * The {@code Entity} class extends the {@code Existence} class to create
  * a base class for all living entities. All enemies and both players
  * extends this.
  *
  * @author Åsmund Røst Wien
  */
-public abstract class Entity extends Existance {
+public abstract class Entity extends Existence {
 
     /**
      * The objects health points.

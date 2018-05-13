@@ -212,7 +212,7 @@ public class IOManager {
     /**
      * Checks if a speciffic save state exists, with all of it's files.
      * @param saveState The save file (0-2) to look for.
-     * @return <i>True</i> or <i>false</i>.
+     * @return {@code true} or {@code false}.
      */
     public boolean saveStateExists(int saveState){
         return fileExists("tmp/" + saveState + "/GameState.ser") &&

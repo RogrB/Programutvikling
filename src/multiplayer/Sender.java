@@ -9,6 +9,7 @@ import view.ViewUtil;
 /**
  * <h1>Sends data transmissions to Player2</h1>
  * This class sends data packets to a specified InetAdress and port.
+ * 
  * @author Roger Birkenes Solli
  */
 public class Sender {
