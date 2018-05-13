@@ -193,7 +193,6 @@ public class Player extends Entity {
             case "WEAPON_POWERUP":
                 powerUp();
                 HUD.getInstance().renderPowerUpText("Weapon Upgraded!");
-                SoundManager.getInst().upgradeWeapon();
                 break;
             case "HEALTH_POWERUP":
                 setHealth(getHealth() + 1);
@@ -203,7 +202,6 @@ public class Player extends Entity {
             case "SHIELD_POWERUP":
                 setShield();
                 HUD.getInstance().renderPowerUpText("Shield!");
-                SoundManager.getInst().upgradeShield();
                 break;
         }
     }
@@ -214,6 +212,7 @@ public class Player extends Entity {
      * that the player2 client renders the correct weapon projectiles
      */        
     public void powerUp() {
+        SoundManager.getInst().upgradeWeapon();
         this.weaponType = playerBehaviour.powerUp(weaponType);
         if(GameModel.getInstance().getMultiplayerStatus()) {
             MultiplayerHandler.getInstance().send("PowerUp", 0, 0);
@@ -393,6 +392,7 @@ public class Player extends Entity {
      * is wider when a shield is equipped.
      */        
     public void setShield() {
+        SoundManager.getInst().upgradeShield();
         if (!hasShield()) {
             this.width = getWidth() + 10;
         }

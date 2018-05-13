@@ -39,6 +39,12 @@ public class IOManager {
      */
     public static IOManager getInstance(){ return inst; }
 
+    FileOutputStream fileOutputStream;
+    ObjectOutputStream objectOutputStream;
+    FileInputStream fileInputStream;
+    ObjectInputStream objectInputStream;
+    File file;
+
     /**
      * This method is continually called on {@code AutoSave}
      * when a single player game runs. It serializes and writes the
@@ -48,21 +54,18 @@ public class IOManager {
      * @see AutoSave
      */
     public void saveGameState() throws FileIOException {
-        FileOutputStream fos;
-        ObjectOutputStream oos;
-
         String src = "tmp/"+GameModel.gameSettings.getPrevSave()+"/GameState.ser";
 
         try {
-            fos = new FileOutputStream(src);
-            oos = new ObjectOutputStream(fos);
+            fileOutputStream = new FileOutputStream(src);
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-            oos.writeObject(gs);
+            objectOutputStream.writeObject(gs);
 
-            oos.flush();
-            fos.flush();
-            oos.close();
-            fos.close();
+            objectOutputStream.flush();
+            fileOutputStream.flush();
+            objectOutputStream.close();
+            fileOutputStream.close();
 
             saveArrayList(GameState.enemies, "tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayEnemies.ser");
             saveArrayList(gs.enemyBullets, "tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayEnemyBullets.ser");
@@ -85,20 +88,17 @@ public class IOManager {
      * @see GameState
      */
     public GameState getGameState(int saveState) throws FileIOException {
-        FileInputStream fis;
-        ObjectInputStream ois;
-
         String src = "tmp/"+saveState+"/GameState.ser";
         GameState res;
 
         try {
-            fis = new FileInputStream(src);
-            ois = new ObjectInputStream(fis);
+            fileInputStream = new FileInputStream(src);
+            objectInputStream = new ObjectInputStream(fileInputStream);
 
-            res = (GameState) ois.readObject();
+            res = (GameState) objectInputStream.readObject();
 
-            ois.close();
-            fis.close();
+            objectInputStream.close();
+            fileInputStream.close();
 
         } catch (IOException i) {
             throw new FileIOException("Load game - Can't locate file: "+src);
@@ -116,19 +116,16 @@ public class IOManager {
      * @see GameState
      */
     public void loadGameState() throws FileIOException {
-        FileInputStream fis;
-        ObjectInputStream ois;
-
         String src = "tmp/"+GameModel.gameSettings.getPrevSave()+"/GameState.ser";
 
         try {
-            fis = new FileInputStream(src);
-            ois = new ObjectInputStream(fis);
+            fileInputStream = new FileInputStream(src);
+            objectInputStream = new ObjectInputStream(fileInputStream);
 
-            gs = (GameState) ois.readObject();
+            gs = (GameState) objectInputStream.readObject();
 
-            ois.close();
-            fis.close();
+            objectInputStream.close();
+            fileInputStream.close();
 
             gs.enemies = (ArrayList) loadList("tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayEnemies.ser");
             gs.enemyBullets = (ArrayList) loadList("tmp/"+GameModel.gameSettings.getPrevSave()+"/ArrayEnemyBullets.ser");
@@ -152,15 +149,12 @@ public class IOManager {
      * @see FileIOException
      */
     private void saveArrayList(ArrayList list, String src) throws FileIOException {
-        FileOutputStream fos;
-        ObjectOutputStream oos;
-
         try {
-            fos = new FileOutputStream(src);
-            oos = new ObjectOutputStream(fos);
-            oos.writeObject(list);
-            oos.flush();
-            oos.close();
+            fileOutputStream = new FileOutputStream(src);
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(list);
+            objectOutputStream.flush();
+            objectOutputStream.close();
         } catch (FileNotFoundException e) {
             throw new FileIOException("Cant't locate file: "+src);
         } catch (IOException e) {
@@ -177,19 +171,16 @@ public class IOManager {
      * @see List
      */
     private List loadList(String src) throws FileIOException {
-        FileInputStream fis;
-        ObjectInputStream ois;
-
         List<Enemy> res;
 
         try {
-            fis = new FileInputStream(src);
-            ois = new ObjectInputStream(fis);
+            fileInputStream = new FileInputStream(src);
+            objectInputStream = new ObjectInputStream(fileInputStream);
 
-            res = (ArrayList<Enemy>) ois.readObject();
+            res = (ArrayList<Enemy>) objectInputStream.readObject();
 
-            fis.close();
-            ois.close();
+            fileInputStream.close();
+            objectInputStream.close();
         } catch (FileNotFoundException e) {
             throw new FileIOException("Can't locate file: "+src);
         } catch (IOException e) {
@@ -228,7 +219,7 @@ public class IOManager {
      * @return <i>true</i> or <i>false</i>.
      */
     public boolean fileExists(String src){
-        File file = new File(src);
+        file = new File(src);
         return file.exists() && !file.isDirectory();
     }
 
@@ -239,21 +230,18 @@ public class IOManager {
      * @see FileIOException
      */
     public GameSettings loadGameSettings() throws FileIOException {
-        FileInputStream fis;
-        ObjectInputStream ois;
-
         String src = "tmp/GameSettings.ser";
 
         GameSettings res;
 
         try {
-            fis = new FileInputStream(src);
-            ois = new ObjectInputStream(fis);
+            fileInputStream = new FileInputStream(src);
+            objectInputStream = new ObjectInputStream(fileInputStream);
 
-            res = (GameSettings) ois.readObject();
+            res = (GameSettings) objectInputStream.readObject();
 
-            ois.close();
-            fis.close();
+            objectInputStream.close();
+            fileInputStream.close();
 
             System.out.println("Loaded game settings");
 
@@ -273,21 +261,18 @@ public class IOManager {
      * @see FileIOException
      */
     public void saveGameSettings(GameSettings gameSettings) throws FileIOException {
-        FileOutputStream fos;
-        ObjectOutputStream oos;
-
         String src = "tmp/GameSettings.ser";
 
         try {
-            fos = new FileOutputStream(src);
-            oos = new ObjectOutputStream(fos);
+            fileOutputStream = new FileOutputStream(src);
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-            oos.writeObject(gameSettings);
+            objectOutputStream.writeObject(gameSettings);
 
-            oos.flush();
-            fos.flush();
-            oos.close();
-            fos.close();
+            objectOutputStream.flush();
+            fileOutputStream.flush();
+            objectOutputStream.close();
+            fileOutputStream.close();
 
         } catch (IOException e) {
             throw new FileIOException("Save settings - Could not write to file "+src);
@@ -301,20 +286,18 @@ public class IOManager {
      * game runs, or if the folders are manually removed.
      */
     private void initDirs(){
-        File directory;
-
-        directory = new File("tmp");
-        if (! directory.exists())
-            directory.mkdir();
-        directory = new File("tmp/0");
-        if (! directory.exists())
-            directory.mkdir();
-        directory = new File("tmp/1");
-        if (! directory.exists())
-            directory.mkdir();
-        directory = new File("tmp/2");
-        if (! directory.exists())
-            directory.mkdir();
+        file = new File("tmp");
+        if (! file.exists())
+            file.mkdir();
+        file = new File("tmp/0");
+        if (! file.exists())
+            file.mkdir();
+        file = new File("tmp/1");
+        if (! file.exists())
+            file.mkdir();
+        file = new File("tmp/2");
+        if (! file.exists())
+            file.mkdir();
     }
 
 }
