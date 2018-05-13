@@ -39,11 +39,30 @@ public class IOManager {
      */
     public static IOManager getInstance(){ return inst; }
 
-    FileOutputStream fileOutputStream;
-    ObjectOutputStream objectOutputStream;
-    FileInputStream fileInputStream;
-    ObjectInputStream objectInputStream;
-    File file;
+    /**
+     * Field for writing to an output stream.
+     */
+    private FileOutputStream fileOutputStream;
+
+    /**
+     * Field for serializing an object to an output stream.
+     */
+    private ObjectOutputStream objectOutputStream;
+
+    /**
+     * Field for reading from an input stream.
+     */
+    private FileInputStream fileInputStream;
+
+    /**
+     * Field for deserializing an object from an input stream.
+     */
+    private ObjectInputStream objectInputStream;
+
+    /**
+     * Field for access to a directory or file stream.
+     */
+    private File file;
 
     /**
      * This method is continually called on {@code AutoSave}
