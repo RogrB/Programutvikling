@@ -10,6 +10,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import controller.GameController;
 import javafx.scene.paint.Color;
+import model.Existence;
 import model.GameModel;
 import model.GameState;
 import model.enemy.Enemy;
@@ -42,11 +43,6 @@ public class GameView extends ViewUtil{
      * Private <b>constructor</b>
      */
     private GameView(){}
-
-    /**
-     * Method to access singleton class.
-     * @return Returns a reference to the singleton object.
-     */
     
     /**
      * Method to access singleton class.
@@ -526,6 +522,7 @@ public class GameView extends ViewUtil{
      * Method for rendering the PowerUp text that shows a descriptive text
      * of the PowerUp when the player picks it up which floats upwards and
      * fades out over time.
+     */
     void renderPowerUpText(String powerUp, int x, int y, float opacity) {
         hud.clearRect(x-10, y-10, 300, 100);
         hud.setFill(new Color(1, 1, 1, opacity));
