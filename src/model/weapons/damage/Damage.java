@@ -3,9 +3,9 @@ package model.weapons.damage;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.image.Image;
-import model.Existance;
+import model.Existence;
 
-public class Damage extends Existance {
+public class Damage extends Existence {
     // Klasse for damage animasjon
     private int teller;
     private boolean finished = false;

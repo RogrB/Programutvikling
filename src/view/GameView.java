@@ -10,7 +10,7 @@ import javafx.scene.layout.*;
 import controller.GameController;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import model.Existance;
+import model.Existence;
 import model.GameModel;
 import model.GameState;
 import model.enemy.Enemy;
@@ -21,7 +21,6 @@ import javafx.scene.text.Font;
 import java.text.DecimalFormat;
 
 import javafx.application.Platform;
-import multiplayer.MultiplayerHandler;
 import model.player.Player;
 
 import static model.GameState.bossType;
@@ -346,9 +345,9 @@ public class GameView extends ViewUtil{
      * to the game screen.
      * The method clears the previous frames image based on the old dimensions and draws a
      * new one at the updated position.
-     * @param object takes in an {@code Existance} object to be rendered
+     * @param object takes in an {@code Existence} object to be rendered
      */             
-    public void render(Existance object) {
+    public void render(Existence object) {
         GraphicsContext gc;
         if(object instanceof Basic)
             gc = bulletLayer;

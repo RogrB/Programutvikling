@@ -8,10 +8,10 @@ import java.util.Iterator;
 /**
  * <h1>PowerUp Class</h1>
  * This class handles the behaviour of PowerUps in the game space.
- * The {@code PowerUp} class extends the {@code Existance} class
+ * The {@code PowerUp} class extends the {@code Existence} class
  * to receive values needed to exist in the game space. 
  */
-public class PowerUp extends Existance {
+public class PowerUp extends Existence {
     
     /**
      * Boolean that decides if {@code this} has been picked up

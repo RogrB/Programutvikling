@@ -19,8 +19,8 @@ import view.GameView;
 class Protocol {
     
     /**
-     * The sendPrep Method prepared data to be transmitted in the {@code Sender} class
-     * @see Sender. This method specifically handles the enemy updates when a player
+     * The sendPrep Method prepared data to be transmitted in the {@code Sender} class.
+     * This method specifically handles the enemy updates when a player
      * shoots an enemy. The data is condensed into chars, ints and booleans to limit
      * transmission size.
      * @param action The action that is to be transmitted
@@ -28,6 +28,7 @@ class Protocol {
      * @param health The health of the enemy
      * @param alive If the enemy is still alive after being updated
      * @return a ByteArrayOutputStream ready to be sent in the {@code Sender} class
+     * @see Sender
      */      
     synchronized ByteArrayOutputStream sendPrep(String action, int id, int health, boolean alive) {
         ByteArrayOutputStream bytestream = new ByteArrayOutputStream();

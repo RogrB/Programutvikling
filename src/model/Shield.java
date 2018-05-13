@@ -7,10 +7,10 @@ import java.util.TimerTask;
 /**
  * <h1>Shield Class</h1>
  * This class handles the behaviour of Shields in the game.
- * The {@code Shield} class extends the {@code Existance} class
+ * The {@code Shield} class extends the {@code Existence} class
  * to receive values needed to exist in the game space. 
  */
-public class Shield extends Existance {
+public class Shield extends Existence {
     
     /**
      * The number of charges - The amount of times a shield can be hit before it breaks.
