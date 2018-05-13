@@ -51,7 +51,7 @@ public class IOManager {
         FileOutputStream fos;
         ObjectOutputStream oos;
 
-        String src = "tmp/"+GameModel.gameSettings.getPrevSave()+"/GameState.ser";
+        String src = "tmps/"+GameModel.gameSettings.getPrevSave()+"/GameState.ser";
 
         try {
             fos = new FileOutputStream(src);
@@ -119,7 +119,7 @@ public class IOManager {
         FileInputStream fis;
         ObjectInputStream ois;
 
-        String src = "tmp/"+GameModel.gameSettings.getPrevSave()+"/GameState.ser";
+        String src = "tmps/"+GameModel.gameSettings.getPrevSave()+"/GameState.ser";
 
         try {
             fis = new FileInputStream(src);

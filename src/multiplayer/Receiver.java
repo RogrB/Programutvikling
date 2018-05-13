@@ -6,6 +6,7 @@ import java.io.*;
 
 import view.MultiplayerView;
 import view.GameView;
+import view.ViewUtil;
 
 public class Receiver extends Thread {
 
@@ -22,8 +23,7 @@ public class Receiver extends Thread {
         } 
         catch(SocketException e) {
             System.err.println(e);
-            MultiplayerView.getInst().getField().changeText(e.toString());
-            GameView.getInstance().getField().changeText(e.toString());
+            ViewUtil.setError(e.toString());
         }
     }
 
@@ -33,8 +33,7 @@ public class Receiver extends Thread {
         }
         catch(Exception e){
             System.err.println(e);
-            MultiplayerView.getInst().getField().changeText(e.toString());
-            GameView.getInstance().getField().changeText(e.toString());            
+            ViewUtil.setError(e.toString());
         }
     }    
 
@@ -52,8 +51,7 @@ public class Receiver extends Thread {
             } 
             catch(IOException e) {
                 System.err.println(e);
-                MultiplayerView.getInst().getField().changeText(e.toString());
-                GameView.getInstance().getField().changeText(e.toString());                
+                ViewUtil.setError(e.toString());
             }
         } 
     }

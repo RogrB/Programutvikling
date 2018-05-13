@@ -17,6 +17,8 @@ import java.util.TimerTask;
 
 import model.GameModel;
 import view.GameView;
+import view.ViewUtil;
+
 import static view.MultiplayerView.stage;
 public class MultiplayerHandler {
     
@@ -149,7 +151,7 @@ public class MultiplayerHandler {
             GameView.getInstance().renderPlayer2();
             sender.closeSocket();
             // receiver.closeSocket();
-            GameView.getInstance().getField().changeText("Player 2 disconnected"); 
+            ViewUtil.setError("Player 2 disconnected");
             System.out.println("Player 2 disconnected");      
             setConnected(false);
         }
@@ -189,7 +191,7 @@ public class MultiplayerHandler {
         GameController.getInstance().nextGame();
         GameView.getInstance().clearScoreScreen();
         GameView.getInstance().setWinButtonOpacity(0);
-        GameView.getInstance().getField().changeText("Player 2 started next level");
+        ViewUtil.setError("Player 2 started next level");
         System.out.println("Player 2 started next level");
     }
     

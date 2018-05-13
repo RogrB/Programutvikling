@@ -98,10 +98,6 @@ public class MenuView extends ViewUtil{
         }
     }
 
-    public WarningField getField(){
-        return errorField;
-    }
-
     public Parent initScene(){
 
         root = new Pane();

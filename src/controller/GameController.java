@@ -133,7 +133,7 @@ public class GameController {
         gs.player.isNotPlaying();
         if(gm.getMultiplayerStatus()) {
             MultiplayerHandler.getInstance().sendDisconnect();
-            MenuView.getInstance().getField().changeText("Game Paused, disconnected from Multiplayer");
+            ViewUtil.setError("Game Paused, disconnected from Multiplayer");
             System.out.println("Game paused, disconnected from Multiplayer");
         } 
     }
@@ -303,7 +303,7 @@ public class GameController {
             AutoSave.getInstance().stop();
             if(gm.getMultiplayerStatus()) {
                 MultiplayerHandler.getInstance().sendDisconnect();
-                GameView.getInstance().getField().changeText("Disconnected from Multiplayer");
+                ViewUtil.setError("Disconnected from Multiplayer");
                 System.out.println("Game Over, disconnected from multiplayer");
             }             
         }

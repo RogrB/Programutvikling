@@ -29,12 +29,8 @@ public class MultiplayerView extends ViewUtil{
 
     private MultiplayerView(){}
 
-    private String lastError = "";
-    
     private MultiplayerHandler mp = MultiplayerHandler.getInstance();
     private GameModel gm = GameModel.getInstance();
-
-    private Parent[] menuElements;
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
@@ -43,9 +39,6 @@ public class MultiplayerView extends ViewUtil{
     private TextField localPortField;
 
     public static Stage stage;
-    
-    //private WarningField errorField = new WarningField();
-    private WarningField hostErrorField = new WarningField();
 
     public Parent initScene(){
         root = new Pane();
@@ -67,16 +60,12 @@ public class MultiplayerView extends ViewUtil{
         remotePortField = new TextField();
         localPortField = new TextField();
 
-        errorField.setTranslateX(475);
-        errorField.setTranslateY(550);
-        hostErrorField.setTranslateX(475);
-        hostErrorField.setTranslateY(590);
+        setErrorFieldPosition();
 
         MenuButton connectButton = new MenuButton("CONNECT");
         MenuButton backButton = new MenuButton("BACK");
         Button helpButton = new Button("?");
 
-        menuElements = new Parent[]{hostnameField, remotePortField, localPortField, connectButton, backButton, helpButton};
         connectButton.setOnMouseClicked(event -> {
             //if (user_name.getText() == null || user_name.getText().trim().isEmpty())
             if (hostnameField.getText() == null || hostnameField.getText().trim().isEmpty()) {
@@ -130,8 +119,9 @@ public class MultiplayerView extends ViewUtil{
             }
             goToView(event, MenuView.getInstance().initScene());
                 });
-        root.getChildren().addAll(header, errorField, hostErrorField, multiplayerMenu);
+        root.getChildren().addAll(header, errorField, multiplayerMenu);
 
+        String lastError = "";
         compareErrorMessage(lastError);
 
         return root;
@@ -160,7 +150,7 @@ public class MultiplayerView extends ViewUtil{
         });
     }
     
-    public boolean testRange(int remote, int local) {
+    private boolean testRange(int remote, int local) {
         boolean valid = true;
         if (remote < 0 || remote > 100000) {
             valid = false;
@@ -183,22 +173,9 @@ public class MultiplayerView extends ViewUtil{
 
         help.showAndWait();
     }
-    
+
     private void setWarningField(Color color, String str) {
         errorField.setColor(color);
         errorField.changeText(str);
     }
-    
-    public void setWarningField(String str) {
-        errorField.changeText(str);
-    }
-    
-    public WarningField getField() {
-        return errorField;
-    }
-    
-    public WarningField getHostnameField() {
-        return hostErrorField;
-    }
-    
 }

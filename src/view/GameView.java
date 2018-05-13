@@ -360,10 +360,6 @@ public class GameView extends ViewUtil{
         hud.clearRect(x-10, y-50, 300, 300);
     }
 
-    public WarningField getField(){
-        return errorField;
-    }
-
     public MenuButton[] getMenuElementsLost(){return menuElementsLost;}
 
     public MenuButton[] getMenuElementsWon(){return menuElementsWon;}
