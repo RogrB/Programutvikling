@@ -6,6 +6,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.GameModel;
 
@@ -16,53 +17,47 @@ public class NewGameView extends ViewUtil{
     public static NewGameView inst = new NewGameView();
     public static NewGameView getInst(){return inst;}
 
-    private String lastError = "";
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
     private int saveNumber = -1;
+
+    private MenuButton save1;
+    private MenuButton save2;
+    private MenuButton save3;
+    private MenuButton backButton;
+
     private MenuButton[] menuElements;
+
+    private void createButtons(){
+        save1 = new MenuButton("SAVE 1");
+        save2 = new MenuButton("SAVE 2");
+        save3 = new MenuButton("SAVE 3");
+        backButton = new MenuButton("BACK");
+    }
 
 
     @Override
-    public Parent initScene() {
-        root = initBaseScene(BG_IMG);
-
-        VBox saveFiles = new VBox();
-        VBox containerVBox = new VBox();
-
-        Text selectSaveText = new Text("SELECT SAVE FILE");
-        selectSaveText.setX(500);
-        selectSaveText.setY(275);
-        selectSaveText.setFill(Color.WHITE);
-        selectSaveText.setFont(header.getFont().font(50));
-
-        setErrorFieldPosition();
-
-        MenuButton backButton = new MenuButton("BACK");
-        MenuButton save1 = new MenuButton("SAVE 1");
+    void setButtonClickEvents() {
         save1.setOnMouseClicked(event -> {
             saveNumber = 0;
             goToView(event, NewSaveView.getInst().initScene());
         });
-        MenuButton save2 = new MenuButton("SAVE 2");
+
         save2.setOnMouseClicked(event -> {
             saveNumber = 1;
             goToView(event, NewSaveView.getInst().initScene());
         });
-        MenuButton save3 = new MenuButton("SAVE 3");
         save3.setOnMouseClicked(event -> {
             saveNumber = 2;
             goToView(event, NewSaveView.getInst().initScene());
         });
+        backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
+    }
 
-        menuElements = new MenuButton[]{save1, save2, save3, backButton};
-
-        saveFiles.getChildren().addAll(save1, save2, save3);
-        saveFiles.setSpacing(10);
-        containerVBox.getChildren().addAll(selectSaveText, saveFiles, backButton);
-        containerVBox.setFocusTraversable(true);
-        containerVBox.setOnKeyPressed(event -> {
+    @Override
+    void setButtonPressEvents(Parent container) {
+        container.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.ESCAPE){
                 goToView(event, MenuView.getInstance().initScene());
             }
@@ -75,14 +70,32 @@ public class NewGameView extends ViewUtil{
                 select(menuElements[elementCounter].getText(), event);
             }
         });
-        menuElements[0].gainedFocus();
-        containerVBox.setSpacing(40);
-        containerVBox.setTranslateX(410);
-        containerVBox.setTranslateY(250);
-        backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
-        root.getChildren().addAll(header, errorField, containerVBox);
+    }
 
-        compareErrorMessage(lastError);
+    @Override
+    public Parent initScene() {
+        root = initBaseScene(BG_IMG);
+
+        VBox saveFiles = new VBox();
+        VBox menuContainer = createMenuContainer(410, 250, 40);
+
+        Text selectSaveText = createText("SELECT SAVE FILE", 500, 275, Font.font("Verdana", 50));
+        createButtons();
+
+        setErrorFieldPosition();
+
+        setButtonClickEvents();
+        setButtonPressEvents(menuContainer);
+
+        menuElements = new MenuButton[]{save1, save2, save3, backButton};
+        saveFiles.getChildren().addAll(save1, save2, save3);
+        saveFiles.setSpacing(10);
+        menuContainer.getChildren().addAll(selectSaveText, saveFiles, backButton);
+        menuContainer.setFocusTraversable(true);
+        menuElements[0].gainedFocus();
+        root.getChildren().addAll(header, errorField, menuContainer);
+
+        compareErrorMessage("");
 
         return root;
     }

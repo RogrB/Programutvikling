@@ -124,7 +124,7 @@ public class Player extends Entity {
         if (hasShield) {
             removeShield();
         }
-        setHealth(5);
+        setHealth(1);
         setY(ViewUtil.VIEW_HEIGHT / 2 - (int) new Image(Sprite.PLAYER.src).getHeight() / 2);
         setAlive();
         immunity = false;

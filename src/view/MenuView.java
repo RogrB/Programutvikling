@@ -22,8 +22,6 @@ public class MenuView extends ViewUtil{
     private static final String BG_IMG = "assets/image/background.jpg";
     private MenuButton[] menuElements;
 
-    private String lastError = "";
-
     private  MenuButton newGameButton;
     private MenuButton continueButton;
     private MenuButton multiplayerButton;
@@ -102,7 +100,7 @@ public class MenuView extends ViewUtil{
     }
 
 
-    private void setButtonClickEvents(){
+    void setButtonClickEvents(){
         newGameButton.setOnMouseClicked(this::createNewSave);
         continueButton.setOnMouseClicked(this::continueGame);
         multiplayerButton.setOnMouseClicked(this::loadMultiplayer);
@@ -111,7 +109,8 @@ public class MenuView extends ViewUtil{
         exitButton.setOnMouseClicked(event -> System.exit(1));
     }
 
-    private void setButtonPressEvents(Parent mainMenu){
+    @Override
+    void setButtonPressEvents(Parent mainMenu){
         mainMenu.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
                 menuElements[elementCounter].lostFocus();
@@ -125,7 +124,7 @@ public class MenuView extends ViewUtil{
         });
     }
 
-    public VBox createMainMenuContainer(){
+    private VBox createMainMenuContainer(){
         VBox mainMenu = new VBox();
         mainMenu.setFocusTraversable(true);
         mainMenu.setSpacing(10);
@@ -134,7 +133,7 @@ public class MenuView extends ViewUtil{
         return mainMenu;
     }
 
-    public void decideMenuLayout(VBox mainMenu){
+    private void decideMenuLayout(VBox mainMenu){
         if(gameFileFound() && GameController.getInstance().getLastGameLost()){
             mainMenu.getChildren().addAll(newGameButton, loadGameButton, multiplayerButton, optionsButton, exitButton);
             menuElements = new MenuButton[]{newGameButton, loadGameButton, multiplayerButton, optionsButton, exitButton};
@@ -168,14 +167,8 @@ public class MenuView extends ViewUtil{
         menuElements[0].gainedFocus();
         root.getChildren().addAll(header, errorField, mainMenu);
 
-        compareErrorMessage(lastError);
-
+        compareErrorMessage("");
         return root;
 
     }
-
-    private void layoutLogic(){
-
-    }
-
 }

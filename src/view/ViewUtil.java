@@ -5,12 +5,14 @@ import controller.UserInputs;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -30,6 +32,15 @@ public abstract class ViewUtil {
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
         root.setBackground(getBackGroundImage(bg));
         return root;
+    }
+
+    public Text createText(String textInput, int x, int y, Font font){
+        Text text = new Text(textInput);
+        text.setX(x);
+        text.setY(y);
+        text.setFill(Color.WHITE);
+        text.setFont(font);
+        return text;
     }
 
     void goToView(InputEvent event, Parent node){
@@ -96,6 +107,23 @@ public abstract class ViewUtil {
                 menuElements[currentFocus].requestFocus();
             }
         }
+    }
+
+    abstract void setButtonClickEvents();
+    abstract void setButtonPressEvents(Parent container);
+
+    Label createBaseLabel(String labelText){
+        Label label = new Label(labelText);
+        label.setTextFill(Color.WHITE);
+        return label;
+    }
+
+    VBox createMenuContainer(int x, int y, int spacing){
+        VBox menuContainer = new VBox();
+        menuContainer.setTranslateX(x);
+        menuContainer.setTranslateY(y);
+        menuContainer.setSpacing(spacing);
+        return menuContainer;
     }
 
     public abstract Parent initScene();

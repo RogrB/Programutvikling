@@ -5,6 +5,7 @@ import javafx.scene.input.KeyCode;
 
 import static controller.GameController.gs;
 import view.GameView;
+import view.ViewUtil;
 
 public class UserInputs {
 
