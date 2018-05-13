@@ -5,6 +5,11 @@ import model.weapons.Weapon;
 
 import java.util.Objects;
 
+/**
+ * <h1>EnemyType contains the details for individual enemies</h1>
+ * Handles health, sprite, shooting chance and projectile sprite for
+ * all the different enemies
+ */
 public enum EnemyType {
 
     //              Health      Sprite                  Shooting chance     Weapon
@@ -29,12 +34,39 @@ public enum EnemyType {
     BOSS01(         20,         Sprite.ENEMY_BOSS01,    .050,                Weapon.ENEMY_CIRCLE),
     BOSS02(         20,         Sprite.ENEMY_BOSS02,    .050,                Weapon.ENEMY_CIRCLE);
 
+    /**
+     * The amount of hit points an enemy has upon spawn
+     */      
     public final int MAX_HEALTH;
+    
+    /**
+     * The sprite of the enemy
+     * @see Sprite
+     */      
     public final Sprite SPRITE;
+    
+    /**
+     * How likely the enemy is to shoot
+     */      
     public final double SHOOTING_CHANCE;
+    
+    /**
+     * The sprite for the enemy projectile
+     */      
     public final Weapon WEAPON;
+    
+    /**
+     * If the enemy is a boss type
+     */      
     public final boolean IS_BOSS;
 
+    /**
+     * <b>Constructor: </b>sets the values required to define an EnemyType
+     * @param MAX_HEALTH sets the amount of hit points an enemy has upon spawn
+     * @param sprite sets the sprite for the enemy
+     * @param shootingChance sets the shootingChance for the enemy - how likely the enemy is to shoot
+     * @param weapon sets the projectile sprite for the enemy
+     */      
     EnemyType(int MAX_HEALTH, Sprite sprite, double shootingChance, Weapon weapon) {
         this.MAX_HEALTH = MAX_HEALTH;
         this.SPRITE = sprite;
@@ -43,6 +75,9 @@ public enum EnemyType {
         IS_BOSS = Objects.equals(this.name(), "BOSS01") || Objects.equals(this.name(), "BOSS02");
     }
 
+    /**
+     * @return if the enemy can shoot
+     */      
     public boolean canShoot(){
         return WEAPON != null;
     }
