@@ -6,10 +6,10 @@ import javafx.scene.image.Image;
 import model.Entity;
 import model.weapons.Basic;
 import model.weapons.DoubleSwirl;
-import model.weapons.Doubles;
+//import model.weapons.Doubles;
 import model.weapons.HeatSeeking;
-import model.weapons.SpeedBullets;
-import model.weapons.DamageBullets;
+//import model.weapons.SpeedBullets;
+//import model.weapons.DamageBullets;
 import model.weapons.TripleBurst;
 import model.weapons.Weapon;
 import view.GameView;
@@ -81,17 +81,21 @@ public class Player2 extends Entity {
                 gs.player2Bullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "SpeedBullets":
-                gs.player2Bullets.add(new SpeedBullets(x + width - 10, y + (height / 2) - 8, weapon));
+                //gs.player2Bullets.add(new SpeedBullets(x + width - 10, y + (height / 2) - 8, weapon));
+                gs.player2Bullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "DamageBullets":
-                gs.player2Bullets.add(new DamageBullets(x + width - 10, y + (height / 2) - 8, weapon));
-                break;        
+                //gs.player2Bullets.add(new DamageBullets(x + width - 10, y + (height / 2) - 8, weapon));
+                gs.player2Bullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
+                break;
             case "HeatSeeking":
                 gs.player2Bullets.add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "Doubles":
-                gs.player2Bullets.add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
-                gs.player2Bullets.add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
+                //gs.player2Bullets.add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
+                gs.player2Bullets.add(new Basic(x + width - 10, y + (height / 2) - 25, weapon));
+                //gs.player2Bullets.add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
+                gs.player2Bullets.add(new Basic(x + width - 10, y + (height / 2) + 15, weapon));
                 break;
             case "DoubleSwirl":
                 gs.player2Bullets.add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));

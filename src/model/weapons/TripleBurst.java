@@ -24,8 +24,9 @@ public class TripleBurst extends Basic {
      * for where the bullet is fired from and the {@code Weapon}
      * @param x X Value
      * @param y Y Value
-     * @param weapon sets the Weapon type in the {@code Weapon} class @see {@code Weapon}
+     * @param weapon sets the Weapon type in the {@code Weapon} class
      * @param level sets the position the bullet was fired from
+     * @see {@code Weapon}
      */        
     public TripleBurst(int x, int y, Weapon weapon, int level) {
         super(

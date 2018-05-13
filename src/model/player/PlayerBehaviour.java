@@ -84,17 +84,21 @@ public class PlayerBehaviour implements java.io.Serializable {
                     gs.playerBullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
                 case "SpeedBullets":
-                    gs.playerBullets.add(new SpeedBullets(x + width - 10, y + (height / 2) - 8, weapon));
+                    //gs.playerBullets.add(new SpeedBullets(x + width - 10, y + (height / 2) - 8, weapon));
+                    gs.playerBullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
                 case "DamageBullets":
-                    gs.playerBullets.add(new DamageBullets(x + width - 10, y + (height / 2) - 8, weapon));
-                    break;        
+                    //gs.playerBullets.add(new DamageBullets(x + width - 10, y + (height / 2) - 8, weapon));
+                    gs.playerBullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
+                    break;
                 case "HeatSeeking":
                     gs.playerBullets.add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
                 case "Doubles":
-                    gs.playerBullets.add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
-                    gs.playerBullets.add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
+                    //gs.playerBullets.add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
+                    gs.playerBullets.add(new Basic(x + width - 10, y + (height / 2) - 25, weapon));
+                    //gs.playerBullets.add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
+                    gs.playerBullets.add(new Basic(x + width - 10, y + (height / 2) + 15, weapon));
                     break;
                 case "DoubleSwirl":
                     gs.playerBullets.add(new DoubleSwirl(x + width, y + (height / 2) - 25, weapon, true));

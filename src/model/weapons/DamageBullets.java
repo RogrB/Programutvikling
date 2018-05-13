@@ -14,7 +14,8 @@ public class DamageBullets extends Basic {
      * for where the bullet is fired from and the {@code Weapon}
      * @param x X Value
      * @param y Y Value
-     * @param weapon sets the Weapon type in the {@code Weapon} class @see {@code Weapon}
+     * @param weapon sets the Weapon type in the {@code Weapon} class
+     * @see {@code Weapon}
      */      
     public DamageBullets(int x, int y, Weapon weapon) {
         super(
