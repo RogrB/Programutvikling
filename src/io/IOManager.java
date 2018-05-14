@@ -72,7 +72,7 @@ public class IOManager {
      * @see FileIOException
      * @see AutoSave
      */
-    public void saveGameState() throws FileIOException {
+    void saveGameState() throws FileIOException {
         String src = "tmp/"+GameModel.gameSettings.getPrevSave()+"/GameState.ser";
 
         try {

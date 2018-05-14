@@ -2,8 +2,6 @@ package multiplayer;
 
 import java.net.*;
 import java.io.*;
-import view.GameView;
-import view.MultiplayerView;
 import view.ViewUtil;
 
 /**
@@ -12,7 +10,7 @@ import view.ViewUtil;
  * 
  * @author Roger Birkenes Solli
  */
-public class Sender {
+class Sender {
     
     /**
      * DatagramSocket - to send and receive datagram packets
@@ -58,7 +56,7 @@ public class Sender {
     /**
      * Method to close the DatagramSocket
      */        
-    public void closeSocket() {
+    void closeSocket() {
         
         try {
             socket.close();

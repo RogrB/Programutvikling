@@ -5,7 +5,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import view.ViewUtil;
 
-import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,9 +22,6 @@ public class SoundManager {
     private Map<String, Media> musicMap = new HashMap<>();
     private Map<String, AudioClip> soundMap = new HashMap<>();
     private MediaPlayer player;
-    private String currentMusic = "music_menu";
-
-    private File MUSIC_WIN =      new File("src/assets/audio/music/music_retro_1.wav");
 
 
     public SoundManager(){
@@ -68,7 +64,6 @@ public class SoundManager {
             loadSound("nav", getClass().getResource(audio + "sfx/nav_1.mp3").toURI().toURL(), .8f);
             loadSound("nav_select", getClass().getResource(audio + "sfx/nav_select_1.mp3").toURI().toURL(), 1f);
 
-            loadMusic("music_win", getClass().getResource(audio + "music/music_retro_1.mp3").toURI().toURL());
             loadMusic("music_menu", getClass().getResource(audio + "music/music_menu_2.mp3").toURI().toURL());
             loadMusic("music_battle", getClass().getResource(audio + "music/music_battle_2.mp3").toURI().toURL());
         }
@@ -92,7 +87,6 @@ public class SoundManager {
 
     public void playMusic(String id){
         Runnable music = () -> {
-            currentMusic = id;
             switch(id){
                 case "music_menu":
                     player = new MediaPlayer(musicMap.get(id));
@@ -101,12 +95,6 @@ public class SoundManager {
                     player.play();
                     break;
                 case "music_battle":
-                    player = new MediaPlayer(musicMap.get(id));
-                    player.setVolume((float) gameSettings.getMusicValue() / 100);
-                    player.setCycleCount(MediaPlayer.INDEFINITE);
-                    player.play();
-                    break;
-                case "music_win":
                     player = new MediaPlayer(musicMap.get(id));
                     player.setVolume((float) gameSettings.getMusicValue() / 100);
                     player.setCycleCount(MediaPlayer.INDEFINITE);

@@ -351,9 +351,5 @@ public class GameController {
         }, 2000);
     }
 
-    HUD getHUD() {
-        return this.hud;
-    }
-
     public Boolean getLastGameLost() {return this.lastGameLost; }
 }

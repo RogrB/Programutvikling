@@ -485,7 +485,7 @@ public class Player extends Entity {
     /**
      * @param type sets Descriptive WeaponType
      */      
-    public void setWeaponType(String type) {
+    void setWeaponType(String type) {
         this.weaponType = type;
     }    
     

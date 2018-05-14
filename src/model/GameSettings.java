@@ -27,7 +27,7 @@ public class GameSettings implements Serializable {
      * <b>Constructor: </b>gets previously stored settings from file,
      * and initiates a new file if it doesn't exist.
      */
-    public GameSettings(){
+    GameSettings(){
         String url = "tmp/GameSettings.ser";
         if(IOManager.getInstance().fileExists(url)){
             readFromFile();

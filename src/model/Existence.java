@@ -2,7 +2,6 @@ package model;
 
 import assets.java.Sprite;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import view.ViewUtil;
 
 import java.util.Iterator;

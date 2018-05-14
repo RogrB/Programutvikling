@@ -260,7 +260,7 @@ public class MultiplayerHandler {
     /**
      * Closes connection and unsets multiplayer status
      */       
-    public void disconnect() {
+    void disconnect() {
         if (connected) {
             GameModel.getInstance().setMultiplayerStatus(false);
             // System.out.println("setting mp to " + GameModel.getInstance().getMultiplayerStatus());
