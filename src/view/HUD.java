@@ -163,13 +163,6 @@ public class HUD {
     }
     
     /**
-     * @return gets the weapon type from the player object
-     */        
-    String weaponType() {
-        return gs.player.getWeaponType();
-    }
-    
-    /**
      * @return gets the image of the weapon icon
      * which is displayed in the top left corner of the screen.
      */        

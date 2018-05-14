@@ -511,7 +511,7 @@ public class GameView extends ViewUtil{
 
         scoreText.setText("Score: " + Integer.toString(gs.player.getScore()));
         levelText.setText("Level " + Integer.toString(gs.getLevelIterator()));
-        weaponType.setText(h.weaponType());
+        weaponType.setText(gs.player.getWeaponType());
     }
 
     /**

@@ -22,7 +22,7 @@ public enum EnemyType {
     RED1(           2,          Sprite.ENEMY_RED1,      .004,               Weapon.ENEMY_BASIC),
     RED2(           2,          Sprite.ENEMY_RED2,      .004,               Weapon.ENEMY_BASIC),
     RED3(           2,          Sprite.ENEMY_RED3,      .004,               Weapon.ENEMY_BASIC),
-    REDBIG(         2,          Sprite.ENEMY_RED_BIG,   .004,               Weapon.ENEMY_BASIC),
+    REDBIG(         3,          Sprite.ENEMY_RED_BIG,   .004,               Weapon.ENEMY_BASIC),
     
     // UFO
     UFOBLUE(        2,          Sprite.UFO_BLUE,        .004,                Weapon.ENEMY_BASIC),
