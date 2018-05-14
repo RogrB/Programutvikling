@@ -416,6 +416,7 @@ public class GameController {
      */
     private void detectGameOver(){
         if (!gs.player.isAlive() && !gs.gameOver) {
+            gs.player.isNotPlaying();
             gs.gameOver = true;
             lastGameLost = true;
             startGameOverTimer();
@@ -459,7 +460,6 @@ public class GameController {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                gs.player.isNotPlaying();
                 if(lastGameLost) {
                     gv.gameOver();
                 } else {
