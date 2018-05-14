@@ -20,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 
 import java.text.DecimalFormat;
+import java.util.Random;
 
 import javafx.application.Platform;
 import model.player.Player;
@@ -201,7 +202,11 @@ public class GameView extends ViewUtil{
     /**
      * Background source
      */             
-    private static final String BG_IMG = "assets/image/background.jpg";
+    private static final String[] BG_IMG = {
+            "assets/image/background/level1/layer1.png",
+            "assets/image/background/level2/layer1.png",
+            "assets/image/background/level3/layer1.png"
+    };
 
     /**
      * Initializes instances of the model-view-controller
@@ -283,6 +288,8 @@ public class GameView extends ViewUtil{
      * @return gets the root pane
      */
     public Parent initScene() {
+        Random rnd = new Random();
+
         if(SoundManager.getInst().getPlayer() != null){
             SoundManager.getInst().playMusic("stop");
         }
@@ -292,7 +299,7 @@ public class GameView extends ViewUtil{
         createContainers();
         requestPane = createRequestPane();
 
-        root = initBaseScene(BG_IMG);
+        root = initBaseScene(BG_IMG[rnd.nextInt(3)]);
         decideLayout();
 
         compareErrorMessage();
