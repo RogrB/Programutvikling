@@ -1,5 +1,7 @@
 package view;
 
+import exceptions.FileIOException;
+import io.IOManager;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -7,6 +9,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import view.customElements.MenuButton;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * <h1>Menu for selecting a new save file</h1>
@@ -67,9 +72,28 @@ public class NewGameView extends ViewUtil{
      */
     private void createButtons(){
         save1 = new MenuButton("SAVE 1");
+        save1.setValue(0);
         save2 = new MenuButton("SAVE 2");
+        save2.setValue(1);
         save3 = new MenuButton("SAVE 3");
+        save3.setValue(2);
         backButton = new MenuButton("BACK");
+    }
+
+    private void checkSavenames(){
+        for(int i = 0; i < 3; i++){
+            if(IOManager.getInstance().saveStateExists(i)){
+                try {
+                    System.out.println("Trying to set button" + i);
+                    menuElements[i].setText(IOManager.getInstance().getGameState(i).getStateName());
+                }
+                catch(Exception e){
+                    ViewUtil.setError("Can't fetch Game save names");
+                    System.err.println(e.getMessage());
+                }
+            }
+        }
+
     }
 
     /**
@@ -138,6 +162,7 @@ public class NewGameView extends ViewUtil{
         setEvents(menuContainer);
 
         menuElements = new MenuButton[]{save1, save2, save3, backButton};
+        checkSavenames();
         saveFiles.getChildren().addAll(save1, save2, save3);
         saveFiles.setSpacing(10);
         menuContainer.getChildren().addAll(selectSaveText, saveFiles, backButton);
