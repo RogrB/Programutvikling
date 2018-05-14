@@ -8,6 +8,7 @@ import java.util.Iterator;
  * <h1>A Class that handles the creation of the TripleBurst upgrade</h1>
  * The {@code TripleBurst} class extends the {@code Basic} class to create a
  * weapon upgrade that fires thee bullets that spread out as they move across the field.
+ * 
  * @author Roger Birkenes Solli
  */
 public class TripleBurst extends Basic {

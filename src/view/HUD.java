@@ -9,6 +9,8 @@ import java.util.TimerTask;
  * <h1>Handles the Heads Up Display on the game screen</h1>
  * This class handles the setup of the heads up display to
  * be rendered to the game screen.
+ * 
+ * @author Roger Birkenes Solli
  */
 public class HUD {
     

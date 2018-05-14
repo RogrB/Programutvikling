@@ -9,6 +9,8 @@ import java.util.TimerTask;
  * <h1>The Asteroid class</h1>
  * The {@code Asteroid} class extends the {@code Enemy} class to create a
  * type of enemy that behaves differently than regular enemies.
+ * 
+ * @author Roger Birkenes Solli
  */
 public class Asteroid extends Enemy {
     

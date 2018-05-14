@@ -11,6 +11,8 @@ import java.util.Iterator;
  * This class handles the behaviour of PowerUps in the game space.
  * The {@code PowerUp} class extends the {@code Existence} class
  * to receive values needed to exist in the game space. 
+ * 
+ * @author Roger Birkenes Solli
  */
 public class PowerUp extends Existence {
     
