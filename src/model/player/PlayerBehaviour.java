@@ -77,6 +77,12 @@ public class PlayerBehaviour implements java.io.Serializable {
      * Checks the current weapon type equipped and created bullet objects
      * accordingly. The bullets are spawned at the appropriate position based
      * on the players X and Y values.
+     * @param weaponType the descriptive weapon type String
+     * @param x X value
+     * @param y Y value
+     * @param width Width
+     * @param height Height
+     * @param weapon The current weapon type object
      */      
     void shoot(String weapontype, int x, int y, int width, int height, Weapon weapon) {
             switch(weapontype) {
@@ -84,20 +90,16 @@ public class PlayerBehaviour implements java.io.Serializable {
                     gs.playerBullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
                 case "SpeedBullets":
-                    //gs.playerBullets.add(new SpeedBullets(x + width - 10, y + (height / 2) - 8, weapon));
                     gs.playerBullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
                 case "DamageBullets":
-                    //gs.playerBullets.add(new DamageBullets(x + width - 10, y + (height / 2) - 8, weapon));
                     gs.playerBullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
                 case "HeatSeeking":
                     gs.playerBullets.add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
                     break;
                 case "Doubles":
-                    //gs.playerBullets.add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
                     gs.playerBullets.add(new Basic(x + width - 10, y + (height / 2) - 25, weapon));
-                    //gs.playerBullets.add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
                     gs.playerBullets.add(new Basic(x + width - 10, y + (height / 2) + 15, weapon));
                     break;
                 case "DoubleSwirl":
@@ -117,35 +119,43 @@ public class PlayerBehaviour implements java.io.Serializable {
      * @param weaponType input the current weapon equipped.
      * @return outputs the new weapon.
      */      
-    public String powerUp(String weaponType) {
-        String returnString = "";
+    public Weapon powerUp(Weapon weaponType) {
+        Weapon returnWeapon;
         switch(weaponType) {
-            case "Reset":
-                returnString = "Basic";
+            case PLAYER_BASIC:
+                returnWeapon = Weapon.PLAYER_UPGRADED;
+                gs.player.setWeaponType("SpeedBullets");
                 break;
-            case "Basic":
-                returnString = "SpeedBullets";
+            case PLAYER_UPGRADED:
+                returnWeapon = Weapon.PLAYER_UPGRADED2;
+                gs.player.setWeaponType("DamageBullets");
                 break;
-            case "SpeedBullets":
-                returnString = "DamageBullets";
+            case PLAYER_UPGRADED2:
+                returnWeapon = Weapon.PLAYER_HEATSEEKING;
+                gs.player.setWeaponType("HeatSeeking");
                 break;
-            case "DamageBullets":
-                returnString = "HeatSeeking";
+            case PLAYER_HEATSEEKING:
+                returnWeapon = Weapon.PLAYER_DOUBLES;
+                gs.player.setWeaponType("Doubles");
                 break;
-            case "HeatSeeking":
-                returnString = "Doubles";
+            case PLAYER_DOUBLES:
+                returnWeapon = Weapon.PLAYER_DOUBLESWIRL;
+                gs.player.setWeaponType("DoubleSwirl");
                 break;
-            case "Doubles":
-                returnString = "DoubleSwirl";
+            case PLAYER_DOUBLESWIRL:
+                returnWeapon = Weapon.PLAYER_TRIPLEBURST;
+                gs.player.setWeaponType("TripleBurst");
                 break;
-            case "DoubleSwirl":
-                returnString = "TripleBurst";
+            case PLAYER_TRIPLEBURST:
+                returnWeapon = Weapon.PLAYER_TRIPLEBURST;
+                gs.player.setWeaponType("TripleBurst");
                 break;
-            case "TripleBurst":
-                returnString = "TripleBurst";
+            default:
+                gs.player.setWeaponType("Basic");
+                returnWeapon = Weapon.PLAYER_BASIC;
                 break;
         }
-        return returnString;
+        return returnWeapon;
     }
     
 }

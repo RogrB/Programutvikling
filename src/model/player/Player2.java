@@ -6,10 +6,7 @@ import javafx.scene.image.Image;
 import model.Entity;
 import model.weapons.Basic;
 import model.weapons.DoubleSwirl;
-//import model.weapons.Doubles;
 import model.weapons.HeatSeeking;
-//import model.weapons.SpeedBullets;
-//import model.weapons.DamageBullets;
 import model.weapons.TripleBurst;
 import model.weapons.Weapon;
 import view.GameView;
@@ -37,12 +34,6 @@ public class Player2 extends Entity {
      * The weapon type currently equipped - can be upgraded several times
      */           
     private String weaponType = "Basic";
-    
-    /**
-     * {@code PlayerBehaviour} object
-     * @see PlayerBehaviour
-     */        
-    private PlayerBehaviour behave = new PlayerBehaviour();    
 
     /**
      * <b>Constructor: </b>sets the player sprite, X and Y positions as well as health.
@@ -56,7 +47,6 @@ public class Player2 extends Entity {
         );
 
         setCanShoot(true);
-        // getImageView().relocate(getX(), getY());
         weapon = Weapon.PLAYER_BASIC;
     }    
     
@@ -81,20 +71,16 @@ public class Player2 extends Entity {
                 gs.player2Bullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "SpeedBullets":
-                //gs.player2Bullets.add(new SpeedBullets(x + width - 10, y + (height / 2) - 8, weapon));
                 gs.player2Bullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "DamageBullets":
-                //gs.player2Bullets.add(new DamageBullets(x + width - 10, y + (height / 2) - 8, weapon));
                 gs.player2Bullets.add(new Basic(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "HeatSeeking":
                 gs.player2Bullets.add(new HeatSeeking(x + width - 10, y + (height / 2) - 8, weapon));
                 break;
             case "Doubles":
-                //gs.player2Bullets.add(new Doubles(x + width - 10, y + (height / 2) - 25, weapon));
                 gs.player2Bullets.add(new Basic(x + width - 10, y + (height / 2) - 25, weapon));
-                //gs.player2Bullets.add(new Doubles(x + width - 10, y + (height / 2) + 15, weapon));
                 gs.player2Bullets.add(new Basic(x + width - 10, y + (height / 2) + 15, weapon));
                 break;
             case "DoubleSwirl":
@@ -134,12 +120,42 @@ public class Player2 extends Entity {
     
     /**
      * Method that handles weapon upgrades for player2 
-     * through the {@code PlayerBehaviour} class
-     * @see PlayerBehaviour 
      */        
     public void powerUp() {
-        this.weaponType = behave.powerUp(weaponType);
-        // System.out.println("weapontype is now " + weaponType);
+        switch(weapon) {
+            case PLAYER_BASIC:
+                weapon = Weapon.PLAYER_UPGRADED;
+                weaponType = "SpeedBullets";
+                break;
+            case PLAYER_UPGRADED:
+                weapon = Weapon.PLAYER_UPGRADED2;
+                weaponType = "DamageBullets";
+                break;
+            case PLAYER_UPGRADED2:
+                weapon = Weapon.PLAYER_HEATSEEKING;
+                weaponType = "HeatSeeking";
+                break;
+            case PLAYER_HEATSEEKING:
+                weapon = Weapon.PLAYER_DOUBLES;
+                weaponType = "Doubles";
+                break;
+            case PLAYER_DOUBLES:
+                weapon = Weapon.PLAYER_DOUBLESWIRL;
+                weaponType = "DoubleSwirl";
+                break;
+            case PLAYER_DOUBLESWIRL:
+                weapon = Weapon.PLAYER_TRIPLEBURST;
+                weaponType = "TripleBurst";
+                break;
+            case PLAYER_TRIPLEBURST:
+                weapon = Weapon.PLAYER_TRIPLEBURST;
+                weaponType = "TripleBurst";
+                break;
+            default:
+                weaponType = "Basic";
+                weapon = Weapon.PLAYER_BASIC;
+                break;
+        }
     }    
     
 }
