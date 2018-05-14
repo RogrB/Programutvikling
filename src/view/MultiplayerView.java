@@ -123,6 +123,7 @@ public class MultiplayerView extends ViewUtil{
         createLabels();
         createTextFields();
         createButtons();
+        setErrorFieldPosition();
     }
 
     private void setEvents(Parent container){
@@ -135,7 +136,6 @@ public class MultiplayerView extends ViewUtil{
         VBox menuContainer = createMenuContainer(450, 250, 10);
         createUI();
         setEvents(menuContainer);
-        setErrorFieldPosition();
         menuContainer.getChildren().addAll(hostname, hostnameField, remotePort, remotePortField, localPort, localPortField, connectButton, backButton, helpButton);
         root.getChildren().addAll(header, errorField, menuContainer);
         compareErrorMessage("");

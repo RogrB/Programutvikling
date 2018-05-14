@@ -3,14 +3,9 @@ package view;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import model.GameModel;
-
-import java.awt.*;
 
 public class NewGameView extends ViewUtil{
 
@@ -26,6 +21,8 @@ public class NewGameView extends ViewUtil{
     private MenuButton save2;
     private MenuButton save3;
     private MenuButton backButton;
+
+    private Text selectSaveText;
 
     private MenuButton[] menuElements;
 
@@ -72,20 +69,26 @@ public class NewGameView extends ViewUtil{
         });
     }
 
+    private void setEvents(Parent container){
+        setButtonClickEvents();
+        setButtonPressEvents(container);
+    }
+
+    private void createUI(){
+        createButtons();
+        selectSaveText = createText("SELECT SAVE FILE", 500, 275, Font.font("Verdana", 50));
+        setErrorFieldPosition();
+    }
+
     @Override
     public Parent initScene() {
         root = initBaseScene(BG_IMG);
 
         VBox saveFiles = new VBox();
-        VBox menuContainer = createMenuContainer(410, 250, 40);
+        VBox menuContainer = createMenuContainer(370, 250, 40);
 
-        Text selectSaveText = createText("SELECT SAVE FILE", 500, 275, Font.font("Verdana", 50));
-        createButtons();
-
-        setErrorFieldPosition();
-
-        setButtonClickEvents();
-        setButtonPressEvents(menuContainer);
+        createUI();
+        setEvents(menuContainer);
 
         menuElements = new MenuButton[]{save1, save2, save3, backButton};
         saveFiles.getChildren().addAll(save1, save2, save3);

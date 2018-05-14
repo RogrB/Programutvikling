@@ -23,12 +23,12 @@ public class LoadGameView extends ViewUtil{
 
     private static final String BG_IMG = "assets/image/background.jpg";
 
-    private ArrayList<MenuButton> tempElements;
-
     private MenuButton save1;
     private MenuButton save2;
     private MenuButton save3;
     private MenuButton backButton;
+
+    private Text loadSaveText;
 
     private MenuButton[] menuElements;
 
@@ -109,23 +109,29 @@ public class LoadGameView extends ViewUtil{
         });
     }
 
+    private void setEvents(Parent container){
+        setButtonClickEvents();
+        setButtonPressEvents(container);
+    }
+
+    private void createUI(){
+        createButtons();
+        loadSaveText = createText("LOAD SAVE FILE", 500, 275, Font.font("Verdana", 50));
+        setErrorFieldPosition();
+    }
+
     @Override
     public Parent initScene() {
         root = initBaseScene(BG_IMG);
 
         VBox saveFiles = new VBox();
-        VBox menuContainer = createMenuContainer(427, 250, 40);
+        VBox menuContainer = createMenuContainer(395, 250, 40);
+        createUI();
 
-        Text loadSaveText = createText("LOAD SAVE FILE", 500, 275, Font.font("Verdana", 50));
+        setEvents(menuContainer);
 
-        createButtons();
-        setButtonClickEvents();
-        setButtonPressEvents(menuContainer);
-
-        tempElements = createTempArray();
+        ArrayList<MenuButton> tempElements = createTempArray();
         menuElements = createMenuElementsArray(tempElements);
-
-        setErrorFieldPosition();
 
         saveFiles.getChildren().addAll(save1, save2, save3);
         saveFiles.setSpacing(10);

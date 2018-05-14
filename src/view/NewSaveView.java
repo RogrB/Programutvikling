@@ -7,9 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.GameModel;
@@ -27,6 +25,10 @@ public class NewSaveView extends ViewUtil{
     private MenuButton backButton;
 
     private TextField saveNameTextField;
+
+    private Text writeSaveNameText;
+
+    private Label saveNameLabel;
 
     private void createButtons(){
         startGameButton = new MenuButton("START");
@@ -49,29 +51,36 @@ public class NewSaveView extends ViewUtil{
         });
     }
 
+    private void setEvents(Parent container){
+        setButtonClickEvents();
+        setButtonPressEvents(container);
+    }
+
+    private TextField createTextField(){
+        TextField textfield = new TextField();
+        textfield.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.ENTER){
+                checkFileName(event);
+            }
+        });
+        return textfield;
+    }
+
+    private void createUI(){
+        saveNameLabel = createBaseLabel("SAVE NAME");
+        saveNameTextField = createTextField();
+        writeSaveNameText = createText("NEW GAME", 460, 275, Font.font("Verdana", 50));
+        createButtons();
+        setErrorFieldPosition();
+    }
+
     @Override
     public Parent initScene() {
         root = initBaseScene(BG_IMG);
 
         VBox menuContainer = createMenuContainer(450, 325, 10);
-        Text writeSaveNameText = createText("NEW GAME", 475, 275, Font.font("Verdana", 50));
-        setErrorFieldPosition();
-
-        Label saveNameLabel = createBaseLabel("SAVE NAME");
-
-        saveNameTextField = new TextField();
-
-        saveNameTextField.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.ENTER){
-                checkFileName(event);
-            }
-        });
-
-
-        createButtons();
-
-        setButtonClickEvents();
-        setButtonPressEvents(menuContainer);
+        createUI();
+        setEvents(menuContainer);
 
         menuContainer.getChildren().addAll(saveNameLabel, saveNameTextField, startGameButton, backButton);
         root.getChildren().addAll(header, writeSaveNameText, errorField, menuContainer);

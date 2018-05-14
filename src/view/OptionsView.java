@@ -8,9 +8,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import model.GameModel;
-import model.GameSettings;
 
 import static model.GameModel.gameSettings;
 
@@ -31,21 +29,20 @@ public class OptionsView extends ViewUtil{
     private Label musicLabel;
     private Label difficultyLabel;
 
+    private Label soundTextLabel;
+    private Label musicTextLabel;
+    private Label difficultyTextLabel;
 
-
-    private Label soundValueLabel;
-    private Label musicValueLabel;
-    private Label difficultyValueLabel;
-
-    private Slider difficultySlider;
     private Slider soundSlider;
     private Slider musicSlider;
+    private Slider difficultySlider;
 
     private MenuButton backButton;
 
     private Parent[] menuElements;
 
-    private OptionsView(){}
+    private OptionsView(){
+    }
 
     private String setDifficultyText(int difficultyValue){
         String text = "";
@@ -69,56 +66,18 @@ public class OptionsView extends ViewUtil{
         return text;
     }
 
-    private void createDescriptiveLabels(){
-        soundLabel = createBaseLabel("VOLUME");
-        musicLabel = createBaseLabel("MUSIC");
-        difficultyLabel = createBaseLabel("DIFFICULTY");
-    }
-
-    private void createValueLabels(){
-        musicValueLabel = createBaseLabel(String.valueOf(musicValue));
-        difficultyValueLabel = createBaseLabel(setDifficultyText(difficultyValue));
-        soundValueLabel = createBaseLabel(String.valueOf(soundValue));
-
-        musicValueLabel.setTranslateX(145);
-        difficultyValueLabel.setTranslateX(125);
-        soundValueLabel.setTranslateX(145);
-    }
-
-    private void createSliders(){
-        soundSlider = createSlider(0, 100, soundValue, 25, 25);
-        musicSlider = createSlider(0, 100, musicValue, 25, 25);
-        difficultySlider = createSlider(1, 5, difficultyValue, 1, 1);
-
-        difficultySlider.setSnapToTicks(true);
-        difficultySlider.setMinorTickCount(0);
-    }
-
-    private Slider createSlider(int min, int max, int val, int majorTick, int blockIncrement){
-        Slider slider = new Slider(min, max, val);
-        slider.setShowTickMarks(true);
-        slider.setMajorTickUnit(majorTick);
-        slider.setBlockIncrement(blockIncrement);
-        return slider;
-    }
-
-    private void createSliderListener(Slider slider, Label label, int setValue){
-        slider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            label.setText(String.valueOf(newValue.intValue()));
-        });
-    }
-
     @Override
-    void setButtonClickEvents(){
+    void setButtonClickEvents() {
         backButton.setOnMouseClicked((MouseEvent event) -> {
             gameSettings.saveSettings(difficultyValue, soundValue, musicValue);
             SoundManager.getInst().getPlayer().setVolume((float)musicValue/100);
             goToView(event, MenuView.getInstance().initScene());
         });
     }
+
     @Override
-    void setButtonPressEvents(Parent optionsMenu){
-        optionsMenu.setOnKeyPressed(event -> {
+    void setButtonPressEvents(Parent container) {
+        container.setOnKeyPressed(event -> {
             if(event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN){
                 backButton.lostFocus();
                 traverseMenu(event.getCode(), menuElements);
@@ -143,49 +102,73 @@ public class OptionsView extends ViewUtil{
         });
     }
 
-    public Parent initScene(){
-        root = initBaseScene(BG_IMG);
-        VBox optionsMenu = createMenuContainer(450, 250, 10);
-        createDescriptiveLabels();
-        //createValueLabels();
-        difficultyValueLabel = new Label(setDifficultyText(difficultyValue));
-        difficultyValueLabel.setTranslateX(125);
-        difficultyValueLabel.setTextFill(Color.WHITE);
+    private Slider createSlider(int min, int max, int value, int majorTick, int blockIncrement){
+        Slider slider = new Slider(min, max, value);
+        slider.setMajorTickUnit(majorTick);
+        slider.setShowTickMarks(true);
+        slider.setBlockIncrement(blockIncrement);
+        return slider;
+    }
 
-        soundValueLabel = new Label(String.valueOf(soundValue));
-        soundValueLabel.setTranslateX(145);
-        soundValueLabel.setTextFill(Color.WHITE);
+    private void createSliders(){
+        soundSlider = createSlider(0, 100, soundValue, 25, 25);
+        musicSlider = createSlider(0, 100, musicValue, 25, 25);
+        difficultySlider = createSlider(1, 5, difficultyValue, 1, 1);
 
-        musicValueLabel = new Label(String.valueOf(musicValue));
-        musicValueLabel.setTranslateX(145);
-        musicValueLabel.setTextFill(Color.WHITE);
+        difficultySlider.setSnapToTicks(true);
+        difficultySlider.setMinorTickCount(0);
+
+        createListeners();
+    }
+
+    private void createLabels(){
+        soundLabel = createBaseLabel("VOLUME");
+        musicLabel = createBaseLabel("MUSIC");
+        difficultyLabel = createBaseLabel("DIFFICULTY");
+
+        difficultyTextLabel = createBaseLabel(setDifficultyText(difficultyValue));
+        soundTextLabel = createBaseLabel(String.valueOf(soundValue));
+        musicTextLabel = createBaseLabel(String.valueOf(musicValue));
+
+        difficultyTextLabel.setTranslateX(125);
+        soundTextLabel.setTranslateX(145);
+        musicTextLabel.setTranslateX(145);
+    }
+
+    private void createUI(){
+        createLabels();
         createSliders();
-
+        setErrorFieldPosition();
         backButton = new MenuButton("BACK");
+    }
 
+    private void createListeners(){
         soundSlider.valueProperty().addListener(((observable, oldValue, newValue) -> {
-            soundValueLabel.setText(String.valueOf(newValue.intValue()));
+            soundTextLabel.setText(String.valueOf(newValue.intValue()));
             soundValue = newValue.intValue();
         }));
-        musicValueLabel = new Label(String.valueOf(musicValue));
         musicSlider.valueProperty().addListener(((observable, oldValue, newValue) -> {
-            musicValueLabel.setText(String.valueOf(newValue.intValue()));
+            musicTextLabel.setText(String.valueOf(newValue.intValue()));
             musicValue = newValue.intValue();
         }));
         difficultySlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             difficultySlider.setValue(newValue.intValue());
             difficultyValue = newValue.intValue();
-            difficultyValueLabel.setText(setDifficultyText(difficultyValue));
+            difficultyTextLabel.setText(setDifficultyText(difficultyValue));
         });
-        setErrorFieldPosition();
-        setButtonClickEvents();
-        setButtonPressEvents(optionsMenu);
+    }
+
+    public Parent initScene(){
+        root = initBaseScene(BG_IMG);
+        createUI();
+        VBox menuContainer = createMenuContainer(450, 250, 10);
 
         menuElements = new Parent[]{soundSlider, musicSlider, difficultySlider, backButton};
-        optionsMenu.getChildren().addAll(soundLabel, soundSlider, soundValueLabel, musicLabel, musicSlider, musicValueLabel, difficultyLabel, difficultySlider, difficultyValueLabel, backButton);
+        menuContainer.getChildren().addAll(soundLabel, soundSlider, soundTextLabel, musicLabel, musicSlider, musicTextLabel, difficultyLabel, difficultySlider, difficultyTextLabel, backButton);
         elementCounter = 0;
-
-        root.getChildren().addAll(header, errorField, optionsMenu);
+        setButtonPressEvents(menuContainer);
+        setButtonClickEvents();
+        root.getChildren().addAll(header, errorField, menuContainer);
 
         compareErrorMessage("");
 

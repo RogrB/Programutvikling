@@ -237,6 +237,7 @@ public class GameView extends ViewUtil{
     private void createUI(){
         createTexts();
         createButtons();
+        setErrorFieldPosition();
     }
 
     private void createContainers(){
@@ -290,8 +291,6 @@ public class GameView extends ViewUtil{
         createUI();
         createContainers();
         requestPane = createRequestPane();
-
-        setErrorFieldPosition();
 
         root = initBaseScene(BG_IMG);
         decideLayout();

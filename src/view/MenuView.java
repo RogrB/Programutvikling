@@ -148,24 +148,27 @@ public class MenuView extends ViewUtil{
         }
     }
 
+    private void setEvents(Parent container){
+        setButtonClickEvents();
+        setButtonPressEvents(container);
+    }
+
 
     public Parent initScene(){
 
         root = initBaseScene(BG_IMG);
 
-        VBox mainMenu = createMainMenuContainer();
+        VBox menuContainer = createMainMenuContainer();
 
         setErrorFieldPosition();
-
         createButtons();
-        setButtonClickEvents();
-        setButtonPressEvents(mainMenu);
+        setEvents(menuContainer);
 
-        decideMenuLayout(mainMenu);
+        decideMenuLayout(menuContainer);
 
 
         menuElements[0].gainedFocus();
-        root.getChildren().addAll(header, errorField, mainMenu);
+        root.getChildren().addAll(header, errorField, menuContainer);
 
         compareErrorMessage("");
         return root;
