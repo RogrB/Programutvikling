@@ -34,16 +34,11 @@ public class LoadGameView extends ViewUtil{
      * @return Returns a reference to the singleton object.
      */
     public static LoadGameView getInst(){return inst;}
-
+    
     /**
      * Private constructor
      */
     private LoadGameView(){}
-
-    /**
-     * The background image of the view.
-     */
-    private static final String BG_IMG = "assets/image/background.jpg";
 
     /**
      * First save button

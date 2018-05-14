@@ -21,6 +21,7 @@ public abstract class ViewUtil {
 
     public static final int VIEW_WIDTH = 1200;
     public static final int VIEW_HEIGHT = 800;
+    protected final String BG_IMG = "assets/image/background/background_menu.png";
     Pane root;
     Text header = new Text("AERO");
     int elementCounter = 0;

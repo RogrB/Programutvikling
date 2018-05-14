@@ -20,8 +20,6 @@ public class OptionsView extends ViewUtil{
         return inst;
     }
 
-    private static final String BG_IMG = "assets/image/background.jpg";
-
     private int difficultyValue = GameModel.gameSettings.getDifficultyValue();
     private int soundValue = GameModel.gameSettings.getSoundValue();
     private int musicValue = GameModel.gameSettings.getMusicValue();
