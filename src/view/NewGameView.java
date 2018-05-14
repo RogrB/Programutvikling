@@ -84,7 +84,6 @@ public class NewGameView extends ViewUtil{
         for(int i = 0; i < 3; i++){
             if(IOManager.getInstance().saveStateExists(i)){
                 try {
-                    System.out.println("Trying to set button" + i);
                     menuElements[i].setText(IOManager.getInstance().getGameState(i).getStateName());
                 }
                 catch(Exception e){
