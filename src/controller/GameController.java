@@ -19,25 +19,71 @@ import java.util.*;
 
 import static model.GameState.bossType;
 
+/**
+ * Class used to control the Game.
+ *
+ * @author Åsmund Røst Wien
+ * @author Jonas Ege Carlsen
+ * @author Roger Birkenes Solli
+ */
 public class GameController {
 
-    // Singleton
+    /**
+     * The singleton object.
+     */
     private static GameController inst = new GameController();
-    private GameController(){}
+
+    /**
+     * Method to access the singleton object.
+     * @return Returns a reference to the singleton object.
+     */
     public static GameController getInstance(){ return inst; }
 
+    /**
+     * Private constructor.
+     */
+    private GameController(){}
+
     // MVC-access
+
+    /**
+     * Used to reference the GameModel singleton object.
+     */
     private GameModel gm;
+
+    /**
+     * Used to reference the GameView singleton object.
+     */
     private GameView gv;
+
+    /**
+     * Used to reference GameState.
+     */
     public static GameState gs;
 
+    /**
+     * Used to display the Heads Up Display.
+     */
     private HUD hud;
+
+    /**
+     * Used to load levels.
+     */
     private LevelLoader levelLoader;
 
+    /**
+     * Timer used to update the game.
+     */
     private AnimationTimer gameMainTimer;
 
+    /**
+     * An iterator used to iterate through enemies.
+     */
     private Iterator<Enemy> enemyIterator;
 
+    /**
+     * Boolean that decides if the last game was lost or not.
+     */
     private Boolean lastGameLost = false;
 
     public void mvcSetup(){

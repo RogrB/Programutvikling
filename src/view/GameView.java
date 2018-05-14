@@ -33,6 +33,8 @@ import static controller.GameController.gs;
  * <h1>The main class for rendering all in-game objects</h1>
  * Everything that is displayed to the player
  * in-game is handled through this class, including the Heads Up Display.
+ *
+ * @author Jonas Ege Carlsen, Roger Birkenes Solli, Åsmund Røst Wien
  */
 public class GameView extends ViewUtil{
 
@@ -193,11 +195,29 @@ public class GameView extends ViewUtil{
      */
     private Text hitPercent = createText("", VIEW_WIDTH/2 - 300, VIEW_HEIGHT/2 + 60, Font.font("Verdana", 30));
 
+    /**
+     * Button used for continuing to the next level.
+     */
     private MenuButton continueButton;
+
+    /**
+     * Button used for retrying after dying.
+     */
     private MenuButton retryButton;
+
+    /**
+     * Button used for returning to the main menu.
+     */
     private MenuButton exitToMenuButton;
+
+    /**
+     * Button used for returning to the main menu.
+     */
     private MenuButton exitToMenuButton2;
 
+    /**
+     * Pane used for escaping to the main menu.
+     */
     private Pane requestPane;
 
     /**
@@ -213,22 +233,33 @@ public class GameView extends ViewUtil{
         gc.mvcSetup();
     }
 
+    /**
+     * Sets button click events for view.
+     */
     @Override
-    void setButtonClickEvents() {
+    void setButtonClickEvents(){}
 
-    }
-
+    /**
+     * Sets button press events for view.
+     * @param container The menu container of the view.
+     */
     @Override
     void setButtonPressEvents(Parent container) {
 
     }
 
+    /**
+     * Creates all the Text for the view.
+     */
     private void createTexts(){
         scoreText = createText("Score: " + Integer.toString(gs.player.getScore()), VIEW_WIDTH - 150, 60, Font.font("Verdana", 20));
         levelText = createText("Level: " + Integer.toString(gs.getLevelIterator()), VIEW_WIDTH - 150, 30, Font.font("Verdana", 20));
         weaponType = createText("WeaponType: ", 110, 30, Font.font("Verdana", 14));
     }
 
+    /**
+     * Creates all the buttons for the view.
+     */
     private void createButtons(){
         continueButton = new MenuButton("CONTINUE");
         retryButton = new MenuButton("RETRY");
@@ -236,12 +267,18 @@ public class GameView extends ViewUtil{
         exitToMenuButton2 = new MenuButton("MAIN MENU");
     }
 
+    /**
+     * Creates the user interface elements for the view.
+     */
     private void createUI(){
         createTexts();
         createButtons();
         setErrorFieldPosition();
     }
 
+    /**
+     * Creates won and lost-containers for the view.
+     */
     private void createContainers(){
         wonButtonContainer = createMenuContainer(450, 675, 0);
         wonButtonContainer.getChildren().addAll(continueButton, exitToMenuButton2);
@@ -254,6 +291,9 @@ public class GameView extends ViewUtil{
         menuElementsLost = new MenuButton[]{retryButton, exitToMenuButton};
     }
 
+    /**
+     * Method to decide the layout for the view.
+     */
     private void decideLayout(){
         if(gm.getMultiplayerStatus()) {
             root.getChildren().addAll(errorField, wonButtonContainer, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, requestPane, player2LayerCanvas);
@@ -263,6 +303,10 @@ public class GameView extends ViewUtil{
         }
     }
 
+    /**
+     * Creates a request pane that handles the KeyCode.ESCAPE event.
+     * @return Returns a Pane.
+     */
     private Pane createRequestPane(){
         Pane pane = new Pane();
         pane.setFocusTraversable(true);
@@ -281,8 +325,9 @@ public class GameView extends ViewUtil{
     }
 
     /**
-     * Method for initiating the object
-     * @return gets the root pane
+     * The main method of the View. Calls other methods and returns
+     * a finished root node.
+     * @return Returns a root node / Pane.
      */
     public Parent initScene() {
         Random rnd = new Random();

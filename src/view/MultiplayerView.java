@@ -20,41 +20,109 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import view.customElements.MenuButton;
 
+/**
+ * Multiplayer Menu
+ * The class {@code MultiplayerView} extends {@code ViewUtil}.
+ *
+ * @author Jonas Ege Carlsen Roger Birkenes Solli
+ */
 public class MultiplayerView extends ViewUtil{
 
+    /**
+     * The singleton object.
+     */
     public static MultiplayerView inst = new MultiplayerView();
+
+    /**
+     * Method to access the singleton object.
+     * @return Returns a reference to the singleton object.
+     */
     public static MultiplayerView getInst(){
         return inst;
     }
 
+    /**
+     * The MultiplayerHandler singleton object.
+     */
     private MultiplayerHandler mp = MultiplayerHandler.getInstance();
+
+    /**
+     * The GameModel singleton object.
+     */
     private GameModel gm = GameModel.getInstance();
 
+
+    /**
+     * TextField used to type the hostname.
+     */
     private TextField hostnameField;
+
+    /**
+     * TextField used to type the remote port.
+     */
     private TextField remotePortField;
+
+    /**
+     * TextField used to type the local port.
+     */
     private TextField localPortField;
+
+    /**
+     * TextField used to describe the hostname TextField.
+     */
     private Label hostname;
+
+    /**
+     * TextField used to describe the remote port TextField.
+     */
     private Label remotePort;
+
+    /**
+     * TextField used to describe the local port TextField.
+     */
     private Label localPort;
 
+    /**
+     * Button used to launch the game and connect to the other player.
+     */
     private MenuButton connectButton;
+
+    /**
+     * Button used to go back to {@code MenuView}.
+     */
     private MenuButton backButton;
+
+    /**
+     * Button used to display help.
+     */
     private Button helpButton;
 
+    /**
+     * Static reference to the stage.
+     */
     public static Stage stage;
 
+    /**
+     * Method used to create all the Labels in the view.
+     */
     private void createLabels(){
         hostname = createBaseLabel("HOSTNAME (OTHER PLAYERS IP");
         remotePort = createBaseLabel("REMOTE PORT");
         localPort = createBaseLabel("LOCAL PORT");
     }
 
+    /**
+     * Method used to create all the TextFields in the view.
+     */
     private void createTextFields(){
         hostnameField = new TextField();
         remotePortField = new TextField();
         localPortField = new TextField();
     }
 
+    /**
+     * Method used to create all the buttons in the view.
+     */
     private void createButtons(){
         connectButton = new MenuButton("CONNECT");
         backButton = new MenuButton("BACK");
@@ -64,7 +132,9 @@ public class MultiplayerView extends ViewUtil{
         helpButton.setTranslateY(-313);
     }
 
-
+    /**
+     * Sets the button click events of the view.
+     */
     @Override
     void setButtonClickEvents() {
         connectButton.setOnMouseClicked(event -> {
@@ -102,6 +172,10 @@ public class MultiplayerView extends ViewUtil{
         });
     }
 
+    /**
+     * Sets the button press events for the menu container.
+     * @param container The menu container of the view.
+     */
     @Override
     void setButtonPressEvents(Parent container) {
         container.setOnKeyPressed(event -> {
@@ -114,6 +188,9 @@ public class MultiplayerView extends ViewUtil{
         });
     }
 
+    /**
+     * Creates all the user interface elements for the view.
+     */
     private void createUI(){
         createLabels();
         createTextFields();
@@ -121,11 +198,20 @@ public class MultiplayerView extends ViewUtil{
         setErrorFieldPosition();
     }
 
+    /**
+     * Sets all the events for the view.
+     * @param container The menu container of the view.
+     */
     private void setEvents(Parent container){
         setButtonClickEvents();
         setButtonPressEvents(container);
     }
 
+    /**
+     * The main method of the View. Calls other methods and returns
+     * a finished root node.
+     * @return Returns a root node / Pane.
+     */
     public Parent initScene(){
         root = initBaseScene(BG_IMG);
         VBox menuContainer = createMenuContainer(450, 250, 10);
@@ -137,11 +223,21 @@ public class MultiplayerView extends ViewUtil{
         return root;
     }
 
+    /**
+     * Method to call different functions based off of a value.
+     * Overridden from {@code ViewUtil}, although it
+     * is not used in this view.
+     * @param buttonName The name of the button.
+     * @param event The event that this function is called from.
+     */
     @Override
     public void select(String buttonName, KeyEvent event) {
 
     }
-    
+
+    /**
+     * Method used to initiate a multiplayer game.
+     */
     private void initMultiplayerGame() {
         String hostname = hostnameField.getText();
         int remoteport = Integer.parseInt(remotePortField.getText());
@@ -150,7 +246,11 @@ public class MultiplayerView extends ViewUtil{
         mp.init(hostname, remoteport, localport);
         gm.setMultiplayerStatus(true);
     }
-    
+
+    /**
+     * Method used to start a multiplayer game.
+     * @param stage Stage to start game on.
+     */
     public void startMultiplayerGame(Stage stage) {
 	Platform.runLater(() -> {
             GameController.getInstance().newGame();
@@ -159,7 +259,14 @@ public class MultiplayerView extends ViewUtil{
             UserInputs userInputs = new UserInputs(scene);
         });
     }
-    
+
+
+    /**
+     * Method used to check if remote and local ports are valid.
+     * @param remote The remote port.
+     * @param local The local port.
+     * @return Returns a boolean.
+     */
     private boolean testRange(int remote, int local) {
         boolean valid = true;
         if (remote < 0 || remote > 100000) {
@@ -172,7 +279,10 @@ public class MultiplayerView extends ViewUtil{
         }
         return valid;
     }
-    
+
+    /**
+     * Method used to display help.
+     */
     private void getHelp() {
         Alert help = new Alert(AlertType.INFORMATION);
         help.setTitle("Multiplayer Help");
@@ -184,6 +294,11 @@ public class MultiplayerView extends ViewUtil{
         help.showAndWait();
     }
 
+    /**
+     * Method used to set Warning Field color and text.
+     * @param color Desired color.
+     * @param str Desired text.
+     */
     private void setWarningField(Color color, String str) {
         errorField.setColor(color);
         errorField.changeText(str);
