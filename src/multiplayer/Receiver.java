@@ -1,11 +1,8 @@
 package multiplayer;
 
-
 import java.net.*;
 import java.io.*;
 
-import view.MultiplayerView;
-import view.GameView;
 import view.ViewUtil;
 
 /**
@@ -34,7 +31,7 @@ public class Receiver extends Thread {
     
     /**
      * {@code Protocol} object to interpret received data
-     * @see {@code Protocol}
+     * @see Protocol
      */    
     private Protocol protocol = new Protocol();
 

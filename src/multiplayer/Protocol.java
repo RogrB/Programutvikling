@@ -6,7 +6,6 @@ import model.GameState;
 import model.player.Player2;
 import model.enemy.Enemy;
 
-import view.GameView;
 
 /**
  * <h1>The Protocol encodes and interprets all data transmissions between clients</h1>
