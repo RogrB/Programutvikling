@@ -10,6 +10,8 @@ import java.util.TimerTask;
  * type of enemy that behaves differently than regular enemies.
  * This enemy is created when a regular Asteroid is shot and breaks off into
  * two smaller asteroids.
+ * 
+ * @author Roger Birkenes Solli
  */
 public class SmallAsteroid extends Enemy {
     

@@ -12,6 +12,7 @@ import static controller.GameController.gs;
  * <h1>A Class that handles the creation of the HeatSeeking upgrade</h1>
  * The {@code HeatSeeking} class extends the {@code Basic} class to create a
  * weapon upgrade that targets an enemy and tracks its movements.
+ * 
  * @author Roger Birkenes Solli
  */
 public class HeatSeeking extends Basic {

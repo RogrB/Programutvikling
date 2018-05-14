@@ -10,6 +10,7 @@ import java.util.Iterator;
  * weapon upgrade. 
  * This weapon upgrade fires two bullets that spins around each other
  * in the Y axis
+ * 
  * @author Roger Birkenes Solli
  */
 public class DoubleSwirl extends Basic {

@@ -16,6 +16,8 @@ import view.ViewUtil;
  * <h1>The Player2 class - For multiplayer events</h1>
  * The {@code Enemy} class extends the {@code Entity} class and handles
  * all the events for the Player2 object
+ * 
+ * @author Roger Birkenes Solli
  */
 public class Player2 extends Entity {
 

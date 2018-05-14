@@ -12,6 +12,8 @@ import static controller.GameController.gs;
  * <h1>Base class for all Player projectiles</h1>
  * The {@code Basic} class extends the {@code Existence} class to create a
  * base for all bullets.
+ * 
+ * @author Roger Birkenes Solli
  */
 public class Basic extends Existence {
 
