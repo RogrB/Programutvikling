@@ -14,16 +14,52 @@ import java.util.concurrent.Executors;
 
 import static model.GameModel.gameSettings;
 
+/**
+ * Loading and playing sounds and music for the entire application.
+ *
+ * @author Jonas Ege Carlsen
+ */
 public class SoundManager {
+
+    /**
+     * The singleton object.
+     */
     private static SoundManager inst = new SoundManager();
+
+    /**
+     * Method to access singleton class.
+     * @return Returns a reference to the singleton object.
+     */
     public static SoundManager getInst(){return inst; }
+
+    /**
+     * Executor that handles playing music.
+     */
     private ExecutorService musicPool = Executors.newSingleThreadExecutor();
+
+    /**
+     * Executor that handles playing sounds.
+     */
     private ExecutorService soundPool = Executors.newFixedThreadPool(2);
+
+    /**
+     * Map to store music files
+     */
     private Map<String, Media> musicMap = new HashMap<>();
+
+    /**
+     * Map to store sound files.
+     */
     private Map<String, AudioClip> soundMap = new HashMap<>();
+
+    /**
+     * Player to play music files.
+     */
     private MediaPlayer player;
 
-
+    /**
+     * <b>Constructor</b>. Loads music and sound files.
+     */
     public SoundManager(){
         try{
             String audio = "/assets/audio/";
@@ -74,17 +110,32 @@ public class SoundManager {
 
     }
 
+    /**
+     * Loads sounds into the sound map.
+     * @param id Name used to extract sound.
+     * @param url Location of the file.
+     * @param volume To adjust volume of sound.
+     */
     private void loadSound(String id, URL url, float volume){
         AudioClip audioClip = new AudioClip(url.toExternalForm());
         audioClip.setVolume(volume * ((float) gameSettings.getSoundValue() / 100));
         soundMap.put(id, audioClip);
     }
 
+    /**
+     * Loads music into the music map
+     * @param id Name used to extract music.
+     * @param url Location of the file.
+     */
     private void loadMusic(String id, URL url){
         Media media = new Media(url.toExternalForm());
         musicMap.put(id, media);
     }
 
+    /**
+     * Method for playing music
+     * @param id ID of music file to play. Pass "stop" to stop music.
+     */
     public void playMusic(String id){
         Runnable music = () -> {
             switch(id){
@@ -109,6 +160,10 @@ public class SoundManager {
         musicPool.execute(music);
     }
 
+    /**
+     * Method for playing a sound.
+     * @param id ID of sound to play.
+     */
     private void playSound(String id){
         Runnable sound = () -> {
             soundMap.get(id).setVolume((float) gameSettings.getSoundValue() / 100);
@@ -117,14 +172,23 @@ public class SoundManager {
         soundPool.execute(sound);
     }
 
+    /**
+     * Method that plays a sound
+     */
     public void shotPlayer(){
         playSound("shot_player");
     }
 
+    /**
+     * Method that plays a sound
+     */
     public void shotBoss(){
         playSound("shot_boss");
     }
 
+    /**
+     * Method that plays a sound randomly selected from 6 options.
+     */
     public void shotEnemy(){
         Random rand = new Random();
         switch(rand.nextInt(5)){
@@ -149,27 +213,45 @@ public class SoundManager {
         }
     }
 
+    /**
+     * Method that plays a sound
+     */
     public void impactBullets(){
         playSound("bullet_impact");
     }
 
+    /**
+     * Method that plays a sound
+     */
     public void impactShield(){
         playSound("impact_4");
     }
 
+    /**
+     * Method that plays two sounds.
+     */
     public void impactPlayer(){
         playSound("sfx_1");
         playSound("sfx_2");
     }
 
+    /**
+     * Method that plays a sound.
+     */
     public void entityDead(){
         playSound("impact_2");
     }
 
+    /**
+     * Method that plays a sound.
+     */
     public void bossWobble(){
         playSound("boss_wobble");
     }
 
+    /**
+     * Method that plays a random boss "talk" on average every third second.
+     */
     public void bossTalk(){
         Random rand = new Random();
         if(rand.nextInt(180) == 0){
@@ -193,38 +275,61 @@ public class SoundManager {
         }
     }
 
+    /**
+     * Method that plays two sounds.
+     */
     public void bossDies(){
         playSound("impact_1");
         playSound("impact_3");
-        //play music
     }
 
-    public MediaPlayer getPlayer() {
-        return player;
-    }
-
+    /**
+     * Method that plays a sound.
+     */
     public void nav(){
         playSound("nav");
     }
 
+    /**
+     * Method that plays a sound.
+     */
     public void navSelect(){
         playSound("nav_select");
     }
 
+    /**
+     * Method that plays a sound.
+     */
     public void upgradeWeapon(){
         playSound("up_weapon");
     }
 
+    /**
+     * Method that plays a sound.
+     */
     public void upgradeHealth(){
         playSound("up_health");
     }
 
+    /**
+     * Method that plays a sound.
+     */
     public void upgradeShield(){
         playSound("up_shield");
     }
 
+    /**
+     * Method to shut down the thread pools.
+     */
     public void shutdown(){
         musicPool.shutdown();
         soundPool.shutdown();
+    }
+
+    /**
+     * @return Returns the music player
+     */
+    public MediaPlayer getPlayer() {
+        return player;
     }
 }
