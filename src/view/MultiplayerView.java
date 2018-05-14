@@ -237,6 +237,7 @@ public class MultiplayerView extends ViewUtil{
 
     /**
      * Method used to initiate a multiplayer game.
+     * Attempts to establish connection
      */
     private void initMultiplayerGame() {
         String hostname = hostnameField.getText();
@@ -248,7 +249,7 @@ public class MultiplayerView extends ViewUtil{
     }
 
     /**
-     * Method used to start a multiplayer game.
+     * Method used to start a multiplayer game once connection has been established
      * @param stage Stage to start game on.
      */
     public void startMultiplayerGame(Stage stage) {
@@ -265,7 +266,7 @@ public class MultiplayerView extends ViewUtil{
      * Method used to check if remote and local ports are valid.
      * @param remote The remote port.
      * @param local The local port.
-     * @return Returns a boolean.
+     * @return Returns a boolean based on whether or not the ports are valid
      */
     private boolean testRange(int remote, int local) {
         boolean valid = true;
@@ -288,8 +289,9 @@ public class MultiplayerView extends ViewUtil{
         help.setTitle("Multiplayer Help");
         help.setHeaderText(null);
         help.setContentText("Enter Player 2's hostname (ip adress) in hostname Field - For testing use \"localhost\" \n \n"
-                + "To find your IP adress open a command prompt and type \"ipconfig\" (windows) you can use your IPv4 \n \n"
-                + "Your LocalPort must be Player 2's RemotePort and vice versa. (Example 5566 / 5567)");
+                + "Your LocalPort must be Player 2's RemotePort and vice versa. (Example 5566 / 5567)\n"
+                + "For online play make sure the ports are open in your Router\n"
+                + "For playing on a Local Area Network use your local adress");
 
         help.showAndWait();
     }
