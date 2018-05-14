@@ -282,6 +282,7 @@ public abstract class ViewUtil {
     void compareErrorMessage(){
         if(!lastErrorMessage.equals("")){
             errorField.changeText(lastErrorMessage);
+            lastErrorMessage = "";
         }
     }
 
