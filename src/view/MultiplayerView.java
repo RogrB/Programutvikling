@@ -89,7 +89,7 @@ public class MultiplayerView extends ViewUtil{
                 }
                 catch(Exception e) {
                     System.err.println(e.getMessage());
-                    errorField.changeText(e.toString());
+                    errorField.changeText(e.getMessage());
                 }
             }
         });

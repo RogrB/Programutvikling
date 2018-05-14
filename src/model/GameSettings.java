@@ -2,6 +2,7 @@ package model;
 
 import exceptions.FileIOException;
 import io.IOManager;
+import view.ViewUtil;
 
 import java.io.Serializable;
 
@@ -77,6 +78,7 @@ public class GameSettings implements Serializable {
         try {
             IOManager.getInstance().saveGameSettings(this);
         } catch (FileIOException e) {
+            ViewUtil.setError(e.getMessage());
             System.err.println(e.getMessage());
         }
     }
@@ -97,6 +99,7 @@ public class GameSettings implements Serializable {
             difficultyValue = fromFile.difficultyValue;
         } catch (FileIOException e) {
             System.err.println(e.getMessage());
+            ViewUtil.setError(e.getMessage());
             initNewSettings();
         }
     }

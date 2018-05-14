@@ -1,11 +1,8 @@
 package multiplayer;
 
-
 import java.net.*;
 import java.io.*;
 
-import view.MultiplayerView;
-import view.GameView;
 import view.ViewUtil;
 
 /**
@@ -34,7 +31,7 @@ public class Receiver extends Thread {
     
     /**
      * {@code Protocol} object to interpret received data
-     * @see {@code Protocol}
+     * @see Protocol
      */    
     private Protocol protocol = new Protocol();
 
@@ -49,8 +46,8 @@ public class Receiver extends Thread {
             looping = true;
         } 
         catch(SocketException e) {
-            System.err.println(e);
-            ViewUtil.setError(e.toString());
+            System.err.println(e.getMessage());
+            ViewUtil.setError(e.getMessage());
         }
     }
 
@@ -62,8 +59,8 @@ public class Receiver extends Thread {
             socket.close();
         }
         catch(Exception e){
-            System.err.println(e);
-            ViewUtil.setError(e.toString());
+            System.err.println(e.getMessage());
+            ViewUtil.setError(e.getMessage());
         }
     }    
 
@@ -84,8 +81,8 @@ public class Receiver extends Thread {
                 }
             } 
             catch(IOException e) {
-                System.err.println(e);
-                ViewUtil.setError(e.toString());
+                System.err.println(e.getMessage());
+                ViewUtil.setError(e.getMessage());
             }
         } 
     }

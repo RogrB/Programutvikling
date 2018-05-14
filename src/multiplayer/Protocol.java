@@ -5,8 +5,7 @@ import java.io.*;
 import model.GameState;
 import model.player.Player2;
 import model.enemy.Enemy;
-
-import view.GameView;
+import view.ViewUtil;
 
 /**
  * <h1>The Protocol encodes and interprets all data transmissions between clients</h1>
@@ -50,7 +49,8 @@ class Protocol {
                     }
                 }
                 catch (IOException e) {
-                    System.err.println(e);
+                    ViewUtil.setError(e.getMessage());
+                    System.err.println(e.getMessage());
                 }   
                 break;
         }
@@ -80,7 +80,8 @@ class Protocol {
                     stream.close();
                 }
                 catch (IOException e) {
-                    System.err.println(e);
+                    System.err.println(e.getMessage());
+                    ViewUtil.setError(e.getMessage());
                 }
                 break;
             case "Reply":
@@ -88,7 +89,8 @@ class Protocol {
                     stream.writeChar('R');
                 }
                 catch (IOException e) {
-                    System.err.println(e);
+                    System.err.println(e.getMessage());
+                    ViewUtil.setError(e.getMessage());
                 }
                 break;
             case "Update":
@@ -101,7 +103,8 @@ class Protocol {
                     stream.close();
                 }
                 catch (IOException e) {
-                    System.err.println(e);
+                    System.err.println(e.getMessage());
+                    ViewUtil.setError(e.getMessage());
                 }
                 break;
             case "Shoot":
@@ -114,7 +117,8 @@ class Protocol {
                     stream.close();
                 }
                 catch (IOException e) {
-                    System.err.println(e);
+                    System.err.println(e.getMessage());
+                    ViewUtil.setError(e.getMessage());
                 }
                 break;
             case "PowerUp":
@@ -122,7 +126,8 @@ class Protocol {
                     stream.writeChar('P');
                 }
                 catch (IOException e) {
-                    System.err.println(e);
+                    System.err.println(e.getMessage());
+                    ViewUtil.setError(e.getMessage());
                 }
                 break;
             case "Disconnect":
@@ -130,7 +135,8 @@ class Protocol {
                     stream.writeChar('D');
                 }
                 catch (IOException e) {
-                    System.err.println(e);
+                    System.err.println(e.getMessage());
+                    ViewUtil.setError(e.getMessage());
                 }
                 break;
             case "NextGame":
@@ -138,7 +144,8 @@ class Protocol {
                     stream.writeChar('N');
                 }
                 catch (IOException e) {
-                    System.err.println(e);
+                    System.err.println(e.getMessage());
+                    ViewUtil.setError(e.getMessage());
                 }
                 break;                
         }
@@ -192,7 +199,8 @@ class Protocol {
             }
         }
         catch(IOException e) {
-            System.err.println(e);
+            ViewUtil.setError(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
     

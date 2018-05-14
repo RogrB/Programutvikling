@@ -1,6 +1,7 @@
 package io;
 
 import exceptions.FileIOException;
+import view.ViewUtil;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -58,6 +59,7 @@ public class AutoSave {
                     IOManager.getInstance().saveGameState();
                 } catch (FileIOException e) {
                     System.err.println(e.getMessage());
+                    ViewUtil.setError(e.getMessage());
                 }
             }
         }, 10, 700);
