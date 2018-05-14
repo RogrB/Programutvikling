@@ -30,7 +30,7 @@ public class LoadGameView extends ViewUtil{
     private static LoadGameView inst = new LoadGameView();
 
     /**
-     * Method to access singleton class.
+     * Method to access singleton object.
      * @return Returns a reference to the singleton object.
      */
     public static LoadGameView getInst(){return inst;}

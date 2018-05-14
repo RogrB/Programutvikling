@@ -17,17 +17,58 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import view.customElements.WarningField;
 
+/**
+ * Abstract parent class for all Views.
+ *
+ * @author Jonas Ege Carlsen
+ */
 public abstract class ViewUtil {
 
+    /**
+     * Width of the application.
+     */
     public static final int VIEW_WIDTH = 1200;
+
+    /**
+     * Height of the application.
+     */
     public static final int VIEW_HEIGHT = 800;
-    protected final String BG_IMG = "assets/image/background/background_menu.png";
+
+    /**
+     * Default background image for every view.
+     */
+    final String BG_IMG = "assets/image/background/background_menu.png";
+
+    /**
+     * The base for all content in every view.
+     */
     Pane root;
+
+    /**
+     * Header Text for the title of the game.
+     */
     Text header = new Text("AERO");
+
+    /**
+     * Keeps track of what element is focused in an array full of elements.
+     */
     int elementCounter = 0;
+
+    /**
+     * Warningfield used for every view. Displays error messages and warnings.
+     */
     static WarningField errorField = new WarningField();
+
+    /**
+     * The last error message the application threw.
+     */
     private static String lastErrorMessage = "";
 
+    /**
+     * Provides a basic root-pane for every view.
+     * @param bg Background image of the view.
+     * @return Returns a Pane.
+     */
     Pane initBaseScene(String bg){
         root = new Pane();
         setHeader();
@@ -36,6 +77,14 @@ public abstract class ViewUtil {
         return root;
     }
 
+    /**
+     * Method for creating a Text object.
+     * @param textInput Desired text
+     * @param x X coordinate for Text object.
+     * @param y Y coordinate for Text object.
+     * @param font Font for Text object.
+     * @return Returns a Text object.
+     */
     Text createText(String textInput, int x, int y, Font font){
         Text text = new Text(textInput);
         text.setX(x);
@@ -45,15 +94,25 @@ public abstract class ViewUtil {
         return text;
     }
 
+    /**
+     * Method used for switching between scenes. Requires
+     * an event to be able to find the Stage.
+     * @param event The event that this function is called with.
+     * @param node A root Pane from a View.
+     */
     void goToView(InputEvent event, Parent node){
         Stage stage = (Stage)((Node)event.getTarget()).getScene().getWindow();
-        Pane root = new Pane();
-        root.getChildren().add(node);
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(node);
         stage.setScene(scene);
         elementCounter = 0;
     }
 
+    /**
+     * Method used for starting a new game. Requires
+     * and event to be able to find the Stage.
+     * @param event The event that this function is called with.
+     * @param node A root Pane from a View.
+     */
     void startGameView(InputEvent event, Parent node){
         Stage stage = (Stage) ((Node)event.getTarget()).getScene().getWindow();
         Scene scene = new Scene(node);
@@ -61,6 +120,11 @@ public abstract class ViewUtil {
         UserInputs userInputs = new UserInputs(scene);
     }
 
+    /**
+     * Created a background image to be used for a View.
+     * @param BG_IMG The location of the image file.
+     * @return Returns a Background
+     */
     private Background getBackGroundImage(String BG_IMG){
         BackgroundImage bg = new BackgroundImage(
                 new Image(BG_IMG),
@@ -79,6 +143,13 @@ public abstract class ViewUtil {
         return new Background(bg);
     }
 
+    /**
+     * Method for moving through an array of menu elements.
+     * This function controls the value of elementCounter,
+     * which in turn keeps track of the selected element.
+     * @param code The KeyCode pressed in menu container.
+     * @param menuElements An array of elements from a View.
+     */
     public void traverseMenu(KeyCode code, Parent[] menuElements){
         SoundManager.getInst().nav();
         if(code == KeyCode.DOWN){
@@ -99,6 +170,13 @@ public abstract class ViewUtil {
         }
     }
 
+    /**
+     * Disables and enables menu elements based on
+     * the currently focused element.
+     * @param currentFocus The currently focused menu element.
+     * @param length Length of menu elements to iterate through.
+     * @param menuElements An array of elements from a View.
+     */
     void setFocusButtons(int currentFocus, int length, Parent[] menuElements){
         for(int i = 0; i < length; i++){
             if(i != currentFocus){
@@ -111,15 +189,35 @@ public abstract class ViewUtil {
         }
     }
 
+    /**
+     * Sets the button click events for the view.
+     */
     abstract void setButtonClickEvents();
+
+    /**
+     * Sets the button press events for menu container.
+     * @param container The menu container of the view.
+     */
     abstract void setButtonPressEvents(Parent container);
 
+    /**
+     * Creates a basic Label.
+     * @param labelText The Label text
+     * @return Returns a Label
+     */
     Label createBaseLabel(String labelText){
         Label label = new Label(labelText);
         label.setTextFill(Color.WHITE);
         return label;
     }
 
+    /**
+     * Creates a basic menu container.
+     * @param x x coordinates for container.
+     * @param y y coordinates for container.
+     * @param spacing spacing for container.
+     * @return Returns a VBox.
+     */
     VBox createMenuContainer(int x, int y, int spacing){
         VBox menuContainer = new VBox();
         menuContainer.setTranslateX(x);
@@ -128,6 +226,11 @@ public abstract class ViewUtil {
         return menuContainer;
     }
 
+    /**
+     * The main method of the View. Calls other methods and returns
+     * a finished root node.
+     * @return Returns a root node / Pane.
+     */
     public abstract Parent initScene();
     public abstract void select(String buttonName, KeyEvent event);
     void setErrorFieldPosition(){
@@ -135,21 +238,35 @@ public abstract class ViewUtil {
         errorField.setTranslateY(750);
     }
 
+    /**
+     * @return Returns the elementCounter.
+     */
     public int getElementCounter(){
         return elementCounter;
     }
 
+    /**
+     * Method to set error messages to display in the WarningField.
+     * @param text The error text.
+     */
     public static void setError(String text){
         lastErrorMessage = text;
         errorField.changeText(text);
     }
 
+    /**
+     * Method to check if an error occured
+     * while switching views.
+     */
     void compareErrorMessage(){
         if(!lastErrorMessage.equals("")){
             errorField.changeText(lastErrorMessage);
         }
     }
 
+    /**
+     * Method used to set the Game Title properties.
+     */
     private void setHeader(){
         header.setX(485);
         header.setY(175);

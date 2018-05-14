@@ -6,14 +6,32 @@ import javafx.scene.input.KeyCode;
 import static controller.GameController.gs;
 import view.GameView;
 
+/**
+ * Class used for handling key events in GameView.
+ *
+ * @author Jonas Ege Carlsen, Åsmund Røst Wien
+ */
 public class UserInputs {
 
+    /**
+     * Public constructor. Initializes the class and
+     * fires another function.
+     * @param s Scene to bind inputs to.
+     */
     public UserInputs(Scene s){
         setKeyListeners(s);
     }
 
+    /**
+     * Reference to the GameView instance.
+     */
     private GameView gv = GameView.getInstance();
 
+    /**
+     * Method to bind inputs to certain actions based off of
+     * whether the player is alive, playing or both.
+     * @param s Scene to bind inputs to.
+     */
     private void setKeyListeners(Scene s){
         s.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.SPACE && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()) {

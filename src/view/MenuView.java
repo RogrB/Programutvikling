@@ -15,20 +15,64 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import view.customElements.MenuButton;
 
+/**
+ * The Main Menu.
+ * The class {@code MenuView} extends {@code ViewUtil}.
+ *
+ * @author Jonas Ege Carlsen
+ */
 public class MenuView extends ViewUtil{
 
+    /**
+     * The singleton object
+     */
     private static MenuView inst = new MenuView();
+
+    /**
+     * Method to access the singleton object.
+     * @return Returns a reference to the singleton object.
+     */
     public static MenuView getInstance(){return inst; }
 
+    /**
+     * An array of Menu Buttons used to keep track of what button is currently selected.
+     */
     private MenuButton[] menuElements;
 
+    /**
+     * Button used to start a new save file.
+     */
     private  MenuButton newGameButton;
+
+    /**
+     * Button used to continue the previous game.
+     */
     private MenuButton continueButton;
+
+    /**
+     * Button used to go to the Multiplayer.
+     */
     private MenuButton multiplayerButton;
+
+    /**
+     * Button used to load a save file.
+     */
     private MenuButton loadGameButton;
+
+    /**
+     * Button used to go to options.
+     */
     private MenuButton optionsButton;
+
+    /**
+     * Button used to exit the game.
+     */
     private MenuButton exitButton;
 
+    /**
+     * Method to resume the last played gamesave.
+     * @param event The event that this function is called from.
+     */
     private void continueGame(InputEvent event){
         Stage stage = (Stage) ((Node)event.getTarget()).getScene().getWindow();
         try {
@@ -43,31 +87,60 @@ public class MenuView extends ViewUtil{
         }
     }
 
+    /**
+     * Method that takes you to the {@code NewGameView}.
+     * @param event The event that this function is called from.
+     */
     private void createNewSave(InputEvent event){
         goToView(event, NewGameView.getInst().initScene());
     }
 
+    /**
+     * Method that takes you to the {@code OptionsView}.
+     * @param event The event that this function is called from.
+     */
     private void showOptions(InputEvent event){
         goToView(event, OptionsView.getInst().initScene());
     }
 
+    /**
+     * Method that exits the game.
+     */
     private void exitGame(){
         System.exit(0);
     }
 
+    /**
+     * Method that takes you to the {@code LoadGameView}.
+     * @param event The event that this function is called from.
+     */
     private void loadGame(InputEvent event){
         goToView(event, LoadGameView.getInst().initScene());
     }
 
+    /**
+     * Method that takes you to the {@code MultiplayerView}.
+     * @param event The event that this function is called from.
+     */
     private void loadMultiplayer(InputEvent event){
         goToView(event, MultiplayerView.getInst().initScene());
     }
 
+    /**
+     * Checks to see if a game has been played before.
+     * @return Returns a boolean.
+     */
     private boolean gameFileFound(){
         return IOManager.getInstance().saveStateExists();
     }
 
-    public void select(String buttonName, KeyEvent event){ //KeyEvent is only here so you can extract Stage from an event. Hacky, I know.
+    /**
+     * Method that changes the scene based
+     * on what button has been pressed.
+     * @param buttonName The name of the button.
+     * @param event The event that this function is called from.
+     */
+    public void select(String buttonName, KeyEvent event){
         SoundManager.getInst().navSelect();
         if(buttonName.equals("NEW GAME")){
             createNewSave(event);
@@ -89,6 +162,9 @@ public class MenuView extends ViewUtil{
         }
     }
 
+    /**
+     * Creates all the buttons in the view.
+     */
     private void createButtons(){
         newGameButton = new MenuButton("NEW GAME");
         continueButton = new MenuButton("CONTINUE");
@@ -98,7 +174,10 @@ public class MenuView extends ViewUtil{
         exitButton = new MenuButton("EXIT");
     }
 
-
+    /**
+     * Sets the button click events of the view.
+     */
+    @Override
     void setButtonClickEvents(){
         newGameButton.setOnMouseClicked(this::createNewSave);
         continueButton.setOnMouseClicked(this::continueGame);
@@ -108,6 +187,10 @@ public class MenuView extends ViewUtil{
         exitButton.setOnMouseClicked(event -> System.exit(1));
     }
 
+    /**
+     * Sets the button press events of the menu container.
+     * @param mainMenu The menu container of the view.
+     */
     @Override
     void setButtonPressEvents(Parent mainMenu){
         mainMenu.setOnKeyPressed(event -> {
@@ -123,15 +206,12 @@ public class MenuView extends ViewUtil{
         });
     }
 
-    private VBox createMainMenuContainer(){
-        VBox mainMenu = new VBox();
-        mainMenu.setFocusTraversable(true);
-        mainMenu.setSpacing(10);
-        mainMenu.setTranslateY(300);
-        mainMenu.setTranslateX(450);
-        return mainMenu;
-    }
-
+    /**
+     * Method to decide what elements should be on the main menu
+     * based off of whether a game has been played before and whether
+     * the last game was lost.
+     * @param mainMenu The main menu container.
+     */
     private void decideMenuLayout(VBox mainMenu){
         if(gameFileFound() && GameController.getInstance().getLastGameLost()){
             mainMenu.getChildren().addAll(newGameButton, loadGameButton, multiplayerButton, optionsButton, exitButton);
@@ -147,17 +227,26 @@ public class MenuView extends ViewUtil{
         }
     }
 
+    /**
+     * Sets the view events.
+     * @param container The menu container of the view.
+     */
     private void setEvents(Parent container){
         setButtonClickEvents();
         setButtonPressEvents(container);
     }
 
-
+    /**
+     * The main method of the View. Calls other methods and returns
+     * a finished root node.
+     * @return Returns a root node / Pane.
+     */
     public Parent initScene(){
 
         root = initBaseScene(BG_IMG);
 
-        VBox menuContainer = createMainMenuContainer();
+        VBox menuContainer = createMenuContainer(450, 300, 10);
+        menuContainer.setFocusTraversable(true);
 
         setErrorFieldPosition();
         createButtons();

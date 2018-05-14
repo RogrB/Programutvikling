@@ -8,11 +8,29 @@ import javafx.stage.Stage;
 import view.GameView;
 import view.MenuView;
 
+/**
+ * The entry point for the application.
+ *
+ * @author Jonas Ege Carlsen, Åsmund Røst Wien, Roger Birkenes Solli
+ */
 public class Main extends Application {
 
+    /**
+     * Method to access the GameView singleton object.
+     */
     private static GameView gv = GameView.getInstance();
+
+    /**
+     * Method to access the MenuView singleton object.
+     */
     private static MenuView mv = MenuView.getInstance();
 
+    /**
+     * Method used to start the JavaFX application.
+     * Also used to set stage settings and launching
+     * the SoundManager.
+     * @param primaryStage The stage used to launch the application.
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         gv.mvcSetup();
