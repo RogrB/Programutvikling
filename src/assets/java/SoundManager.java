@@ -69,7 +69,7 @@ public class SoundManager {
         }
         catch(Exception e){
             ViewUtil.setError(e.getMessage());
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
 
     }

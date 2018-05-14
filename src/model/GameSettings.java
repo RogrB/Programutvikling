@@ -21,7 +21,7 @@ public class GameSettings implements Serializable {
     /**
      * Variables for in game access to the settings values.
      */
-    private int prevSave, musicvalue, soundValue, difficultyValue;
+    private int prevSave, musicValue, soundValue, difficultyValue;
 
     /**
      * <b>Constructor: </b>gets previously stored settings from file,
@@ -42,33 +42,31 @@ public class GameSettings implements Serializable {
     private void initNewSettings(){
         prevSave = -1;
         difficultyValue = 3;
-        musicvalue = 50;
+        musicValue = 50;
         soundValue = 50;
         writeToFile();
     }
 
     /**
-     * Sets the objects customizable fields with new parameters by the user
-     * and writes them to the file.
-     * @param difficultyValue
-     * @param soundValue
-     * @param musicvalue
+     * Sets the objects customizable fields with new parameters and writes them to the file.
+     * @param difficultyValue The new difficulty value.
+     * @param soundValue The new preferred sound (SFX) volume.
+     * @param musicValue The new preferred music volume.
      */
-    public void saveSettings(int difficultyValue, int soundValue, int musicvalue){
+    public void saveSettings(int difficultyValue, int soundValue, int musicValue){
         this.difficultyValue = difficultyValue;
         this.soundValue = soundValue;
-        this.musicvalue = musicvalue;
+        this.musicValue = musicValue;
         writeToFile();
     }
 
     /**
-     * Sets the index of the previously saved game file for quick access
+     * Sets the index of the previously saved game state for quick access
      * and writes it to file.
-     * @param prevSave
+     * @param prevSave The index of the previously played save state.
      */
     public void savePrevSave(int prevSave){
         this.prevSave = prevSave;
-        System.out.println("GameSettings::prevSave == "+this.prevSave);
         writeToFile();
     }
 
@@ -94,7 +92,7 @@ public class GameSettings implements Serializable {
         try {
             fromFile = IOManager.getInstance().loadGameSettings();
             prevSave = fromFile.prevSave;
-            musicvalue = fromFile.musicvalue;
+            musicValue = fromFile.musicValue;
             soundValue = fromFile.soundValue;
             difficultyValue = fromFile.difficultyValue;
         } catch (FileIOException e) {
@@ -108,7 +106,7 @@ public class GameSettings implements Serializable {
      * @return The music volume setting.
      */
     public int getMusicValue() {
-        return musicvalue;
+        return musicValue;
     }
 
     /**

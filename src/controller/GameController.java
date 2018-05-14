@@ -134,8 +134,7 @@ public class GameController {
         if(gm.getMultiplayerStatus()) {
             MultiplayerHandler.getInstance().sendDisconnect();
             ViewUtil.setError("Game Paused, disconnected from Multiplayer");
-            System.out.println("Game paused, disconnected from Multiplayer");
-        } 
+        }
     }
 
     private void moveEnemies(){
@@ -304,8 +303,7 @@ public class GameController {
             if(gm.getMultiplayerStatus()) {
                 MultiplayerHandler.getInstance().sendDisconnect();
                 ViewUtil.setError("Disconnected from Multiplayer");
-                System.out.println("Game Over, disconnected from multiplayer");
-            }             
+            }
         }
     }
 
@@ -313,9 +311,7 @@ public class GameController {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
-            public void run() {
-                System.out.println("Game lost!");
-            }
+            public void run() {}
         }, 2000);
     }
 
@@ -343,7 +339,6 @@ public class GameController {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Game Won!");
                 gs.player.isNotPlaying();
                 gv.gameWon();
                 gameMainTimer.stop();

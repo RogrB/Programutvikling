@@ -262,8 +262,6 @@ public class IOManager {
             objectInputStream.close();
             fileInputStream.close();
 
-            System.out.println("Loaded game settings");
-
         } catch (IOException i) {
             throw new FileIOException("Load settings - Can't locate file: "+src);
         } catch (ClassNotFoundException c) {

@@ -51,12 +51,12 @@ public class GameView extends ViewUtil{
     public static GameView getInstance(){ return inst; }
 
     /**
-     * Accesses an instance of the {@code GameController} object
+     * Accesses to the {@code GameController} instance.
      */
     private GameController gc = GameController.getInstance();
     
     /**
-     * Accesses an instance of the {@code GameModel} object
+     * Accesses to the {@code GameModel} instance.
      */
     private GameModel gm = GameModel.getInstance();
     /**
@@ -204,7 +204,7 @@ public class GameView extends ViewUtil{
     private static final String BG_IMG = "assets/image/background.jpg";
 
     /**
-     * sets up the model-view-controller
+     * Initializes instances of the model-view-controller
      */
     public void mvcSetup(){
         gm.mvcSetup();
@@ -308,11 +308,9 @@ public class GameView extends ViewUtil{
     @Override
     public void select(String buttonName, KeyEvent event) {
         if(buttonName.equals("RETRY")){
-            System.out.println("Totally started a new game");
             gc.newGame();
             gs.player.init();
             lostButtonContainer.setOpacity(0);
-            System.out.println(gs.player.isAlive());
         }
         if(buttonName.equals("MAIN MENU")){
             if(SoundManager.getInst().getPlayer() != null){
@@ -322,7 +320,6 @@ public class GameView extends ViewUtil{
             goToView(event, MenuView.getInstance().initScene());
         }
         if(buttonName.equals("CONTINUE")){
-            System.out.println("Next level!");
             gc.nextGame();
             wonButtonContainer.setOpacity(0);
             clearScoreScreen();

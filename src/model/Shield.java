@@ -9,6 +9,8 @@ import java.util.TimerTask;
  * This class handles the behaviour of Shields in the game.
  * The {@code Shield} class extends the {@code Existence} class
  * to receive values needed to exist in the game space. 
+ * 
+ * @author Roger Birkenes Solli
  */
 public class Shield extends Existence {
     
@@ -56,7 +58,7 @@ public class Shield extends Existence {
     }
     
     /**
-     * @param sets the number of charges the shield has
+     * @param charges sets the number of charges the shield has
      */     
     private void setCharges(int charges) {
         this.charges = charges;
@@ -77,7 +79,7 @@ public class Shield extends Existence {
     }
     
     /**
-     * @param sets the immunity state of the shield
+     * @param immunity sets the immunity state of the shield
      */     
     private void setImmunity(boolean immunity) {
         this.immunity = immunity;
