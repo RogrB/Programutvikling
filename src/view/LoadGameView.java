@@ -22,8 +22,6 @@ public class LoadGameView extends ViewUtil{
     private LoadGameView(){}
     public static LoadGameView getInst(){return inst;}
 
-    private static final String BG_IMG = "assets/image/background.jpg";
-
     private MenuButton save1;
     private MenuButton save2;
     private MenuButton save3;

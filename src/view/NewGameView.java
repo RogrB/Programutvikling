@@ -12,9 +12,6 @@ public class NewGameView extends ViewUtil{
     public static NewGameView inst = new NewGameView();
     public static NewGameView getInst(){return inst;}
 
-
-    private static final String BG_IMG = "assets/image/background.jpg";
-
     private int saveNumber = -1;
 
     private MenuButton save1;

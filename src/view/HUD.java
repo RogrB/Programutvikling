@@ -34,7 +34,7 @@ public class HUD {
      * Numeral X icon - used in combination with the {@code playerIcon} and
      * {@code lifeCounter} to display the Players current hit points
      */        
-    private Image numeralX = new Image("assets/image/hud/numeralX.png");
+    private Image numeralX = new Image("assets/image/hud/numeral/numeralX.png");
     
     /**
      * Weapon Icon - used in combination with on-screen text to display the current
@@ -153,7 +153,7 @@ public class HUD {
      * @param n sets the life counter Icon
      */        
     private void setlifeCounter(int n) {
-        this.lifeCounter = new Image("assets/image/hud/numeral" + n + ".png");
+        this.lifeCounter = new Image("assets/image/hud/numeral/numeral" + n + ".png");
     }
     
     /**

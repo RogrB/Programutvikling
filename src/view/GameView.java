@@ -201,12 +201,8 @@ public class GameView extends ViewUtil{
 
     /**
      * Background source
-     */             
-    private static final String[] BG_IMG = {
-            "assets/image/background/level1/layer1.png",
-            "assets/image/background/level2/layer1.png",
-            "assets/image/background/level3/layer1.png"
-    };
+     */
+    private final String BG_IMG = "assets/image/background/background_game.png";
 
     /**
      * Initializes instances of the model-view-controller
@@ -299,7 +295,7 @@ public class GameView extends ViewUtil{
         createContainers();
         requestPane = createRequestPane();
 
-        root = initBaseScene(BG_IMG[rnd.nextInt(3)]);
+        root = initBaseScene(BG_IMG);
         decideLayout();
 
         compareErrorMessage();
@@ -379,7 +375,7 @@ public class GameView extends ViewUtil{
         // Is ded!
         menuElementsLost[0].gainedFocus();
         lostButtonContainer.setOpacity(1);
-        graphics.drawImage(new Image("assets/image/gameover.png"), (VIEW_WIDTH/2) - 368, (VIEW_HEIGHT/2) - 51);
+        graphics.drawImage(new Image("assets/image/overlays/gameover.png"), (VIEW_WIDTH/2) - 368, (VIEW_HEIGHT/2) - 51);
     }
 
     /**
@@ -433,7 +429,7 @@ public class GameView extends ViewUtil{
 
             root.getChildren().addAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent);
 
-            hud.drawImage(new Image("assets/image/scorescreen.png"), (VIEW_WIDTH/2) - 360, (VIEW_HEIGHT/2) - 275);
+            hud.drawImage(new Image("assets/image/overlays/scorescreen.png"), (VIEW_WIDTH/2) - 360, (VIEW_HEIGHT/2) - 275);
         });
     }
 
@@ -468,19 +464,19 @@ public class GameView extends ViewUtil{
                 if(enemy.getType() == boss){
                     hud.clearRect(VIEW_WIDTH/3, 40, 328, 105);
                     if (enemy.getHealth() > 19) {
-                        hud.drawImage(new Image("assets/image/hud/bossHealth_Bar_Full.png"), VIEW_WIDTH/3, 40);
-                        hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
+                        hud.drawImage(new Image("assets/image/hud/boss_health/bossHealth_Bar_Full.png"), VIEW_WIDTH/3, 40);
+                        hud.drawImage(new Image("assets/image/hud/boss_health/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
                     }
                     else if (enemy.getHealth() == 19) {
-                        hud.drawImage(new Image("assets/image/hud/bossHealth_Bar.png"), (VIEW_WIDTH/3) + 70, 73);
-                        hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
+                        hud.drawImage(new Image("assets/image/hud/boss_health/bossHealth_Bar.png"), (VIEW_WIDTH/3) + 70, 73);
+                        hud.drawImage(new Image("assets/image/hud/boss_health/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
                     }
                     else if (enemy.getHealth() <= 0) {
-                        hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
+                        hud.drawImage(new Image("assets/image/hud/boss_health/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
                     }
                     else {
-                        hud.drawImage(new Image("assets/image/hud/bossHealth_Bar.png"), (VIEW_WIDTH/3) + 70, 73, 230 - ((boss.MAX_HEALTH - enemy.getHealth()) * 11.7), 30);
-                        hud.drawImage(new Image("assets/image/hud/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
+                        hud.drawImage(new Image("assets/image/hud/boss_health/bossHealth_Bar.png"), (VIEW_WIDTH/3) + 70, 73, 230 - ((boss.MAX_HEALTH - enemy.getHealth()) * 11.7), 30);
+                        hud.drawImage(new Image("assets/image/hud/boss_health/bossHealth_Border.png"), VIEW_WIDTH/3, 40);
                     }
 
                 }

@@ -19,7 +19,6 @@ public class MenuView extends ViewUtil{
     private static MenuView inst = new MenuView();
     public static MenuView getInstance(){return inst; }
 
-    private static final String BG_IMG = "assets/image/background.jpg";
     private MenuButton[] menuElements;
 
     private  MenuButton newGameButton;

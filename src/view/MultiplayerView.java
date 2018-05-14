@@ -29,8 +29,6 @@ public class MultiplayerView extends ViewUtil{
     private MultiplayerHandler mp = MultiplayerHandler.getInstance();
     private GameModel gm = GameModel.getInstance();
 
-    private static final String BG_IMG = "assets/image/background.jpg";
-
     private TextField hostnameField;
     private TextField remotePortField;
     private TextField localPortField;

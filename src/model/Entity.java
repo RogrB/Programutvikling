@@ -142,7 +142,7 @@ public abstract class Entity extends Existence {
     protected void animateDeath() {
         deathAnimCounter++;
         if (deathAnimCounter < 9) {
-            newSprite("assets/image/playerDeath/playerDeath_00" + deathAnimCounter + ".png");
+            newSprite("assets/image/player_death/playerDeath_00" + deathAnimCounter + ".png");
         } else {
             newSprite(Sprite.CLEAR);
         }
