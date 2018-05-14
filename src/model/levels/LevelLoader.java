@@ -40,7 +40,7 @@ public class LevelLoader {
     private String[][][] levelData;
 
     /**
-     * Sets the Level to the input.
+     * Sets the Level to the desired LevelData.
      * @param levelData Desired level.
      */
     public void setLevelData(String[][][] levelData){
@@ -50,8 +50,11 @@ public class LevelLoader {
 
     /**
      * Loads a column of leveldata.
-     * @param increment current column.
-     * @return Returns ++increment.
+     * <b>Note: </b>The column width is set to 70, which means
+     * that once the {@code levelIncrement % 70 == 0}, a new
+     * column is loaded.
+     * @param increment The levels increment progression.
+     * @return Returns The levels increment progression +1.
      */
     public int increment(int increment){
         int COLUMN_WIDTH = 70;
@@ -65,8 +68,9 @@ public class LevelLoader {
     }
 
     /**
-     * Generates enemies based on level data.
-     * @param enemies 2d array created by {@code increment()}.
+     * Loops through the inner row enemy definitions.
+     * @param enemies A single column (2d array) returned
+     *                by {@code getEnemyColumn()}.
      */
     private void loopThroughEnemyRows(String[][] enemies){
         for(int i = 0; i < enemies.length; i++){
