@@ -18,7 +18,6 @@ import view.ViewUtil;
 import java.util.*;
 
 import static model.GameState.bossType;
-import view.MenuView;
 
 public class GameController {
 

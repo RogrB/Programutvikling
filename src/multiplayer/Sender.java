@@ -38,7 +38,7 @@ class Sender {
             this.hostname = InetAddress.getByName(hostname);
         }
         catch (UnknownHostException e) {
-            System.err.println(e);
+            System.err.println(e.getMessage());
             ViewUtil.setError("Unknown Hostname: " + hostname);
             MultiplayerHandler.getInstance().cancelConnectAttempt();
         }
@@ -48,8 +48,8 @@ class Sender {
             socket = new DatagramSocket();
         }
         catch(SocketException e) {
-            System.err.println(e);
-            ViewUtil.setError(e.toString());
+            System.err.println(e.getMessage());
+            ViewUtil.setError(e.getMessage());
         }
     }
     
@@ -62,8 +62,8 @@ class Sender {
             socket.close();
         }
         catch(Exception e) {
-            System.err.println(e);
-            ViewUtil.setError(e.toString());
+            System.err.println(e.getMessage());
+            ViewUtil.setError(e.getMessage());
         }
     }       
     
@@ -80,11 +80,11 @@ class Sender {
         catch(IOException e) {
             if (e instanceof UnknownHostException) {
                 ViewUtil.setError("Unknown Hostname: " + hostname);
-                System.err.println(e);
+                System.err.println(e.getMessage());
             }
             else {
-                System.err.println(e);
-                ViewUtil.setError(e.toString());
+                System.err.println(e.getMessage());
+                ViewUtil.setError(e.getMessage());
             }
         }
     }
