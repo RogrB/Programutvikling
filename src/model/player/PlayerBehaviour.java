@@ -77,7 +77,7 @@ public class PlayerBehaviour implements java.io.Serializable {
      * Checks the current weapon type equipped and created bullet objects
      * accordingly. The bullets are spawned at the appropriate position based
      * on the players X and Y values.
-     * @param weaponType the descriptive weapon type String
+     * @param weapontype the descriptive weapon type String
      * @param x X value
      * @param y Y value
      * @param width Width
