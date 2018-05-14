@@ -8,9 +8,23 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import view.customElements.MenuButton;
 
+/**
+ * Menu for selecting a new save file.
+ * The class {@code NewGameView} extends {@code ViewUtil}
+ *
+ * @author  Jonas Ege Carlsen
+ */
 public class NewGameView extends ViewUtil{
 
-    public static NewGameView inst = new NewGameView();
+    /**
+     * The singleton object
+     */
+    private static NewGameView inst = new NewGameView();
+
+    /**
+     * Method to access singleton object
+     * @return Returns a reference to the singleton object.
+     */
     public static NewGameView getInst(){return inst;}
 
 

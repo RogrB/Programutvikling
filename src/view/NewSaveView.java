@@ -15,6 +15,9 @@ import view.customElements.MenuButton;
 
 import java.util.Objects;
 
+/**
+ *
+ */
 public class NewSaveView extends ViewUtil{
 
     public static NewSaveView inst = new NewSaveView();
