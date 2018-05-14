@@ -3,9 +3,9 @@ package model.player;
 import assets.java.SoundManager;
 import assets.java.Sprite;
 import model.Entity;
-import model.PowerUp;
+import model.powerups.PowerUp;
 import model.weapons.*;
-import model.Shield;
+import model.powerups.Shield;
 
 import java.util.Timer;
 import java.util.TimerTask;

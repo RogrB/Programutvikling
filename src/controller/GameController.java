@@ -12,13 +12,12 @@ import model.weapons.*;
 import multiplayer.MultiplayerHandler;
 import view.GameView;
 import view.HUD;
-import model.PowerUp;
+import model.powerups.PowerUp;
 import view.ViewUtil;
 
 import java.util.*;
 
 import static model.GameState.bossType;
-import view.MenuView;
 
 public class GameController {
 

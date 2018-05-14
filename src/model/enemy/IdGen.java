@@ -1,4 +1,4 @@
-package model;
+package model.enemy;
 
 /**
  * <h1>Identification generator</h1>
