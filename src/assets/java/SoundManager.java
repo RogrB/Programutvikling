@@ -32,45 +32,45 @@ public class SoundManager {
         try{
             String audio = "/assets/audio/";
 
-            loadSound("shot_player", getClass().getResource(audio + "shots/player_1.wav").toURI().toURL(), 1f);
+            loadSound("shot_player", getClass().getResource(audio + "shots/player_1.mp3").toURI().toURL(), 1f);
 
-            loadSound("shot_boss", getClass().getResource(audio + "boss_sfx/boss_shot_1.wav").toURI().toURL(), .6f);
+            loadSound("shot_boss", getClass().getResource(audio + "boss_sfx/boss_shot_1.mp3").toURI().toURL(), .5f);
 
-            loadSound("shot_enemy_1", getClass().getResource(audio + "shots/enemy_1.wav").toURI().toURL(), .5f);
-            loadSound("shot_enemy_2", getClass().getResource(audio + "shots/enemy_2.wav").toURI().toURL(), .5f);
-            loadSound("shot_enemy_3", getClass().getResource(audio + "shots/enemy_3.wav").toURI().toURL(), .5f);
-            loadSound("shot_enemy_4", getClass().getResource(audio + "shots/enemy_4.wav").toURI().toURL(), .5f);
-            loadSound("shot_enemy_5", getClass().getResource(audio + "shots/enemy_5.wav").toURI().toURL(), .5f);
-            loadSound("shot_enemy_6", getClass().getResource(audio + "shots/enemy_6.wav").toURI().toURL(), .5f);
+            loadSound("shot_enemy_1", getClass().getResource(audio + "shots/enemy_1.mp3").toURI().toURL(), .5f);
+            loadSound("shot_enemy_2", getClass().getResource(audio + "shots/enemy_2.mp3").toURI().toURL(), .5f);
+            loadSound("shot_enemy_3", getClass().getResource(audio + "shots/enemy_3.mp3").toURI().toURL(), .5f);
+            loadSound("shot_enemy_4", getClass().getResource(audio + "shots/enemy_4.mp3").toURI().toURL(), .5f);
+            loadSound("shot_enemy_5", getClass().getResource(audio + "shots/enemy_5.mp3").toURI().toURL(), .5f);
+            loadSound("shot_enemy_6", getClass().getResource(audio + "shots/enemy_6.mp3").toURI().toURL(), .5f);
 
-            loadSound("bullet_impact", getClass().getResource(audio + "impacts/bullet_impact_1.wav").toURI().toURL(), 1f);
-            loadSound("impact_1", getClass().getResource(audio + "impacts/impact_1.wav").toURI().toURL(), 1f);
-            loadSound("impact_2", getClass().getResource(audio + "impacts/impact_2.wav").toURI().toURL(), 1f);
-            loadSound("impact_3", getClass().getResource(audio + "impacts/impact_3.wav").toURI().toURL(), 1f);
-            loadSound("impact_4", getClass().getResource(audio + "impacts/impact_4.wav").toURI().toURL(), 1f);
+            loadSound("bullet_impact", getClass().getResource(audio + "impacts/bullet_impact_1.mp3").toURI().toURL(), 1f);
+            loadSound("impact_1", getClass().getResource(audio + "impacts/impact_1.mp3").toURI().toURL(), 1f);
+            loadSound("impact_2", getClass().getResource(audio + "impacts/impact_2.mp3").toURI().toURL(), 1f);
+            loadSound("impact_3", getClass().getResource(audio + "impacts/impact_3.mp3").toURI().toURL(), 1f);
+            loadSound("impact_4", getClass().getResource(audio + "impacts/impact_4.mp3").toURI().toURL(), 1f);
 
-            loadSound("up_weapon", getClass().getResource(audio + "sfx/beep_1.wav").toURI().toURL(), 1f);
-            loadSound("up_health", getClass().getResource(audio + "sfx/ascending_2.wav").toURI().toURL(), 1f);
-            loadSound("up_shield", getClass().getResource(audio + "sfx/ascending_1.wav").toURI().toURL(), .7f);
+            loadSound("up_weapon", getClass().getResource(audio + "sfx/beep_1.mp3").toURI().toURL(), 1f);
+            loadSound("up_health", getClass().getResource(audio + "sfx/ascending_2.mp3").toURI().toURL(), 1f);
+            loadSound("up_shield", getClass().getResource(audio + "sfx/ascending_1.mp3").toURI().toURL(), .5f);
 
-            loadSound("sfx_1", getClass().getResource(audio + "sfx/hit_1.wav").toURI().toURL(), 1f);
-            loadSound("sfx_2", getClass().getResource(audio + "sfx/alarm_1.wav").toURI().toURL(), .6f);
+            loadSound("sfx_1", getClass().getResource(audio + "sfx/hit_1.mp3").toURI().toURL(), 1f);
+            loadSound("sfx_2", getClass().getResource(audio + "sfx/alarm_1.mp3").toURI().toURL(), .6f);
 
-            loadSound("boss_spawn_1", getClass().getResource(audio + "boss_sfx/boss_spawn_1.wav").toURI().toURL(), 1f);
-            loadSound("boss_wobble", getClass().getResource(audio + "sfx/wobble_1.wav").toURI().toURL(), .7f);
-            loadSound("boss_talk_1", getClass().getResource(audio + "boss_sfx/boss_talk_1.wav").toURI().toURL(), 1f);
-            loadSound("boss_talk_2", getClass().getResource(audio + "boss_sfx/boss_talk_2.wav").toURI().toURL(), 1f);
-            loadSound("boss_talk_3", getClass().getResource(audio + "boss_sfx/boss_talk_3.wav").toURI().toURL(), 1f);
-            loadSound("boss_talk_4", getClass().getResource(audio + "boss_sfx/boss_talk_4.wav").toURI().toURL(), 1f);
-            loadSound("boss_talk_5", getClass().getResource(audio + "boss_sfx/boss_talk_5.wav").toURI().toURL(), 1f);
-            loadSound("boss_talk_6", getClass().getResource(audio + "boss_sfx/boss_talk_6.wav").toURI().toURL(), 1f);
+            loadSound("boss_spawn_1", getClass().getResource(audio + "boss_sfx/boss_spawn_1.mp3").toURI().toURL(), 1f);
+            loadSound("boss_wobble", getClass().getResource(audio + "sfx/wobble_1.mp3").toURI().toURL(), .6f);
+            loadSound("boss_talk_1", getClass().getResource(audio + "boss_sfx/boss_talk_1.mp3").toURI().toURL(), 1f);
+            loadSound("boss_talk_2", getClass().getResource(audio + "boss_sfx/boss_talk_2.mp3").toURI().toURL(), 1f);
+            loadSound("boss_talk_3", getClass().getResource(audio + "boss_sfx/boss_talk_3.mp3").toURI().toURL(), 1f);
+            loadSound("boss_talk_4", getClass().getResource(audio + "boss_sfx/boss_talk_4.mp3").toURI().toURL(), 1f);
+            loadSound("boss_talk_5", getClass().getResource(audio + "boss_sfx/boss_talk_5.mp3").toURI().toURL(), 1f);
+            loadSound("boss_talk_6", getClass().getResource(audio + "boss_sfx/boss_talk_6.mp3").toURI().toURL(), 1f);
 
-            loadSound("nav", getClass().getResource(audio + "sfx/nav_1.wav").toURI().toURL(), 1f);
-            loadSound("nav_select", getClass().getResource(audio + "sfx/nav_select_1.wav").toURI().toURL(), 1f);
+            loadSound("nav", getClass().getResource(audio + "sfx/nav_1.mp3").toURI().toURL(), .8f);
+            loadSound("nav_select", getClass().getResource(audio + "sfx/nav_select_1.mp3").toURI().toURL(), 1f);
 
-            loadMusic("music_win", getClass().getResource(audio + "music/music_retro_1.wav").toURI().toURL());
-            loadMusic("music_menu", getClass().getResource(audio + "music/music_menu_2.wav").toURI().toURL());
-            loadMusic("music_battle", getClass().getResource(audio + "music/music_battle_2.wav").toURI().toURL());
+            loadMusic("music_win", getClass().getResource(audio + "music/music_retro_1.mp3").toURI().toURL());
+            loadMusic("music_menu", getClass().getResource(audio + "music/music_menu_2.mp3").toURI().toURL());
+            loadMusic("music_battle", getClass().getResource(audio + "music/music_battle_2.mp3").toURI().toURL());
         }
         catch(Exception e){
             ViewUtil.setError(e.getMessage());
