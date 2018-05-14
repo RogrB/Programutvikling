@@ -1,12 +1,13 @@
 package model;
 
-import view.GameView;
 import multiplayer.MultiplayerHandler;
 
 /**
- * A class for model fields that doesn't need to be stored in a specific game state.
+ * A class for model specific fields that doesn't need to be stored in a specific game state.
  *
- * author Åsmund Røst Wien, Jonas Ege Carlsen, Roger Birkenes Solli
+ * @author Åsmund Røst Wien
+ * @author Jonas Ege Carlsen
+ * @author Roger Birkenes Solli
  */
 public class GameModel {
 
@@ -27,28 +28,44 @@ public class GameModel {
     private boolean multiplayer = false;
 
     /**
-     * The singleton object of MultiPlayerHandler.
+     * Local access to the instance of the MultiplayerHandler object.
+     * @see MultiplayerHandler
      */
     private MultiplayerHandler mp = MultiplayerHandler.getInstance();
 
+    /**
+     * The future reference to the GameSettings object.
+     */
     public static GameSettings gameSettings;
 
+    /**
+     * Private constructor.
+     */
     private GameModel(){
         gameSettings = new GameSettings();
     }
 
-    public void mvcSetup(){
-        GameView gv = GameView.getInstance();
-    }
-    
+    /**
+     * Checks if the current game is a multiplayer game or not.
+     * @return {@code true} or {@code false}.
+     */
     public boolean getMultiplayerStatus() {
         return this.multiplayer;
     }
-    
+
+    /**
+     * Defines if the game currently is a multiplayer game or not.
+     * @param status {@code true} or {@code false}.
+     */
     public void setMultiplayerStatus(boolean status) {
         this.multiplayer = status;
     }
-    
+
+    /**
+     * Returns access to the MultiplayerHandler object.
+     * @return Access to the MultiplayerHandler object.
+     * @see MultiplayerHandler
+     */
     public MultiplayerHandler getMP() {
         return this.mp;
     }
