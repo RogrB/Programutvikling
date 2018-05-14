@@ -73,6 +73,11 @@ public class MultiplayerHandler {
     private boolean nextGameRequest = false;
     
     /**
+     * A thread that attempts to connect to Player2
+     */       
+    private Thread connectionThread = new Thread();    
+    
+    /**
      * The singleton object.
      */
     private static MultiplayerHandler inst = new MultiplayerHandler();
@@ -181,21 +186,17 @@ public class MultiplayerHandler {
      * Creates a thread that attempts to connect to Player2
      * This is done in a thread so as not to freeze the
      * game while connection is established
-     */       
-    private Thread thread = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            while(!connected && !cancel) {
-                sender.send(protocol.sendPrep("Connect", 0, 0));
-            }           
-        } 
-    });
-    
-    /**
-     * Starts the thread that attempts to connect to Player2
-     */       
+     */           
     public void startConnection() {
-        thread.start();
+        connectionThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(!connected && !cancel) {
+                    sender.send(protocol.sendPrep("Connect", 0, 0));
+                }           
+            } 
+        });        
+        connectionThread.start();
     }
     
     /**
@@ -211,7 +212,7 @@ public class MultiplayerHandler {
      */       
     void establishConnection() {
         setConnected(true);
-        thread.interrupt();
+        connectionThread.interrupt();
         if (!gameStarted) {
             gameStarted = true;
             MultiplayerView.getInst().startMultiplayerGame(stage);
@@ -273,7 +274,7 @@ public class MultiplayerHandler {
      * Cancels an ongoing connection attempt
      */       
     public void cancelConnectAttempt() {
-        thread.interrupt();
+        connectionThread.interrupt();
         cancel = true;
         setConnected(false);
         GameModel.getInstance().setMultiplayerStatus(false);

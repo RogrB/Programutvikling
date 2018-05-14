@@ -405,7 +405,7 @@ public class Player extends Entity {
      * Method that removes the shield and resets the player width
      */        
     private void removeShield() {
-        this.width = getWidth() - 10;
+        this.width = sprite.getWidth();
         shield.newSprite(Sprite.CLEAR);
         this.hasShield = false;
     }

@@ -9,6 +9,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import model.GameModel;
+import view.customElements.MenuButton;
 
 import static model.GameModel.gameSettings;
 

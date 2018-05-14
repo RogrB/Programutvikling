@@ -1,4 +1,4 @@
-package view;
+package view.customElements;
 
 import javafx.animation.FadeTransition;
 import javafx.geometry.Pos;
@@ -10,12 +10,29 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-class WarningField extends StackPane {
+/**
+ * Custom class for a Warning field.
+ * The class {@code WarningField} extends {@code StackPane}.
+ *
+ * @author Jonas Ege Carlsen
+ */
+public class WarningField extends StackPane {
 
+    /**
+     * The text of the warning field.
+     */
     private Text text;
+
+    /**
+     * The background color of the warning field.
+     */
     private Color fill = Color.DARKRED;
 
-    WarningField(){
+    /**
+     * Constructor for the custom Warning field.
+     * Initializes the object.
+     */
+    public WarningField(){
         text = new Text("");
         text.setFont(Font.font("Verdana", 15));
         text.setFill(Color.WHITE);
@@ -32,7 +49,12 @@ class WarningField extends StackPane {
         getChildren().addAll(bg, text);
     }
 
-    void changeText(String newText){
+    /**
+     * Changes the text of the Warning field. Whenever the text is changed
+     * the warningfield will fade in and out over a duration of time.
+     * @param newText The new Warning field-text.
+     */
+    public void changeText(String newText){
         text.setText(newText);
         FadeTransition fadeTransitionIn = new FadeTransition(Duration.millis(2000), this);
         fadeTransitionIn.setFromValue(0);
@@ -45,8 +67,12 @@ class WarningField extends StackPane {
         fadeTransitionOut.setToValue(0);
         fadeTransitionOut.play();
     }
-    
-    void setColor(Color color) {
+
+    /**
+     * Changes the color of the Warning field.
+     * @param color The new color of the Warning field.
+     */
+    public void setColor(Color color) {
         this.fill = color;
     }
     

@@ -12,25 +12,67 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.GameModel;
+import view.customElements.MenuButton;
 
-import static controller.GameController.gs;
 import java.util.ArrayList;
 
+/**
+ * Menu for loading save files.
+ * The class {@code LoadGameView} extends {@code ViewUtil}.
+ *
+ * @author Jonas Ege Carlsen
+ */
 public class LoadGameView extends ViewUtil{
 
+    /**
+     * The singleton object
+     */
     private static LoadGameView inst = new LoadGameView();
-    private LoadGameView(){}
-    public static LoadGameView getInst(){return inst;}
 
+    /**
+     * Method to access singleton class.
+     * @return Returns a reference to the singleton object.
+     */
+    public static LoadGameView getInst(){return inst;}
+    
+    /**
+     * Private constructor
+     */
+    private LoadGameView(){}
+
+    /**
+     * First save button
+     */
     private MenuButton save1;
+
+    /**
+     * Second save button
+     */
     private MenuButton save2;
+
+    /**
+     * Third save button
+     */
     private MenuButton save3;
+
+    /**
+     * A button to go back to Main Menu with
+     */
     private MenuButton backButton;
 
+    /**
+     * Text that displays the purpose of the scene.
+     */
     private Text loadSaveText;
 
+    /**
+     * An array of Menu Buttons used to keep track of what button is currently selected.
+     */
     private MenuButton[] menuElements;
 
+    /**
+     * Creates all the buttons in the view.
+     */
     private void createButtons(){
         save1 = new MenuButton("SAVE 1");
         save1.setValue(0);
@@ -42,6 +84,9 @@ public class LoadGameView extends ViewUtil{
         backButton.setValue(3);
     }
 
+    /**
+     * @return Returns a temporary array of save buttons.
+     */
     private ArrayList<MenuButton> createTempArray(){
         ArrayList<MenuButton> AL = new ArrayList<>();
         AL.add(save1);
@@ -51,6 +96,12 @@ public class LoadGameView extends ViewUtil{
         return AL;
     }
 
+    /**
+     *  Checks if the save file assosicated with a button
+     *  contains anything. If not, make it inaccessible
+     *  and remove from the temporary array.
+     * @param tempElements Temporary array to use.
+     */
     private void checkSaves(ArrayList<MenuButton> tempElements){
         int counter = 0;
         for(int i = 0; i < 3; i++){
@@ -71,6 +122,13 @@ public class LoadGameView extends ViewUtil{
         }
     }
 
+    /**
+     * Creates the MenuElements array based on the temporary array
+     * that is used in {@code checkSaves} so that one can proparly
+     * navigate the buttons.
+     * @param tempElements The previously used temporary array.
+     * @return Returns an array of Menu Buttons.
+     */
     private MenuButton[] createMenuElementsArray(ArrayList<MenuButton> tempElements){
         switch(tempElements.size()){
             case 1:
@@ -86,11 +144,21 @@ public class LoadGameView extends ViewUtil{
         return menuElements;
     }
 
+    /**
+     * Sets the button click events of the view.
+     */
     @Override
     void setButtonClickEvents() {
+        save1.setOnMouseClicked(event -> loadGame(event, 0));
+        save2.setOnMouseClicked(event -> loadGame(event, 1));
+        save3.setOnMouseClicked(event -> loadGame(event, 2));
         backButton.setOnMouseClicked(event -> goToView(event, MenuView.getInstance().initScene()));
     }
 
+    /**
+     * Sets the button press events of the menu container.
+     * @param container The menu container of the view.
+     */
     @Override
     void setButtonPressEvents(Parent container) {
         container.setOnKeyPressed(event -> {
@@ -109,17 +177,29 @@ public class LoadGameView extends ViewUtil{
         });
     }
 
+    /**
+     * Sets the view events.
+     * @param container The menu container of the view.
+     */
     private void setEvents(Parent container){
         setButtonClickEvents();
         setButtonPressEvents(container);
     }
 
+    /**
+     * Creates the user interface elements of the view.
+     */
     private void createUI(){
         createButtons();
         loadSaveText = createText("LOAD SAVE FILE", 500, 275, Font.font("Verdana", 50));
         setErrorFieldPosition();
     }
 
+    /**
+     * The main method of the View. Calls other methods and returns
+     * a finished root node.
+     * @return Returns a root node / Pane.
+     */
     @Override
     public Parent initScene() {
         root = initBaseScene(BG_IMG);
@@ -145,6 +225,13 @@ public class LoadGameView extends ViewUtil{
         return root;
     }
 
+    /**
+     * Method to call different functions based off of a value.
+     * Overridden from {@code ViewUtil}, although {@code buttonName}
+     * is not used in this view.
+     * @param buttonName The name of the button.
+     * @param event The event that this function is called from.
+     */
     @Override
     public void select(String buttonName, KeyEvent event) {
         switch (menuElements[elementCounter].getValue()) {
@@ -163,6 +250,11 @@ public class LoadGameView extends ViewUtil{
             }
     }
 
+    /**
+     * Loads a game save and launches the game from the last save point.
+     * @param event The event that this function is called from.
+     * @param gameSave The number of the game save that is to be loaded.
+     */
     private void loadGame(InputEvent event, int gameSave){
         int prevSave = GameModel.gameSettings.getPrevSave();
         GameModel.gameSettings.savePrevSave(gameSave);
