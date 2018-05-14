@@ -221,6 +221,7 @@ public class MultiplayerHandler {
     
     /**
      * Sets {@code connected}
+     * @param connected Boolean
      */       
     private void setConnected(boolean connected) {
         this.connected = connected;
@@ -309,14 +310,15 @@ public class MultiplayerHandler {
     public boolean getNextGameRequest() {
         return this.nextGameRequest;
     }
-    
+
     /**
      * Sets {@code nextGameRequest}
-     */       
+     * @param state Boolean
+     */
     public void setNextGameRequest(boolean state) {
         this.nextGameRequest = state;
     }
-    
+
     /**
      * Method for starting the next level
      * after receiving a next level request
@@ -340,6 +342,7 @@ public class MultiplayerHandler {
 
     /**
      * Sets {@code initiateConnection}
+     * @param b Boolean
      */       
     public void setInitConnection(boolean b) {
         this.initiateConnection = b;

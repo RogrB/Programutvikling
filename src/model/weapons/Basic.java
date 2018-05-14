@@ -53,7 +53,7 @@ public class Basic extends Existence {
      * @param x X Value
      * @param y Y Value
      * @param weapon sets the Weapon type in the {@code Weapon} class
-     * @see {@code Weapon}
+     * @see Weapon
      */      
     public Basic(int x, int y, Weapon weapon) {
         super(x,y);
@@ -83,7 +83,6 @@ public class Basic extends Existence {
     /**
      * Handles update ticks triggered by the
      * animationtimer in the {@code GameController} class
-     * @see {@code GameController}
      * Moves the bullet according to the input and purges the bullet if needed
      * @param x X value
      * @param y Y value

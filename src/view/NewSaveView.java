@@ -16,7 +16,7 @@ import view.customElements.MenuButton;
 import java.util.Objects;
 
 /**
- * Menu for choosing a name for a new save file.
+ * <h1>Menu for choosing a name for a new save file.</h1>
  * The class {@code NewSaveView} extends {@code ViewUtil}.
  *
  * @author Jonas Ege Carlsen
@@ -90,15 +90,6 @@ public class NewSaveView extends ViewUtil{
     }
 
     /**
-     * Sets the view events.
-     * @param container The menu container of the view.
-     */
-    private void setEvents(Parent container){
-        setButtonClickEvents();
-        setButtonPressEvents(container);
-    }
-
-    /**
      * Creates a TextField and attaches an
      * event handler to it.
      * @return Returns a TextField.
@@ -125,8 +116,7 @@ public class NewSaveView extends ViewUtil{
     }
 
     /**
-     * The main method of the View. Calls other methods and returns
-     * a finished root node.
+     * Calls other methods and returns a finished root node.
      * @return Returns a root node / Pane.
      */
     @Override
@@ -145,7 +135,7 @@ public class NewSaveView extends ViewUtil{
         return root;
     }
     /**
-     * Method to call different functions based off of a value.
+     * Method for handling selection of menu elements
      * Overridden from {@code ViewUtil}, although it is not used
      * in this view.
      * @param buttonName The name of the button.

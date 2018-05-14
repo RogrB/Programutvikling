@@ -17,7 +17,7 @@ import view.customElements.MenuButton;
 import java.util.ArrayList;
 
 /**
- * Menu for loading save files.
+ * <h1>Menu for loading save files.</h1>
  * The class {@code LoadGameView} extends {@code ViewUtil}.
  *
  * @author Jonas Ege Carlsen
@@ -178,15 +178,6 @@ public class LoadGameView extends ViewUtil{
     }
 
     /**
-     * Sets the view events.
-     * @param container The menu container of the view.
-     */
-    private void setEvents(Parent container){
-        setButtonClickEvents();
-        setButtonPressEvents(container);
-    }
-
-    /**
      * Creates the user interface elements of the view.
      */
     private void createUI(){
@@ -226,7 +217,7 @@ public class LoadGameView extends ViewUtil{
     }
 
     /**
-     * Method to call different functions based off of a value.
+     * Method for handling selection of menu elements
      * Overridden from {@code ViewUtil}, although {@code buttonName}
      * is not used in this view.
      * @param buttonName The name of the button.

@@ -21,7 +21,7 @@ import javafx.scene.control.Button;
 import view.customElements.MenuButton;
 
 /**
- * Multiplayer Menu
+ * <h1>Multiplayer Menu</h1>
  * The class {@code MultiplayerView} extends {@code ViewUtil}.
  *
  * @author Jonas Ege Carlsen Roger Birkenes Solli
@@ -199,17 +199,7 @@ public class MultiplayerView extends ViewUtil{
     }
 
     /**
-     * Sets all the events for the view.
-     * @param container The menu container of the view.
-     */
-    private void setEvents(Parent container){
-        setButtonClickEvents();
-        setButtonPressEvents(container);
-    }
-
-    /**
-     * The main method of the View. Calls other methods and returns
-     * a finished root node.
+     * Calls other methods and returns a finished root node.
      * @return Returns a root node / Pane.
      */
     public Parent initScene(){
@@ -224,7 +214,7 @@ public class MultiplayerView extends ViewUtil{
     }
 
     /**
-     * Method to call different functions based off of a value.
+     * Method for handling selection of menu elements
      * Overridden from {@code ViewUtil}, although it
      * is not used in this view.
      * @param buttonName The name of the button.

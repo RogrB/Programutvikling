@@ -20,7 +20,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 
 import java.text.DecimalFormat;
-import java.util.Random;
 
 import javafx.application.Platform;
 import model.player.Player;
@@ -221,11 +220,6 @@ public class GameView extends ViewUtil{
     private Pane requestPane;
 
     /**
-     * Background source
-     */
-    private final String BG_IMG = "assets/image/background/background_game.png";
-
-    /**
      * Initializes instances of the model-view-controller
      */
     public void mvcSetup(){
@@ -329,7 +323,6 @@ public class GameView extends ViewUtil{
      * @return Returns a root node / Pane.
      */
     public Parent initScene() {
-        Random rnd = new Random();
 
         if(SoundManager.getInst().getPlayer() != null){
             SoundManager.getInst().playMusic("stop");
@@ -340,6 +333,7 @@ public class GameView extends ViewUtil{
         createContainers();
         requestPane = createRequestPane();
 
+        String BG_IMG = "assets/image/background/background_game.png";
         root = initBaseScene(BG_IMG);
         decideLayout();
 
@@ -349,7 +343,8 @@ public class GameView extends ViewUtil{
     }
 
     /**
-     * Method for handling selection of menu elements
+     * Method for handling selection of menu elements.
+     * Overridden from {@code ViewUtil}.
      * @param buttonName inputs the name of the button that was pressed
      * @param event inputs the event
      */
@@ -490,6 +485,8 @@ public class GameView extends ViewUtil{
      * Method that renders the Heads Up Display.
      * This includes Player Hit points, shield charges, current weapon type,
      * boss health bar, score and current level.
+     * @param h HUD.
+     * @param shield true for shield, false for no shield.
      */
     void renderHUD(HUD h, boolean shield) {
         hud.clearRect(15, 15, 120, 50);
@@ -537,6 +534,10 @@ public class GameView extends ViewUtil{
      * Method for rendering the PowerUp text that shows a descriptive text
      * of the PowerUp when the player picks it up which floats upwards and
      * fades out over time.
+     * @param powerUp String name of powerup.
+     * @param x X coordinates of where to render.
+     * @param y X coordinates of where to render.
+     * @param opacity float value of desired opacity.
      */
     void renderPowerUpText(String powerUp, int x, int y, float opacity) {
         hud.clearRect(x-10, y-10, 300, 100);
@@ -547,6 +548,8 @@ public class GameView extends ViewUtil{
 
     /**
      * Clears the powerUp text
+     * @param x X coordinates of where to clear.
+     * @param y Y coordinates of where to clear.
      */
     void clearPowerUpText(int x, int y) {
         hud.clearRect(x-10, y-50, 300, 300);

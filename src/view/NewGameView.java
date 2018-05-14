@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 import view.customElements.MenuButton;
 
 /**
- * Menu for selecting a new save file.
+ * <h1>Menu for selecting a new save file</h1>
  * The class {@code NewGameView} extends {@code ViewUtil}.
  *
  * @author  Jonas Ege Carlsen
@@ -115,15 +115,6 @@ public class NewGameView extends ViewUtil{
     }
 
     /**
-     * Sets the view events.
-     * @param container The menu container of the view.
-     */
-    private void setEvents(Parent container){
-        setButtonClickEvents();
-        setButtonPressEvents(container);
-    }
-
-    /**
      * Creates the user interface elements of the view.
      */
     private void createUI(){
@@ -133,8 +124,7 @@ public class NewGameView extends ViewUtil{
     }
 
     /**
-     * The main method of the View. Calls other methods and returns
-     * a finished root node.
+     * Calls other methods and returns a finished root node.
      * @return Returns a root node / Pane.
      */
     @Override
@@ -161,7 +151,7 @@ public class NewGameView extends ViewUtil{
     }
 
     /**
-     * Method to call different functions based off of a value.
+     * Method for handling selection of menu elements
      * Overridden from {@code ViewUtil}, although {@code buttonName}
      * is not used in this view.
      * @param buttonName The name of the button.
@@ -179,7 +169,8 @@ public class NewGameView extends ViewUtil{
     }
 
     /**
-     * @return Returns the value of the save button that was clicked.
+     * Returns the value of the save button that was clicked.
+     * @return Returns the saveNumber-int.
      */
     int getSaveNumber(){return saveNumber; }
 }

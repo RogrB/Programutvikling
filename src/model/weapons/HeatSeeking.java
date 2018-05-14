@@ -40,7 +40,7 @@ public class HeatSeeking extends Basic {
      * @param x X Value
      * @param y Y Value
      * @param weapon sets the Weapon type in the {@code Weapon} class
-     * @see {@code Weapon}
+     * @see Weapon
      */      
     public HeatSeeking(int x, int y, Weapon weapon) {
         super(

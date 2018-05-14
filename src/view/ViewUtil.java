@@ -18,7 +18,8 @@ import javafx.stage.Stage;
 import view.customElements.WarningField;
 
 /**
- * Abstract parent class for all Views.
+ * <h1>Abstract parent class for all Views</h1>
+ * Every View in this application inherits from this class.
  *
  * @author Jonas Ege Carlsen
  */
@@ -65,7 +66,7 @@ public abstract class ViewUtil {
     private static String lastErrorMessage = "";
 
     /**
-     * Provides a basic root-pane for every view.
+     * Provides a basic root-pane template.
      * @param bg Background image of the view.
      * @return Returns a Pane.
      */
@@ -121,7 +122,7 @@ public abstract class ViewUtil {
     }
 
     /**
-     * Created a background image to be used for a View.
+     * Creates a background image to be used for a View.
      * @param BG_IMG The location of the image file.
      * @return Returns a Background
      */
@@ -201,6 +202,16 @@ public abstract class ViewUtil {
     abstract void setButtonPressEvents(Parent container);
 
     /**
+     * Sets the view events.
+     * @param container The menu container of the view.
+     */
+    void setEvents(Parent container){
+        setButtonClickEvents();
+        setButtonPressEvents(container);
+
+    }
+
+    /**
      * Creates a basic Label.
      * @param labelText The Label text
      * @return Returns a Label
@@ -227,18 +238,28 @@ public abstract class ViewUtil {
     }
 
     /**
-     * The main method of the View. Calls other methods and returns
-     * a finished root node.
+     * Calls other methods and returns a finished root node.
      * @return Returns a root node / Pane.
      */
     public abstract Parent initScene();
+
+     /**
+     * Method for handling selection of menu elements
+     * @param buttonName inputs the name of the button that was pressed
+     * @param event inputs the event
+     */
     public abstract void select(String buttonName, KeyEvent event);
+
+    /**
+     * Method for placing the errorField on a view.
+     */
     void setErrorFieldPosition(){
         errorField.setTranslateX(200);
         errorField.setTranslateY(750);
     }
 
     /**
+     * Returns the {@code elementCounter} variable.
      * @return Returns the elementCounter.
      */
     public int getElementCounter(){

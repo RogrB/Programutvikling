@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import view.customElements.MenuButton;
 
 /**
- * The Main Menu.
+ * <h1>The Main Menu</h1>
  * The class {@code MenuView} extends {@code ViewUtil}.
  *
  * @author Jonas Ege Carlsen
@@ -135,8 +135,8 @@ public class MenuView extends ViewUtil{
     }
 
     /**
-     * Method that changes the scene based
-     * on what button has been pressed.
+     * Method for handling selection of menu elements
+     * Overridden from {@code ViewUtil}.
      * @param buttonName The name of the button.
      * @param event The event that this function is called from.
      */
@@ -225,15 +225,6 @@ public class MenuView extends ViewUtil{
             mainMenu.getChildren().addAll(newGameButton, multiplayerButton, optionsButton, exitButton);
             menuElements = new MenuButton[]{newGameButton, multiplayerButton, optionsButton, exitButton};
         }
-    }
-
-    /**
-     * Sets the view events.
-     * @param container The menu container of the view.
-     */
-    private void setEvents(Parent container){
-        setButtonClickEvents();
-        setButtonPressEvents(container);
     }
 
     /**

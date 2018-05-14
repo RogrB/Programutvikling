@@ -14,7 +14,7 @@ import view.customElements.MenuButton;
 import static model.GameModel.gameSettings;
 
 /**
- * Menu for showing and changing options.
+ * <h1>Menu for showing and changing options</h1>
  * The class {@code OptionsView} extends {@code ViewUtil}.
  *
  * @author Jonas Ege Carlsen
@@ -263,8 +263,7 @@ public class OptionsView extends ViewUtil{
     }
 
     /**
-     * The main method of the View. Calls other methods and returns
-     * a finished root node.
+     * Calls other methods and returns a finished root node.
      * @return Returns a root node / Pane.
      */
     public Parent initScene(){
@@ -275,8 +274,7 @@ public class OptionsView extends ViewUtil{
         menuElements = new Parent[]{soundSlider, musicSlider, difficultySlider, backButton};
         menuContainer.getChildren().addAll(soundLabel, soundSlider, soundTextLabel, musicLabel, musicSlider, musicTextLabel, difficultyLabel, difficultySlider, difficultyTextLabel, backButton);
         elementCounter = 0;
-        setButtonPressEvents(menuContainer);
-        setButtonClickEvents();
+        setEvents(menuContainer);
         root.getChildren().addAll(header, errorField, menuContainer);
 
         compareErrorMessage();
@@ -284,7 +282,7 @@ public class OptionsView extends ViewUtil{
         return root;
     }
     /**
-     * Method to call different functions based off of a value.
+     * Method for handling selection of menu elements
      * Overridden from {@code ViewUtil}.
      * @param buttonName The name of the button.
      * @param event The event that this function is called from.
