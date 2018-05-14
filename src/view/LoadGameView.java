@@ -34,7 +34,7 @@ public class LoadGameView extends ViewUtil{
      * @return Returns a reference to the singleton object.
      */
     public static LoadGameView getInst(){return inst;}
-    
+
     /**
      * Private constructor
      */
@@ -97,9 +97,9 @@ public class LoadGameView extends ViewUtil{
     }
 
     /**
-     *  Checks if the save file assosicated with a button
-     *  contains anything. If not, make it inaccessible
-     *  and remove from the temporary array.
+     * Checks if the save file assosicated with a button
+     * contains anything. If not, make it inaccessible
+     * and remove from the temporary array.
      * @param tempElements Temporary array to use.
      */
     private void checkSaves(ArrayList<MenuButton> tempElements){
