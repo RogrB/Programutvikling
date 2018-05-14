@@ -48,12 +48,6 @@ public class UserInputs {
             if (event.getCode() == KeyCode.Q && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()) {
                 gs.player.setShield();
             }
-            if (event.getCode() == KeyCode.T && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()) {
-                GameController.getInstance().getHUD().renderPowerUpText("Test");
-            }
-            if (event.getCode() == KeyCode.R && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()) {
-                GameView.getInstance().renderScoreScreen();
-            }
         });
 
         s.setOnKeyReleased(event -> {

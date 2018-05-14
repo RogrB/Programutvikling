@@ -295,7 +295,7 @@ public class GameView extends ViewUtil{
         root = initBaseScene(BG_IMG);
         decideLayout();
 
-        compareErrorMessage("");
+        compareErrorMessage();
 
         return root;
     }

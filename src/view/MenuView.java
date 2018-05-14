@@ -170,7 +170,7 @@ public class MenuView extends ViewUtil{
         menuElements[0].gainedFocus();
         root.getChildren().addAll(header, errorField, menuContainer);
 
-        compareErrorMessage("");
+        compareErrorMessage();
         return root;
 
     }

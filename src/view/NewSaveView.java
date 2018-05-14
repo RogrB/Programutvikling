@@ -85,7 +85,7 @@ public class NewSaveView extends ViewUtil{
         menuContainer.getChildren().addAll(saveNameLabel, saveNameTextField, startGameButton, backButton);
         root.getChildren().addAll(header, writeSaveNameText, errorField, menuContainer);
 
-        compareErrorMessage("");
+        compareErrorMessage();
 
         return root;
     }

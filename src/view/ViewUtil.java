@@ -26,7 +26,7 @@ public abstract class ViewUtil {
     static WarningField errorField = new WarningField();
     private static String lastErrorMessage = "";
 
-    public Pane initBaseScene(String bg){
+    Pane initBaseScene(String bg){
         root = new Pane();
         setHeader();
         root.setPrefSize(VIEW_WIDTH, VIEW_HEIGHT);
@@ -34,7 +34,7 @@ public abstract class ViewUtil {
         return root;
     }
 
-    public Text createText(String textInput, int x, int y, Font font){
+    Text createText(String textInput, int x, int y, Font font){
         Text text = new Text(textInput);
         text.setX(x);
         text.setY(y);
@@ -59,7 +59,7 @@ public abstract class ViewUtil {
         UserInputs userInputs = new UserInputs(scene);
     }
 
-    Background getBackGroundImage(String BG_IMG){
+    private Background getBackGroundImage(String BG_IMG){
         BackgroundImage bg = new BackgroundImage(
                 new Image(BG_IMG),
                 BackgroundRepeat.NO_REPEAT,
@@ -142,16 +142,16 @@ public abstract class ViewUtil {
         errorField.changeText(text);
     }
 
-    void compareErrorMessage(String msg){
-        if(!lastErrorMessage.equals(msg)){
+    void compareErrorMessage(){
+        if(!lastErrorMessage.equals("")){
             errorField.changeText(lastErrorMessage);
         }
     }
 
-    void setHeader(){
+    private void setHeader(){
         header.setX(485);
         header.setY(175);
         header.setFill(Color.WHITE);
-        header.setFont(header.getFont().font(100));
+        header.setFont(Font.font("Verdana", 100));
     }
 }

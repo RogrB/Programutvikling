@@ -6,17 +6,18 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-public class WarningField extends StackPane {
+class WarningField extends StackPane {
 
     private Text text;
     private Color fill = Color.DARKRED;
 
-    public WarningField(){
+    WarningField(){
         text = new Text("");
-        text.setFont(text.getFont().font(15));
+        text.setFont(Font.font("Verdana", 15));
         text.setFill(Color.WHITE);
 
         Rectangle bg = new Rectangle(800, 30);
@@ -31,7 +32,7 @@ public class WarningField extends StackPane {
         getChildren().addAll(bg, text);
     }
 
-    public void changeText(String newText){
+    void changeText(String newText){
         text.setText(newText);
         FadeTransition fadeTransitionIn = new FadeTransition(Duration.millis(2000), this);
         fadeTransitionIn.setFromValue(0);
@@ -45,7 +46,7 @@ public class WarningField extends StackPane {
         fadeTransitionOut.play();
     }
     
-    public void setColor(Color color) {
+    void setColor(Color color) {
         this.fill = color;
     }
     

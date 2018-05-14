@@ -14,7 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.GameModel;
 import multiplayer.MultiplayerHandler;
-import controller.UserInputs;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -138,7 +137,7 @@ public class MultiplayerView extends ViewUtil{
         setEvents(menuContainer);
         menuContainer.getChildren().addAll(hostname, hostnameField, remotePort, remotePortField, localPort, localPortField, connectButton, backButton, helpButton);
         root.getChildren().addAll(header, errorField, menuContainer);
-        compareErrorMessage("");
+        compareErrorMessage();
         return root;
     }
 

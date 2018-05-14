@@ -170,7 +170,7 @@ public class OptionsView extends ViewUtil{
         setButtonClickEvents();
         root.getChildren().addAll(header, errorField, menuContainer);
 
-        compareErrorMessage("");
+        compareErrorMessage();
 
         return root;
     }
