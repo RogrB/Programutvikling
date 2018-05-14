@@ -20,7 +20,7 @@ import java.util.*;
 import static model.GameState.bossType;
 
 /**
- * Class used to control the Game.
+ * Controller class to manipulate the model objects.
  *
  * @author Åsmund Røst Wien
  * @author Jonas Ege Carlsen
@@ -44,8 +44,6 @@ public class GameController {
      */
     private GameController(){}
 
-    // MVC-access
-
     /**
      * Used to reference the GameModel singleton object.
      */
@@ -57,7 +55,7 @@ public class GameController {
     private GameView gv;
 
     /**
-     * Used to reference GameState.
+     * Used to reference the active GameState.
      */
     public static GameState gs;
 
@@ -77,15 +75,19 @@ public class GameController {
     private AnimationTimer gameMainTimer;
 
     /**
-     * An iterator used to iterate through enemies.
+     * An class iterator used to iterate through enemies.
      */
     private Iterator<Enemy> enemyIterator;
 
     /**
      * Boolean that decides if the last game was lost or not.
+     * Used for specific logical purposes.
      */
     private Boolean lastGameLost = false;
 
+    /**
+     * Method to initiate the model-view–controller references.
+     */
     public void mvcSetup(){
         gm = GameModel.getInstance();
         gv = GameView.getInstance();
@@ -95,11 +97,19 @@ public class GameController {
         hud = HUD.getInstance();
     }
 
+    /**
+     * Function to initiate a new game. Input parameterdefines
+     * the name set by the user on a new game creation.
+     * @param stateName The name for this game state.
+     */
     public void newGame(String stateName){
         newGame();
         gs.setStateName(stateName);
     }
 
+    /**
+     * Function used to initiate a new multiplayer game.
+     */
     public void newGame(){
         lastGameLost = false;
         gs.firstLevel();
@@ -107,6 +117,9 @@ public class GameController {
         gameRun();
     }
 
+    /**
+     * Iterates the game state to the next level.
+     */
     public void nextGame(){
         lastGameLost = false;
         gs.nextLevel();
@@ -117,12 +130,18 @@ public class GameController {
         }
     }
 
+    /**
+     * Loads an older game state.
+     */
     public void loadGame(){
         gs.loadGameData();
         gs.player.resume();
         gameRun();
     }
 
+    /**
+     * Method to start the game logic loop.
+     */
     private void gameRun(){
         gs.player.isPlaying();
         gv.clearAllGraphics();
@@ -136,6 +155,9 @@ public class GameController {
             SoundManager.getInst().playMusic("music_battle");
     }
 
+    /**
+     * Method which defines the game logic loop.
+     */
     private void gameTimerStart() {
         if(gameMainTimer == null)
             gameMainTimer = new AnimationTimer() {
@@ -171,7 +193,10 @@ public class GameController {
         gameMainTimer.start();
     }
 
-
+    /**
+     * Pauses the game logic loop.
+     * <b>Note: </b>also disconnects the other player if the game is multiplayer.
+     */
     public void gamePause(){
         AutoSave.getInstance().stop();
         gameMainTimer.stop();
@@ -182,6 +207,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Iterates through all enemies on the game board,
+     * moves them and triggers all functionality.
+     * @see Enemy
+     */
     private void moveEnemies(){
         enemyIterator = GameState.enemies.iterator();
         while(enemyIterator.hasNext()){
@@ -191,6 +221,10 @@ public class GameController {
         }
     }
 
+    /**
+     * Moves all PowerUps on the game board.
+     * @see PowerUp
+     */
     private void movePowerups(){
         Iterator<PowerUp> powerUpIterator = gs.powerups.iterator();
         while (powerUpIterator.hasNext()){
@@ -200,6 +234,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Moves all bullets on the game board. Player and enemies.
+     * @see Enemy
+     * @see Basic
+     */
     private void moveAllBullets(){
         Iterator<Basic> bulletIterator = gs.playerBullets.iterator();
         while(bulletIterator.hasNext()){
@@ -223,6 +262,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Detects if an enemy was hit by a player bullet.
+     * @see Enemy
+     * @see Basic
+     */
     private void detectEnemyShotByPlayer(){
         ArrayList<Enemy> tempEnemies = new ArrayList<>();
         for(Basic bullet : gs.playerBullets){
@@ -260,11 +304,11 @@ public class GameController {
         }
     }
 
-    public void spawnSmallAsteroids(int x, int y) {
-        GameState.enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN"), x, y - 20));
-        GameState.enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN_REVERSED"), x, y + 20));
-    }
-
+    /**
+     * Detects of player was shot by an enemy bullet.
+     * @see model.player.Player
+     * @see Basic
+     */
     private void detectPlayerShotByEnemy(){
         for(Basic bullet : gs.enemyBullets){
             if(bullet.collidesWith(gs.player) && !bullet.getHasHit()){
@@ -274,6 +318,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Detects if player collides with an enemy.
+     * @see model.player.Player
+     * @see Enemy
+     */
     private void detectPlayerCollidesWithEnemy(){
         for (Enemy enemy: GameState.enemies) {
             if(enemy.collidesWith(gs.player)){
@@ -285,6 +334,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Detects if player collides with a powerup.
+     * @see model.player.Player
+     * @see PowerUp
+     */
     private void detectPlayerCollidesWithPowerUp() {
         if (!gs.powerups.isEmpty()) {
             for (PowerUp powerUp : gs.powerups) {
@@ -296,6 +350,10 @@ public class GameController {
         }
     }
 
+    /**
+     * Random number generator to check if a powerup should spawn.
+     * <i>Should spawn every 25 seconds on average.</i>
+     */
     private void spawnPowerUps(){
         Random random = new Random();
         if(random.nextInt(1500) < 1) {
@@ -303,6 +361,11 @@ public class GameController {
         }
     }
 
+    /**
+     * Creates a new random powerup and returns it.
+     * @return The new powerup object.
+     * @see PowerUp
+     */
     private PowerUp generateNewPowerUp(){
         Random rand = new Random();
         int randNr = rand.nextInt(8);
@@ -336,14 +399,26 @@ public class GameController {
         );
     }
 
+    /**
+     * Method to divide a large asteroid into two smaller ones.
+     * @param x The initial X position of the new {@code SmallAsteroid} object.
+     * @param y The initial Y position of the new {@code SmallAsteroid} object.
+     * @see Asteroid
+     * @see SmallAsteroid
+     */
+    public void spawnSmallAsteroids(int x, int y) {
+        GameState.enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN"), x, y - 20));
+        GameState.enemies.add(new SmallAsteroid(new EnemyMovementPattern("SIN_REVERSED"), x, y + 20));
+    }
+
+    /**
+     * Detects if the conditions for losing the game has been met.
+     */
     private void detectGameOver(){
         if (!gs.player.isAlive() && !gs.gameOver) {
             gs.gameOver = true;
-            gs.player.isNotPlaying();
             lastGameLost = true;
-            startLossTimer();
-            gv.gameOver();
-            gameMainTimer.stop();
+            startGameOverTimer();
             AutoSave.getInstance().stop();
             if(gm.getMultiplayerStatus()) {
                 MultiplayerHandler.getInstance().sendDisconnect();
@@ -352,14 +427,9 @@ public class GameController {
         }
     }
 
-    private void startLossTimer(){
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {}
-        }, 2000);
-    }
-
+    /**
+     * Detects if the conditions for winning the game has been met.
+     */
     private void detectGameWin() {
         if (GameModel.getInstance().getMultiplayerStatus()) {
             if(MultiplayerHandler.getInstance().getNextGameRequest()) {
@@ -372,24 +442,37 @@ public class GameController {
                 if(enemy.getType() == boss && !enemy.isAlive() && !gs.gameOver){
                     gs.gameOver = true;
                     lastGameLost = false;
-                    startGameWinTimer();
+                    startGameOverTimer();
                     AutoSave.getInstance().stop();
                 }
             }
         }
     }
 
-    private void startGameWinTimer(){
+    /**
+     * Initiates a 2 second delay before the game logic ends and
+     * the game is lost. This is to allow for animations to finish
+     * before the game stops.
+     */
+    private void startGameOverTimer(){
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 gs.player.isNotPlaying();
-                gv.gameWon();
+                if(lastGameLost) {
+                    gv.gameOver();
+                } else {
+                    gv.gameWon();
+                }
                 gameMainTimer.stop();
             }
         }, 2000);
     }
 
+    /**
+     * Returns if the previous game was lost or not.
+     * @return {@code true} or {@code false}.
+     */
     public Boolean getLastGameLost() {return this.lastGameLost; }
 }
