@@ -99,7 +99,6 @@ public class NewSaveView extends ViewUtil{
         GameModel.gameSettings.savePrevSave(NewGameView.getInst().getSaveNumber());
         GameController.getInstance().newGame(saveNameTextField.getText());
         startGameView(event, GameView.getInstance().initScene());
-        System.out.println("Totally started a new game");
     }
 
     private void checkFileName(InputEvent event){

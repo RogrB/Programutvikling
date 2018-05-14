@@ -18,7 +18,8 @@ import java.util.ArrayList;
 
 public class LoadGameView extends ViewUtil{
 
-    public static LoadGameView inst = new LoadGameView();
+    private static LoadGameView inst = new LoadGameView();
+    private LoadGameView(){}
     public static LoadGameView getInst(){return inst;}
 
     private static final String BG_IMG = "assets/image/background.jpg";
@@ -64,7 +65,7 @@ public class LoadGameView extends ViewUtil{
                     tempElements.get(counter).setText(IOManager.getInstance().getGameState(counter).getStateName());
                 }
                 catch(Exception e){
-                    System.out.println(e.getMessage());
+                    System.err.println(e.getMessage());
                 }
                 counter++;
             }
@@ -161,8 +162,6 @@ public class LoadGameView extends ViewUtil{
                 goToView(event, MenuView.getInstance().initScene());
                 break;
             }
-        System.out.println(gs.getStateName());
-        System.out.println("Totally loaded a rad gamesave");
     }
 
     private void loadGame(InputEvent event, int gameSave){

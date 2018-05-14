@@ -5,6 +5,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import view.ViewUtil;
 
+import javax.sql.rowset.serial.SerialRef;
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
@@ -74,7 +75,7 @@ public class SoundManager {
         }
         catch(Exception e){
             ViewUtil.setError(e.getMessage());
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
 
     }

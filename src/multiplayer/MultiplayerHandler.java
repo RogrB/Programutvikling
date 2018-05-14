@@ -157,14 +157,12 @@ public class MultiplayerHandler {
      * spawn two smaller asteroids upon death
      */       
     void updateEnemies(int id, int health, boolean alive) {
-        // System.out.println("trying to find enemyid to apply update");
         ArrayList<Enemy> tempEnemies = new ArrayList<>();
         for(Iterator<Enemy> enemyIterator = GameState.enemies.iterator(); enemyIterator.hasNext();){
             Enemy enemy = enemyIterator.next();
             if (enemy.getID() == id) {
                 if(health < enemy.getHealth()) {
                     enemy.setHealth(health);
-                    //System.out.println("Setting health to " + health);
                 }
                 if(!alive && enemy.isAlive()) {
                     enemy.isDead();
@@ -251,7 +249,6 @@ public class MultiplayerHandler {
             public void run() {
                 if (connected) {
                     disconnect();
-                    System.out.println("closing connection");
                 }
             }
         }, 0, 50);            
@@ -263,13 +260,11 @@ public class MultiplayerHandler {
     public void disconnect() {
         if (connected) {
             GameModel.getInstance().setMultiplayerStatus(false);
-            // System.out.println("setting mp to " + GameModel.getInstance().getMultiplayerStatus());
             gs.player2.unsetSprite();
             GameView.getInstance().renderPlayer2();
             sender.closeSocket();
             // receiver.closeSocket();
             ViewUtil.setError("Player 2 disconnected");
-            System.out.println("Player 2 disconnected");      
             setConnected(false);
         }
     }
@@ -332,7 +327,6 @@ public class MultiplayerHandler {
         GameView.getInstance().clearScoreScreen();
         GameView.getInstance().setWinButtonOpacity(0);
         ViewUtil.setError("Player 2 started next level");
-        System.out.println("Player 2 started next level");
     }
     
     /**

@@ -71,15 +71,12 @@ public class MultiplayerView extends ViewUtil{
         connectButton.setOnMouseClicked(event -> {
             //if (user_name.getText() == null || user_name.getText().trim().isEmpty())
             if (hostnameField.getText() == null || hostnameField.getText().trim().isEmpty()) {
-                System.out.println("Enter Hostname");
                 errorField.changeText("Enter Hostname");
             }
             else if (remotePortField.getText() == null || remotePortField.getText().trim().isEmpty()) {
-                System.out.println("Enter RemotePort");
                 errorField.changeText("Enter RemotePort");
             }
             else if (localPortField.getText() == null || localPortField.getText().trim().isEmpty()) {
-                System.out.println("Enter LocalPort");
                 errorField.changeText("Enter LocalPort");
             }
             else {

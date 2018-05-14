@@ -83,7 +83,6 @@ public class MenuView extends ViewUtil{
         }
         if(buttonName.equals("OPTIONS")){
             showOptions(event);
-            System.out.println(SoundManager.getInst().getPlayer().getVolume());
         }
         if(buttonName.equals("EXIT")){
             exitGame();
