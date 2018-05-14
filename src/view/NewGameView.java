@@ -80,6 +80,10 @@ public class NewGameView extends ViewUtil{
         backButton = new MenuButton("BACK");
     }
 
+    /**
+     * Method that checks if saves have been created. If they have,
+     * this method fetches their names.
+     */
     private void checkSavenames(){
         for(int i = 0; i < 3; i++){
             if(IOManager.getInstance().saveStateExists(i)){
