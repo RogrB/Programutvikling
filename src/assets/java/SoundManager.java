@@ -40,7 +40,7 @@ public class SoundManager {
     /**
      * Executor that handles playing sounds.
      */
-    private ExecutorService soundPool = Executors.newFixedThreadPool(2);
+    private ExecutorService soundPool = Executors.newFixedThreadPool(4);
 
     /**
      * Map to store music files

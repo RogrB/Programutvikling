@@ -209,7 +209,6 @@ public class GameView extends ViewUtil{
      * Initializes instances of the model-view-controller
      */
     public void mvcSetup(){
-        gm.mvcSetup();
         gc.mvcSetup();
     }
 
