@@ -38,8 +38,9 @@ public class DoubleSwirl extends Basic {
      * for where the bullet is fired from and the {@code Weapon}
      * @param x X Value
      * @param y Y Value
-     * @param weapon sets the Weapon type in the {@code Weapon} class @see {@code Weapon}
+     * @param weapon sets the Weapon type in the {@code Weapon} class
      * @param top sets if the bullet is fired at the top or bottom
+     * @see {@code Weapon}
      */       
     public DoubleSwirl(int x, int y, Weapon weapon, boolean top) {
         super(

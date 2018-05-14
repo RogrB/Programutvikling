@@ -50,7 +50,8 @@ public class Basic extends Existence {
      * and defines dimensions based on the sprite.
      * @param x X Value
      * @param y Y Value
-     * @param weapon sets the Weapon type in the {@code Weapon} class @see {@code Weapon}
+     * @param weapon sets the Weapon type in the {@code Weapon} class
+     * @see {@code Weapon}
      */      
     public Basic(int x, int y, Weapon weapon) {
         super(x,y);

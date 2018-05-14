@@ -54,7 +54,7 @@ public class Player extends Entity {
     /**
      * The weapon type currently equipped - can be upgraded several times
      */        
-    private String weaponType = "Bullet";
+    private String weaponType = "Basic";
     
     /**
      * If the player currently has a shield equipped
@@ -64,7 +64,7 @@ public class Player extends Entity {
     /**
      * If the player is currently shooting
      */        
-    private boolean shooting= false;
+    private boolean shooting = false;
     
     /**
      * {@code Shield} object
@@ -124,13 +124,14 @@ public class Player extends Entity {
         if (hasShield) {
             removeShield();
         }
-        setHealth(1);
+        setHealth(5);
         setY(ViewUtil.VIEW_HEIGHT / 2 - (int) new Image(Sprite.PLAYER.src).getHeight() / 2);
         setAlive();
         immunity = false;
         shooting = false;
         score = 0;
-        this.weaponType = playerBehaviour.powerUp("Reset");
+        this.weapon = Weapon.PLAYER_BASIC;
+        this.weaponType = "Basic";
         enemiesKilled = 0;
         bulletsHit = 0;
         bulletCount = 0;
@@ -213,7 +214,7 @@ public class Player extends Entity {
      */        
     public void powerUp() {
         SoundManager.getInst().upgradeWeapon();
-        this.weaponType = playerBehaviour.powerUp(weaponType);
+        this.weapon = playerBehaviour.powerUp(weapon);
         if(GameModel.getInstance().getMultiplayerStatus()) {
             MultiplayerHandler.getInstance().send("PowerUp", 0, 0);
         }
@@ -270,7 +271,7 @@ public class Player extends Entity {
                 setCanShoot(true);
                 this.cancel();
             }
-        }, 300);
+        }, weapon.FIRERATE);
     }
 
     /**
@@ -480,6 +481,13 @@ public class Player extends Entity {
     public String getWeaponType() {
         return this.weaponType;
     }
+    
+    /**
+     * @param type sets Descriptive WeaponType
+     */      
+    public void setWeaponType(String type) {
+        this.weaponType = type;
+    }    
     
     /**
      * @return the amount of enemies killed

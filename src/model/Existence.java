@@ -20,22 +20,22 @@ import java.util.Iterator;
 public abstract class Existence implements java.io.Serializable {
 
     /**
-     * The X and Y position of {@code this}.
+     * The position value of the object.
      */
     private int x, y;
 
     /**
-     * The X and Y position of {@code this} at the previous frame.
+     * The position value of the object at the previous frame.
      */
     private int oldX, oldY;
 
     /**
-     * The dimensions of {@code this}.
+     * The dimension values of the object.
      */
     protected int height, width;
 
     /**
-     * The dimensions of {@code this} at the previous frame.
+     * The dimension values of the object at the previous frame.
      */
     private int oldHeight, oldWidth;
 
@@ -45,19 +45,13 @@ public abstract class Existence implements java.io.Serializable {
     private boolean readyToPurge;
 
     /**
-     * {@code This' Image}.
+     * This object's {@code Image}.
      * @see Image
      */
     protected transient Image image;
 
     /**
-     * {@code This' ImageView}.
-     * @see ImageView
-     */
-    public transient ImageView imageView;
-
-    /**
-     * {@code This' Sprite}.
+     * This object's {@code Sprite}.
      * @see Sprite
      */
     public Sprite sprite;
@@ -197,15 +191,6 @@ public abstract class Existence implements java.io.Serializable {
         return  image;
     }
 
-    /**
-     * Get the object's {@code ImageView}.
-     * <p>
-     * <b>Note: </b>Most objects simply use the {@code Image}, though a few speciffic use the ImageView for simplicity.
-     * @return The object's {@code ImageView}.
-     */
-    public ImageView getImageView() {
-        return imageView;
-    }
 
     /**
      * Redefines an objects {@code Sprite}, and redefines it's dimensions.
@@ -223,7 +208,6 @@ public abstract class Existence implements java.io.Serializable {
      */
     public void newSprite(String src){
         image = new Image(src);
-        imageView = new ImageView(image);
         setNewDimensions();
     }
 
