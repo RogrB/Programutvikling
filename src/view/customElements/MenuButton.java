@@ -58,6 +58,7 @@ public class MenuButton extends StackPane{
     }
 
     /**
+     * Returns the button text.
      * @return Returns the text of the button.
      */
     public String getText(){
@@ -106,6 +107,7 @@ public class MenuButton extends StackPane{
     public void setValue(int value){this.value = value; }
 
     /**
+     * Returns the button value.
      * @return Returns the button value.
      */
     public int getValue(){return value; }

@@ -10,20 +10,49 @@ import view.ViewUtil;
 import static model.GameState.enemies;
 import static model.GameState.bossType;
 
+/**
+ * <h1>Class for loading and handling levels</h1>
+ *
+ * @author Jonas Ege Carlsen
+ * @author Åsmund Røst Wien
+ */
 public class LevelLoader {
 
-    // Singleton
+    /**
+     * The singleton object.
+     */
     private static LevelLoader inst = new LevelLoader();
+
+    /**
+     * Private constructor.
+     */
     private LevelLoader(){}
+
+    /**
+     * Method to access the singleton object.
+     * @return Returns a reference to the singleton object.
+     */
     public static LevelLoader getInstance(){ return inst; }
 
+    /**
+     * Three-dimensional array containing level data.
+     */
     private String[][][] levelData;
 
+    /**
+     * Sets the Level to the input.
+     * @param levelData Desired level.
+     */
     public void setLevelData(String[][][] levelData){
         bossType = null;
         this.levelData = levelData;
     }
-    
+
+    /**
+     * Loads a column of leveldata.
+     * @param increment current column.
+     * @return Returns ++increment.
+     */
     public int increment(int increment){
         int COLUMN_WIDTH = 70;
         if((increment < (levelData[1].length* COLUMN_WIDTH))) {
@@ -35,12 +64,21 @@ public class LevelLoader {
         return ++increment;
     }
 
+    /**
+     * Generates enemies based on level data.
+     * @param enemies 2d array created by {@code increment()}.
+     */
     private void loopThroughEnemyRows(String[][] enemies){
         for(int i = 0; i < enemies.length; i++){
             generateEnemy(enemies[i], i);
         }
     }
 
+    /**
+     * Creates enemies based off of the level data passed in.
+     * @param enemyData Array consisting of EnemyType and EnemyMovementPattern
+     * @param yLane Which lane to place the enemy in.
+     */
     private void generateEnemy(String[] enemyData, int yLane){
         int xSpawn = ViewUtil.VIEW_WIDTH - 1;
 
@@ -69,6 +107,11 @@ public class LevelLoader {
         }
     }
 
+    /**
+     * Returns a column of LevelData
+     * @param column Column to return
+     * @return Returns a 2D array.
+     */
     private String[][] getEnemyColumn(int column){
 
         int rows = levelData.length;
