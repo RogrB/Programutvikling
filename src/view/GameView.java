@@ -164,32 +164,32 @@ public class GameView extends ViewUtil{
     /**
      * Text for the Scorescreen - Level complete
      */
-    private Text levelComplete = new Text();
+    private Text levelComplete = createText("", VIEW_WIDTH/2 - 140, VIEW_HEIGHT/2 - 230, Font.font("Verdana", 32));
 
     /**
      * Text for the Scorescreen - Score count
      */
-    private Text scoreT = new Text();
+    private Text scoreT = createText("", VIEW_WIDTH/2 - 300, VIEW_HEIGHT/2 - 140, Font.font("Verdana", 30));
 
     /**
      * Text for the Scorescreen - Amounts of shots fired
      */
-    private Text shotsFired = new Text();
+    private Text shotsFired = createText("", VIEW_WIDTH/2 - 300, VIEW_HEIGHT/2 - 90, Font.font("Verdana", 30));
 
     /**
      * Text for the Scorescreen - Amount of enemies hit
      */
-    private Text enemiesHit = new Text();
+    private Text enemiesHit = createText("", VIEW_WIDTH/2 - 300, VIEW_HEIGHT/2 - 40, Font.font("Verdana", 30));
 
     /**
      * Text for the Scorescreen - Amount of enemies killed
      */
-    private Text enemiesKilled = new Text();
+    private Text enemiesKilled = createText("", VIEW_WIDTH/2 - 300, VIEW_HEIGHT/2 + 10, Font.font("Verdana", 30));
 
     /**
      * Text for the Scorescreen - Accuracy
      */
-    private Text hitPercent = new Text();
+    private Text hitPercent = createText("", VIEW_WIDTH/2 - 300, VIEW_HEIGHT/2 + 60, Font.font("Verdana", 30));
 
     private MenuButton continueButton;
     private MenuButton retryButton;
@@ -412,49 +412,20 @@ public class GameView extends ViewUtil{
      * Shows the score, shots fired, enemies hit, enemies killed and accuracy.
      * May or may not be called from a thread, so the method is surrounded by Platform.runLater
      */
-    public void renderScoreScreen() {
+    private void renderScoreScreen() {
 
         Platform.runLater(() -> {
             float bullets = gs.player.getBulletCount();
             float hits = gs.player.getBulletsHit();
             float accuracy = (hits / bullets) * 100;
             DecimalFormat accuracyFormat = new DecimalFormat("#.00");
+
             levelComplete.setText("Level " + gs.getLevelIterator() + " Cleared!");
-            levelComplete.setX((VIEW_WIDTH/2) - 140);
-            levelComplete.setY((VIEW_HEIGHT/2) - 230);
-
             scoreT.setText("Score:   " + Integer.toString(gs.player.getScore()));
-            scoreT.setX((VIEW_WIDTH/2) - 300);
-            scoreT.setY((VIEW_HEIGHT/2) - 140);
-
             shotsFired.setText("Shots fired:   " + Float.toString(bullets));
-            shotsFired.setX((VIEW_WIDTH/2) - 300);
-            shotsFired.setY((VIEW_HEIGHT/2) - 90);
-
             enemiesHit.setText("Enemies hit:   " + Float.toString(hits));
-            enemiesHit.setX((VIEW_WIDTH/2) - 300);
-            enemiesHit.setY((VIEW_HEIGHT/2) - 40);
-
             enemiesKilled.setText("Enemies killed:   " + Integer.toString(gs.player.getEnemiesKilled()));
-            enemiesKilled.setX((VIEW_WIDTH/2) - 300);
-            enemiesKilled.setY((VIEW_HEIGHT/2) + 10);
-
             hitPercent.setText("Accuracy:   " + accuracyFormat.format(accuracy) + "%");
-            hitPercent.setX((VIEW_WIDTH/2) - 300);
-            hitPercent.setY((VIEW_HEIGHT/2) + 60);
-
-            levelComplete.setFill(Color.WHITE);
-            levelComplete.setFont(Font.font("Verdana", 32));
-            scoreT.setFill(Color.WHITE);
-            scoreT.setFont(Font.font("Verdana", 30));
-            shotsFired.setFill(Color.WHITE);
-            shotsFired.setFont(Font.font("Verdana", 30));
-            enemiesHit.setFill(Color.WHITE);
-            enemiesHit.setFont(Font.font("Verdana", 30));
-            enemiesKilled.setFill(Color.WHITE);
-            enemiesKilled.setFont(Font.font("Verdana", 30));
-            hitPercent.setFill(Color.WHITE);
-            hitPercent.setFont(Font.font("Verdana", 30));
 
             root.getChildren().addAll(levelComplete, scoreT, shotsFired, enemiesHit, enemiesKilled, hitPercent);
 

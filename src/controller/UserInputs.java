@@ -5,7 +5,6 @@ import javafx.scene.input.KeyCode;
 
 import static controller.GameController.gs;
 import view.GameView;
-import view.ViewUtil;
 
 public class UserInputs {
 
@@ -20,26 +19,38 @@ public class UserInputs {
             if (event.getCode() == KeyCode.SPACE && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()) {
                 gs.player.isShooting();
             }
-            if(event.getCode() == KeyCode.SPACE && !GameController.gs.player.getPlaying() && GameController.gs.player.isAlive() || event.getCode() == KeyCode.ENTER && !GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()) {
+            if(event.getCode() == KeyCode.SPACE && !GameController.gs.player.getPlaying() && GameController.gs.player.isAlive() ||
+                    event.getCode() == KeyCode.ENTER && !GameController.gs.player.getPlaying() && GameController.gs.player.isAlive())
+            {
                 gv.select(gv.getMenuElementsWon()[gv.getElementCounter()].getText(), event);
             }
-            if (event.getCode() == KeyCode.SPACE  && !GameController.gs.player.getPlaying() && !GameController.gs.player.isAlive()|| event.getCode() == KeyCode.ENTER && !GameController.gs.player.getPlaying() && !GameController.gs.player.isAlive()) {
+            if (event.getCode() == KeyCode.SPACE  && !GameController.gs.player.getPlaying() && !GameController.gs.player.isAlive()||
+                    event.getCode() == KeyCode.ENTER && !GameController.gs.player.getPlaying() && !GameController.gs.player.isAlive())
+            {
                 gv.select(gv.getMenuElementsLost()[gv.getElementCounter()].getText(), event);
             }
-            if (event.getCode() == KeyCode.W  && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()|| event.getCode() == KeyCode.UP && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()) {
+            if (event.getCode() == KeyCode.W  && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()||
+                    event.getCode() == KeyCode.UP && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive())
+            {
                 gs.player.move("UP");
             }
-            if (event.getCode() == KeyCode.UP && !GameController.gs.player.getPlaying() && !GameController.gs.player.isAlive() || event.getCode() == KeyCode.DOWN && !GameController.gs.player.getPlaying() && !GameController.gs.player.isAlive()) {
+            if (event.getCode() == KeyCode.UP && !GameController.gs.player.getPlaying() && !GameController.gs.player.isAlive() ||
+                    event.getCode() == KeyCode.DOWN && !GameController.gs.player.getPlaying() && !GameController.gs.player.isAlive())
+            {
                 gv.getMenuElementsLost()[gv.getElementCounter()].lostFocus();
                 gv.traverseMenu(event.getCode(), gv.getMenuElementsLost());
                 gv.getMenuElementsLost()[gv.getElementCounter()].gainedFocus();
             }
-            if(event.getCode() == KeyCode.UP && !GameController.gs.player.getPlaying() && GameController.gs.player.isAlive() || event.getCode() == KeyCode.DOWN && !GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()){
+            if(event.getCode() == KeyCode.UP && !GameController.gs.player.getPlaying() && GameController.gs.player.isAlive() ||
+                    event.getCode() == KeyCode.DOWN && !GameController.gs.player.getPlaying() && GameController.gs.player.isAlive())
+            {
                 gv.getMenuElementsWon()[gv.getElementCounter()].lostFocus();
                 gv.traverseMenu(event.getCode(), gv.getMenuElementsWon());
                 gv.getMenuElementsWon()[gv.getElementCounter()].gainedFocus();
             }
-            if (event.getCode() == KeyCode.S && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive() || event.getCode() == KeyCode.DOWN && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()) {
+            if (event.getCode() == KeyCode.S && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive() ||
+                    event.getCode() == KeyCode.DOWN && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive())
+            {
                 gs.player.move("DOWN");
             }
             if (event.getCode() == KeyCode.E && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()) {
