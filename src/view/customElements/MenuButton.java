@@ -1,4 +1,4 @@
-package view;
+package view.customElements;
 
 import assets.java.SoundManager;
 import javafx.geometry.Pos;
@@ -14,7 +14,7 @@ public class MenuButton extends StackPane{
     private Rectangle bg;
     private int value;
 
-    MenuButton(String name){
+    public MenuButton(String name){
         text = new Text(name);
         text.setFont(Font.font("Verdana", 20));
         text.setFill(Color.WHITE);
@@ -49,12 +49,12 @@ public class MenuButton extends StackPane{
         text.setFill(Color.WHITE);
     }
 
-    void setColor(Color color){
+    public void setColor(Color color){
         bg.setStroke(color);
         text.setFill(Color.GREY);
     }
 
-    void setText(String text){
+    public void setText(String text){
         this.text.setText(text);
     }
 

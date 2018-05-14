@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.GameModel;
+import view.customElements.MenuButton;
 
 import java.util.Objects;
 

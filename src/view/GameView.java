@@ -23,6 +23,7 @@ import java.text.DecimalFormat;
 
 import javafx.application.Platform;
 import model.player.Player;
+import view.customElements.MenuButton;
 
 import static model.GameState.bossType;
 import static controller.GameController.gs;

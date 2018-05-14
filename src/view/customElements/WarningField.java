@@ -1,4 +1,4 @@
-package view;
+package view.customElements;
 
 import javafx.animation.FadeTransition;
 import javafx.geometry.Pos;
@@ -10,12 +10,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-class WarningField extends StackPane {
+public class WarningField extends StackPane {
 
     private Text text;
     private Color fill = Color.DARKRED;
 
-    WarningField(){
+    public WarningField(){
         text = new Text("");
         text.setFont(Font.font("Verdana", 15));
         text.setFill(Color.WHITE);
@@ -32,7 +32,7 @@ class WarningField extends StackPane {
         getChildren().addAll(bg, text);
     }
 
-    void changeText(String newText){
+    public void changeText(String newText){
         text.setText(newText);
         FadeTransition fadeTransitionIn = new FadeTransition(Duration.millis(2000), this);
         fadeTransitionIn.setFromValue(0);
@@ -46,7 +46,7 @@ class WarningField extends StackPane {
         fadeTransitionOut.play();
     }
     
-    void setColor(Color color) {
+    public void setColor(Color color) {
         this.fill = color;
     }
     
