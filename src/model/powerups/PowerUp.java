@@ -1,7 +1,8 @@
 
-package model;
+package model.powerups;
 
 import assets.java.Sprite;
+import model.Existence;
 
 import java.util.Iterator;
 

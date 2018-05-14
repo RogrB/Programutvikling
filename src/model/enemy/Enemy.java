@@ -2,7 +2,6 @@ package model.enemy;
 
 import assets.java.SoundManager;
 import model.Entity;
-import model.IdGen;
 import model.weapons.Basic;
 
 import java.util.Iterator;

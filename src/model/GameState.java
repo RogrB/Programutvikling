@@ -6,6 +6,7 @@ import model.levels.LevelData;
 import model.levels.LevelLoader;
 import model.player.Player;
 import model.player.Player2;
+import model.powerups.PowerUp;
 import model.weapons.Basic;
 
 import java.util.ArrayList;
