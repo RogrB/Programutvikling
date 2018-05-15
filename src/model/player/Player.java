@@ -140,6 +140,7 @@ public class Player extends Entity {
         bulletsHit = 0;
         bulletCount = 0;
         canShoot = true;
+        newSprite(Sprite.PLAYER);
     }
 
     /**
@@ -154,6 +155,7 @@ public class Player extends Entity {
         immunity = false;
         shooting = false;
         canShoot = true;
+        newSprite(Sprite.PLAYER);
     }
 
     /**
