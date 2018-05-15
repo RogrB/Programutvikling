@@ -443,7 +443,6 @@ public class GameController {
             for(Enemy enemy : GameState.enemies){
                 if(enemy.getType() == boss && !enemy.isAlive() && !gs.gameOver){
                     gs.gameOver = true;
-                    gs.player.isNotPlaying();
                     lastGameLost = false;
                     startGameOverTimer();
                     AutoSave.getInstance().stop();
@@ -462,6 +461,7 @@ public class GameController {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
+                gs.player.isNotPlaying();
                 if(lastGameLost) {
                     gv.gameOver();
                 } else {
