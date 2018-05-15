@@ -300,10 +300,10 @@ public class GameView extends ViewUtil{
      */
     private void decideLayout(){
         if(gm.getMultiplayerStatus()) {
-            root.getChildren().addAll(errorField, wonButtonContainer, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, requestPane, player2LayerCanvas);
+            root.getChildren().addAll(errorField, wonButtonContainer, exitToMenuButton3, completedText, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, requestPane, player2LayerCanvas);
         }
         else {
-            root.getChildren().addAll(errorField, wonButtonContainer, lostButtonContainer, playerLayerCanvas, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, requestPane);
+            root.getChildren().addAll(errorField, wonButtonContainer, lostButtonContainer, exitToMenuButton3, completedText, playerLayerCanvas, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, requestPane);
         }
     }
 
@@ -445,7 +445,7 @@ public class GameView extends ViewUtil{
     }
 
     public void gameCompleted(){
-        System.out.println("GameWon");
+        clearScoreScreen();
         completedText.setText("GAME COMPLETED");
         exitToMenuButton3.gainedFocus();
         exitToMenuButton3.setOpacity(1);
@@ -483,7 +483,7 @@ public class GameView extends ViewUtil{
             float accuracy = (hits / bullets) * 100;
             DecimalFormat accuracyFormat = new DecimalFormat("#.00");
 
-            levelComplete.setText("Level " + gs.getLevelIterator() + " Cleared!");
+            levelComplete.setText("Level " + (gs.getLevelIterator() + 1) + " Cleared!");
             scoreT.setText("Score:   " + Integer.toString(gs.player.getScore()));
             shotsFired.setText("Shots fired:   " + Float.toString(bullets));
             enemiesHit.setText("Enemies hit:   " + Float.toString(hits));
@@ -549,7 +549,7 @@ public class GameView extends ViewUtil{
         }
 
         scoreText.setText("Score: " + Integer.toString(gs.player.getScore()));
-        levelText.setText("Level " + Integer.toString(gs.getLevelIterator()));
+        levelText.setText("Level " + Integer.toString(gs.getLevelIterator() +1));
         weaponType.setText(gs.player.getWeaponType());
     }
 

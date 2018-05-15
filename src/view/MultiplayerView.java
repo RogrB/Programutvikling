@@ -2,6 +2,8 @@ package view;
 
 import controller.GameController;
 import controller.UserInputs;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -150,13 +152,18 @@ public class MultiplayerView extends ViewUtil{
             }
             else {
                 try {
-                    if(testRange(Integer.parseInt(remotePortField.getText()), Integer.parseInt(localPortField.getText()))) {
-                        initMultiplayerGame();
-                        hostnameField.setDisable(true);
-                        remotePortField.setDisable(true);
-                        localPortField.setDisable(true);
-                        stage = (Stage) ((Node)event.getTarget()).getScene().getWindow();
-                        mp.startConnection();
+                    if(validateIP(hostnameField.getText())) {
+                        if(testRange(Integer.parseInt(remotePortField.getText()), Integer.parseInt(localPortField.getText()))) {
+                            initMultiplayerGame();
+                            hostnameField.setDisable(true);
+                            remotePortField.setDisable(true);
+                            localPortField.setDisable(true);
+                            stage = (Stage) ((Node)event.getTarget()).getScene().getWindow();
+                            mp.startConnection();
+                        }
+                    }
+                    else {
+                        errorField.changeText("Invalid hostname");
                     }
                 }
                 catch(Exception e) {
@@ -273,6 +280,22 @@ public class MultiplayerView extends ViewUtil{
             errorField.changeText("Invalid LocalPort Range");
         }
         return valid;
+    }
+    
+    /**
+     * Validates the hostname input
+     */    
+    private boolean validateIP(String hostname) {
+        if ("localhost".equals(hostname) || "Localhost".equals(hostname)) {
+            return true;
+        }
+        else {
+            String comparePattern = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+
+            Pattern pattern = Pattern.compile(comparePattern);
+            Matcher matcher = pattern.matcher(hostname);
+            return matcher.find();        
+        }
     }
 
     /**
