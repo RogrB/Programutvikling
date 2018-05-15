@@ -20,6 +20,7 @@ public class FileIOException extends Exception {
      */
     public FileIOException(String message){
         super(message);
+        System.err.println(message);
         ViewUtil.setError(message);
     }
 

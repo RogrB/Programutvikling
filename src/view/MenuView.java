@@ -82,9 +82,7 @@ public class MenuView extends ViewUtil{
             stage.setScene(scene);
             UserInputs userInputs = new UserInputs(scene);
 
-        } catch (FileIOException e) {
-            System.err.println(e.getMessage());
-        }
+        } catch (FileIOException e) {}
     }
 
     /**

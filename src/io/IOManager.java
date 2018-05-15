@@ -73,7 +73,7 @@ public class IOManager {
      * @see AutoSave
      */
     void saveGameState() throws FileIOException {
-        String src = "tmp/"+GameModel.gameSettings.getPrevSave()+"/GameState.ser";
+        String src = "tmp/"+GameModel.gameSettings.getPrevSave()+"pikk/GameState.ser";
 
         try {
             fileOutputStream = new FileOutputStream(src);

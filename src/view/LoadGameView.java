@@ -113,10 +113,7 @@ public class LoadGameView extends ViewUtil{
                 try{
                     tempElements.get(counter).setText(IOManager.getInstance().getGameState(counter).getStateName());
                 }
-                catch(Exception e){
-                    System.err.println(e.getMessage());
-                    ViewUtil.setError(e.getMessage());
-                }
+                catch(FileIOException e){}
                 counter++;
             }
         }
@@ -255,8 +252,6 @@ public class LoadGameView extends ViewUtil{
                 GameController.getInstance().loadGame();
                 startGameView(event, GameView.getInstance().initScene());
             } catch (FileIOException e) {
-                System.err.println(e.getMessage());
-                ViewUtil.setError(e.getMessage());
                 GameModel.gameSettings.savePrevSave(prevSave);
             }
         } else {

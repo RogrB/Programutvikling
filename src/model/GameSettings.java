@@ -77,10 +77,7 @@ public class GameSettings implements Serializable {
     private void writeToFile(){
         try {
             IOManager.getInstance().saveGameSettings(this);
-        } catch (FileIOException e) {
-            ViewUtil.setError(e.getMessage());
-            System.err.println(e.getMessage());
-        }
+        } catch (FileIOException e) {}
     }
 
     /**
@@ -98,8 +95,6 @@ public class GameSettings implements Serializable {
             soundValue = fromFile.soundValue;
             difficultyValue = fromFile.difficultyValue;
         } catch (FileIOException e) {
-            System.err.println(e.getMessage());
-            ViewUtil.setError(e.getMessage());
             initNewSettings();
         }
     }

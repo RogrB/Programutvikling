@@ -90,10 +90,7 @@ public class NewGameView extends ViewUtil{
                 try {
                     menuElements[i].setText(IOManager.getInstance().getGameState(i).getStateName());
                 }
-                catch(Exception e){
-                    ViewUtil.setError("Can't fetch Game save names");
-                    System.err.println(e.getMessage());
-                }
+                catch(FileIOException e){}
             }
         }
 
