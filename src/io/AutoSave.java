@@ -57,9 +57,7 @@ public class AutoSave {
             public void run() {
                 try {
                     IOManager.getInstance().saveGameState();
-                } catch (FileIOException e) {
-                    System.err.println(e.getMessage());
-                }
+                } catch (FileIOException e) {}
             }
         }, 10, 700);
     }

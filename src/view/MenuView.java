@@ -81,11 +81,8 @@ public class MenuView extends ViewUtil{
             Scene scene = new Scene(GameView.getInstance().initScene());
             stage.setScene(scene);
             UserInputs userInputs = new UserInputs(scene);
-
-        } catch (FileIOException e) {
-            ViewUtil.setError("Can't load previous game!");
-            System.err.println(e.getMessage());
         }
+        catch (FileIOException e) {}
     }
 
     /**

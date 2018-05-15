@@ -41,6 +41,8 @@ public class MultiplayerHandler {
      */       
     private Sender sender;
     
+    private Receiver receiver;
+    
     /**
      * Sets whether or not a connection attempt
      * has been started
@@ -94,7 +96,7 @@ public class MultiplayerHandler {
     public static MultiplayerHandler getInstance() { return inst; }
     
     /**
-     * Initiates the object.
+     * Initiates the object and starts the Receiver thread that listens to packets.
      * @param hostname InetAdress to connect to
      * @param remoteport Sets port to sent data transmissions
      * @param localport Sets port to receive data transmissions
@@ -102,7 +104,7 @@ public class MultiplayerHandler {
     public void init(String hostname, int remoteport, int localport) {
         protocol = new Protocol();
         sender = new Sender(hostname, remoteport);
-        Receiver receiver = new Receiver(localport);
+        receiver = new Receiver(localport);
         cancel = false;
         connected = false;
         gameStarted = false;
@@ -120,7 +122,7 @@ public class MultiplayerHandler {
      * @param y Sets an int value to be transmitted
      */
     public void send(String action, int x, int y) {
-        if(connected)
+        //if(connected)
         sender.send(protocol.sendPrep(action, x, y));
     }
     
@@ -132,7 +134,7 @@ public class MultiplayerHandler {
      * @param alive If the enemy is currently alive or needs to be set dead
      */    
     public void send(String action, int id, int health, boolean alive) {
-        if(connected)
+        //if(connected)
         sender.send(protocol.sendPrep(action, id, health , alive));
     }
     
@@ -141,7 +143,7 @@ public class MultiplayerHandler {
      * @param input takes in DataInputStream for the {@code Protocol} to interpret
      */     
     public void recieveProtocol(DataInputStream input) {
-        if(connected)
+        //if(connected)
         protocol.recieve(input);
     }
 
@@ -263,10 +265,11 @@ public class MultiplayerHandler {
     void disconnect() {
         if (connected) {
             GameModel.getInstance().setMultiplayerStatus(false);
+            receiver.setLooping(false);
             gs.player2.unsetSprite();
             GameView.getInstance().renderPlayer2();
             sender.closeSocket();
-            // receiver.closeSocket();
+            receiver.closeSocket();
             ViewUtil.setError("Player 2 disconnected");
             setConnected(false);
         }
@@ -277,11 +280,13 @@ public class MultiplayerHandler {
      */       
     public void cancelConnectAttempt() {
         connectionThread.interrupt();
+        receiver.setLooping(false);
         cancel = true;
         setConnected(false);
         GameModel.getInstance().setMultiplayerStatus(false);
         sender.closeSocket();
         initiateConnection = false;
+        receiver.closeSocket();
     }
     
     /**

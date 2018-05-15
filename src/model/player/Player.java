@@ -144,6 +144,9 @@ public class Player extends Entity {
      * continuing to the next level
      */        
     public void resume(){
+        if (!hasShield) {
+            removeShield();
+        }
         immunity = false;
         shooting = false;
         canShoot = true;
