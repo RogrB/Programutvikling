@@ -451,7 +451,7 @@ public class GameView extends ViewUtil{
         Platform.runLater(
                 () -> {
                     canvas.toFront();
-                    graphics.drawImage(new Image("assets/image/overlays/gameCompleted.png"), 126, (VIEW_HEIGHT/2) - 51);
+                    graphics.drawImage(new Image("assets/image/overlays/gamecompleted.png"), 126, (VIEW_HEIGHT/2) - 51);
                 }
         );
     }

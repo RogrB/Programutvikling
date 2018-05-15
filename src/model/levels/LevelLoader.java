@@ -1,5 +1,6 @@
 package model.levels;
 
+import assets.java.SoundManager;
 import assets.java.Sprite;
 import model.enemy.Enemy;
 import model.enemy.EnemyMovementPattern;
@@ -56,7 +57,7 @@ public class LevelLoader {
      * @return Returns The levels increment progression +1.
      */
     public int increment(int increment){
-        int COLUMN_WIDTH = 70;
+        int COLUMN_WIDTH = 60;
         if((increment < (levelData[1].length* COLUMN_WIDTH))) {
             if (increment % COLUMN_WIDTH == 0) {
                 int column = (increment / COLUMN_WIDTH);
@@ -100,6 +101,7 @@ public class LevelLoader {
                                 ((ViewUtil.VIEW_HEIGHT-Sprite.ASTEROID1.getHeight())/6) * yLane + 1));
                 break;
             case "3":
+                SoundManager.getInst().bossWobble();
                 bossType = EnemyType.valueOf(enemyData[1]).name();
                 enemies.add(new Enemy(
                                 EnemyType.valueOf(enemyData[1]),
