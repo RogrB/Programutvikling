@@ -456,7 +456,7 @@ public class GameController {
      * the game is lost. This is to allow for animations to finish
      * before the game stops.
      */
-    private void startGameOverTimer(){
+    public void startGameOverTimer(){
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -477,4 +477,8 @@ public class GameController {
      * @return {@code true} or {@code false}.
      */
     public Boolean getLastGameLost() {return this.lastGameLost; }
+
+    //SLETT DENNE lol
+    public void setLastGameLost(boolean input){this.lastGameLost = input;}
+
 }

@@ -78,7 +78,10 @@ public class UserInputs {
                 gs.player.setShield();
             }
             if (event.getCode() == KeyCode.T && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()) {
-                
+                gs.player.isNotPlaying();
+                gs.gameOver = true;
+                GameController.getInstance().setLastGameLost(false);
+                GameController.getInstance().startGameOverTimer();
             }
         });
 
