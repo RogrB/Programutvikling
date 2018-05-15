@@ -167,6 +167,9 @@ public class Player extends Entity {
         if(shooting){
             shoot();
         }
+        if(!isAlive()){
+            animateDeath();
+        }
     }
 
     /**
