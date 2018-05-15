@@ -290,7 +290,7 @@ public abstract class ViewUtil {
      * Method used to set the Game Title properties.
      */
     private void setHeader(){
-        header.setX(485);
+        header.setX(466);
         header.setY(175);
         header.setFill(Color.WHITE);
         header.setFont(Font.font("Verdana", 100));

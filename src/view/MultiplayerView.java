@@ -152,6 +152,9 @@ public class MultiplayerView extends ViewUtil{
                 try {
                     if(testRange(Integer.parseInt(remotePortField.getText()), Integer.parseInt(localPortField.getText()))) {
                         initMultiplayerGame();
+                        hostnameField.setDisable(true);
+                        remotePortField.setDisable(true);
+                        localPortField.setDisable(true);
                         stage = (Stage) ((Node)event.getTarget()).getScene().getWindow();
                         mp.startConnection();
                     }

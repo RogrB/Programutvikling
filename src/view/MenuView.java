@@ -83,6 +83,7 @@ public class MenuView extends ViewUtil{
             UserInputs userInputs = new UserInputs(scene);
 
         } catch (FileIOException e) {
+            ViewUtil.setError("Can't load previous game!");
             System.err.println(e.getMessage());
         }
     }
@@ -245,12 +246,10 @@ public class MenuView extends ViewUtil{
 
         decideMenuLayout(menuContainer);
 
-
         menuElements[0].gainedFocus();
         root.getChildren().addAll(header, errorField, menuContainer);
 
         compareErrorMessage();
         return root;
-
     }
 }

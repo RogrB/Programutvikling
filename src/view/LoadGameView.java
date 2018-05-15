@@ -115,7 +115,7 @@ public class LoadGameView extends ViewUtil{
                 }
                 catch(Exception e){
                     System.err.println(e.getMessage());
-                    ViewUtil.setError(e.getMessage());
+                    ViewUtil.setError("Can't fetch save game names!");
                 }
                 counter++;
             }
@@ -256,7 +256,6 @@ public class LoadGameView extends ViewUtil{
                 startGameView(event, GameView.getInstance().initScene());
             } catch (FileIOException e) {
                 System.err.println(e.getMessage());
-                ViewUtil.setError(e.getMessage());
                 GameModel.gameSettings.savePrevSave(prevSave);
             }
         } else {
