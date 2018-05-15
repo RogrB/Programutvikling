@@ -46,6 +46,7 @@ class Sender {
         
         try {
             socket = new DatagramSocket();
+            socket.setReuseAddress(true);
         }
         catch(SocketException e) {
             System.err.println(e.getMessage());
