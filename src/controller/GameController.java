@@ -125,14 +125,10 @@ public class GameController {
     public void nextGame(){
         lastGameLost = false;
         gs.nextLevel();
-        if(LevelData.getLevelByIndex(gs.levelIncrementor) != null){
-            gs.player.resume();
-            gameRun();
-            if (GameModel.getInstance().getMultiplayerStatus()) {
-                MultiplayerHandler.getInstance().nextGame();
-            }
-        } else {
-            GameView.getInstance().gameCompleted();
+        gs.player.resume();
+        gameRun();
+        if (GameModel.getInstance().getMultiplayerStatus()) {
+            MultiplayerHandler.getInstance().nextGame();
         }
     }
 
@@ -471,7 +467,11 @@ public class GameController {
                 if(lastGameLost) {
                     gv.gameOver();
                 } else {
-                    gv.gameWon();
+                    if(LevelData.getLevelByIndex(gs.getLevelIterator() +1) != null) {
+                        gv.gameWon();
+                    } else {
+                        gv.gameCompleted();
+                    }
                 }
                 gameMainTimer.stop();
             }
