@@ -38,7 +38,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         gv.mvcSetup();
 
-        primaryStage.setTitle("Working Title: Pippi");
+        primaryStage.setTitle("Aero");
         primaryStage.getIcons().add(new Image("assets/image/player/ship/playerShip2_red.png"));
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(e -> {
