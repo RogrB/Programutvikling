@@ -43,6 +43,7 @@ public class Receiver extends Thread {
     Receiver(int localPort) {
         try {
             socket = new DatagramSocket(localPort);
+            socket.setReuseAddress(true);
             looping = true;
         } 
         catch(SocketException e) {
