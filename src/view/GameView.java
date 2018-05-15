@@ -415,7 +415,12 @@ public class GameView extends ViewUtil{
         // Is ded!
         menuElementsLost[0].gainedFocus();
         lostButtonContainer.setOpacity(1);
-        graphics.drawImage(new Image("assets/image/overlays/gameover.png"), (VIEW_WIDTH/2) - 368, (VIEW_HEIGHT/2) - 51);
+        Platform.runLater(
+          () -> {
+            canvas.toFront();
+            graphics.drawImage(new Image("assets/image/overlays/gameover.png"), (VIEW_WIDTH/2) - 368, (VIEW_HEIGHT/2) - 51);            
+          }
+        );        
     }
 
     /**
