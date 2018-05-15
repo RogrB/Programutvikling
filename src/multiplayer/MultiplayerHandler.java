@@ -191,14 +191,11 @@ public class MultiplayerHandler {
      * game while connection is established
      */           
     public void startConnection() {
-        connectionThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(!connected && !cancel) {
-                    sender.send(protocol.sendPrep("Connect", 0, 0));
-                }           
-            } 
-        });        
+        connectionThread = new Thread(() -> {
+            while(!connected && !cancel) {
+                sender.send(protocol.sendPrep("Connect", 0, 0));
+            }
+        });
         connectionThread.start();
     }
     

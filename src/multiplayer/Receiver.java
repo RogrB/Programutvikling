@@ -54,8 +54,8 @@ public class Receiver extends Thread {
 
     /**
      * Method for closing the DatagramSocket
-     */    
-    public void closeSocket() {
+     */
+    void closeSocket() {
         try {
             socket.close();
         }
@@ -91,7 +91,7 @@ public class Receiver extends Thread {
     /**
      * @param looping sets looping variable
      * if the receiver is active or not
-     */    
+     */
     public void setLooping(boolean looping) {
         this.looping = looping;
     }
