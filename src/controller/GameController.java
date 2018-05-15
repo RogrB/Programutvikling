@@ -463,13 +463,16 @@ public class GameController {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                gs.player.isNotPlaying();
                 if(lastGameLost) {
                     gv.gameOver();
+                    gs.player.isNotPlaying();
                 } else {
                     if(LevelData.getLevelByIndex(gs.getLevelIterator() +1) != null) {
                         gv.gameWon();
-                    } else {
+                        gs.player.isNotPlaying();
+                    }
+                    else {
+                        gs.player.isDead();
                         gv.gameCompleted();
                     }
                 }
