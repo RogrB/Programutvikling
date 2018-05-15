@@ -52,7 +52,6 @@ public class UserInputs {
             {
                 System.out.println(GameController.getInstance().getLastGameLost());
                 gv.select(gv.getMenuElementsWon()[1].getText(), event);
-                GameController.getInstance().setLastGameLost(true);
             }
             if (event.getCode() == KeyCode.W  && gs.player.getPlaying() && gs.player.isAlive()||
                     event.getCode() == KeyCode.UP && gs.player.getPlaying() && gs.player.isAlive())
