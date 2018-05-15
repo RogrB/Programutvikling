@@ -282,6 +282,9 @@ public class MultiplayerView extends ViewUtil{
         return valid;
     }
     
+    /**
+     * Validates the hostname input
+     */    
     private boolean validateIP(String hostname) {
         if ("localhost".equals(hostname) || "Localhost".equals(hostname)) {
             return true;
