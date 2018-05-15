@@ -7,6 +7,10 @@ import assets.java.Sprite;
  * Contains the data for all the weapon types available.
  * Sets the sprite, damage, firerate and hitanimation for all weapon types.
  * Both player and enemy weapons.
+ *
+ * @author Roger Birkenes Solli
+ * @author Åsmund Røst Wien
+ * @author Jonas Ege Carlsen
  */
 public enum Weapon {
 

@@ -12,7 +12,9 @@ import view.MenuView;
 /**
  * The entry point for the application.
  *
- * @author Jonas Ege Carlsen, Åsmund Røst Wien, Roger Birkenes Solli
+ * @author Jonas Ege Carlsen
+ * @author Åsmund Røst Wien
+ * @author Roger Birkenes Solli
  */
 public class Main extends Application {
 

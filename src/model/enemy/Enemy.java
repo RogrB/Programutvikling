@@ -14,6 +14,10 @@ import static model.GameModel.gameSettings;
  * <h1>Base class for enemy object</h1>
  * The {@code Enemy} class extends the {@code Entity} class to create a
  * base for all enemies. Further details are handled in the {@code EnemyType} class
+ *
+ * @author Åsmund Røst Wien
+ * @author Jonas Ege Carlsen
+ * @author Roger Birkenes Solli
  */
 public class Enemy extends Entity {
 

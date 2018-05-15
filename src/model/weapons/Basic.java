@@ -14,6 +14,8 @@ import static controller.GameController.gs;
  * base for all bullets.
  * 
  * @author Roger Birkenes Solli
+ * @author Åsmund Røst Wien
+ * @author Jonas Ege Carlsen
  */
 public class Basic extends Existence {
 

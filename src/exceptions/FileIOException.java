@@ -9,6 +9,8 @@ import view.ViewUtil;
  *
  * <p><b>Note: </b>Whenever this class is thrown, the error is also
  * printed out to the user for them to know what has gone wrong.
+ *
+ * @author  Åsmund Røst Wien
  */
 public class FileIOException extends Exception {
 

@@ -9,7 +9,7 @@ import view.GameView;
 /**
  * Class used for handling key events in GameView.
  *
- * @author Jonas Ege Carlsen, Åsmund Røst Wien
+ * @author Jonas Ege Carlsen
  */
 public class UserInputs {
 

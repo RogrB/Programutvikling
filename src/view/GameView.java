@@ -33,7 +33,9 @@ import static controller.GameController.gs;
  * Everything that is displayed to the player
  * in-game is handled through this class, including the Heads Up Display.
  *
- * @author Jonas Ege Carlsen, Roger Birkenes Solli, Åsmund Røst Wien
+ * @author Jonas Ege Carlsen
+ * @author Roger Birkenes Solli
+ * @author Åsmund Røst Wien
  */
 public class GameView extends ViewUtil{
 
