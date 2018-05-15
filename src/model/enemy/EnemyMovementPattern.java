@@ -15,13 +15,17 @@ import static java.lang.Math.*;
  * available options are:
  *
  * {@code
- * LEFT,       LEFT_PULSATING
- * SIN,        SIN_REVERSED
- * COS,        COS_REVERSED
- * TRI,        TRI_REVERSED
+ * LEFT,       LEFT_PULSATING,
+ * SIN,        SIN_REVERSED,
+ * COS,        COS_REVERSED,
+ * TRI,        TRI_REVERSED,
  *
- * MADNESS_01, MADNESS_02, MADNESS_03
- * BOSS_LINE,  BOSS_EIGHT, BOSS_OVAL
+ * MADNESS_01, MADNESS_02, MADNESS_03,
+ *
+ * BOSS_LINE,   BOSS_LINE_REVERSED,
+ * BOSS_EIGHT,  BOSS_EIGHT_FLAT,
+ * BOSS_OVAL,   BOSS_OVAL_FLAT,
+ * BOSS_ARCH
  * }.
  *
  * All enemies has an {@code EnemyMovementPattern}.
