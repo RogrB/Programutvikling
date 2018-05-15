@@ -202,7 +202,7 @@ public class MultiplayerHandler {
     /**
      * Method for replying to a connection attempt from Player2
      */       
-    void replyConnection() {
+    public void replyConnection() {
         sender.send(protocol.sendPrep("Reply", 0, 0));
     }    
     

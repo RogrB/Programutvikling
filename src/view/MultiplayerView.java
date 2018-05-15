@@ -244,6 +244,7 @@ public class MultiplayerView extends ViewUtil{
      */
     public void startMultiplayerGame(Stage stage) {
 	Platform.runLater(() -> {
+            mp.replyConnection();
             GameController.getInstance().newGame();
             Scene scene = new Scene(GameView.getInstance().initScene());
             stage.setScene(scene);
