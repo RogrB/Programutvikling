@@ -49,7 +49,7 @@ class Sender {
         }
         catch(SocketException e) {
             System.err.println(e.getMessage());
-            ViewUtil.setError(e.getMessage());
+            ViewUtil.setError("Could not bind to port: " + remoteport);
         }
     }
     
@@ -63,7 +63,7 @@ class Sender {
         }
         catch(Exception e) {
             System.err.println(e.getMessage());
-            ViewUtil.setError(e.getMessage());
+            ViewUtil.setError("Failed to close RemoteSocket");
         }
     }       
     
@@ -84,7 +84,7 @@ class Sender {
             }
             else {
                 System.err.println(e.getMessage());
-                ViewUtil.setError(e.getMessage());
+                ViewUtil.setError("Could not send packet");
             }
         }
     }

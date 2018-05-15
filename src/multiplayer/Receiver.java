@@ -47,7 +47,7 @@ public class Receiver extends Thread {
         } 
         catch(SocketException e) {
             System.err.println(e.getMessage());
-            ViewUtil.setError(e.getMessage());
+            ViewUtil.setError("Could not bind to port: " + localPort);
         }
     }
 
@@ -60,7 +60,7 @@ public class Receiver extends Thread {
         }
         catch(Exception e){
             System.err.println(e.getMessage());
-            ViewUtil.setError(e.getMessage());
+            ViewUtil.setError("Failed to close ReceiverSocket");
         }
     }    
 
@@ -82,7 +82,7 @@ public class Receiver extends Thread {
             } 
             catch(IOException e) {
                 System.err.println(e.getMessage());
-                ViewUtil.setError(e.getMessage());
+                ViewUtil.setError("Failed to receive datagram packet");
             }
         } 
     }
