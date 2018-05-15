@@ -38,4 +38,11 @@ public class IdGen {
     public int newId(){
         return ++id;
     }
+
+    /**
+     * Resets the IDs for a new multiplayer game.
+     */
+    public void resetIDs(){
+        id = 0;
+    }
 }
