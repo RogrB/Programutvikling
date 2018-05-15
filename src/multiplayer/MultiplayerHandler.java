@@ -216,6 +216,7 @@ public class MultiplayerHandler {
         if (!gameStarted) {
             gameStarted = true;
             MultiplayerView.getInst().startMultiplayerGame(stage);
+            replyConnection();
         }
     }
     
