@@ -194,8 +194,6 @@ public class GameView extends ViewUtil{
      */
     private Text hitPercent = createText("", VIEW_WIDTH/2 - 300, VIEW_HEIGHT/2 + 60, Font.font("Verdana", 30));
 
-    private Text completedText = createText("", VIEW_WIDTH/2 - 300, VIEW_HEIGHT/2, Font.font("Verdana", 100));
-
     /**
      * Button used for continuing to the next level.
      */
@@ -267,8 +265,8 @@ public class GameView extends ViewUtil{
         exitToMenuButton2 = new MenuButton("MAIN MENU");
         exitToMenuButton3 = new MenuButton("MAIN MENU");
         exitToMenuButton3.setOpacity(0);
-        exitToMenuButton3.setTranslateX(200);
-        exitToMenuButton3.setTranslateY(200);
+        exitToMenuButton3.setTranslateX(450);
+        exitToMenuButton3.setTranslateY(500);
     }
 
     /**
@@ -300,10 +298,10 @@ public class GameView extends ViewUtil{
      */
     private void decideLayout(){
         if(gm.getMultiplayerStatus()) {
-            root.getChildren().addAll(errorField, wonButtonContainer, exitToMenuButton3, completedText, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, requestPane, player2LayerCanvas);
+            root.getChildren().addAll(errorField, wonButtonContainer, exitToMenuButton3, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, playerLayerCanvas, scoreText, levelText, weaponType, requestPane, player2LayerCanvas);
         }
         else {
-            root.getChildren().addAll(errorField, wonButtonContainer, lostButtonContainer, exitToMenuButton3, completedText, playerLayerCanvas, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, requestPane);
+            root.getChildren().addAll(errorField, wonButtonContainer, lostButtonContainer, exitToMenuButton3, playerLayerCanvas, canvas, hudCanvas, enemyLayerCanvas, bulletLayerCanvas, scoreText, levelText, weaponType, requestPane);
         }
     }
 
@@ -446,9 +444,14 @@ public class GameView extends ViewUtil{
 
     public void gameCompleted(){
         clearScoreScreen();
-        completedText.setText("GAME COMPLETED");
         exitToMenuButton3.gainedFocus();
         exitToMenuButton3.setOpacity(1);
+        Platform.runLater(
+                () -> {
+                    canvas.toFront();
+                    graphics.drawImage(new Image("assets/image/overlays/gameCompleted.png"), 126, (VIEW_HEIGHT/2) - 51);
+                }
+        );
     }
 
     /**

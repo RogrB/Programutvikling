@@ -50,7 +50,9 @@ public class UserInputs {
             if(event.getCode() == KeyCode.SPACE && gs.player.getPlaying() && !gs.player.isAlive()||
                     event.getCode() == KeyCode.ENTER && gs.player.getPlaying() && !gs.player.isAlive())
             {
+                System.out.println(GameController.getInstance().getLastGameLost());
                 gv.select(gv.getMenuElementsWon()[1].getText(), event);
+                GameController.getInstance().setLastGameLost(true);
             }
             if (event.getCode() == KeyCode.W  && gs.player.getPlaying() && gs.player.isAlive()||
                     event.getCode() == KeyCode.UP && gs.player.getPlaying() && gs.player.isAlive())

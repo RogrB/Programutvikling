@@ -444,7 +444,6 @@ public class GameController {
             for(Enemy enemy : GameState.enemies){
                 if(enemy.getType() == boss && !enemy.isAlive() && !gs.gameOver){
                     gs.gameOver = true;
-                    lastGameLost = false;
                     startGameOverTimer();
                     AutoSave.getInstance().stop();
                 }
@@ -470,6 +469,7 @@ public class GameController {
                     if(LevelData.getLevelByIndex(gs.getLevelIterator() +1) != null) {
                         gv.gameWon();
                         gs.player.isNotPlaying();
+                        lastGameLost = true;
                     }
                     else {
                         gs.player.isDead();
