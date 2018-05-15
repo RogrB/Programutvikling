@@ -115,6 +115,7 @@ public class GameController {
         gs.firstLevel();
         gs.player.init();
         gameRun();
+        IdGen.getInstance().resetIDs();
     }
 
     /**
