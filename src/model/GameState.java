@@ -102,7 +102,7 @@ public class GameState implements java.io.Serializable {
      * Called on the creation of a new game.
      */
     public void firstLevel(){
-        levelIterator = 1;
+        levelIterator = 0;
         initLevel();
     }
 
@@ -119,20 +119,24 @@ public class GameState implements java.io.Serializable {
      * Resets objects and fields in order to initialize a new level.
      */
     private void initLevel(){
-        this.levelData = LevelData.getLevel("LEVEL"+levelIterator);
+        this.levelData = LevelData.getLevelByIndex(levelIterator);
 
-        levelIncrementor = 0;
+        if(this.levelData != null) {
+            levelIncrementor = 0;
 
-        powerups = new ArrayList();
-        enemies = new ArrayList();
+            powerups = new ArrayList();
+            enemies = new ArrayList();
 
-        enemyBullets = new ArrayList<>();
-        playerBullets = new ArrayList<>();
-        player2Bullets = new ArrayList<>();
+            enemyBullets = new ArrayList<>();
+            playerBullets = new ArrayList<>();
+            player2Bullets = new ArrayList<>();
 
-        gameOver = false;
-        LevelLoader.getInstance().setLevelData(levelData);
-        bossType = null;
+            gameOver = false;
+            LevelLoader.getInstance().setLevelData(levelData);
+            bossType = null;
+        } else {
+            System.out.println("GameWon");
+        }
     }
 
     /**
