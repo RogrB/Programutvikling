@@ -9,7 +9,7 @@ import view.GameView;
 /**
  * Class used for handling key events in GameView.
  *
- * @author Jonas Ege Carlsen, Åsmund Røst Wien
+ * @author Jonas Ege Carlsen
  */
 public class UserInputs {
 
@@ -82,12 +82,6 @@ public class UserInputs {
             }
             if (event.getCode() == KeyCode.Q && gs.player.getPlaying() && gs.player.isAlive()) {
                 gs.player.setShield();
-            }
-            if (event.getCode() == KeyCode.T && gs.player.getPlaying() && gs.player.isAlive()) {
-                gs.player.isNotPlaying();
-                gs.gameOver = true;
-                GameController.getInstance().setLastGameLost(false);
-                GameController.getInstance().startGameOverTimer();
             }
         });
 

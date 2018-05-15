@@ -6,6 +6,9 @@ import assets.java.Sprite;
  * <h1>Handles the sprites for the "bullet death" animation</h1>
  * Contains the sprites needed to animate the bullet hit effect
  * for both player and enemy bullets
+ *
+ * @author Åsmund Røst Wien
+ * @author Roger Birkenes Solli
  */
 public enum BulletHit {
     PLAYER_BASIC( new Sprite[] {

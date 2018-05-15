@@ -15,7 +15,6 @@ import static model.GameState.bossType;
  * <h1>Class for loading and handling levels</h1>
  *
  * @author Jonas Ege Carlsen
- * @author Åsmund Røst Wien
  */
 public class LevelLoader {
 

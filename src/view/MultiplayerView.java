@@ -26,7 +26,8 @@ import view.customElements.MenuButton;
  * <h1>Multiplayer Menu</h1>
  * The class {@code MultiplayerView} extends {@code ViewUtil}.
  *
- * @author Jonas Ege Carlsen, Roger Birkenes Solli
+ * @author Jonas Ege Carlsen
+ * @author Roger Birkenes Solli
  */
 public class MultiplayerView extends ViewUtil{
 

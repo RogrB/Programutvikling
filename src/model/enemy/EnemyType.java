@@ -9,6 +9,10 @@ import java.util.Objects;
  * <h1>EnemyType contains the details for individual enemies</h1>
  * Handles health, sprite, shooting chance and projectile sprite for
  * all the different enemies
+ *
+ * @author Åsmund Røst Wien
+ * @author Jonas Ege Carlsen
+ * @author Roger Birkenes Solli
  */
 public enum EnemyType {
 

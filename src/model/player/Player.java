@@ -21,6 +21,10 @@ import view.HUD;
  * <h1>The Player class</h1>
  * The {@code Enemy} class extends the {@code Entity} class and handles
  * all the events for the Player object
+ *
+ * @author Roger Birkenes Solli
+ * @author Jonas Ege Carlsen
+ * @author Åsmund Røst Wien
  */
 public class Player extends Entity {
 
