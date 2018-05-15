@@ -8,6 +8,7 @@ import static controller.GameController.gs;
  * <h1>A class for handling Player behaviour</h1>
  * This class handles movements, shooting and weapon powerups
  *
+ * @author Åsmund Røst Wien
  * @author Roger Birkenes Solli
  */
 public class PlayerBehaviour implements java.io.Serializable {
