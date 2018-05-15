@@ -49,7 +49,7 @@ class Protocol {
                     }
                 }
                 catch (IOException e) {
-                    ViewUtil.setError(e.getMessage());
+                    ViewUtil.setError("Failed to send Enemy Update");
                     System.err.println(e.getMessage());
                 }   
                 break;
@@ -81,7 +81,7 @@ class Protocol {
                 }
                 catch (IOException e) {
                     System.err.println(e.getMessage());
-                    ViewUtil.setError(e.getMessage());
+                    ViewUtil.setError("Failed to send connection request");
                 }
                 break;
             case "Reply":
@@ -90,7 +90,7 @@ class Protocol {
                 }
                 catch (IOException e) {
                     System.err.println(e.getMessage());
-                    ViewUtil.setError(e.getMessage());
+                    ViewUtil.setError("Failed to send connection reply");
                 }
                 break;
             case "Update":
@@ -104,7 +104,7 @@ class Protocol {
                 }
                 catch (IOException e) {
                     System.err.println(e.getMessage());
-                    ViewUtil.setError(e.getMessage());
+                    ViewUtil.setError("Failed to send Player movement update");
                 }
                 break;
             case "Shoot":
@@ -118,7 +118,7 @@ class Protocol {
                 }
                 catch (IOException e) {
                     System.err.println(e.getMessage());
-                    ViewUtil.setError(e.getMessage());
+                    ViewUtil.setError("Failed to send Player shot info");
                 }
                 break;
             case "PowerUp":
@@ -127,7 +127,7 @@ class Protocol {
                 }
                 catch (IOException e) {
                     System.err.println(e.getMessage());
-                    ViewUtil.setError(e.getMessage());
+                    ViewUtil.setError("Failed to send PowerUp notification");
                 }
                 break;
             case "Disconnect":
@@ -136,7 +136,7 @@ class Protocol {
                 }
                 catch (IOException e) {
                     System.err.println(e.getMessage());
-                    ViewUtil.setError(e.getMessage());
+                    ViewUtil.setError("Failed to send Disconnection Request");
                 }
                 break;
             case "NextGame":
@@ -145,7 +145,7 @@ class Protocol {
                 }
                 catch (IOException e) {
                     System.err.println(e.getMessage());
-                    ViewUtil.setError(e.getMessage());
+                    ViewUtil.setError("Failed to send Next Level Request");
                 }
                 break;                
         }
@@ -199,7 +199,7 @@ class Protocol {
             }
         }
         catch(IOException e) {
-            ViewUtil.setError(e.getMessage());
+            ViewUtil.setError("Could not read packet data");
             System.err.println(e.getMessage());
         }
     }
