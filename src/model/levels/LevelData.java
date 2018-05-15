@@ -66,25 +66,10 @@ public class LevelData {
     };
 
     /**
-     * Method to access the level data.
-     * @param levelName The name of the level to access.
+     * Method to access the level data by index.
+     * @param index The index value of the level.
      * @return The three dimensional String array which contains the level data over time.
      */
-    public static String[][][] getLevelByName(String levelName){
-        switch (levelName) {
-            case "LEVEL1":
-                return LEVEL1;
-            case "LEVEL2":
-                return LEVEL2;
-            case "LEVEL3":
-                return LEVEL3;
-            case "LEVEL4":
-                return LEVEL4;
-            default:
-                return null;
-        }
-    }
-
     public static String[][][] getLevelByIndex(int index) {
         String[][][][] allLevels = {LEVEL1, LEVEL2, LEVEL3, LEVEL4};
         try {

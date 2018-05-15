@@ -8,6 +8,7 @@ import model.player.Player;
 import model.player.Player2;
 import model.powerups.PowerUp;
 import model.weapons.Basic;
+import view.GameView;
 
 import java.util.ArrayList;
 
@@ -120,8 +121,7 @@ public class GameState implements java.io.Serializable {
      */
     private void initLevel(){
         this.levelData = LevelData.getLevelByIndex(levelIterator);
-
-        if(this.levelData != null) {
+        if(levelData != null) {
             levelIncrementor = 0;
 
             powerups = new ArrayList();
@@ -134,8 +134,6 @@ public class GameState implements java.io.Serializable {
             gameOver = false;
             LevelLoader.getInstance().setLevelData(levelData);
             bossType = null;
-        } else {
-            System.out.println("GameWon");
         }
     }
 

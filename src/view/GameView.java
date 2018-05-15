@@ -445,6 +445,7 @@ public class GameView extends ViewUtil{
     }
 
     public void gameCompleted(){
+        System.out.println("GameWon");
         completedText.setText("GAME COMPLETED");
         exitToMenuButton3.gainedFocus();
         exitToMenuButton3.setOpacity(1);
