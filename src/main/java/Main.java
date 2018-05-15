@@ -4,6 +4,7 @@ import assets.java.SoundManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import view.GameView;
 import view.MenuView;
@@ -36,6 +37,7 @@ public class Main extends Application {
         gv.mvcSetup();
 
         primaryStage.setTitle("Working Title: Pippi");
+        primaryStage.getIcons().add(new Image("assets/image/player/ship/playerShip2_red.png"));
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest(e -> {
             SoundManager.getInst().shutdown();
