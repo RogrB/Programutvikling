@@ -7,6 +7,7 @@ import io.AutoSave;
 import model.GameModel;
 import model.GameState;
 import model.enemy.*;
+import model.levels.LevelData;
 import model.levels.LevelLoader;
 import model.weapons.*;
 import multiplayer.MultiplayerHandler;
@@ -124,10 +125,14 @@ public class GameController {
     public void nextGame(){
         lastGameLost = false;
         gs.nextLevel();
-        gs.player.resume();
-        gameRun();
-        if (GameModel.getInstance().getMultiplayerStatus()) {
-            MultiplayerHandler.getInstance().nextGame();
+        if(LevelData.getLevelByIndex(gs.levelIncrementor) != null){
+            gs.player.resume();
+            gameRun();
+            if (GameModel.getInstance().getMultiplayerStatus()) {
+                MultiplayerHandler.getInstance().nextGame();
+            }
+        } else {
+            GameView.getInstance().gameCompleted();
         }
     }
 
