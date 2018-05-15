@@ -46,7 +46,7 @@ public class GameView extends ViewUtil{
      * Private <b>constructor</b>
      */
     private GameView(){}
-    
+
     /**
      * Method to access singleton class.
      * @return Returns a reference to the singleton object.
@@ -57,7 +57,7 @@ public class GameView extends ViewUtil{
      * Accesses to the {@code GameController} instance.
      */
     private GameController gc = GameController.getInstance();
-    
+
     /**
      * Accesses to the {@code GameModel} instance.
      */
@@ -133,12 +133,12 @@ public class GameView extends ViewUtil{
      * GraphicsContext for the enemy canvas layer
      */
     private final GraphicsContext enemyLayer = enemyLayerCanvas.getGraphicsContext2D();
-    
+
     /**
      * GraphicsContext for the player canvas layer
-     */         
+     */
     private final GraphicsContext playerLayer = playerLayerCanvas.getGraphicsContext2D();
-    
+
     /**
      * GraphicsContext for the player2 canvas layer
      */
@@ -194,6 +194,8 @@ public class GameView extends ViewUtil{
      */
     private Text hitPercent = createText("", VIEW_WIDTH/2 - 300, VIEW_HEIGHT/2 + 60, Font.font("Verdana", 30));
 
+    private Text completedText = createText("", VIEW_WIDTH/2 - 300, VIEW_HEIGHT/2, Font.font("Verdana", 100));
+
     /**
      * Button used for continuing to the next level.
      */
@@ -213,6 +215,11 @@ public class GameView extends ViewUtil{
      * Button used for returning to the main menu.
      */
     private MenuButton exitToMenuButton2;
+
+    /**
+     * Button used for returning to the main menu when the game is completed.
+     */
+    private MenuButton exitToMenuButton3;
 
     /**
      * Pane used for escaping to the main menu.
@@ -258,6 +265,10 @@ public class GameView extends ViewUtil{
         retryButton = new MenuButton("RETRY");
         exitToMenuButton = new MenuButton("MAIN MENU");
         exitToMenuButton2 = new MenuButton("MAIN MENU");
+        exitToMenuButton3 = new MenuButton("MAIN MENU");
+        exitToMenuButton3.setOpacity(0);
+        exitToMenuButton3.setTranslateX(200);
+        exitToMenuButton3.setTranslateY(200);
     }
 
     /**
@@ -418,9 +429,9 @@ public class GameView extends ViewUtil{
         Platform.runLater(
           () -> {
             canvas.toFront();
-            graphics.drawImage(new Image("assets/image/overlays/gameover.png"), (VIEW_WIDTH/2) - 368, (VIEW_HEIGHT/2) - 51);            
+            graphics.drawImage(new Image("assets/image/overlays/gameover.png"), (VIEW_WIDTH/2) - 368, (VIEW_HEIGHT/2) - 51);
           }
-        );        
+        );
     }
 
     /**
@@ -431,6 +442,12 @@ public class GameView extends ViewUtil{
         renderScoreScreen();
         menuElementsWon[0].gainedFocus();
         wonButtonContainer.setOpacity(1);
+    }
+
+    public void gameCompleted(){
+        completedText.setText("GAME COMPLETED");
+        exitToMenuButton3.gainedFocus();
+        exitToMenuButton3.setOpacity(1);
     }
 
     /**
