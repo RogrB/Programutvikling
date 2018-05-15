@@ -77,6 +77,9 @@ public class UserInputs {
             if (event.getCode() == KeyCode.Q && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()) {
                 gs.player.setShield();
             }
+            if (event.getCode() == KeyCode.T && GameController.gs.player.getPlaying() && GameController.gs.player.isAlive()) {
+                
+            }
         });
 
         s.setOnKeyReleased(event -> {
