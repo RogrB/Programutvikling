@@ -456,6 +456,7 @@ public class GameController {
      * the game is lost. This is to allow for animations to finish
      * before the game stops.
      */
+    //Sett denne til private
     public void startGameOverTimer(){
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
