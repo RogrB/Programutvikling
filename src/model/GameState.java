@@ -8,6 +8,7 @@ import model.player.Player;
 import model.player.Player2;
 import model.powerups.PowerUp;
 import model.weapons.Basic;
+import view.GameView;
 
 import java.util.ArrayList;
 
@@ -135,7 +136,7 @@ public class GameState implements java.io.Serializable {
             LevelLoader.getInstance().setLevelData(levelData);
             bossType = null;
         } else {
-            System.out.println("GameWon");
+            GameView.getInstance().gameComplete();
         }
     }
 
