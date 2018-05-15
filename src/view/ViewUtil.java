@@ -38,7 +38,7 @@ public abstract class ViewUtil {
     /**
      * Default background image for every view.
      */
-    final String BG_IMG = "assets/image/background/background_menu.png";
+    final String BG_IMG = "assets/image/background/background.png";
 
     /**
      * The base for all content in every view.
