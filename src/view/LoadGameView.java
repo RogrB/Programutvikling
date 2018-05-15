@@ -252,10 +252,6 @@ public class LoadGameView extends ViewUtil{
                 GameController.getInstance().loadGame();
                 startGameView(event, GameView.getInstance().initScene());
             } catch (FileIOException e) {
-<<<<<<< HEAD
-                System.err.println(e.getMessage());
-=======
->>>>>>> c057d37d34ec9c44e3fb68a49311e79c650bba86
                 GameModel.gameSettings.savePrevSave(prevSave);
             }
         } else {
