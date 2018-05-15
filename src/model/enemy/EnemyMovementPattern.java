@@ -127,6 +127,7 @@ public class EnemyMovementPattern implements java.io.Serializable {
                 break;
 
             case "BOSS_LINE":
+            case "BOSS_LINE_REVERSED":
                 bossInit();
                 break;
 
@@ -134,6 +135,13 @@ public class EnemyMovementPattern implements java.io.Serializable {
                 bossInit();
                 if(!bossInitializing)
                     x -= cos(toRadians(framesAlive * modWavelength * movementSpeed)) * getModifiersMultiplied();
+                break;
+            case "BOSS_ARCH":
+            case "BOSS_EIGHT_FLAT":
+            case "BOSS_OVAL_FLAT":
+                bossInit();
+                if(!bossInitializing)
+                    x -= sin(toRadians(framesAlive * modWavelength * movementSpeed)) * getModifiersMultiplied() * 2;
                 break;
 
             case "BOSS_OVAL":
@@ -182,9 +190,20 @@ public class EnemyMovementPattern implements java.io.Serializable {
                 y += cos(toRadians(framesAlive * modWavelength * movementSpeed)) * getModifiersMultiplied();
                 break;
 
+            case "BOSS_ARCH":
             case "BOSS_EIGHT":
                 if (!bossInitializing)
                     y -= cos(toRadians(framesAlive * modWavelength * movementSpeed / 2)) * getModifiersMultiplied();
+                break;
+
+            case "BOSS_EIGHT_FLAT":
+                if (!bossInitializing)
+                    y -= cos(toRadians(framesAlive * modWavelength * movementSpeed * 2)) * getModifiersMultiplied();
+                break;
+
+            case "BOSS_OVAL_FLAT":
+                if (!bossInitializing)
+                    y -= cos(toRadians(framesAlive * modWavelength * movementSpeed)) * getModifiersMultiplied();
                 break;
 
             case "BOSS_OVAL":
@@ -193,8 +212,14 @@ public class EnemyMovementPattern implements java.io.Serializable {
                 break;
 
             case "BOSS_LINE":
-                if (bossInitializing)
-                    break;
+                if (!bossInitializing)
+                    y -= cos(toRadians(framesAlive * modWavelength * movementSpeed)) * getModifiersMultiplied();
+                break;
+
+            case "BOSS_LINE_REVERSED":
+                if (!bossInitializing)
+                    y += cos(toRadians(framesAlive * modWavelength * movementSpeed)) * getModifiersMultiplied();
+                break;
 
             case "TRI":
             case "TRI_REVERSED":
@@ -298,9 +323,6 @@ public class EnemyMovementPattern implements java.io.Serializable {
     private void bossInit(){
         int BOSS_INIT_TIME = 250;
         if(bossCounter < BOSS_INIT_TIME) {
-
-            if(bossCounter == 0)
-                SoundManager.getInst().bossWobble();
             framesAlive = 0;
             x--;
             bossCounter++;

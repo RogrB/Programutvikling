@@ -22,13 +22,13 @@ public enum EnemyType {
     RED1(           2,          Sprite.ENEMY_RED1,      .004,               Weapon.ENEMY_BASIC),
     RED2(           2,          Sprite.ENEMY_RED2,      .004,               Weapon.ENEMY_BASIC),
     RED3(           2,          Sprite.ENEMY_RED3,      .004,               Weapon.ENEMY_BASIC),
-    REDBIG(         3,          Sprite.ENEMY_RED_BIG,   .004,               Weapon.ENEMY_BASIC),
+    REDBIG(         7,          Sprite.ENEMY_RED_BIG,   .020,               Weapon.ENEMY_BASIC),
     
     // UFO
-    UFOBLUE(        2,          Sprite.UFO_BLUE,        .004,                Weapon.ENEMY_BASIC),
-    UFOGREEN(       2,          Sprite.UFO_GREEN,       .004,                Weapon.ENEMY_BASIC),
-    UFORED(         2,          Sprite.UFO_RED,         .004,                Weapon.ENEMY_BASIC),
-    UFOYELLOW(      2,          Sprite.UFO_YELLOW,      .004,                Weapon.ENEMY_BASIC),
+    UFOBLUE(        3,          Sprite.UFO_BLUE,        .008,                Weapon.ENEMY_BASIC),
+    UFOGREEN(       3,          Sprite.UFO_GREEN,       .008,                Weapon.ENEMY_BASIC),
+    UFORED(         3,          Sprite.UFO_RED,         .008,                Weapon.ENEMY_BASIC),
+    UFOYELLOW(      3,          Sprite.UFO_YELLOW,      .008,                Weapon.ENEMY_BASIC),
     
     // Bosstypes
     BOSS01(         20,         Sprite.ENEMY_BOSS01,    .050,                Weapon.ENEMY_CIRCLE),
