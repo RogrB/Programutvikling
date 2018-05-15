@@ -41,6 +41,10 @@ public class MultiplayerHandler {
      */       
     private Sender sender;
     
+    /**
+     * {@code Receiver} object
+     * @see Receiver
+     */          
     private Receiver receiver;
     
     /**
@@ -122,7 +126,6 @@ public class MultiplayerHandler {
      * @param y Sets an int value to be transmitted
      */
     public void send(String action, int x, int y) {
-        //if(connected)
         sender.send(protocol.sendPrep(action, x, y));
     }
     
@@ -134,7 +137,6 @@ public class MultiplayerHandler {
      * @param alive If the enemy is currently alive or needs to be set dead
      */    
     public void send(String action, int id, int health, boolean alive) {
-        //if(connected)
         sender.send(protocol.sendPrep(action, id, health , alive));
     }
     
@@ -143,7 +145,6 @@ public class MultiplayerHandler {
      * @param input takes in DataInputStream for the {@code Protocol} to interpret
      */     
     public void recieveProtocol(DataInputStream input) {
-        //if(connected)
         protocol.recieve(input);
     }
 
