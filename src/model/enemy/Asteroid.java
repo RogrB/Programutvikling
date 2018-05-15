@@ -98,7 +98,7 @@ public class Asteroid extends Enemy {
         } else {
             setOldX(getX());
             setOldY(getY());
-            //animateDeath();
+            animateDeath();
         }
 
         if(isOffScreen() || getReadyToPurge()){

@@ -342,7 +342,7 @@ public class GameView extends ViewUtil{
         createContainers();
         requestPane = createRequestPane();
 
-        String BG_IMG = "assets/image/background/background_game.png";
+        String BG_IMG = "assets/image/background/background.png";
         root = initBaseScene(BG_IMG);
         decideLayout();
 

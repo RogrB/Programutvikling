@@ -469,11 +469,11 @@ public class GameController {
                     if(LevelData.getLevelByIndex(gs.getLevelIterator() +1) != null) {
                         gv.gameWon();
                         gs.player.isNotPlaying();
-                        lastGameLost = true;
                     }
                     else {
                         gs.player.isDead();
                         gv.gameCompleted();
+                        lastGameLost = true;
                     }
                 }
                 gameMainTimer.stop();
