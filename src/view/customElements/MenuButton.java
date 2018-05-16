@@ -54,7 +54,6 @@ public class MenuButton extends StackPane{
             SoundManager.getInst().nav();
         });
         this.setOnMouseExited(event -> lostFocus());
-        this.setOnMouseClicked(event -> SoundManager.getInst().navSelect());
     }
 
     /**
