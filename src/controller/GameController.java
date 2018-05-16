@@ -354,11 +354,11 @@ public class GameController {
 
     /**
      * Random number generator to check if a powerup should spawn.
-     * <i>Should spawn every 25 seconds on average.</i>
+     * <i>Should spawn every 10 seconds on average.</i>
      */
     private void spawnPowerUps(){
         Random random = new Random();
-        if(random.nextInt(1500) < 1) {
+        if(random.nextInt(600) < 1) {
             gs.powerups.add(generateNewPowerUp());
         }
     }
